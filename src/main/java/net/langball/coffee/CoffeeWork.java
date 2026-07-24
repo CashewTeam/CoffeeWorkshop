@@ -17,6 +17,7 @@ public class CoffeeWork {
         ModBlocks.BLOCKS.register(modBus);
         ModItems.ITEMS.register(modBus);
         ModEffects.EFFECTS.register(modBus);
+        ModSounds.SOUNDS.register(modBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modBus);
         ModMenuTypes.MENUS.register(modBus);
         ModCreativeTabs.TABS.register(modBus);

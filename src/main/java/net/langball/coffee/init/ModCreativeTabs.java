@@ -127,6 +127,32 @@ public class ModCreativeTabs {
                         output.accept(ModItems.CAKE_MODEL_SQUARE.get());
                         output.accept(ModItems.CAKE_MODEL_PLATE.get());
                         output.accept(ModItems.SMALL_MODEL.get());
+                        output.accept(ModItems.MOONCAKE_MODEL.get());
+                        output.accept(ModItems.MIXING_BOWL.get());
+
+                        // Other items
+                        output.accept(ModItems.VANILLA.get());
+                        output.accept(ModItems.BAG.get());
+                        output.accept(ModItems.SYRUP_EMPTY.get());
+
+                        // Cake slices & extra foods
+                        output.accept(ModItems.CAKE_SPONGE_SLICE.get());
+                        output.accept(ModItems.PIE_CREAM.get());
+                        output.accept(ModItems.SANDWICH_BLT.get());
+                        output.accept(ModItems.ICECREAM_VANILLA.get());
+
+                        // Drinks
+                        output.accept(ModItems.COFFEE_INSTANT_STICK.get());
+                        output.accept(ModItems.COFFEE_INSTANT_BOX.get());
+                        output.accept(ModItems.COFFEE_INSTANT.get());
+                        output.accept(ModItems.COFFEE_AMERICANO.get());
+                        output.accept(ModItems.ESPRESSO.get());
+
+                        // Records
+                        output.accept(ModItems.RECORD_BLANK.get());
+                        output.accept(ModItems.RECORD_KUSA_NOSHI_TO_NE.get());
+                        output.accept(ModItems.RECORD_LAZY_LADY_KAGUYA.get());
+                        output.accept(ModItems.RECORD_THE_GRIMOIRE_OF_MARISA.get());
                     })
                     .build());
 }
