@@ -1,6 +1,11 @@
 package net.langball.coffee.init;
 
 import net.langball.coffee.CoffeeWork;
+import net.langball.coffee.block.entity.CoffeeMachineBlockEntity;
+import net.langball.coffee.block.entity.GrinderBlockEntity;
+import net.langball.coffee.block.entity.IcecreamMachineBlockEntity;
+import net.langball.coffee.block.entity.OvenBlockEntity;
+import net.langball.coffee.block.entity.RollerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -10,47 +15,33 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, CoffeeWork.MODID);
 
-    // Stub registrations — actual BlockEntity classes will be created in Sprint 3.
-    // These are temporary and will be replaced with proper BlockEntityType.Builder.of(...)
-    // referencing the actual BlockEntity subclasses.
-
-    public static final RegistryObject<BlockEntityType<?>> GRINDER = BLOCK_ENTITIES.register("grinder",
+    public static final RegistryObject<BlockEntityType<GrinderBlockEntity>> GRINDER = BLOCK_ENTITIES.register("grinder",
             () -> BlockEntityType.Builder.of(
-                    (pos, state) -> {
-                        throw new UnsupportedOperationException("BlockEntity not yet implemented");
-                    },
+                    GrinderBlockEntity::new,
                     ModBlocks.GRINDER.get(), ModBlocks.GRINDER_ON.get()
             ).build(null));
 
-    public static final RegistryObject<BlockEntityType<?>> COFFEE_MACHINE = BLOCK_ENTITIES.register("coffee_machine",
+    public static final RegistryObject<BlockEntityType<CoffeeMachineBlockEntity>> COFFEE_MACHINE = BLOCK_ENTITIES.register("coffee_machine",
             () -> BlockEntityType.Builder.of(
-                    (pos, state) -> {
-                        throw new UnsupportedOperationException("BlockEntity not yet implemented");
-                    },
+                    CoffeeMachineBlockEntity::new,
                     ModBlocks.COFFEE_MACHINE.get(), ModBlocks.COFFEE_MACHINE_ON.get()
             ).build(null));
 
-    public static final RegistryObject<BlockEntityType<?>> ICECREAM_MACHINE = BLOCK_ENTITIES.register("icecream_machine",
+    public static final RegistryObject<BlockEntityType<IcecreamMachineBlockEntity>> ICECREAM_MACHINE = BLOCK_ENTITIES.register("icecream_machine",
             () -> BlockEntityType.Builder.of(
-                    (pos, state) -> {
-                        throw new UnsupportedOperationException("BlockEntity not yet implemented");
-                    },
+                    IcecreamMachineBlockEntity::new,
                     ModBlocks.ICECREAM_MACHINE.get(), ModBlocks.ICECREAM_MACHINE_ON.get()
             ).build(null));
 
-    public static final RegistryObject<BlockEntityType<?>> ROLLER = BLOCK_ENTITIES.register("roller",
+    public static final RegistryObject<BlockEntityType<RollerBlockEntity>> ROLLER = BLOCK_ENTITIES.register("roller",
             () -> BlockEntityType.Builder.of(
-                    (pos, state) -> {
-                        throw new UnsupportedOperationException("BlockEntity not yet implemented");
-                    },
+                    RollerBlockEntity::new,
                     ModBlocks.ROLLER.get(), ModBlocks.ROLLER_ON.get()
             ).build(null));
 
-    public static final RegistryObject<BlockEntityType<?>> OVEN = BLOCK_ENTITIES.register("oven",
+    public static final RegistryObject<BlockEntityType<OvenBlockEntity>> OVEN = BLOCK_ENTITIES.register("oven",
             () -> BlockEntityType.Builder.of(
-                    (pos, state) -> {
-                        throw new UnsupportedOperationException("BlockEntity not yet implemented");
-                    },
+                    OvenBlockEntity::new,
                     ModBlocks.OVEN.get(), ModBlocks.OVEN_ON.get()
             ).build(null));
 }
