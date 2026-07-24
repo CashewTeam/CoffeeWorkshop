@@ -543,3 +543,47 @@ entity.Villager.food_trader=Food Trader
 
 death.attack.potion_caffeine=%s died of caffeine poisoning
 coffeework.message.bed.caffeine=The caffeine makes you unable to sleep
+# Containers
+container.coffeework.grinder=Grinder
+container.coffeework.coffee_machine=Coffee Machine
+container.coffeework.icecream_machine=Ice Cream Machine
+container.coffeework.roller=Roller
+container.coffeework.oven=Clay Oven
+
+# Effects
+effect.coffeework.caffeine=Caffeine
+effect.coffeework.relax=Relax
+effect.coffeework.golden_heart=Golden Heart
+
+# Villagers
+entity.minecraft.villager.coffeework.coffee_barista=Coffee Barista
+entity.minecraft.villager.coffeework.coffee_materials_trader=Coffee Materials Trader
+entity.minecraft.villager.coffeework.food_trader=Food Trader
+entity.minecraft.villager.coffeework.baker=Baker
+
+# Records
+item.coffeework.record_kusa_noshi_to_ne.desc=Kusa Noshi To Ne
+item.coffeework.record_lazy_lady_kaguya.desc=Lazy Lady Kaguya
+item.coffeework.record_the_grimoire_of_marisa.desc=The Grimoire of Marisa
+# Containers (Japanese)
+container.coffeework.grinder=グラインダー
+container.coffeework.coffee_machine=コーヒーマシン
+container.coffeework.icecream_machine=アイスクリームマシン
+container.coffeework.roller=ローラー
+container.coffeework.oven=粘土窯
+
+# Effects (Japanese)
+effect.coffeework.caffeine=カフェイン
+effect.coffeework.relax=リラックス
+effect.coffeework.golden_heart=ゴールデンハート
+
+# Villagers (Japanese)
+entity.minecraft.villager.coffeework.coffee_barista=コーヒー・バリスタ
+entity.minecraft.villager.coffeework.coffee_materials_trader=コーヒー材料商
+entity.minecraft.villager.coffeework.food_trader=食品商
+entity.minecraft.villager.coffeework.baker=ベイカー
+
+# Records (Japanese)
+item.coffeework.record_kusa_noshi_to_ne.desc=草の詩
+item.coffeework.record_lazy_lady_kaguya.desc=怠惰な輝夜
+item.coffeework.record_the_grimoire_of_marisa.desc=魔理沙の魔導書

@@ -1,4 +1,5 @@
 {
+  "render_type": "cutout",
 	"credit": "Made with Blockbench",
 	"textures": {
 		"1": "blocks/concrete_white",

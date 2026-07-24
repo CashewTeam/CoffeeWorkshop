@@ -1,4 +1,5 @@
 {
+  "render_type": "cutout",
     "parent": "block/crop",
     "textures": {
         "crop": "coffeework:blocks/vanilla_stage_5"
