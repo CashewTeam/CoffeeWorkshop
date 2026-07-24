@@ -1,43 +1,32 @@
 package net.langball.coffee;
 
+import net.langball.coffee.init.*;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod(modid=CoffeeWork.MODID, name=CoffeeWork.NAME, version=CoffeeWork.VERSION, dependencies="required:forge@[14.23.4.2764,);after:dcs_climate;after:teastory;after:ic2;after:lastsmith@[V1.2.6.3-MC1.12.2,);")
+@Mod(CoffeeWork.MODID)
 public class CoffeeWork {
-	public static final String MODID = "coffeework";
+    public static final String MODID = "coffeework";
     public static final String NAME = "Coffee Workshop";
-    public static final String VERSION = "@version@";
-    
-	@Instance(CoffeeWork.MODID)
-	    public static CoffeeWork instance;
-	    
-	@SidedProxy(clientSide = "net.langball.coffee.ClientProxy",serverSide = "net.langball.coffee.CommonProxy")
- public static CommonProxy proxy; 
-	 
-	   
-	@EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
-        proxy.preInit(event);
+
+    public CoffeeWork() {
+        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ModBlocks.BLOCKS.register(modBus);
+        ModItems.ITEMS.register(modBus);
+        ModEffects.EFFECTS.register(modBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modBus);
+        ModMenuTypes.MENUS.register(modBus);
+        ModCreativeTabs.TABS.register(modBus);
+
+        modBus.addListener(this::commonSetup);
     }
 
-    @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-        proxy.init(event);
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
 
+        });
     }
-
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
-        proxy.postInit(event);
-    }
-}   
-	   
+}

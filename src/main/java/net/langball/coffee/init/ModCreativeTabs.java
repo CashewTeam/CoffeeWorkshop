@@ -1,0 +1,132 @@
+package net.langball.coffee.init;
+
+import net.langball.coffee.CoffeeWork;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
+
+public class ModCreativeTabs {
+    public static final DeferredRegister<CreativeModeTab> TABS =
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CoffeeWork.MODID);
+
+    public static final RegistryObject<CreativeModeTab> COFFEE_TAB = TABS.register("coffee_workshop",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.coffee_workshop"))
+                    .icon(() -> new ItemStack(ModItems.COLD_BREW_POT.get()))
+                    .displayItems((params, output) -> {
+                        // Machines
+                        output.accept(ModItems.GRINDER.get());
+                        output.accept(ModItems.COFFEE_MACHINE.get());
+                        output.accept(ModItems.ICECREAM_MACHINE.get());
+                        output.accept(ModItems.ROLLER.get());
+                        output.accept(ModItems.OVEN.get());
+                        output.accept(ModItems.COLD_BREW_POT.get());
+
+                        // Plants
+                        output.accept(ModItems.COFFEE_TREE.get());
+                        output.accept(ModItems.BLUEBERRY_BUSH.get());
+                        output.accept(ModItems.COFFEE_SEEDS.get());
+                        output.accept(ModItems.VANILLA_SEEDS.get());
+
+                        // Ores
+                        output.accept(ModItems.SODA_ORE.get());
+
+                        // Ingredients
+                        output.accept(ModItems.COFFEE_BEAN_RAW.get());
+                        output.accept(ModItems.COFFEE_BEAN.get());
+                        output.accept(ModItems.COFFEE_POWDER.get());
+                        output.accept(ModItems.COCOA_BEAN.get());
+                        output.accept(ModItems.COCOA_POWDER.get());
+                        output.accept(ModItems.COCOA_BATTER.get());
+                        output.accept(ModItems.BAG_CLOTH.get());
+                        output.accept(ModItems.ICE_SLAG.get());
+                        output.accept(ModItems.YEAST.get());
+                        output.accept(ModItems.PLATE_IRON.get());
+                        output.accept(ModItems.SPICES.get());
+                        output.accept(ModItems.GELATIN.get());
+                        output.accept(ModItems.SODA.get());
+                        output.accept(ModItems.FLOUR.get());
+                        output.accept(ModItems.DOUGH.get());
+                        output.accept(ModItems.DOUGH_PASTRY.get());
+                        output.accept(ModItems.DOUGH_COOKIE.get());
+                        output.accept(ModItems.DOUGH_GINGER.get());
+                        output.accept(ModItems.DOUGH_BREAD.get());
+                        output.accept(ModItems.DOUGH_BREAD_ROUND.get());
+                        output.accept(ModItems.DOUGH_BAGUETTE.get());
+                        output.accept(ModItems.DOUGH_BAGEL.get());
+                        output.accept(ModItems.DOUGH_TOAST.get());
+                        output.accept(ModItems.PLATE_DOUGH.get());
+                        output.accept(ModItems.PLATE_DOUGH_PASTRY.get());
+                        output.accept(ModItems.PLATE_DOUGH_GINGER.get());
+                        output.accept(ModItems.EMPTY_COLD_BREW_POT.get());
+
+                        // Foods
+                        output.accept(ModItems.BREAD_ROUND.get());
+                        output.accept(ModItems.BAGUETTE.get());
+                        output.accept(ModItems.BAGEL.get());
+                        output.accept(ModItems.TOAST.get());
+                        output.accept(ModItems.BUTTER.get());
+                        output.accept(ModItems.CHEESE.get());
+                        output.accept(ModItems.BLUEBERRY.get());
+                        output.accept(ModItems.CHOCOLATE_BAR.get());
+                        output.accept(ModItems.CHOCOLATE_CHIP.get());
+                        output.accept(ModItems.BROWNIE.get());
+                        output.accept(ModItems.FIELD_RATION.get());
+
+                        // Bags
+                        output.accept(ModItems.BAG_COFFEE.get());
+                        output.accept(ModItems.BAG_COFFEE_RAW.get());
+                        output.accept(ModItems.BAG_COCOA.get());
+                        output.accept(ModItems.BAG_COCOA_POWDER.get());
+                        output.accept(ModItems.BAG_FLOUR.get());
+                        output.accept(ModItems.BAG_COFFEE_POWDER.get());
+                        output.accept(ModItems.BAG_SUGAR.get());
+                        output.accept(ModItems.DOUBLE_BAG_COFFEE.get());
+                        output.accept(ModItems.DOUBLE_BAG_COFFEE_RAW.get());
+                        output.accept(ModItems.DOUBLE_BAG_COCOA.get());
+                        output.accept(ModItems.DOUBLE_BAG_COCOA_POWDER.get());
+                        output.accept(ModItems.DOUBLE_BAG_FLOUR.get());
+                        output.accept(ModItems.DOUBLE_BAG_COFFEE_POWDER.get());
+                        output.accept(ModItems.DOUBLE_BAG_SUGAR.get());
+
+                        // Cakes
+                        output.accept(ModItems.CAKE_SPONGE.get());
+                        output.accept(ModItems.CAKE_SPONGE_CHOCOLATE.get());
+                        output.accept(ModItems.CAKE_SPONGE_COFFEE.get());
+                        output.accept(ModItems.CAKE_SPONGE_PUMPKIN.get());
+                        output.accept(ModItems.CAKE_SPONGE_CARROT.get());
+                        output.accept(ModItems.CAKE_SPONGE_REDVELVET.get());
+                        output.accept(ModItems.CAKE_SPONGE_LEMON.get());
+                        output.accept(ModItems.CAKE_SPONGE_TEA.get());
+                        output.accept(ModItems.CAKE_SPONGE_BERRY.get());
+                        output.accept(ModItems.CAKE_COFFEE.get());
+                        output.accept(ModItems.CAKE_HARVEST.get());
+                        output.accept(ModItems.CAKE_LEMON.get());
+                        output.accept(ModItems.CAKE_TEA.get());
+                        output.accept(ModItems.CAKE_BERRY.get());
+                        output.accept(ModItems.CAKE_CHEESE.get());
+                        output.accept(ModItems.CAKE_SCHWARZWALD.get());
+                        output.accept(ModItems.CAKE_REDVELVET.get());
+                        output.accept(ModItems.TIRAMISU.get());
+                        output.accept(ModItems.MOUSSE_BERRY.get());
+                        output.accept(ModItems.MOUSSE_LEMON.get());
+                        output.accept(ModItems.MOUSSE_CHOCOLATE.get());
+                        output.accept(ModItems.MOUSSE_COFFEE.get());
+
+                        // Decor
+                        output.accept(ModItems.PLATE.get());
+                        output.accept(ModItems.XMAS_TREE.get());
+                        output.accept(ModItems.GINGER_HOUSE.get());
+
+                        // Tools
+                        output.accept(ModItems.IRON_BOWL.get());
+                        output.accept(ModItems.CAKE_MODEL.get());
+                        output.accept(ModItems.CAKE_MODEL_SQUARE.get());
+                        output.accept(ModItems.CAKE_MODEL_PLATE.get());
+                        output.accept(ModItems.SMALL_MODEL.get());
+                    })
+                    .build());
+}

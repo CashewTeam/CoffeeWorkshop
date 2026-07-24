@@ -1,0 +1,32 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+issueTrackerUrl="https://github.com/your-repo/coffeework/issues"
+
+[[mods]]
+    modId="coffeework"
+    version="1.2.8.1"
+    displayName="Coffee Workshop"
+    updateJSONURL="https://example.com/coffeework/update.json"
+    logoFile="logo.png"
+    credits="Mojang, Limuliya.Izefia.lillian"
+    authors="MCMOD Modding Group"
+    description='''
+        Bring me a coffee. Get a move on!
+
+        一个关于咖啡的 Minecraft 模组，添加了咖啡种植、加工、烘焙、饮品制作等一系列内容。
+    '''
+
+    [[dependencies.coffeework]]
+        modId="forge"
+        mandatory=true
+        versionRange="[47,)"
+        ordering="NONE"
+        side="BOTH"
+
+    [[dependencies.coffeework]]
+        modId="minecraft"
+        mandatory=true
+        versionRange="[1.20.1,1.21)"
+        ordering="NONE"
+        side="BOTH"
