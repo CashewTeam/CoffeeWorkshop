@@ -76,11 +76,11 @@ public class ModBlocks {
     public static final RegistryObject<Block> BAG_COCOA_POWDER = BLOCKS.register("bag_cocoa_powder",
             () -> new BlockBag(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> BAG_FLOUR = BLOCKS.register("bag_flour",
-            () -> new BlockBag(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_WHITE).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockBag(BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> BAG_COFFEE_POWDER = BLOCKS.register("bag_coffee_powder",
             () -> new BlockBag(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> BAG_SUGAR = BLOCKS.register("bag_sugar",
-            () -> new BlockBag(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_WHITE).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockBag(BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(0.5F).sound(SoundType.WOOL)));
 
     // ========== Double Bags ==========
     public static final RegistryObject<Block> DOUBLE_BAG_COFFEE = BLOCKS.register("double_bag_coffee",
@@ -92,11 +92,11 @@ public class ModBlocks {
     public static final RegistryObject<Block> DOUBLE_BAG_COCOA_POWDER = BLOCKS.register("double_bag_cocoa_powder",
             () -> new BlockBag2(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> DOUBLE_BAG_FLOUR = BLOCKS.register("double_bag_flour",
-            () -> new BlockBag2(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_WHITE).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockBag2(BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> DOUBLE_BAG_COFFEE_POWDER = BLOCKS.register("double_bag_coffee_powder",
             () -> new BlockBag2(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> DOUBLE_BAG_SUGAR = BLOCKS.register("double_bag_sugar",
-            () -> new BlockBag2(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_WHITE).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockBag2(BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(0.5F).sound(SoundType.WOOL)));
 
     // ========== Cakes (sponge, layer 1) ==========
     public static final RegistryObject<Block> CAKE_SPONGE = BLOCKS.register("cake_sponge",

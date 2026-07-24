@@ -1339,7 +1339,8 @@ public class JEICompat implements IModPlugin {
 
 | 任务 | 影响文件 | 预估复杂度 |
 |---|---|---|
-| 更新 JEI 兼容 | 9 个文件 | ⭐⭐⭐ |
+| 更新 JEI 兼容 | 9 个文件 |
+| 更新 ToughAsNails 兼容 |
 | 删除 `Util` 中不再需要的类 | `RecipesUtil.java`, `TagPropertyAccessor.java` | ⭐ |
 | 测试 + 修复编译错误 | — | ⭐⭐⭐⭐⭐ |
 

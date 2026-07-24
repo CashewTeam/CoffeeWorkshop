@@ -16,8 +16,8 @@ import java.util.List;
 public class ItemRecordCW extends RecordItem {
     private final String titleKey;
 
-    public ItemRecordCW(int analogOutput, RegistryObject<SoundEvent> sound, Item.Properties properties, String titleKey) {
-        super(analogOutput, sound.get(), properties.stacksTo(1));
+    public ItemRecordCW(int analogOutput, RegistryObject<SoundEvent> sound, Item.Properties properties, String titleKey, int lengthInTicks) {
+        super(analogOutput, sound, properties.stacksTo(1), lengthInTicks);
         this.titleKey = titleKey;
     }
 

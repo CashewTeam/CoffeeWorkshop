@@ -26,8 +26,8 @@ public class ModCreativeTabs {
                         output.accept(ModItems.COLD_BREW_POT.get());
 
                         // Plants
-                        output.accept(ModItems.COFFEE_TREE.get());
-                        output.accept(ModItems.BLUEBERRY_BUSH.get());
+                        output.accept(ModItems.COFFEE_TREE_ITEM.get());
+                        output.accept(ModItems.BLUEBERRY_BUSH_ITEM.get());
                         output.accept(ModItems.COFFEE_SEEDS.get());
                         output.accept(ModItems.VANILLA_SEEDS.get());
 
@@ -61,7 +61,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.PLATE_DOUGH.get());
                         output.accept(ModItems.PLATE_DOUGH_PASTRY.get());
                         output.accept(ModItems.PLATE_DOUGH_GINGER.get());
-                        output.accept(ModItems.EMPTY_COLD_BREW_POT.get());
+                        output.accept(ModItems.EMPTY_COLDBREW_POT.get());
 
                         // Foods
                         output.accept(ModItems.BREAD_ROUND.get());

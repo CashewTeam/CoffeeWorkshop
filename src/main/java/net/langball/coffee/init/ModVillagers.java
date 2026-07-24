@@ -1,16 +1,23 @@
 package net.langball.coffee.init;
 
 import com.google.common.collect.ImmutableSet;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.langball.coffee.CoffeeWork;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.List;
 
 public class ModVillagers {
     public static final DeferredRegister<PoiType> POI_TYPES =
@@ -60,6 +67,69 @@ public class ModVillagers {
                     ImmutableSet.of(), ImmutableSet.of(),
                     SoundEvents.VILLAGER_WORK_BUTCHER));
 
+    // ========================================================================
+    // Custom VillagerTrades.ItemListing implementations
+    // (Vanilla classes are package-private, so we provide our own.)
+    // ========================================================================
+
+    /**
+     * Sells an item for emeralds. Player pays emeralds, receives the item.
+     * Equivalent to vanilla {@code VillagerTrades.ItemsForEmeralds}.
+     */
+    public static class ItemsForEmeralds implements VillagerTrades.ItemListing {
+        private final ItemStack itemStack;
+        private final int emeraldCost;
+        private final int maxUses;
+        private final int villagerXp;
+        private final float priceMultiplier;
+
+        public ItemsForEmeralds(Item item, int emeraldCost, int resultCount, int maxUses, int villagerXp) {
+            this(new ItemStack(item, resultCount), emeraldCost, maxUses, villagerXp, 0.05F);
+        }
+
+        public ItemsForEmeralds(ItemStack stack, int emeraldCost, int maxUses, int villagerXp) {
+            this(stack, emeraldCost, maxUses, villagerXp, 0.05F);
+        }
+
+        public ItemsForEmeralds(ItemStack stack, int emeraldCost, int maxUses, int villagerXp, float priceMultiplier) {
+            this.itemStack = stack;
+            this.emeraldCost = emeraldCost;
+            this.maxUses = maxUses;
+            this.villagerXp = villagerXp;
+            this.priceMultiplier = priceMultiplier;
+        }
+
+        @Override
+        public MerchantOffer getOffer(Entity entity, RandomSource random) {
+            return new MerchantOffer(new ItemStack(Items.EMERALD, emeraldCost), itemStack, maxUses, villagerXp, priceMultiplier);
+        }
+    }
+
+    /**
+     * Buys an item for emeralds. Player gives items, receives emeralds.
+     * Equivalent to vanilla {@code VillagerTrades.EmeraldForItems}.
+     */
+    public static class EmeraldsForItems implements VillagerTrades.ItemListing {
+        private final ItemStack buyItem;
+        private final int emeraldCount;
+        private final int maxUses;
+        private final int villagerXp;
+        private final float priceMultiplier;
+
+        public EmeraldsForItems(ItemLike item, int itemCount, int emeraldCount, int maxUses, int villagerXp) {
+            this.buyItem = new ItemStack(item, itemCount);
+            this.emeraldCount = emeraldCount;
+            this.maxUses = maxUses;
+            this.villagerXp = villagerXp;
+            this.priceMultiplier = 0.05F;
+        }
+
+        @Override
+        public MerchantOffer getOffer(Entity entity, RandomSource random) {
+            return new MerchantOffer(buyItem, new ItemStack(Items.EMERALD, emeraldCount), maxUses, villagerXp, priceMultiplier);
+        }
+    }
+
     // ========================== Trade Registration ==========================
 
     /**
@@ -68,90 +138,59 @@ public class ModVillagers {
      */
     public static void registerTrades() {
         // ---- COFFEE BARISTA (old VillagerCoffee + coffee drinks) ----
-        //   Level 1: sells coffee beans/powders          (old SimpleBuy: materials[0/1/2])
-        //   Level 2: buys powders in bulk, sells syrup    (old SimpleSell + SimpleBuy)
-        //   Level 3: sells spices, buys cocoa powder      (old materials[7], materials[2])
-        List<VillagerTrades.ItemListing>[] baristaTrades = new List[3];
-        baristaTrades[0] = List.of(
-                // Coffee drinks for emeralds
-                new VillagerTrades.ItemsForEmeralds(ModItems.COFFEE_AMERICANO.get(), 2, 1, 12, 2),
-                new VillagerTrades.ItemsForEmeralds(ModItems.ESPRESSO.get(), 3, 1, 12, 2),
-                // Materials for emeralds  (old: SimpleBuy materials[0] x2 for 3-7e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.COFFEE_BEAN.get(), 4, 2, 16, 1),
-                // Materials for emeralds  (old: SimpleBuy materials[1] x4 for 4-9e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.COFFEE_POWDER.get(), 6, 4, 16, 1),
-                // Materials for emeralds  (old: SimpleBuy materials[2] x4 for 6-11e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.COCOA_POWDER.get(), 8, 4, 16, 1)
-        );
-        baristaTrades[1] = List.of(
-                // Buy powders in bulk  (old: SimpleSell materials[1] x16 for 2-6e)
-                new VillagerTrades.EmeraldsForItems(ModItems.COFFEE_POWDER.get(), 4, 16, 12, 5),
-                // Buy cocoa powder in bulk  (old: SimpleSell materials[2] x16 for 2-6e)
-                new VillagerTrades.EmeraldsForItems(ModItems.COCOA_POWDER.get(), 4, 16, 12, 5),
-                // Sell syrup  (old: SimpleBuy syrup x16 for 2-6e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.SYRUP_EMPTY.get(), 4, 16, 12, 5)
-        );
-        baristaTrades[2] = List.of(
-                // Sell spices  (old: SimpleBuy materials[7] x16 for 2-6e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.SPICES.get(), 4, 16, 12, 10),
-                // Buy cocoa powder  (old: SimpleSell materials[2] x8 for 2-6e)
-                new VillagerTrades.EmeraldsForItems(ModItems.COCOA_POWDER.get(), 2, 8, 12, 10)
-        );
+        Int2ObjectMap<VillagerTrades.ItemListing[]> baristaTrades = new Int2ObjectOpenHashMap<>();
+        baristaTrades.put(1, new VillagerTrades.ItemListing[]{
+                new ItemsForEmeralds(ModItems.COFFEE_AMERICANO.get(), 2, 1, 12, 2),
+                new ItemsForEmeralds(ModItems.ESPRESSO.get(), 3, 1, 12, 2),
+                new ItemsForEmeralds(ModItems.COFFEE_BEAN.get(), 4, 2, 16, 1),
+                new ItemsForEmeralds(ModItems.COFFEE_POWDER.get(), 6, 4, 16, 1),
+                new ItemsForEmeralds(ModItems.COCOA_POWDER.get(), 8, 4, 16, 1)
+        });
+        baristaTrades.put(2, new VillagerTrades.ItemListing[]{
+                new EmeraldsForItems(ModItems.COFFEE_POWDER.get(), 4, 16, 12, 5),
+                new EmeraldsForItems(ModItems.COCOA_POWDER.get(), 4, 16, 12, 5),
+                new ItemsForEmeralds(ModItems.SYRUP_EMPTY.get(), 4, 16, 12, 5)
+        });
+        baristaTrades.put(3, new VillagerTrades.ItemListing[]{
+                new ItemsForEmeralds(ModItems.SPICES.get(), 4, 16, 12, 10),
+                new EmeraldsForItems(ModItems.COCOA_POWDER.get(), 2, 8, 12, 10)
+        });
         VillagerTrades.TRADES.put(ModVillagers.COFFEE_BARISTA.get(), baristaTrades);
 
         // ---- COFFEE MATERIALS TRADER (old VillagerCoffee2) ----
-        //   Level 1: sells instant sticks, buys beans
-        //   Level 2: buys/sells instant boxes, sells cups
-        //   Level 3: buys instant boxes in bulk
-        //   (old: coffee_instant_stick, coffee_instant_box, coffee_instant_cup_unopen)
-        List<VillagerTrades.ItemListing>[] materialsTrades = new List[3];
-        materialsTrades[0] = List.of(
-                new VillagerTrades.ItemsForEmeralds(ModItems.COFFEE_INSTANT_STICK.get(), 2, 3, 12, 2),
-                new VillagerTrades.EmeraldsForItems(ModItems.COFFEE_BEAN.get(), 1, 4, 16, 1)
-        );
-        materialsTrades[1] = List.of(
-                // Player sells instant box for emeralds  (old: SimpleSell box x1 for 4-6e)
-                new VillagerTrades.EmeraldsForItems(ModItems.COFFEE_INSTANT_BOX.get(), 5, 1, 8, 5),
-                // Player buys instant box with emeralds  (old: SimpleBuy box x1 for 7-9e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.COFFEE_INSTANT_BOX.get(), 8, 1, 8, 5),
-                // Player buys instant drink cup  (old: SimpleBuy cup x1 for 2-3e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.COFFEE_INSTANT.get(), 2, 1, 12, 5)
-        );
-        materialsTrades[2] = List.of(
-                // Player sells 16 instant boxes  (old: SimpleSell box x16 for 24-48e)
-                new VillagerTrades.EmeraldsForItems(ModItems.COFFEE_INSTANT_BOX.get(), 32, 16, 3, 15)
-        );
+        Int2ObjectMap<VillagerTrades.ItemListing[]> materialsTrades = new Int2ObjectOpenHashMap<>();
+        materialsTrades.put(1, new VillagerTrades.ItemListing[]{
+                new ItemsForEmeralds(ModItems.COFFEE_INSTANT_STICK.get(), 2, 3, 12, 2),
+                new EmeraldsForItems(ModItems.COFFEE_BEAN.get(), 1, 4, 16, 1)
+        });
+        materialsTrades.put(2, new VillagerTrades.ItemListing[]{
+                new EmeraldsForItems(ModItems.COFFEE_INSTANT_BOX.get(), 5, 1, 8, 5),
+                new ItemsForEmeralds(ModItems.COFFEE_INSTANT_BOX.get(), 8, 1, 8, 5),
+                new ItemsForEmeralds(ModItems.COFFEE_INSTANT.get(), 2, 1, 12, 5)
+        });
+        materialsTrades.put(3, new VillagerTrades.ItemListing[]{
+                new EmeraldsForItems(ModItems.COFFEE_INSTANT_BOX.get(), 32, 16, 3, 15)
+        });
         VillagerTrades.TRADES.put(ModVillagers.COFFEE_MATERIALS_TRADER.get(), materialsTrades);
 
         // ---- FOOD TRADER (old VillagerFood) ----
-        //   Level 1: buys cake slices, sells flour/blueberries/cocoa beans
-        //   Level 2: sells brownies, buys dough/cheese
-        //   Level 3: sells cake molds
-        List<VillagerTrades.ItemListing>[] foodTrades = new List[3];
-        foodTrades[0] = List.of(
-                // Player sells cake sponge slice  (old: SimpleSell dessert_1[2] x8 for 4-12e)
-                new VillagerTrades.EmeraldsForItems(ModItems.CAKE_SPONGE_SLICE.get(), 1, 8, 12, 2),
-                // Player buys flour  (old: SimpleBuy materials[11] x16 for 3-5e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.FLOUR.get(), 1, 8, 16, 1),
-                // Player buys blueberries  (old: SimpleBuy materialFood[5] x4 for 6-8e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.BLUEBERRY.get(), 2, 4, 16, 1),
-                // Player buys cocoa beans  (old: SimpleBuy materials[4] x4 for 3-5e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.COCOA_BEAN.get(), 1, 4, 16, 1)
-        );
-        foodTrades[1] = List.of(
-                // Player sells brownie  (old: SimpleSell muffin[9] x8 for 8-14e)
-                new VillagerTrades.EmeraldsForItems(ModItems.BROWNIE.get(), 2, 8, 12, 5),
-                // Player buys dough  (old: SimpleBuy materials[10] x8 for 6-7e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.DOUGH.get(), 1, 8, 16, 5),
-                // Player buys cheese  (old: SimpleBuy materialFood[9] x8 for 8-10e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.CHEESE.get(), 1, 8, 12, 5)
-        );
-        foodTrades[2] = List.of(
-                // Cake molds  (old: SimpleBuy cake_model x1 for 4-8e)
-                new VillagerTrades.ItemsForEmeralds(ModItems.CAKE_MODEL.get(), 5, 1, 8, 10),
-                new VillagerTrades.ItemsForEmeralds(ModItems.CAKE_MODEL_SQUARE.get(), 5, 1, 8, 10),
-                new VillagerTrades.ItemsForEmeralds(ModItems.CAKE_MODEL_PLATE.get(), 5, 1, 8, 10)
-        );
+        Int2ObjectMap<VillagerTrades.ItemListing[]> foodTrades = new Int2ObjectOpenHashMap<>();
+        foodTrades.put(1, new VillagerTrades.ItemListing[]{
+                new EmeraldsForItems(ModItems.CAKE_SPONGE_SLICE.get(), 1, 8, 12, 2),
+                new ItemsForEmeralds(ModItems.FLOUR.get(), 1, 8, 16, 1),
+                new ItemsForEmeralds(ModItems.BLUEBERRY.get(), 2, 4, 16, 1),
+                new ItemsForEmeralds(ModItems.COCOA_BEAN.get(), 1, 4, 16, 1)
+        });
+        foodTrades.put(2, new VillagerTrades.ItemListing[]{
+                new EmeraldsForItems(ModItems.BROWNIE.get(), 2, 8, 12, 5),
+                new ItemsForEmeralds(ModItems.DOUGH.get(), 1, 8, 16, 5),
+                new ItemsForEmeralds(ModItems.CHEESE.get(), 1, 8, 12, 5)
+        });
+        foodTrades.put(3, new VillagerTrades.ItemListing[]{
+                new ItemsForEmeralds(ModItems.CAKE_MODEL.get(), 5, 1, 8, 10),
+                new ItemsForEmeralds(ModItems.CAKE_MODEL_SQUARE.get(), 5, 1, 8, 10),
+                new ItemsForEmeralds(ModItems.CAKE_MODEL_PLATE.get(), 5, 1, 8, 10)
+        });
         VillagerTrades.TRADES.put(ModVillagers.FOOD_TRADER.get(), foodTrades);
     }
 }

@@ -300,15 +300,15 @@ public class ModItems {
             () -> new ItemRecordCW(1,
                     ModSounds.RECORD_KUSA_NOSHI_TO_NE,
                     new Item.Properties().rarity(Rarity.RARE),
-                    "item.coffeework.record_kusa_noshi_to_ne.desc"));
+                    "item.coffeework.record_kusa_noshi_to_ne.desc", 100));
     public static final RegistryObject<Item> RECORD_LAZY_LADY_KAGUYA = ITEMS.register("record_lazy_lady_kaguya",
             () -> new ItemRecordCW(1,
                     ModSounds.RECORD_LAZY_LADY_KAGUYA,
                     new Item.Properties().rarity(Rarity.RARE),
-                    "item.coffeework.record_lazy_lady_kaguya.desc"));
+                    "item.coffeework.record_lazy_lady_kaguya.desc", 100));
     public static final RegistryObject<Item> RECORD_THE_GRIMOIRE_OF_MARISA = ITEMS.register("record_the_grimoire_of_marisa",
             () -> new ItemRecordCW(1,
                     ModSounds.RECORD_THE_GRIMOIRE_OF_MARISA,
                     new Item.Properties().rarity(Rarity.RARE),
-                    "item.coffeework.record_the_grimoire_of_marisa.desc"));
+                    "item.coffeework.record_the_grimoire_of_marisa.desc", 100));
 }

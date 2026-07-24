@@ -20,7 +20,7 @@ public class CoffeeWork {
     public static final String NAME = "Coffee Workshop";
 
     public CoffeeWork() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModConfig.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, net.langball.coffee.ModConfig.SPEC);
 
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 

@@ -25,7 +25,7 @@ import java.util.Set;
 
 public class ContainerCoffeeMachine extends AbstractContainerMenu {
     private final IItemHandler itemHandler;
-    private final ContainerData data;
+    public final ContainerData data;
     private final BlockEntity blockEntity;
     private final Level level;
 
