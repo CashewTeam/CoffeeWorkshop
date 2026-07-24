@@ -1272,10 +1272,10 @@ public class JEICompat implements IModPlugin {
 |---|---|---|
 | Mod 加载检测 | `Loader.isModLoaded(modId)` | `ModList.get().isLoaded(modId)` |
 | @Optional 注解 | `@Optional.Interface` / `@Optional.Method` | 移除，需手动检查 |
-| TeaStory | 直接引用 `roito.teastory.TeaStory.MODID` | 需确认新版 modID |
-| HAC (HeatAndClimate) | `defeatedcrow.hac.main.ClimateMain.MOD_ID` | 需确认新版 modID |
-| IC2 | `ic2.core.IC2.MODID` | 需确认新版 modID |
-| ToughAsNails | `toughasnails.api.*` | TAN 1.20 已停更，可能需要移除 |
+| TeaStory | 直接引用 `roito.teastory.TeaStory.MODID` | 1.20.1已经停更 |
+| HAC (HeatAndClimate) | `defeatedcrow.hac.main.ClimateMain.MOD_ID` | 1.20.1已经停更 |
+| IC2 | `ic2.core.IC2.MODID` | 需确认新版 modID |1.20.1已经停更
+| ToughAsNails | `toughasnails.api.*` | ToughAsNails-forge-1.20.1-9.2.0.171 可以使用 |
 
 ### 17.2 建议策略
 
