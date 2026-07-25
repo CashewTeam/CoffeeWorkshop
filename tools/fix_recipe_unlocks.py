@@ -97,6 +97,11 @@ UNLOCK_BY_RESULT = {
     "MOUSSE_COFFEE":       "ModItems.CAKE_MODEL.get()",
     "PIE_CREAM":           "ModItems.PLATE_DOUGH_PASTRY.get()",
     "ICECREAM_VANILLA":    "Items.MILK_BUCKET",
+
+    # Rolled dough plates (unlock with their parent dough)
+    "PLATE_DOUGH":         "ModItems.DOUGH.get()",
+    "PLATE_DOUGH_PASTRY":  "ModItems.DOUGH_PASTRY.get()",
+    "PLATE_DOUGH_GINGER":  "ModItems.DOUGH_GINGER.get()",
 }
 
 

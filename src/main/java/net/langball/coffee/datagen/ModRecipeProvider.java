@@ -625,17 +625,17 @@ public class ModRecipeProvider extends RecipeProvider {
         // ===================================================================
         // These were originally Roller machine recipes; manual 2x2 crafting as fallback
 
-        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH.get(), Items.IRON_INGOT)
+        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH.get(), ModItems.DOUGH.get())
                 .pattern("DD")
                 .define('D', ModItems.DOUGH.get())
                 .save(writer, modLoc("plate_dough"));
 
-        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH_PASTRY.get(), Items.IRON_INGOT)
+        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH_PASTRY.get(), ModItems.DOUGH_PASTRY.get())
                 .pattern("DD")
                 .define('D', ModItems.DOUGH_PASTRY.get())
                 .save(writer, modLoc("plate_dough_pastry"));
 
-        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH_GINGER.get(), Items.IRON_INGOT)
+        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH_GINGER.get(), ModItems.DOUGH_GINGER.get())
                 .pattern("DD")
                 .define('D', ModItems.DOUGH_GINGER.get())
                 .save(writer, modLoc("plate_dough_ginger"));

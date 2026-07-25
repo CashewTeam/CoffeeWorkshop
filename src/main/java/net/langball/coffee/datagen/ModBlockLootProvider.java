@@ -66,11 +66,12 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.PLATE.get());
         add(ModBlocks.COLD_BREW_POT.get(), noDrop()); // drops handled by BlockColdBrewPot#onRemove
         // Soda ore: Silk Touch → ore block; otherwise 4-8 soda with Fortune + explosion decay
-        add(ModBlocks.SODA_ORE.get(), createSilkTouchDispatchTable(
-                ModBlocks.SODA_ORE.get(),
-                LootItem.lootTableItem(ModItems.SODA.get())
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 8.0F)))
-                        .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+        add(ModBlocks.SODA_ORE.get(), applyExplosionDecay(ModBlocks.SODA_ORE.get(),
+                createSilkTouchDispatchTable(
+                        ModBlocks.SODA_ORE.get(),
+                        LootItem.lootTableItem(ModItems.SODA.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 8.0F)))
+                                .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))));
         dropSelf(ModBlocks.XMAS_TREE.get());
         dropSelf(ModBlocks.GINGER_HOUSE.get());
 
