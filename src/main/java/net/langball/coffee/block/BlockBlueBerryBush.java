@@ -10,6 +10,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -77,6 +78,18 @@ public class BlockBlueBerryBush extends Block implements BonemealableBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
                                   InteractionHand hand, BlockHitResult hit) {
         int age = state.getValue(AGE);
+        ItemStack held = player.getItemInHand(hand);
+
+        // Shearing: drops 2 bush items at any age
+        if (held.is(Items.SHEARS)) {
+            if (!level.isClientSide) {
+                popResource(level, pos, new ItemStack(ModItems.BLUEBERRY_BUSH_ITEM.get(), 2));
+                held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        // Right-click harvest at maturity
         if (age == 3) {
             int count = 1 + level.random.nextInt(2);
             popResource(level, pos, new ItemStack(ModItems.BLUEBERRY.get(), count));

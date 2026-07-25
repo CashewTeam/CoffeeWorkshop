@@ -91,7 +91,11 @@ public class BlockColdBrewPot extends Block {
         if (!state.is(newState.getBlock())) {
             int ferm = state.getValue(FERM);
             if (ferm == 8) {
+                // Emptied state: drop the empty pot
                 popResource(level, pos, new ItemStack(ModItems.EMPTY_COLDBREW_POT.get()));
+            } else {
+                // Otherwise drop the full pot
+                popResource(level, pos, new ItemStack(ModItems.COLD_BREW_POT.get()));
             }
         }
         super.onRemove(state, level, pos, newState, isMoving);

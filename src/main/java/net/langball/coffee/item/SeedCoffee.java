@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SeedCoffee extends Item {
@@ -23,7 +24,9 @@ public class SeedCoffee extends Item {
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
 
-        if (state.is(net.minecraft.world.level.block.Blocks.FARMLAND)) {
+        // Allow planting on grass, dirt, podzol, rooted dirt, and farmland
+        if (state.is(Blocks.FARMLAND) || state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.DIRT)
+                || state.is(Blocks.COARSE_DIRT) || state.is(Blocks.PODZOL) || state.is(Blocks.ROOTED_DIRT)) {
             BlockPos above = pos.above();
             if (level.isEmptyBlock(above)) {
                 level.setBlock(above, cropBlock.defaultBlockState(), 2);

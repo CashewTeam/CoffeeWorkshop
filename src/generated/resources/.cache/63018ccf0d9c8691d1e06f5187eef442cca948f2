@@ -1,0 +1,3 @@
+// 1.20.1	2026-07-25T19:37:47.2789397	Tags for minecraft:block mod id coffeework
+480af51f682bd7665c2a0813b69f2740ca2df367 data/minecraft/tags/blocks/mineable/pickaxe.json
+cd0c12b8939ea0602f9ced906551a67f53b48964 data/minecraft/tags/blocks/needs_iron_tool.json

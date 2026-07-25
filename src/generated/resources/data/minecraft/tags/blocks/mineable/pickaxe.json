@@ -1,0 +1,12 @@
+{
+  "values": [
+    "coffeework:grinder",
+    "coffeework:coffee_machine",
+    "coffeework:icecream_machine",
+    "coffeework:roller",
+    "coffeework:oven",
+    "coffeework:coldbrew_pot",
+    "coffeework:soda_ore",
+    "coffeework:plate"
+  ]
+}

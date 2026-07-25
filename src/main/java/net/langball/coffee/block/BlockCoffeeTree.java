@@ -8,10 +8,12 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -43,6 +45,24 @@ public class BlockCoffeeTree extends Block implements BonemealableBlock {
 
     @Override
     @SuppressWarnings("deprecation")
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        BlockPos below = pos.below();
+        BlockState soil = level.getBlockState(below);
+        return soil.is(Blocks.GRASS_BLOCK) || soil.is(Blocks.DIRT) || soil.is(Blocks.COARSE_DIRT)
+                || soil.is(Blocks.PODZOL) || soil.is(Blocks.FARMLAND) || soil.is(Blocks.ROOTED_DIRT);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, level, pos, block, fromPos, isMoving);
+        if (!level.isClientSide && !state.canSurvive(level, pos)) {
+            level.destroyBlock(pos, true);
+        }
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!level.isAreaLoaded(pos, 1)) return;
         if (level.getRawBrightness(pos, 0) >= 9) {
@@ -54,9 +74,22 @@ public class BlockCoffeeTree extends Block implements BonemealableBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
                                  InteractionHand hand, BlockHitResult hit) {
         int age = state.getValue(AGE);
+        ItemStack held = player.getItemInHand(hand);
+
+        // Shearing: always works, drops the block itself
+        if (held.is(Items.SHEARS)) {
+            if (!level.isClientSide) {
+                popResource(level, pos, new ItemStack(ModItems.COFFEE_TREE_ITEM.get()));
+                held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        // Right-click harvest at maturity
         if (age == 3) {
             if (!level.isClientSide) {
                 popResource(level, pos, new ItemStack(ModItems.COFFEE_SEEDS.get()));
