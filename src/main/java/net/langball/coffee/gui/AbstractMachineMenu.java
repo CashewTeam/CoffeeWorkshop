@@ -3,6 +3,7 @@ package net.langball.coffee.gui;
 import net.langball.coffee.block.entity.MachineBlockEntity;
 import net.langball.coffee.gui.slot.SlotMachineResult;
 import net.langball.coffee.recipes.MachineRecipe;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -15,23 +16,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.Set;
 
 /**
  * Common menu base for all five processing machines.
  *
- * <p>Provides:
- * <ul>
- *   <li>Player inventory + hotbar slot creation</li>
- *   <li>{@link #stillValid(Player)} via {@link ContainerLevelAccess}</li>
- *   <li>Shift-click logic shared by fuel-burning and self-powered machines</li>
- *   <li>{@link #hasRecipe(ItemStack, RecipeType)} helper</li>
- * </ul>
- *
- * <p>Subclasses declare slot positions and machine-specific slot types
- * by overriding {@link #addMachineSlots()}.
+ * <p>Provides player inventory layout, {@link #stillValid}, shift-click,
+ * and shared helpers.  Subclasses declare slot positions and machine-
+ * specific slot types via {@link #addMachineSlots()}.
  */
 public abstract class AbstractMachineMenu extends AbstractContainerMenu {
 
@@ -44,7 +41,6 @@ public abstract class AbstractMachineMenu extends AbstractContainerMenu {
     private static final int PLAYER_INV_ROW_COUNT = 3;
     private static final int PLAYER_INV_COL_COUNT = 9;
 
-    // Derived in constructor — see addPlayerSlots
     protected final int playerInvStartIndex;
     protected final int hotbarStartIndex;
 
@@ -65,22 +61,20 @@ public abstract class AbstractMachineMenu extends AbstractContainerMenu {
         this.addDataSlots(data);
     }
 
-    /**
-     * Subclasses add machine-specific slots here (input, fuel, output).
-     * The slot index range {@code [0, machineSlotCount-1]} is reserved
-     * for machine slots.
-     */
+    // ---- Abstract contract (subclass provides) ----------------------------
+
     protected abstract void addMachineSlots();
-
-    /**
-     * Subclasses return the RecipeType for their machine.
-     */
     protected abstract RecipeType<MachineRecipe> getRecipeType();
+    protected abstract Set<Block> getValidBlocks();
+    protected abstract int getOutputSlotIndex();
+    protected abstract boolean isFuelItem(ItemStack stack);
 
     /**
-     * Subclasses return the set of valid blocks for {@link #stillValid}.
+     * Returns the fuel slot index, or -1 if this machine has no fuel slot.
      */
-    protected abstract Set<Block> getValidBlocks();
+    protected int getFuelSlotIndex() {
+        return -1;
+    }
 
     // ---- Slot layout helpers --------------------------------------------
 
@@ -110,9 +104,6 @@ public abstract class AbstractMachineMenu extends AbstractContainerMenu {
 
     // ---- Recipe helper --------------------------------------------------
 
-    /**
-     * Checks whether the given stack matches a recipe of this machine's type.
-     */
     protected boolean hasRecipe(ItemStack stack) {
         return level.getRecipeManager()
                 .getRecipeFor(getRecipeType(), new SimpleContainer(stack), level)
@@ -120,17 +111,6 @@ public abstract class AbstractMachineMenu extends AbstractContainerMenu {
     }
 
     // ---- Shift-click ----------------------------------------------------
-
-    /**
-     * Subclasses must return the slot index of the output slot.
-     */
-    protected abstract int getOutputSlotIndex();
-
-    /**
-     * Subclasses return whether the given stack is valid fuel for this
-     * machine (used by shift-click to decide fuel-slot routing).
-     */
-    protected abstract boolean isFuelItem(ItemStack stack);
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
@@ -145,24 +125,20 @@ public abstract class AbstractMachineMenu extends AbstractContainerMenu {
             int totalSlots = this.slots.size();
 
             if (index == outputIdx) {
-                // Output → player inventory
                 if (!this.moveItemStackTo(itemstack1, playerInvStartIndex, totalSlots, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(itemstack1, itemstack);
             } else if (index < playerInvStartIndex) {
-                // Machine slot → player inventory
                 if (!this.moveItemStackTo(itemstack1, playerInvStartIndex, totalSlots, false)) {
                     return ItemStack.EMPTY;
                 }
             } else {
-                // Player inventory or hotbar → machine
                 if (hasRecipe(itemstack1)) {
                     if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (isFuelItem(itemstack1)) {
-                    // Fuel slot: index 1 for 3-slot machines; skip for 2-slot (Coffee)
                     int fuelSlot = getFuelSlotIndex();
                     if (fuelSlot >= 0) {
                         if (!this.moveItemStackTo(itemstack1, fuelSlot, fuelSlot + 1, false)) {
@@ -204,11 +180,34 @@ public abstract class AbstractMachineMenu extends AbstractContainerMenu {
         return itemstack;
     }
 
+    // ---- Shared helpers --------------------------------------------------
+
     /**
-     * Returns the fuel slot index, or -1 if this machine has no fuel slot.
+     * Resolves an IItemHandler from the BlockEntity at the given position.
+     * Falls back to an empty handler if no BE or capability is present.
      */
-    protected int getFuelSlotIndex() {
-        return -1; // default: no fuel (Coffee Machine overrides to return 1)
+    protected static IItemHandler getItemHandlerAt(Inventory inv, BlockPos pos, int size) {
+        BlockEntity be = inv.player.level().getBlockEntity(pos);
+        if (be != null) {
+            return be.getCapability(ForgeCapabilities.ITEM_HANDLER)
+                    .resolve()
+                    .orElseGet(() -> new ItemStackHandler(size));
+        }
+        return new ItemStackHandler(size);
+    }
+
+    /**
+     * Resolves the MachineBlockEntity at the given position, or throws
+     * a clear error if missing or of the wrong type.
+     */
+    protected static MachineBlockEntity getMachineAt(Inventory inv, BlockPos pos) {
+        BlockEntity be = inv.player.level().getBlockEntity(pos);
+        if (be instanceof MachineBlockEntity mbe) {
+            return mbe;
+        }
+        throw new IllegalStateException(
+                "Expected MachineBlockEntity at " + pos + ", got " +
+                (be != null ? be.getClass().getName() : "null"));
     }
 
     // ---- Data access ----------------------------------------------------

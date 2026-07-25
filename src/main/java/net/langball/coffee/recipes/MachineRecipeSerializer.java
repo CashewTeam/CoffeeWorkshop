@@ -68,38 +68,21 @@ public final class MachineRecipeSerializer implements RecipeSerializer<MachineRe
             throw new JsonParseException("Machine recipe '" + id + "' is missing required field 'ingredient'");
         }
         Ingredient ingredient = Ingredient.fromJson(json.get("ingredient"));
-        if (ingredient.isEmpty()) {
-            throw new JsonParseException("Machine recipe '" + id + "' has an empty ingredient");
-        }
 
         // --- result validation ---
         if (!json.has("result") || json.get("result").isJsonNull()) {
             throw new JsonParseException("Machine recipe '" + id + "' is missing required field 'result'");
         }
         ItemStack result = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
-        if (result.isEmpty()) {
-            throw new JsonParseException("Machine recipe '" + id + "' result is empty");
-        }
-        int count = result.getCount();
-        int maxStack = result.getMaxStackSize();
-        if (count < 1 || count > maxStack) {
-            throw new JsonParseException("Machine recipe '" + id + "' result count " + count
-                    + " is out of range [1, " + maxStack + "]");
-        }
 
-        // --- experience validation ---
+        // --- experience ---
         float experience = GsonHelper.getAsFloat(json, "experience", 0.0F);
-        if (!Float.isFinite(experience) || experience < 0.0F) {
-            throw new JsonParseException("Machine recipe '" + id + "' experience " + experience
-                    + " must be finite and >= 0");
-        }
 
-        // --- cookingtime validation ---
+        // --- cookingtime ---
         int cookingTime = GsonHelper.getAsInt(json, "cookingtime", 200);
-        if (cookingTime < 1 || cookingTime > MAX_COOKING_TIME) {
-            throw new JsonParseException("Machine recipe '" + id + "' cookingtime " + cookingTime
-                    + " is out of range [1, " + MAX_COOKING_TIME + "]");
-        }
+
+        // Shared validation (reused by fromNetwork as well)
+        validateRecipeData(id, ingredient, result, experience, cookingTime);
 
         return new MachineRecipe(id, group, ingredient, result, experience, cookingTime, recipeType, this);
     }
@@ -112,16 +95,8 @@ public final class MachineRecipeSerializer implements RecipeSerializer<MachineRe
         float experience = buf.readFloat();
         int cookingTime = buf.readVarInt();
 
-        // Defensive checks on network data
-        if (result.isEmpty()) {
-            throw new IllegalArgumentException("Machine recipe '" + id + "' received empty result from network");
-        }
-        if (!Float.isFinite(experience) || experience < 0.0F) {
-            throw new IllegalArgumentException("Machine recipe '" + id + "' received invalid experience: " + experience);
-        }
-        if (cookingTime < 1 || cookingTime > MAX_COOKING_TIME) {
-            throw new IllegalArgumentException("Machine recipe '" + id + "' received invalid cookingtime: " + cookingTime);
-        }
+        // Shared validation (same rules as fromJson)
+        validateRecipeData(id, ingredient, result, experience, cookingTime);
 
         return new MachineRecipe(id, group, ingredient, result, experience, cookingTime, recipeType, this);
     }
@@ -133,5 +108,41 @@ public final class MachineRecipeSerializer implements RecipeSerializer<MachineRe
         buf.writeItem(recipe.result());
         buf.writeFloat(recipe.experience());
         buf.writeVarInt(recipe.cookingTime());
+    }
+
+    // ---- Shared validation -----------------------------------------------
+
+    /**
+     * Validates recipe data regardless of source (JSON or network).
+     * Throws {@link IllegalArgumentException} on invalid data so both
+     * paths fail fast with a clear message that includes the recipe ID.
+     */
+    static void validateRecipeData(ResourceLocation id, Ingredient ingredient,
+                                    ItemStack result, float experience, int cookingTime) {
+        if (ingredient.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Machine recipe '" + id + "' has an empty ingredient");
+        }
+        if (result.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Machine recipe '" + id + "' result is empty");
+        }
+        int count = result.getCount();
+        int maxStack = result.getMaxStackSize();
+        if (count < 1 || count > maxStack) {
+            throw new IllegalArgumentException(
+                    "Machine recipe '" + id + "' result count " + count
+                    + " is out of range [1, " + maxStack + "]");
+        }
+        if (!Float.isFinite(experience) || experience < 0.0F) {
+            throw new IllegalArgumentException(
+                    "Machine recipe '" + id + "' experience " + experience
+                    + " must be finite and >= 0");
+        }
+        if (cookingTime < 1 || cookingTime > MAX_COOKING_TIME) {
+            throw new IllegalArgumentException(
+                    "Machine recipe '" + id + "' cookingtime " + cookingTime
+                    + " is out of range [1, " + MAX_COOKING_TIME + "]");
+        }
     }
 }

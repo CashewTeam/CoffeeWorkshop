@@ -1,7 +1,6 @@
 package net.langball.coffee.block.entity;
 
 import net.langball.coffee.CoffeeWork;
-import net.langball.coffee.block.MachineBlock;
 import net.langball.coffee.init.ModBlockEntities;
 import net.langball.coffee.init.ModRecipeTypes;
 import net.langball.coffee.recipes.MachineRecipe;
@@ -13,7 +12,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -22,13 +20,11 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Coffee Machine block entity — brews drinks from coffee powder etc.
  *
- * <p>Self-powered: has no fuel slot.  When idle and a valid recipe is
- * present, the machine starts a self-cycle for exactly
- * {@code recipe.cookingTime()} ticks.  The {@code burnTime} field is
- * repurposed as the self-cycle timer (matches the recipe's duration).
- *
- * <p>Extends {@link AbstractProcessingBlockEntity} directly (not the
- * fueled variant) because it does not consume external fuel.
+ * <p>Self-powered: has no fuel slot.  Overrides
+ * {@link #startProcessingPower(MachineRecipe)} to begin a self-cycle
+ * for exactly {@code recipe.cookingTime()} ticks.  All other tick
+ * logic (recipe resolution, progress, output, LIT) is inherited from
+ * {@link AbstractProcessingBlockEntity#tickProcessing(Level, BlockPos, BlockState)}.
  */
 public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
 
@@ -42,7 +38,6 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
-                if (slot == SLOT_INPUT) activeRecipeId = null;
             }
 
             @Override
@@ -69,7 +64,7 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
     protected int[] getInputSlots() { return new int[]{SLOT_INPUT}; }
 
     @Override
-    protected int[] getFuelSlots() { return new int[0]; } // no fuel slot
+    protected int[] getFuelSlots() { return new int[0]; }
 
     @Override
     protected int[] getOutputSlots() { return new int[]{SLOT_OUTPUT}; }
@@ -77,6 +72,16 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
     public boolean isBurning() {
         return burnTime > 0;
     }
+
+    // ---- Self-powered hooks ------------------------------------------------
+
+    @Override
+    protected void startProcessingPower(MachineRecipe recipe) {
+        burnTime = recipe.cookingTime();
+        burnTimeTotal = recipe.cookingTime();
+    }
+
+    // ---- MenuProvider ------------------------------------------------------
 
     @Override
     public Component getDisplayName() {
@@ -89,61 +94,10 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
         return new net.langball.coffee.gui.ContainerCoffeeMachine(id, inventory, itemHandler, data, this);
     }
 
+    // ---- Tick --------------------------------------------------------------
+
     @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
-        if (level.isClientSide) return;
-
-        boolean wasBurning = burnTime > 0;
-        boolean dirty = false;
-
-        // Self-cycle timer
-        if (burnTime > 0) {
-            burnTime--;
-        }
-
-        MachineRecipe recipe = getCurrentRecipe();
-        var prevRecipeId = activeRecipeId;
-        boolean canProcess = recipe != null && canAcceptResult(recipe);
-
-        // Start a new self-cycle when idle and work is available
-        if (burnTime == 0 && canProcess) {
-            burnTime = recipe.cookingTime();
-            burnTimeTotal = recipe.cookingTime();
-            totalCookTime = recipe.cookingTime();
-            dirty = true;
-        }
-
-        // Detect recipe change
-        if (recipe != null && prevRecipeId != null && !prevRecipeId.equals(recipe.getId())) {
-            onRecipeChanged(prevRecipeId, recipe.getId());
-            dirty = true;
-        }
-
-        // Advance progress
-        if (burnTime > 0 && canProcess) {
-            cookTime++;
-            if (cookTime >= totalCookTime) {
-                cookTime = 0;
-                totalCookTime = recipe.cookingTime();
-                processRecipe(recipe);
-                dirty = true;
-            }
-        } else if (!canProcess && cookTime > 0) {
-            if (recipe == null) {
-                cookTime = 0;
-                dirty = true;
-            }
-        }
-
-        // Sync LIT
-        if (wasBurning != (burnTime > 0)) {
-            dirty = true;
-            level.setBlock(pos, state.setValue(MachineBlock.LIT, burnTime > 0),
-                    Block.UPDATE_ALL);
-        }
-
-        if (dirty) {
-            setChanged(level, pos, state);
-        }
+        tickProcessing(level, pos, state);
     }
 }

@@ -36,7 +36,6 @@ public class OvenBlockEntity extends AbstractFueledProcessingBlockEntity {
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
-                if (slot == SLOT_INPUT) activeRecipeId = null;
             }
 
             @Override
@@ -98,6 +97,6 @@ public class OvenBlockEntity extends AbstractFueledProcessingBlockEntity {
 
     @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
-        tickFueledProcessing(level, pos, state);
+        tickProcessing(level, pos, state);
     }
 }

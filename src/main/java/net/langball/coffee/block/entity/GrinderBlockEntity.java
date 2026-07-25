@@ -38,8 +38,6 @@ public class GrinderBlockEntity extends AbstractFueledProcessingBlockEntity {
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
-                // Invalidate recipe when input changes
-                if (slot == SLOT_INPUT) activeRecipeId = null;
             }
 
             @Override
@@ -115,6 +113,6 @@ public class GrinderBlockEntity extends AbstractFueledProcessingBlockEntity {
 
     @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
-        tickFueledProcessing(level, pos, state);
+        tickProcessing(level, pos, state);
     }
 }

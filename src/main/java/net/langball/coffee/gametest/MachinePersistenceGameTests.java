@@ -1,39 +1,39 @@
 package net.langball.coffee.gametest;
 
+import net.langball.coffee.CoffeeWork;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraftforge.gametest.GameTestHolder;
+import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 /**
  * Machine persistence GameTests.
- *
- * <p>Tests that block entity NBT survives save/load cycles, that
- * items, fuel, progress, recipe tracking and experience are all
- * correctly restored.
  */
+@GameTestHolder(CoffeeWork.MODID)
+@PrefixGameTestTemplate(false)
 public class MachinePersistenceGameTests {
 
-    @GameTest(template = "coffeework:empty")
+    @GameTest(template = "empty")
     public static void inventorySurvivesReload(GameTestHelper helper) {
-        // Phase 2.6
         helper.succeed();
     }
 
-    @GameTest(template = "coffeework:empty")
+    @GameTest(template = "empty")
     public static void progressSurvivesReload(GameTestHelper helper) {
         helper.succeed();
     }
 
-    @GameTest(template = "coffeework:empty")
+    @GameTest(template = "empty")
     public static void fuelSurvivesReload(GameTestHelper helper) {
         helper.succeed();
     }
 
-    @GameTest(template = "coffeework:empty")
+    @GameTest(template = "empty")
     public static void recipeIdSurvivesReload(GameTestHelper helper) {
         helper.succeed();
     }
 
-    @GameTest(template = "coffeework:empty")
+    @GameTest(template = "empty")
     public static void experienceSurvivesReload(GameTestHelper helper) {
         helper.succeed();
     }

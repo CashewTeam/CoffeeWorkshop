@@ -120,57 +120,92 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
         }
     }
 
+    // ---- Power hooks (for self-powered / non-fuel machines) ----------------
+
+    /**
+     * Returns {@code true} when the machine currently has processing
+     * power available.  Fueled machines override this to check
+     * {@code burnTime > 0}; self-powered machines start their own
+     * cycle.
+     */
+    protected boolean hasProcessingPower() {
+        return burnTime > 0;
+    }
+
+    /**
+     * Attempts to begin a processing-power cycle for the given recipe.
+     * Called once per tick when {@link #hasProcessingPower()} is false
+     * but a valid recipe is ready.  Subclasses set {@code burnTime}
+     * and {@code burnTimeTotal} here.
+     */
+    protected void startProcessingPower(MachineRecipe recipe) {
+        // default: no-op (fueled machines override in their own tick)
+    }
+
+    /**
+     * Decrements the power timer each tick.  Fueled and self-powered
+     * machines both call this at the start of their tick.
+     */
+    protected void tickProcessingPower() {
+        if (burnTime > 0) burnTime--;
+    }
+
     // ---- Shared tick body --------------------------------------------------
 
     /**
-     * Common server-side tick for non-fueled processing machines.
+     * Common server-side tick for <em>all</em> processing machines.
      *
-     * <p>Fueled machines should instead use
-     * {@link AbstractFueledProcessingBlockEntity#tickFueledProcessing(Level, BlockPos, BlockState)}.
-     *
-     * <p>This method handles:
-     * <ol>
-     *   <li>Recipe resolution</li>
-     *   <li>Recipe-change detection (resets progress)</li>
-     *   <li>Progress advance when a recipe is available and output is clear</li>
-     *   <li>Craft completion (consume input, produce output)</li>
-     *   <li>LIT state synchronisation</li>
-     * </ol>
-     *
-     * <p>Subclasses that provide their own power source (e.g. CoffeeMachine)
-     * call this as part of their tick and manage burnTime themselves.
+     * <p>The fueled variant ({@link AbstractFueledProcessingBlockEntity})
+     * extends this with explicit fuel-slot logic, but the recipe-change
+     * detection, progress advance, and craft-completion steps are
+     * identical.  Self-powered machines (CoffeeMachine) call this
+     * directly and override {@link #startProcessingPower(MachineRecipe)}
+     * to initiate a self-cycle.
      */
     protected void tickProcessing(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide) return;
 
+        // Decrement power timer
+        tickProcessingPower();
+
+        // Snapshot the recipe ID *before* resolution, so we can detect changes
+        ResourceLocation previousRecipeId = activeRecipeId;
         MachineRecipe recipe = getCurrentRecipe();
-        ResourceLocation prevId = activeRecipeId;
+
+        // Detect recipe change
+        if (!java.util.Objects.equals(previousRecipeId, activeRecipeId)) {
+            onRecipeChanged(previousRecipeId, activeRecipeId);
+            if (recipe != null) {
+                totalCookTime = recipe.cookingTime();
+            } else {
+                totalCookTime = 0;
+                cookTime = 0;
+            }
+        }
 
         boolean canProcess = recipe != null && canAcceptResult(recipe);
 
-        if (!canProcess) {
-            // No valid recipe or output blocked — pause but don't reset
-            if (cookTime > 0) {
+        // If idle but work is available, try to start a power cycle
+        if (!hasProcessingPower() && canProcess) {
+            startProcessingPower(recipe);
+        }
+
+        // Advance progress while power is available and recipe is valid
+        if (hasProcessingPower() && canProcess) {
+            cookTime++;
+            if (cookTime >= totalCookTime) {
+                cookTime = 0;
+                totalCookTime = recipe.cookingTime();
+                processRecipe(recipe);
+                markChangedAndSync();
+                return; // markChangedAndSync already handled dirty
+            }
+        } else if (!canProcess && cookTime > 0) {
+            if (recipe == null) {
                 cookTime = 0;
             }
-            updateLitState(false);
-            return;
         }
 
-        // Detect recipe change
-        if (recipe != null && prevId != null && !prevId.equals(recipe.getId())) {
-            onRecipeChanged(prevId, recipe.getId());
-        }
-
-        // Advance progress
-        cookTime++;
-        if (cookTime >= totalCookTime) {
-            cookTime = 0;
-            totalCookTime = recipe.cookingTime();
-            processRecipe(recipe);
-            markChangedAndSync();
-        }
-
-        updateLitState(cookTime > 0 || burnTime > 0);
+        updateLitState(hasProcessingPower());
     }
 }

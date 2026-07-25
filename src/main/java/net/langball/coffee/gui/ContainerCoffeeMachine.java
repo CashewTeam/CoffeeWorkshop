@@ -14,10 +14,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import java.util.Set;
@@ -29,7 +26,7 @@ public class ContainerCoffeeMachine extends AbstractMachineMenu {
         this(id, inv,
                 getItemHandlerAt(inv, pos, 2),
                 new SimpleContainerData(4),
-                (MachineBlockEntity) inv.player.level().getBlockEntity(pos));
+                getMachineAt(inv, pos));
     }
 
     /** Server-side constructor. */
@@ -61,21 +58,11 @@ public class ContainerCoffeeMachine extends AbstractMachineMenu {
 
     @Override
     protected boolean isFuelItem(ItemStack stack) {
-        return false; // Coffee Machine has no fuel
+        return false;
     }
 
     @Override
     protected int getFuelSlotIndex() {
-        return -1; // no fuel slot
-    }
-
-    private static IItemHandler getItemHandlerAt(Inventory inv, BlockPos pos, int size) {
-        BlockEntity be = inv.player.level().getBlockEntity(pos);
-        if (be != null) {
-            return be.getCapability(ForgeCapabilities.ITEM_HANDLER)
-                    .resolve()
-                    .orElseGet(() -> new ItemStackHandler(size));
-        }
-        return new ItemStackHandler(size);
+        return -1;
     }
 }
