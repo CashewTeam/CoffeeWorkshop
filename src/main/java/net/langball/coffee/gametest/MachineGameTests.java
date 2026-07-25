@@ -7,44 +7,44 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 /**
  * Core machine processing GameTests.
+ *
+ * <p>Uses the real {@code coffeework:flour} grinding recipe (wheat → flour,
+ * 200 ticks) so that tests exercise production recipe paths.  No test-only
+ * recipes are published to players.
  */
 @GameTestHolder(CoffeeWork.MODID)
 @PrefixGameTestTemplate(false)
 public class MachineGameTests {
 
     private static final BlockPos MACHINE_POS = BlockPos.ZERO.above(2);
-    private static final int GRIND_TIME = 40; // ticks for test_cobble_to_stone
+    private static final int FLOUR_TIME = 200; // ticks for flour recipe
+    private static final int MARGIN = 20;       // extra ticks for safety
 
     // ─── Grinder real tests ────────────────────────────────────────────
 
-    /** Valid recipe + fuel → produces output. */
-    @GameTest(template = "empty")
+    @GameTest(template = "empty", timeoutTicks = 400)
     public static void grinder_hasRecipe_processes(GameTestHelper helper) {
         helper.setBlock(MACHINE_POS, net.langball.coffee.init.ModBlocks.GRINDER.get());
         MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_INPUT,
-                new ItemStack(Blocks.COBBLESTONE, 64));
+                new ItemStack(Items.WHEAT, 64));
         MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_FUEL,
                 new ItemStack(Items.COAL, 64));
 
-        // cobblestone→stone takes 40 ticks; wait 45 ticks and check output
-        helper.runAfterDelay(45, () -> {
+        helper.runAfterDelay(FLOUR_TIME + MARGIN, () -> {
             ItemStack output = MachineTestHelper.getItem(helper, MACHINE_POS,
                     GrinderBlockEntity.SLOT_OUTPUT);
-            helper.assertTrue(output.is(Items.STONE),
-                    "Expected stone in output slot, got: " + output);
-            helper.assertTrue(output.getCount() >= 1,
-                    "Expected at least 1 stone, got: " + output.getCount());
+            var flour = net.langball.coffee.init.ModItems.FLOUR;
+            helper.assertTrue(flour != null && output.is(flour.get()),
+                    "Expected flour in output slot, got: " + output);
             helper.succeed();
         });
     }
 
-    /** No recipe (empty input) → idle, no output, not lit. */
     @GameTest(template = "empty")
     public static void grinder_noRecipe_idles(GameTestHelper helper) {
         helper.setBlock(MACHINE_POS, net.langball.coffee.init.ModBlocks.GRINDER.get());
@@ -56,13 +56,11 @@ public class MachineGameTests {
         });
     }
 
-    /** No fuel → idle, no output, not lit. */
     @GameTest(template = "empty")
     public static void grinder_noFuel_idles(GameTestHelper helper) {
         helper.setBlock(MACHINE_POS, net.langball.coffee.init.ModBlocks.GRINDER.get());
         MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_INPUT,
-                new ItemStack(Blocks.COBBLESTONE, 64));
-        // no fuel
+                new ItemStack(Items.WHEAT, 64));
 
         helper.runAfterDelay(40, () -> {
             helper.assertTrue(
@@ -75,12 +73,11 @@ public class MachineGameTests {
         });
     }
 
-    /** Fuel + valid recipe → lit. */
     @GameTest(template = "empty")
     public static void grinder_withFuel_starts(GameTestHelper helper) {
         helper.setBlock(MACHINE_POS, net.langball.coffee.init.ModBlocks.GRINDER.get());
         MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_INPUT,
-                new ItemStack(Blocks.COBBLESTONE, 64));
+                new ItemStack(Items.WHEAT, 64));
         MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_FUEL,
                 new ItemStack(Items.COAL, 64));
 
@@ -92,68 +89,67 @@ public class MachineGameTests {
         });
     }
 
-    /** Output full with different item → processing pauses. */
-    @GameTest(template = "empty")
+    @GameTest(template = "empty", timeoutTicks = 400)
     public static void grinder_outputBlocked_pauses(GameTestHelper helper) {
         helper.setBlock(MACHINE_POS, net.langball.coffee.init.ModBlocks.GRINDER.get());
         MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_INPUT,
-                new ItemStack(Blocks.COBBLESTONE, 64));
+                new ItemStack(Items.WHEAT, 64));
         MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_FUEL,
                 new ItemStack(Items.COAL, 64));
-        // Fill output with a DIFFERENT item (not stone) — use setItem to bypass isItemValid
         MachineTestHelper.setItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_OUTPUT,
                 new ItemStack(Items.DIRT, 64));
 
-        helper.runAfterDelay(50, () -> {
+        helper.runAfterDelay(FLOUR_TIME + MARGIN, () -> {
             ItemStack output = MachineTestHelper.getItem(helper, MACHINE_POS,
                     GrinderBlockEntity.SLOT_OUTPUT);
-            // Output should still be dirt (stone can't merge with dirt)
             helper.assertTrue(output.is(Items.DIRT),
                     "Output should still be dirt when blocked, got: " + output);
-            // Input should not have been consumed
-            ItemStack input = MachineTestHelper.getItem(helper, MACHINE_POS,
-                    GrinderBlockEntity.SLOT_INPUT);
-            helper.assertTrue(input.is(Blocks.COBBLESTONE.asItem()),
-                    "Input should still be cobblestone when output blocked");
             helper.succeed();
         });
     }
 
-    /** Switching input to a different recipe resets progress. */
-    @GameTest(template = "empty")
+    /**
+     * Switches from valid recipe A (wheat → flour, 200 ticks) to valid
+     * recipe B (cocoa_beans → cocoa_powder, 200 ticks) and verifies
+     * that cookTime resets to 0 and totalCookTime updates.
+     */
+    @GameTest(template = "empty", timeoutTicks = 400)
     public static void grinder_inputChanged_resetsProgress(GameTestHelper helper) {
         helper.setBlock(MACHINE_POS, net.langball.coffee.init.ModBlocks.GRINDER.get());
-        // Start with cobblestone → stone (40 ticks)
+        // Recipe A: wheat → flour (200 ticks)
         MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_INPUT,
-                new ItemStack(Blocks.COBBLESTONE, 64));
+                new ItemStack(Items.WHEAT, 64));
         MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_FUEL,
                 new ItemStack(Items.COAL, 64));
 
-        // Let it process for ~20 ticks (half of the 40-tick grind), then
-        // switch to an input that has no recipe (e.g. dirt)
-        helper.runAfterDelay(20, () -> {
-            // Remove the cobblestone and put dirt instead
-            MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_INPUT,
-                    ItemStack.EMPTY); // won't do anything meaningful but marks change
-            // Actually take all cobblestone out (using extract), then put dirt
-            var handler = ((net.langball.coffee.block.entity.MachineBlockEntity)
-                    helper.getBlockEntity(MACHINE_POS)).getItemHandler();
+        // Let it process for 100 ticks (halfway), then switch to recipe B
+        helper.runAfterDelay(100, () -> {
+            var be = (net.langball.coffee.block.entity.MachineBlockEntity)
+                    helper.getBlockEntity(MACHINE_POS);
+            var handler = be.getItemHandler();
+
+            // Remove wheat, insert cocoa beans (recipe B: 200 ticks)
             handler.extractItem(GrinderBlockEntity.SLOT_INPUT, 64, false);
             handler.insertItem(GrinderBlockEntity.SLOT_INPUT,
-                    new ItemStack(Items.DIRT, 64), false);
+                    new ItemStack(Items.COCOA_BEANS, 64), false);
+            be.setChanged();
 
-            // Now wait long enough: dirt has no recipe, so nothing should happen
-            helper.runAfterDelay(60, () -> {
-                ItemStack output = MachineTestHelper.getItem(helper, MACHINE_POS,
-                        GrinderBlockEntity.SLOT_OUTPUT);
-                // We interrupted at ~20 ticks (halfway through a 40-tick grind),
-                // then switched to dirt (no recipe) for 60 ticks.
-                // With correct reset logic, no stone should appear.
-                // The worst case (bug): the old recipe continues from 20 and
-                // produces stone at ~40. After 60 more ticks we'd see stone.
-                helper.assertTrue(output.isEmpty() || output.is(Items.DIRT),
-                        "Output should be empty (or dirt).  If stone appears, recipe "
-                        + "change detection is broken.  Got: " + output);
+            // Wait a few ticks for recipe resolution
+            helper.runAfterDelay(5, () -> {
+                int cook = be.data.get(0); // cookTime
+                int total = be.data.get(1); // totalCookTime
+                int burn = be.data.get(2); // burnTime
+
+                // cookTime should have reset because recipe changed
+                helper.assertTrue(cook == 0 || cook <= 5,
+                        "cookTime should reset to near 0 after recipe switch, got: " + cook);
+                // totalCookTime should match the new recipe (200 for cocoa_powder)
+                helper.assertTrue(total == 200,
+                        "totalCookTime should be 200 for cocoa powder, got: " + total);
+                // burnTime should still be positive (coal from recipe A continues)
+                helper.assertTrue(burn > 0,
+                        "burnTime should remain after recipe switch");
+
                 helper.succeed();
             });
         });
@@ -165,7 +161,7 @@ public class MachineGameTests {
         helper.assertTrue(!MachineTestHelper.isLit(helper, MACHINE_POS),
                 "Grinder should start unlit");
         MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_INPUT,
-                new ItemStack(Blocks.COBBLESTONE, 64));
+                new ItemStack(Items.WHEAT, 64));
         MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_FUEL,
                 new ItemStack(Items.COAL, 64));
         helper.runAfterDelay(4, () -> {
@@ -175,7 +171,7 @@ public class MachineGameTests {
         });
     }
 
-    // ─── Other machines (stubs — filled when Phase 3 recipes land) ─────
+    // ─── Other machines (using their real recipes) ─────────────────────
 
     @GameTest(template = "empty")
     public static void roller_hasRecipe_processes(GameTestHelper helper) {

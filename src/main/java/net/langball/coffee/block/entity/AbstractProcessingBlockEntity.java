@@ -219,8 +219,14 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
 
         // Advance progress while power is available and recipe is valid
         if (hasProcessingPower() && canProcess) {
+            int oldSignal = totalCookTime > 0 ? (cookTime * 15) / totalCookTime : 0;
             cookTime++;
             setChanged(); // persist cookTime progress every tick
+            int newSignal = totalCookTime > 0 ? (cookTime * 15) / totalCookTime : 0;
+            if (oldSignal != newSignal && level != null) {
+                level.updateNeighbourForOutputSignal(worldPosition,
+                        getBlockState().getBlock());
+            }
             if (cookTime >= totalCookTime) {
                 cookTime = 0;
                 totalCookTime = recipe.cookingTime();

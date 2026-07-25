@@ -66,12 +66,13 @@ public class SlotMachineResult extends SlotItemHandler {
     }
 
     /**
-     * Called during shift-click (quick-move).  Does NOT fire onCraftedBy
-     * here — onTake() handles everything once, using the recorded count.
+     * Called during shift-click (quick-move).  Accumulates the number
+     * of items that were actually crafted/moved so that onTake() can
+     * use the correct count for callbacks, XP, and awards.
      */
     @Override
     protected void onQuickCraft(@NotNull ItemStack stack, int amount) {
-        // Intentionally empty: crafted callback + XP + awards happen in onTake()
+        removedCount += amount;
     }
 
     /**

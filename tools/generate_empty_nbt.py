@@ -145,7 +145,7 @@ def main():
     print(f"Generated {len(nbt_bytes)} bytes uncompressed NBT")
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    with gzip.open(output_path, 'wb') as f:
+    with gzip.GzipFile(output_path, 'wb', mtime=0) as f:
         f.write(nbt_bytes)
 
     compressed_size = os.path.getsize(output_path)

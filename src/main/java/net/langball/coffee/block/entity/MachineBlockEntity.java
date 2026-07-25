@@ -242,11 +242,12 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         totalCookTime = tag.getInt("CookTimeTotal");
         burnTimeTotal = tag.getInt("BurnTimeTotal");
         itemHandler.deserializeNBT(tag.getCompound("Items"));
-        // Active recipe
+        // Clear before loading to avoid stale state when fields are absent
+        activeRecipeId = null;
+        recipesUsed.clear();
         if (tag.contains("ActiveRecipe")) {
             activeRecipeId = ResourceLocation.tryParse(tag.getString("ActiveRecipe"));
         }
-        // Recipes used
         if (tag.contains("RecipesUsed")) {
             CompoundTag used = tag.getCompound("RecipesUsed");
             for (String key : used.getAllKeys()) {

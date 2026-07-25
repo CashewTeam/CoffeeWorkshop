@@ -34,7 +34,7 @@ public class MachinePersistenceGameTests {
 
         // Fill slots (use setItem for output slot since isItemValid blocks it)
         be.getItemHandler().insertItem(GrinderBlockEntity.SLOT_INPUT,
-                new ItemStack(Blocks.COBBLESTONE, 5), false);
+                new ItemStack(Items.WHEAT, 5), false);
         be.getItemHandler().insertItem(GrinderBlockEntity.SLOT_FUEL,
                 new ItemStack(Items.COAL, 3), false);
         MachineTestHelper.setItem(helper, POS, GrinderBlockEntity.SLOT_OUTPUT,
@@ -56,7 +56,7 @@ public class MachinePersistenceGameTests {
         ItemStack fuel = be.getItemHandler().getStackInSlot(GrinderBlockEntity.SLOT_FUEL);
         ItemStack output = be.getItemHandler().getStackInSlot(GrinderBlockEntity.SLOT_OUTPUT);
 
-        helper.assertTrue(input.is(Blocks.COBBLESTONE.asItem()) && input.getCount() == 5,
+        helper.assertTrue(input.is(Items.WHEAT) && input.getCount() == 5,
                 "Input slot should survive reload, got: " + input);
         helper.assertTrue(fuel.is(Items.COAL) && fuel.getCount() == 3,
                 "Fuel slot should survive reload, got: " + fuel);
@@ -112,9 +112,9 @@ public class MachinePersistenceGameTests {
         var be = (net.langball.coffee.block.entity.MachineBlockEntity)
                 helper.getBlockEntity(POS);
 
-        // Put valid recipe input
+        // Put valid recipe input (wheat → flour)
         be.getItemHandler().insertItem(GrinderBlockEntity.SLOT_INPUT,
-                new ItemStack(Blocks.COBBLESTONE, 1), false);
+                new ItemStack(Items.WHEAT, 1), false);
 
         // Tick once to let the BE resolve the recipe and set activeRecipeId
         be.tick(helper.getLevel(), POS, helper.getBlockState(POS));
@@ -147,7 +147,7 @@ public class MachinePersistenceGameTests {
 
         // Manually record a recipe completion
         be.getRecipesUsed().put(
-                net.minecraft.resources.ResourceLocation.parse("coffeework:test_cobble_to_stone"),
+                net.minecraft.resources.ResourceLocation.parse("coffeework:flour"),
                 5);
 
         CompoundTag saved = be.saveWithFullMetadata();
@@ -159,11 +159,11 @@ public class MachinePersistenceGameTests {
 
         helper.assertTrue(
                 be.getRecipesUsed().containsKey(
-                        net.minecraft.resources.ResourceLocation.parse("coffeework:test_cobble_to_stone")),
+                        net.minecraft.resources.ResourceLocation.parse("coffeework:flour")),
                 "RecipesUsed should survive NBT reload");
         helper.assertTrue(
                 be.getRecipesUsed().get(
-                        net.minecraft.resources.ResourceLocation.parse("coffeework:test_cobble_to_stone")) == 5,
+                        net.minecraft.resources.ResourceLocation.parse("coffeework:flour")) == 5,
                 "Experience count should be 5 after reload");
 
         helper.succeed();
