@@ -1,292 +1,295 @@
 # Coffee Workshop — Content Inventory
 
-> **Last updated:** 2026-07-25  
+> **Last updated:** 2026-07-25 (Phase 0 baseline)  
 > **Branch:** 1.20.1  
-> **This document compares the 1.12.2 (master) content with the current 1.20.1 port status.**
+> **This document uses the R/A/O/B/T completion matrix defined in the Phase 0 audit.**
 
 ---
 
 ## Legend
 
-| Icon | Meaning |
-|------|---------|
-| ✅ | Ported / fully functional |
-| 🔄 | Renamed (old name → new name) |
-| 📦 | Merged (multiple old items into one) |
-| 🆕 | New in 1.20.1 |
-| ⏳ | Deferred to later phase |
-| ❌ | Removed / not ported |
+| Column | Meaning |
+|--------|---------|
+| **R** | Registry — block/item/effect/etc. is registered in Java code |
+| **A** | Assets — model, texture, language key (en_us) present |
+| **O** | Obtainable — available in survival mode without `/give` or creative tab |
+| **B** | Behavior — core behavior matches original design intent |
+| **T** | Tested — verified via GameTest, manual test, or CI pass |
+
+**Phase 0 status** reflects static analysis and `compileJava`/`runData` verification only.
+Items marked ❌ in O/B/T need Phase 1+ attention.
 
 ---
 
 ## Machines
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| `grinder` (off/on) | `grinder` (single + LIT) | ✅ | Phase 2 refactor |
-| `coffeemachine` (off/on) | `coffee_machine` (single + LIT) | 🔄 | Renamed, single block |
-| `icecreammachine` (off/on) | `icecream_machine` (single + LIT) | 🔄 | Renamed, single block |
-| `roller` (off/on) | `roller` (single + LIT) | ✅ | Phase 2 refactor |
-| `oven` (off/on) | `oven` (single + LIT) | ✅ | Phase 2 refactor |
-| — | Clay Oven (`oven` formerly `clay_oven`) | 🔄 | Now `oven` |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| grinder | ✅ | ⚠️ | ✅ | ⚠️ | ❌ | LIT blockstate missing (P0-09); client-side burnTime (P0-07); input remainder bug (P0-08) |
+| coffee_machine | ✅ | ⚠️ | ✅ | ⚠️ | ❌ | Same LIT + tick + remainder issues |
+| icecream_machine | ✅ | ⚠️ | ✅ | ⚠️ | ❌ | Same LIT + tick + remainder issues |
+| roller | ✅ | ⚠️ | ✅ | ⚠️ | ❌ | Same LIT + tick + remainder issues |
+| oven | ✅ | ⚠️ | ✅ | ⚠️ | ❌ | Same LIT + tick + remainder issues |
+
+> Assets note: all 5 machines use `blocks/anvil_base` texture (P0-10). Blockstates ignore `lit` property (P0-09).
 
 ---
 
 ## Plants & Crops
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| `coffee_tree` | `coffee_tree` | ✅ | Phase 4: growth, harvest, seeds |
-| `blueberry_bush` | `blueberry_bush` | ✅ | Phase 4: age, harvest, bonemeal |
-| `vanilla_crop` | `vanilla_crop` | ✅ | Phase 4: crop behavior |
-| `coffee_seeds` | `coffee_seeds` | ✅ | |
-| `vanilla_seeds` | `vanilla_seeds` | ✅ | |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| coffee_tree | ✅ | ✅ | ⚠️ | ❌ | ❌ | Mature harvest drops seeds not raw beans (P0-03); shears don't remove block (P0-04) |
+| blueberry_bush | ✅ | ✅ | ✅ | ✅ | ❌ | Basic harvest works |
+| vanilla_crop | ✅ | ✅ | ✅ | ✅ | ❌ | Basic crop behavior |
+| coffee_seeds | ✅ | ✅ | ✅ | ❌ | ❌ | Only source is coffee_tree (which drops seeds not raw beans) |
+| vanilla_seeds | ✅ | ✅ | ✅ | ✅ | ❌ | |
 
 ---
 
 ## Drinks (Hot)
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| Espresso | `espresso` | ✅ | Multi-cup, returns cup |
-| Café Americano | `coffee_americano` | ✅ | Multi-cup, returns cup |
-| Café Latte | `coffee_latte` | ✅ | Multi-cup, returns cup |
-| Cappuccino | `coffee_cappuccino` | ✅ | Multi-cup, returns cup |
-| Caramel Macchiato | `coffee_macchiato` | ✅ | Multi-cup, returns cup |
-| Mochaccino | `coffee_mochaccino` | ✅ | Multi-cup, returns cup |
-| Green Tea | `coffee_green_tea` | ✅ | Returns glass |
-| Black Tea | `coffee_black_tea` | ✅ | Returns glass |
-| Milk Tea | `coffee_milk_tea` | ✅ | Returns glass |
-| Mandarin Drink | `coffee_mandarin_drink` | ✅ | Returns glass |
-| Cold Brew | `coffee_coldbrew` | ✅ | Returns glass |
-| Hot Cocoa | `cocoa` | ✅ | Returns cup |
-| Strong Cocoa | `cocoa_strong` | ✅ | Returns cup |
-| Instant Coffee | `coffee_instant` | ✅ | Packaging-based |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| espresso | ✅ | ✅ | ❌ | ⚠️ | ❌ | Machine recipe exists but no survival path to cup + powder |
+| coffee_americano | ✅ | ✅ | ❌ | ⚠️ | ❌ | Machine recipe exists; multi-cup NBT init not guaranteed (P0-06) |
+| coffee_latte | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same as americano |
+| coffee_cappuccino | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_macchiato | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_mochaccino | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_green_tea | ✅ | ✅ | ❌ | ✅ | ❌ | Machine recipe exists |
+| coffee_black_tea | ✅ | ✅ | ❌ | ✅ | ❌ | Machine recipe exists |
+| coffee_milk_tea | ✅ | ✅ | ❌ | ✅ | ❌ | Machine recipe exists |
+| coffee_mandarin_drink | ✅ | ✅ | ❌ | ✅ | ❌ | Machine recipe exists |
+| coffee_coldbrew | ✅ | ✅ | ❌ | ✅ | ❌ | Machine recipe exists |
+| cocoa | ✅ | ✅ | ❌ | ⚠️ | ❌ | Machine recipe exists; multi-cup NBT |
+| cocoa_strong | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_instant | ✅ | ✅ | ❌ | ✅ | ❌ | Packaging-based, has crafting recipe |
 
 ---
 
 ## Drinks (Iced)
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| Iced Americano | `coffee_americano_ice` | ✅ | Returns glass |
-| Iced Latte | `coffee_latte_ice` | ✅ | Returns glass |
-| Iced Cappuccino | `coffee_cappuccino_ice` | ✅ | Returns glass |
-| Iced Macchiato | `coffee_macchiato_ice` | ✅ | Returns glass |
-| Iced Mochaccino | `coffee_mochaccino_ice` | ✅ | Returns glass |
-| Iced Green Tea | `coffee_green_tea_ice` | ✅ | Returns glass |
-| Iced Black Tea | `coffee_black_tea_ice` | ✅ | Returns glass |
-| Iced Milk Tea | `coffee_milk_tea_ice` | ✅ | Returns glass |
-| Iced Mandarin Drink | `coffee_mandarin_drink_ice` | ✅ | Returns glass |
-| Iced Cold Brew | `coffee_coldbrew_ice` | ✅ | Returns glass |
-| Iced Cocoa | `cocoa_ice` | ✅ | Returns glass |
-| Iced Strong Cocoa | `cocoa_strong_ice` | ✅ | Returns glass |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| coffee_americano_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | No verified survival path; multi-cup NBT |
+| coffee_latte_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_cappuccino_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_macchiato_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_mochaccino_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_green_tea_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_black_tea_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_milk_tea_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_mandarin_drink_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| cocoa_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| cocoa_strong_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
 
 ---
 
 ## Flavored Latte Variants
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| Caramel Latte | `coffee_latte_caramel` | ✅ | Hot, returns cup |
-| Chocolate Latte | `coffee_latte_chocolate` | ✅ | Hot, returns cup |
-| Fruit Latte | `coffee_latte_fruit` | ✅ | Hot, returns cup |
-| Mint Latte | `coffee_latte_mint` | ✅ | Hot, returns cup |
-| Vanilla Latte | `coffee_latte_vanilla` | ✅ | Hot, returns cup |
-| Sakura Latte | `coffee_latte_sakura` | ✅ | Hot, returns cup |
-| Iced Caramel Latte | `coffee_latte_caramel_ice` | ✅ | Returns glass |
-| Iced Chocolate Latte | `coffee_latte_chocolate_ice` | ✅ | Returns glass |
-| Iced Fruit Latte | `coffee_latte_fruit_ice` | ✅ | Returns glass |
-| Iced Mint Latte | `coffee_latte_mint_ice` | ✅ | Returns glass |
-| Iced Vanilla Latte | `coffee_latte_vanilla_ice` | ✅ | Returns glass |
-| Iced Sakura Latte | `coffee_latte_sakura_ice` | ✅ | Returns glass |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| coffee_latte_caramel | ✅ | ✅ | ❌ | ⚠️ | ❌ | No verified machine recipe or survival path |
+| coffee_latte_chocolate | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_latte_fruit | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_latte_mint | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_latte_vanilla | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_latte_sakura | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_latte_caramel_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_latte_chocolate_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_latte_fruit_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_latte_mint_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_latte_vanilla_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_latte_sakura_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
 
 ---
 
 ## Americano Extensions
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| Fruit Americano | `coffee_americano_fruit` | ✅ | Returns cup |
-| Iced Fruit Americano | `coffee_americano_fruit_ice` | ✅ | Returns glass |
-| Nitro Americano | `coffee_americano_nitro_ice` | ✅ | Returns glass |
-| Nitro Fruit Americano | `coffee_americano_nitro_fruit_ice` | ✅ | Returns glass |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| coffee_americano_fruit | ✅ | ✅ | ❌ | ⚠️ | ❌ | No verified machine recipe |
+| coffee_americano_fruit_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_americano_nitro_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_americano_nitro_fruit_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
 
 ---
 
 ## Cold Brew Extensions
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| Fruit Cold Brew | `coffee_coldbrew_fruit` | ✅ | Returns glass |
-| Cold Brew Latte | `coffee_coldbrew_latte` | ✅ | Returns glass |
-| Caramel Cold Brew Latte | `coffee_coldbrew_latte_caramel` | ✅ | Returns glass |
-| Chocolate Cold Brew Latte | `coffee_coldbrew_latte_chocolate` | ✅ | Returns glass |
-| Fruit Cold Brew Latte | `coffee_coldbrew_latte_fruit` | ✅ | Returns glass |
-| Mint Cold Brew Latte | `coffee_coldbrew_latte_mint` | ✅ | Returns glass |
-| Vanilla Cold Brew Latte | `coffee_coldbrew_latte_vanilla` | ✅ | Returns glass |
-| Iced Fruit Cold Brew | `coffee_coldbrew_fruit_ice` | ✅ | Returns glass |
-| Iced Cold Brew Latte | `coffee_coldbrew_latte_ice` | ✅ | Returns glass |
-| Iced Caramel Cold Brew Latte | `coffee_coldbrew_latte_caramel_ice` | ✅ | Returns glass |
-| Iced Chocolate Cold Brew Latte | `coffee_coldbrew_latte_chocolate_ice` | ✅ | Returns glass |
-| Iced Fruit Cold Brew Latte | `coffee_coldbrew_latte_fruit_ice` | ✅ | Returns glass |
-| Iced Mint Cold Brew Latte | `coffee_coldbrew_latte_mint_ice` | ✅ | Returns glass |
-| Iced Vanilla Cold Brew Latte | `coffee_coldbrew_latte_vanilla_ice` | ✅ | Returns glass |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| coffee_coldbrew_fruit | ✅ | ✅ | ❌ | ⚠️ | ❌ | No verified machine recipe |
+| coffee_coldbrew_latte | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_latte_caramel | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_latte_chocolate | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_latte_fruit | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_latte_mint | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_latte_vanilla | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_fruit_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_latte_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_latte_caramel_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_latte_chocolate_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_latte_fruit_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_latte_mint_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
+| coffee_coldbrew_latte_vanilla_ice | ✅ | ✅ | ❌ | ⚠️ | ❌ | Same |
 
 ---
 
 ## Instant Coffee & Accessories
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| Instant Coffee | `coffee_instant` | ✅ | |
-| Instant Coffee Stick | `coffee_instant_stick` | ✅ | |
-| Instant Coffee Box | `coffee_instant_box` | ✅ | |
-| Instant Coffee Cup | `coffee_instant_cup` | ⏳ | Model exists, not registered |
-| Instant Coffee Cup (unopened) | `coffee_instant_cup_unopen` | ⏳ | Model exists, not registered |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| coffee_instant | ✅ | ✅ | ✅ | ✅ | ❌ | Crafting recipe exists |
+| coffee_instant_stick | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| coffee_instant_box | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| coffee_instant_cup | ❌ | ⚠️ | ❌ | ❌ | ❌ | Model exists, not registered |
+| coffee_instant_cup_unopen | ❌ | ⚠️ | ❌ | ❌ | ❌ | Model exists, not registered |
 
 ---
 
 ## Drinks (Soda) — Deferred
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| Soda Water | `soda_drink` | ⏳ | Translations exist, not registered |
-| Cola | `soda_drink_cola` | ⏳ | Translations exist, not registered |
-| Lemon Soda | `soda_drink_lemon` | ⏳ | Translations exist, not registered |
-| Berry Soda | `soda_drink_berry` | ⏳ | Translations exist, not registered |
-| Cherry Cola | `soda_drink_cherry` | ⏳ | Translations exist, not registered |
-| Vanilla Soda | `soda_drink_vanilla` | ⏳ | Translations exist, not registered |
-| Apple Soda | `soda_drink_apple` | ⏳ | Translations exist, not registered |
-| Chocolate Soda | `soda_drink_chocolate` | ⏳ | Translations exist, not registered |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| soda_drink | ❌ | ⚠️ | ❌ | ❌ | ❌ | Translations exist, not registered |
+| soda_drink_cola | ❌ | ⚠️ | ❌ | ❌ | ❌ | Same |
+| soda_drink_lemon | ❌ | ⚠️ | ❌ | ❌ | ❌ | Same |
+| soda_drink_berry | ❌ | ⚠️ | ❌ | ❌ | ❌ | Same |
+| soda_drink_cherry | ❌ | ⚠️ | ❌ | ❌ | ❌ | Same |
+| soda_drink_vanilla | ❌ | ⚠️ | ❌ | ❌ | ❌ | Same |
+| soda_drink_apple | ❌ | ⚠️ | ❌ | ❌ | ❌ | Same |
+| soda_drink_chocolate | ❌ | ⚠️ | ❌ | ❌ | ❌ | Same |
 
 ---
 
 ## Containers & Utensils
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| Cup (ceramic) | `cup` | ✅ | Returned by hot drinks |
-| Glass | `cup_glass` | ✅ | Returned by iced drinks |
-| Plate | `plate` | ✅ | Block + item |
-| Cold Brew Pot | `coldbrew_pot` | ✅ | Block |
-| Empty Cold Brew Pot | `empty_coldbrew_pot` | ✅ | |
-| Cold Brew Bottle | `coldbrew_bottle` | ✅ | |
-| Syrup (empty) | `syrup_empty` | ✅ | |
-| Iron Bowl | `iron_bowl` | ✅ | |
-| Mixing Bowl | `mixing_bowl` | ✅ | |
-| Bag | `bag` | ✅ | |
-| Bag Cloth | `bag_cloth` | ✅ | |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| cup | ✅ | ✅ | ✅ | ✅ | ❌ | Returned by hot drinks |
+| cup_glass | ✅ | ✅ | ✅ | ✅ | ❌ | Returned by iced drinks |
+| plate | ✅ | ✅ | ✅ | ✅ | ❌ | Block + item |
+| coldbrew_pot | ✅ | ✅ | ✅ | ⚠️ | ❌ | ferm state, Loot Table review pending (P0-11) |
+| empty_coldbrew_pot | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| coldbrew_bottle | ✅ | ✅ | ❌ | ❌ | ❌ | No production recipe in survival |
+| syrup_empty | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| iron_bowl | ✅ | ✅ | ✅ | ❌ | ❌ | Plain Item, consumed by recipes (P0-12) |
+| mixing_bowl | ✅ | ✅ | ✅ | ❌ | ❌ | Plain Item, consumed by recipes (P0-12) |
+| bag | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| bag_cloth | ✅ | ✅ | ✅ | ✅ | ❌ | |
 
 ---
 
 ## Ingredients & Materials
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| Raw Coffee Bean | `coffee_bean_raw` | ✅ | |
-| Roast Coffee Bean | `coffee_bean` | ✅ | |
-| Coffee Powder | `coffee_powder` | ✅ | |
-| Cocoa Bean | `cocoa_bean` | ✅ | |
-| Cocoa Powder | `cocoa_powder` | ✅ | |
-| Cocoa Batter | `cocoa_batter` | ✅ | |
-| Flour | `flour` | ✅ | |
-| Dough (+ variants) | `dough*` | ✅ | 12 dough variants |
-| Butter | `butter` | ✅ | |
-| Cheese | `cheese` | ✅ | |
-| Yeast | `yeast` | ✅ | |
-| Gelatin | `gelatin` | ✅ | |
-| Soda (baking) | `soda` | ✅ | |
-| Spices | `spices` | ✅ | |
-| Ice Slag | `ice_slag` | ✅ | |
-| Iron Plate | `plate_iron` | ✅ | |
-| Vanilla | `vanilla` | ✅ | |
-| Chocolate Bar | `chocolate_bar` | ✅ | |
-| Chocolate Chip | `chocolate_chip` | ✅ | |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| coffee_bean_raw | ✅ | ✅ | ❌ | ❌ | ❌ | Coffee tree drops seeds, not raw beans (P0-03) |
+| coffee_bean | ✅ | ✅ | ❌ | ✅ | ❌ | Requires raw bean via furnace recipe |
+| coffee_powder | ✅ | ✅ | ❌ | ✅ | ❌ | Requires coffee_bean via grinder recipe |
+| cocoa_bean | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| cocoa_powder | ✅ | ✅ | ✅ | ✅ | ❌ | Furnace recipe from cocoa beans |
+| cocoa_batter | ✅ | ✅ | ❌ | ✅ | ❌ | Requires grinder recipe |
+| flour | ✅ | ✅ | ❌ | ✅ | ❌ | Requires grinder recipe |
+| dough* (12 variants) | ✅ | ✅ | ⚠️ | ⚠️ | ❌ | Require mixing_bowl (consumed) and flour |
+| butter | ✅ | ✅ | ✅ | ⚠️ | ❌ | Consumes mixing_bowl |
+| cheese | ✅ | ✅ | ✅ | ⚠️ | ❌ | Consumes mixing_bowl |
+| yeast | ✅ | ✅ | ✅ | ⚠️ | ❌ | Consumes mixing_bowl |
+| gelatin | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| soda | ✅ | ✅ | ❌ | ❌ | ❌ | Soda ore drops self, not soda material (P0-14) |
+| spices | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| ice_slag | ✅ | ✅ | ❌ | ✅ | ❌ | Requires grinder recipe |
+| plate_iron | ✅ | ✅ | ❌ | ✅ | ❌ | Requires roller recipe |
+| vanilla | ✅ | ✅ | ❌ | ✅ | ❌ | Requires vanilla crop |
+| chocolate_bar | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| chocolate_chip | ✅ | ✅ | ❌ | ⚠️ | ❌ | Chocolate → chip recipe? |
 
 ---
 
 ## Bags (Storage Blocks)
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| 7 single bag types | `bag_*` | ✅ | coffee, cocoa, flour, sugar, etc. |
-| 7 double bag types | `double_bag_*` | ✅ | |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| bag_* (7 types) | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| double_bag_* (7 types) | ✅ | ✅ | ✅ | ✅ | ❌ | |
 
 ---
 
 ## Cakes & Desserts
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| 9 sponge cake types | `cake_sponge_*` | ✅ | |
-| Coffee Cake | `cake_coffee` | ✅ | |
-| Harvest Cake | `cake_harvest` | ✅ | |
-| Lemon Cake | `cake_lemon` | ✅ | |
-| Tea Cake | `cake_tea` | ✅ | |
-| Berry Cake | `cake_berry` | ✅ | |
-| Cheese Cake | `cake_cheese` | ✅ | |
-| Schwarzwald Cake | `cake_schwarzwald` | ✅ | |
-| Red Velvet Cake | `cake_redvelvet` | ✅ | |
-| Tiramisu | `tiramisu` | ✅ | |
-| 4 mousse types | `mousse_*` | ✅ | |
-| Cream Pie | `pie_cream` | ✅ | |
-| Sponge Cake Slice | `cake_sponge_slice` | ✅ | |
-| Cake Models | `cake_model*` | ✅ | 3 types |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| cake_sponge_* (9 types) | ✅ | ✅ | ✅ | ⚠️ | ❌ | Consume mixing_bowl |
+| cake_coffee | ✅ | ✅ | ✅ | ⚠️ | ❌ | Loot table dropSelf (P0-11) |
+| cake_harvest | ✅ | ✅ | ✅ | ⚠️ | ❌ | Same |
+| cake_lemon | ✅ | ✅ | ✅ | ⚠️ | ❌ | Same |
+| cake_tea | ✅ | ✅ | ✅ | ⚠️ | ❌ | Same |
+| cake_berry | ✅ | ✅ | ✅ | ⚠️ | ❌ | Same |
+| cake_cheese | ✅ | ✅ | ✅ | ⚠️ | ❌ | Same |
+| cake_schwarzwald | ✅ | ✅ | ✅ | ⚠️ | ❌ | Same |
+| cake_redvelvet | ✅ | ✅ | ✅ | ⚠️ | ❌ | Same |
+| tiramisu | ✅ | ✅ | ✅ | ⚠️ | ❌ | Same |
+| mousse_* (4 types) | ✅ | ✅ | ✅ | ⚠️ | ❌ | Same |
+| pie_cream | ✅ | ✅ | ✅ | ⚠️ | ❌ | Same |
+| cake_sponge_slice | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| cake_model* (3 types) | ✅ | ✅ | ✅ | ❌ | ❌ | Plain Items, consumed (P0-12) |
 
 ---
 
 ## Breads
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| Round Bread | `bread_round` | ✅ | |
-| Baguette | `baguette` | ✅ | |
-| Bagel | `bagel` | ✅ | |
-| Toast | `toast` | ✅ | |
-| Brownie | `brownie` | ✅ | |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| bread_round | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| baguette | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| bagel | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| toast | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| brownie | ✅ | ✅ | ✅ | ✅ | ❌ | |
 
 ---
 
 ## Sandwiches
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| BLT Sandwich | `sandwich_blt` | ✅ | |
-| Club Sandwich | `sandwich_club` | ⏳ | Translations exist |
-| Large BLT | `sandwich_blt_large` | ⏳ | Translations exist |
-| Large Club | `sandwich_club_large` | ⏳ | Translations exist |
-| Bacon Egg Sandwich | `sandwich_bacon_egg` | ⏳ | Translations exist |
-| Ham Cheese Bagel | `sandwich_ham_cheese` | ⏳ | Translations exist |
-| Cheeseburger | `sandwich_beef_cheese` | ⏳ | Translations exist |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| sandwich_blt | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| sandwich_club | ❌ | ⚠️ | ❌ | ❌ | ❌ | Deferred |
+| sandwich_blt_large | ❌ | ⚠️ | ❌ | ❌ | ❌ | Deferred |
+| sandwich_club_large | ❌ | ⚠️ | ❌ | ❌ | ❌ | Deferred |
+| sandwich_bacon_egg | ❌ | ⚠️ | ❌ | ❌ | ❌ | Deferred |
+| sandwich_ham_cheese | ❌ | ⚠️ | ❌ | ❌ | ❌ | Deferred |
+| sandwich_beef_cheese | ❌ | ⚠️ | ❌ | ❌ | ❌ | Deferred |
 
 ---
 
 ## Ice Creams
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| Vanilla Ice Cream | `icecream_vanilla` | ✅ | |
-| Other flavors | — | ⏳ | Icecream machine recipes deferred |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| icecream_vanilla | ✅ | ✅ | ✅ | ⚠️ | ❌ | Has direct crafting fallback + machine recipe |
+| Other flavors | ❌ | ❌ | ❌ | ❌ | ❌ | Deferred |
 
 ---
 
 ## Decor & Specials
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| Soda Ore | `soda_ore` | ✅ | |
-| Xmas Tree | `xmas_tree` | ✅ | |
-| Ginger House | `ginger_house` | ✅ | |
-| Records (3) | `record_*` | ✅ | |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| soda_ore | ✅ | ✅ | ✅ | ❌ | ❌ | Drops self, should drop soda material 4-8 (P0-14) |
+| xmas_tree | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| ginger_house | ✅ | ✅ | ✅ | ✅ | ❌ | |
+| record_* (3 types) | ✅ | ✅ | ✅ | ✅ | ❌ | |
 
 ---
 
 ## Drink Plates (Block Form) — Deferred
 
-| Old (1.12.2) | New (1.20.1) | Status | Notes |
-|---|---|---|---|
-| ~70 plate blockstates | — | ⏳ | 70+ blockstate/block model files exist, not registered as blocks. Deferred until plate system design is finalized. |
+| Content | R | A | O | B | T | Notes |
+|---|---|---|---:|---:|---:|---:|-------|
+| ~70 plate types | ❌ | ⚠️ | ❌ | ❌ | ❌ | 70+ blockstate/model files exist but no registration |
 
 ---
 
@@ -294,33 +297,36 @@
 
 | Old (1.12.2) | Reason | Notes |
 |---|---|---|
-| `forge_marker` blockstates | Replaced by standard variant format | Phase 1 |
-| `coffeeworkshop` namespace | Unified to `coffeework` | Phase 1 |
-| `.lang` files | Replaced by `.json` lang files | Phase 1 |
+| `forge_marker` blockstates | Replaced by standard variant format | Phase 1 ✅ |
+| `coffeeworkshop` namespace | Unified to `coffeework` | Phase 1 ✅ |
+| `.lang` files | Replaced by `.json` lang files | Files still present, Phase 1 planned removal |
 | Static HashMap recipe maps | Replaced by data-driven RecipeManager | Phase 3 |
 
 ---
 
-## Summary Statistics
+## Summary Statistics (R/A/O/B/T)
 
-| Category | Total | ✅ Ported | ⏳ Deferred | ❌ Removed |
-|---|---|---|---|---|
-| Machines | 5 | 5 | 0 | 0 |
-| Plants & Crops | 5 | 5 | 0 | 0 |
-| Drinks (hot) | 13 | 13 | 0 | 0 |
-| Drinks (iced) | 12 | 12 | 0 | 0 |
-| Flavored lattes | 12 | 12 | 0 | 0 |
-| Americano extensions | 4 | 4 | 0 | 0 |
-| Cold brew extensions | 14 | 14 | 0 | 0 |
-| Instant coffee + extras | 5 | 3 | 2 | 0 |
-| Soda drinks | 8 | 0 | 8 | 0 |
-| Containers & utensils | 12 | 12 | 0 | 0 |
-| Ingredients & materials | 17 | 17 | 0 | 0 |
-| Bags (storage) | 14 | 14 | 0 | 0 |
-| Cakes & desserts | 18 | 18 | 0 | 0 |
-| Breads | 5 | 5 | 0 | 0 |
-| Sandwiches | 6 | 1 | 5 | 0 |
-| Ice creams | 6 | 1 | 5 | 0 |
-| Decor & specials | 6 | 6 | 0 | 0 |
-| Drink plates | ~70 | 0 | ~70 | 0 |
-| **Total** | **~232** | **~132** | **~90** | **~10** |
+| Category | Total | R ✅ | A ✅ | O ✅ | B ✅ | T ✅ |
+|---|---|---|---:|---:|---:|---:|---:|
+| Machines | 5 | 5 | 5 | 5 | 0 | 0 |
+| Plants & Crops | 5 | 5 | 5 | 4 | 3 | 0 |
+| Drinks (hot) | 14 | 14 | 14 | 0 | 0 | 0 |
+| Drinks (iced) | 12 | 12 | 12 | 0 | 0 | 0 |
+| Flavored lattes | 12 | 12 | 12 | 0 | 0 | 0 |
+| Americano extensions | 4 | 4 | 4 | 0 | 0 | 0 |
+| Cold brew extensions | 14 | 14 | 14 | 0 | 0 | 0 |
+| Instant coffee | 5 | 3 | 4 | 3 | 3 | 0 |
+| Soda drinks | 8 | 0 | 0 | 0 | 0 | 0 |
+| Containers & utensils | 10 | 10 | 10 | 9 | 6 | 0 |
+| Ingredients & materials | 17 | 17 | 17 | 8 | 13 | 0 |
+| Bags (storage) | 14 | 14 | 14 | 14 | 14 | 0 |
+| Cakes & desserts | 18 | 18 | 18 | 18 | 0 | 0 |
+| Breads | 5 | 5 | 5 | 5 | 5 | 0 |
+| Sandwiches | 7 | 1 | 1 | 1 | 1 | 0 |
+| Ice creams | 6 | 1 | 1 | 1 | 1 | 0 |
+| Decor & specials | 6 | 6 | 6 | 6 | 3 | 0 |
+| Drink plates | ~70 | 0 | 0 | 0 | 0 | 0 |
+| **Total (excl. deferred)** | **~160** | **~141** | **~142** | **~74** | **~49** | **0** |
+| **Total (all)** | **~232** | **~141** | **~142** | **~74** | **~49** | **0** |
+
+> **Key insight:** Only ~46% of registered items are obtainable in survival. Zero items are tested.

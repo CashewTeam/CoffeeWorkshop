@@ -17,6 +17,9 @@ out
 build
 .gradle
 
+# generated resources cache (regenerated on every runData)
+src/generated/resources/.cache/
+
 # other
 eclipse
 run
