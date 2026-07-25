@@ -1,9 +1,9 @@
 {
   "parent": "block/cake_uneaten",
   "textures": {
-    "particle": "coffeework:textures/blocks/mousse_coffee_side",
-    "bottom": "coffeework:textures/blocks/mousse_coffee_bottom",
-    "top": "coffeework:textures/blocks/mousse_coffee_top",
-    "side": "coffeework:textures/blocks/mousse_coffee_side"
+    "particle": "coffeework:block/mousse_coffee_side",
+    "bottom": "coffeework:block/mousse_coffee_bottom",
+    "top": "coffeework:block/mousse_coffee_top",
+    "side": "coffeework:block/mousse_coffee_side"
   }
 }

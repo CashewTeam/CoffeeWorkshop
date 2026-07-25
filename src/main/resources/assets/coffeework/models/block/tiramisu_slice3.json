@@ -1,10 +1,10 @@
 {
   "parent": "block/cake_slice3",
   "textures": {
-    "particle": "coffeework:textures/blocks/tiramisu_side",
-    "bottom": "coffeework:textures/blocks/tiramisu_bottom",
-    "top": "coffeework:textures/blocks/tiramisu_top",
-    "side": "coffeework:textures/blocks/tiramisu_side",
-    "inside": "coffeework:textures/blocks/tiramisu_inner"
+    "particle": "coffeework:block/tiramisu_side",
+    "bottom": "coffeework:block/tiramisu_bottom",
+    "top": "coffeework:block/tiramisu_top",
+    "side": "coffeework:block/tiramisu_side",
+    "inside": "coffeework:block/tiramisu_inner"
   }
 }

@@ -2,6 +2,6 @@
   "render_type": "cutout",
   "parent": "block/crop",
   "textures": {
-    "crop": "coffeework:textures/blocks/vanilla_stage_7"
+    "crop": "coffeework:block/vanilla_stage_7"
   }
 }

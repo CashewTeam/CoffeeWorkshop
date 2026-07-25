@@ -1,7 +1,7 @@
 {
   "parent": "builtin/generated",
   "textures": {
-    "layer0": "coffeework:textures/items/seed_coffee"
+    "layer0": "coffeework:item/seed_coffee"
   },
   "display": {
     "ground": {

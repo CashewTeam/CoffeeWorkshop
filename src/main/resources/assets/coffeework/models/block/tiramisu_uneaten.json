@@ -1,9 +1,9 @@
 {
   "parent": "block/cake_uneaten",
   "textures": {
-    "particle": "coffeework:textures/blocks/tiramisu_side",
-    "bottom": "coffeework:textures/blocks/tiramisu_bottom",
-    "top": "coffeework:textures/blocks/tiramisu_top",
-    "side": "coffeework:textures/blocks/tiramisu_side"
+    "particle": "coffeework:block/tiramisu_side",
+    "bottom": "coffeework:block/tiramisu_bottom",
+    "top": "coffeework:block/tiramisu_top",
+    "side": "coffeework:block/tiramisu_side"
   }
 }

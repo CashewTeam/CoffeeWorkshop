@@ -1,7 +1,7 @@
 {
   "parent": "builtin/generated",
   "textures": {
-    "layer0": "coffeework:textures/items/blueberry_bush"
+    "layer0": "coffeework:item/blueberry_bush"
   },
   "display": {
     "ground": {

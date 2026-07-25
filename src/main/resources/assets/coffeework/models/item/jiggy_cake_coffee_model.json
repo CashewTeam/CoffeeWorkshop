@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "coffeework:textures/items/jiggy_cake_coffee_model"
+    "layer0": "coffeework:item/jiggy_cake_coffee_model"
   }
 }

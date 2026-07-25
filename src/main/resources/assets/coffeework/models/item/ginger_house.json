@@ -1,10 +1,10 @@
 {
   "credit": "Made with Blockbench",
   "textures": {
-    "0": "coffeework:textures/model/texture31",
-    "1": "coffeework:textures/model/texture32",
-    "2": "coffeework:textures/model/texture33",
-    "particle": "coffeework:textures/model/texture31"
+    "0": "coffeework:block/model/texture31",
+    "1": "coffeework:block/model/texture32",
+    "2": "coffeework:block/model/texture33",
+    "particle": "coffeework:block/model/texture31"
   },
   "elements": [
     {

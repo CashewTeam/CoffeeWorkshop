@@ -1,11 +1,11 @@
 {
   "parent": "block/cake_slice1",
   "textures": {
-    "particle": "coffeework:textures/blocks/cake_tea_side",
-    "bottom": "coffeework:textures/blocks/cake_tea_bottom",
-    "top": "coffeework:textures/blocks/cake_tea_top",
-    "side": "coffeework:textures/blocks/cake_tea_side",
-    "inside": "coffeework:textures/blocks/cake_tea_inner"
+    "particle": "coffeework:block/cake_tea_side",
+    "bottom": "coffeework:block/cake_tea_bottom",
+    "top": "coffeework:block/cake_tea_top",
+    "side": "coffeework:block/cake_tea_side",
+    "inside": "coffeework:block/cake_tea_inner"
   },
   "render_type": "cutout"
 }

@@ -1,10 +1,10 @@
 {
   "parent": "block/cake_uneaten",
   "textures": {
-    "particle": "coffeework:textures/blocks/cake_cheese_side",
-    "bottom": "coffeework:textures/blocks/cake_cheese_bottom",
-    "top": "coffeework:textures/blocks/cake_cheese_top",
-    "side": "coffeework:textures/blocks/cake_cheese_side"
+    "particle": "coffeework:block/cake_cheese_side",
+    "bottom": "coffeework:block/cake_cheese_bottom",
+    "top": "coffeework:block/cake_cheese_top",
+    "side": "coffeework:block/cake_cheese_side"
   },
   "render_type": "cutout"
 }

@@ -1,7 +1,7 @@
 {
   "parent": "builtin/generated",
   "textures": {
-    "layer0": "coffeework:textures/blocks/coffee_stage_2"
+    "layer0": "coffeework:block/coffee_stage_2"
   },
   "display": {
     "ground": {

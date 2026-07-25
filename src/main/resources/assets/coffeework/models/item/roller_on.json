@@ -4,7 +4,7 @@
     "0": "block/oak_log",
     "1": "block/oak_planks",
     "2": "block/smooth_stone_slab_top",
-    "3": "coffeework:textures/model/texture22",
+    "3": "coffeework:block/model/texture22",
     "particle": "block/oak_log"
   },
   "elements": [

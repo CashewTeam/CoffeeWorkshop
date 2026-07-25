@@ -1,8 +1,8 @@
 {
   "parent": "coffeework:block/coffee_ice_plate",
   "textures": {
-    "0": "coffeework:textures/model/coffee/glass",
-    "1": "coffeework:textures/model/coffee/cocoa_strong",
-    "1_1": "coffeework:textures/model/coffee/cup"
+    "0": "coffeework:block/model/coffee/glass",
+    "1": "coffeework:block/model/coffee/cocoa_strong",
+    "1_1": "coffeework:block/model/coffee/cup"
   }
 }

@@ -3,7 +3,7 @@
   "textures": {
     "0": "blocks/concrete_yellow",
     "1": "blocks/anvil_base",
-    "2": "coffeework:textures/model/coffee/coffee_americano",
+    "2": "coffeework:block/model/coffee/coffee_americano",
     "particle": "blocks/concrete_yellow"
   },
   "elements": [

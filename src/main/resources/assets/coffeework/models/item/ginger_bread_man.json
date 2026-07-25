@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "coffeework:textures/items/ginger_bread_man"
+    "layer0": "coffeework:item/ginger_bread_man"
   }
 }

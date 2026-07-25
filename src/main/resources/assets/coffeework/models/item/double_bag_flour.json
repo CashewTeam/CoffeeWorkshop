@@ -1,9 +1,9 @@
 {
   "credit": "Made with Blockbench",
   "textures": {
-    "0": "coffeework:textures/model/bag_none",
-    "1": "coffeework:textures/model/bag_flour",
-    "particle": "coffeework:textures/model/bag_none"
+    "0": "coffeework:block/model/bag_none",
+    "1": "coffeework:block/model/bag_flour",
+    "particle": "coffeework:block/model/bag_none"
   },
   "elements": [
     {

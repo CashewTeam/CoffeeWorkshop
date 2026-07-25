@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "coffeework:textures/items/hardtack_raw"
+    "layer0": "coffeework:item/hardtack_raw"
   }
 }

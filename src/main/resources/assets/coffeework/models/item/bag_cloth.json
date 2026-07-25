@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "coffeework:textures/items/bag_cloth"
+    "layer0": "coffeework:item/bag_cloth"
   }
 }

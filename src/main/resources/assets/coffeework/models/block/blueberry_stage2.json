@@ -4,7 +4,7 @@
   "textures": {
     "0": "block/oak_log",
     "1": "block/oak_log_top",
-    "2": "coffeework:textures/model/leaves_blueberry2",
+    "2": "coffeework:block/model/leaves_blueberry2",
     "particle": "block/oak_log"
   },
   "elements": [

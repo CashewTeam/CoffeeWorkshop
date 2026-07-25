@@ -1,8 +1,8 @@
 {
   "credit": "Made with Blockbench",
   "textures": {
-    "0": "coffeework:textures/model/coffee_instant_box",
-    "particle": "coffeework:textures/model/coffee_instant_box"
+    "0": "coffeework:block/model/coffee_instant_box",
+    "particle": "coffeework:block/model/coffee_instant_box"
   },
   "elements": [
     {

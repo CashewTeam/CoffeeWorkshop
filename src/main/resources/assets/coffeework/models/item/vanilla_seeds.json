@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "coffeework:textures/items/vanilla_seeds"
+    "layer0": "coffeework:item/vanilla_seeds"
   }
 }

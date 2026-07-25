@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "coffeework:textures/items/bread_round"
+    "layer0": "coffeework:item/bread_round"
   }
 }

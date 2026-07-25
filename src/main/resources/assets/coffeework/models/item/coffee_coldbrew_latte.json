@@ -1,7 +1,7 @@
 {
   "parent": "coffeework:item/coffee",
   "textures": {
-    "1": "coffeework:textures/model/coffee/cup",
-    "2": "coffeework:textures/model/coffee/coffee_coldbrew_latte"
+    "1": "coffeework:block/model/coffee/cup",
+    "2": "coffeework:block/model/coffee/coffee_coldbrew_latte"
   }
 }

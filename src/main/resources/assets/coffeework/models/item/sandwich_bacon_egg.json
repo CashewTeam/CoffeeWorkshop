@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "coffeework:textures/items/sandwich_bacon_egg"
+    "layer0": "coffeework:item/sandwich_bacon_egg"
   }
 }

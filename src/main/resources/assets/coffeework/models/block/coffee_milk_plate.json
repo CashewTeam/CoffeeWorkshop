@@ -1,9 +1,9 @@
 {
   "credit": "Made with Blockbench",
   "textures": {
-    "0": "coffeework:textures/model/coffee/coffee_cappuccino",
+    "0": "coffeework:block/model/coffee/coffee_cappuccino",
     "1": "block/white_concrete",
-    "particle": "coffeework:textures/model/coffee/coffee_cappuccino",
+    "particle": "coffeework:block/model/coffee/coffee_cappuccino",
     "1_1": "block/white_concrete"
   },
   "elements": [

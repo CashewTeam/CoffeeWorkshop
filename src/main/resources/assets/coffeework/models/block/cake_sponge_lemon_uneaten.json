@@ -1,10 +1,10 @@
 {
   "parent": "block/cake_uneaten",
   "textures": {
-    "particle": "coffeework:textures/blocks/cake_sponge_lemon_side",
-    "bottom": "coffeework:textures/blocks/cake_sponge_lemon_bottom",
-    "top": "coffeework:textures/blocks/cake_sponge_lemon_top",
-    "side": "coffeework:textures/blocks/cake_sponge_lemon_side"
+    "particle": "coffeework:block/cake_sponge_lemon_side",
+    "bottom": "coffeework:block/cake_sponge_lemon_bottom",
+    "top": "coffeework:block/cake_sponge_lemon_top",
+    "side": "coffeework:block/cake_sponge_lemon_side"
   },
   "render_type": "cutout"
 }

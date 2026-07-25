@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "coffeework:textures/items/d_bar"
+    "layer0": "coffeework:item/d_bar"
   }
 }

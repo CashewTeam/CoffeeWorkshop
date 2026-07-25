@@ -4,7 +4,7 @@
     "0": "blocks/anvil_base",
     "1": "block/iron_block",
     "2": "block/brown_wool",
-    "3": "coffeework:textures/model/texture6",
+    "3": "coffeework:block/model/texture6",
     "particle": "blocks/anvil_base"
   },
   "elements": [

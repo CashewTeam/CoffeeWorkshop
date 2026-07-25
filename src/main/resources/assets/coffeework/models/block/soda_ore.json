@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "coffeework:textures/blocks/soda_ore"
+    "all": "coffeework:block/soda_ore"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "coffeework:textures/items/sandwich_club_large"
+    "layer0": "coffeework:item/sandwich_club_large"
   }
 }

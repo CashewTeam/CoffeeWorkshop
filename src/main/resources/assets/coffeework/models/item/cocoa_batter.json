@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "coffeework:textures/items/cocoa_batter"
+    "layer0": "coffeework:item/cocoa_batter"
   }
 }
