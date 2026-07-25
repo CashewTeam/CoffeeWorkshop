@@ -1,13 +1,11 @@
 package net.langball.coffee.block.entity;
 
 import net.langball.coffee.CoffeeWork;
-import net.langball.coffee.block.BlockGrinder;
+import net.langball.coffee.block.MachineBlock;
 import net.langball.coffee.init.ModBlockEntities;
-import net.langball.coffee.init.ModBlocks;
 import net.langball.coffee.recipes.blocks.GrinderRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -22,7 +20,6 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
@@ -193,6 +190,10 @@ public class GrinderBlockEntity extends BlockEntity implements MenuProvider {
                     || (ItemStack.isSameItemSameTags(output, result)
                     && output.getCount() + result.getCount() <= output.getMaxStackSize()));
 
+            /* Pre-existing logic preserved verbatim (PR-05 only touches the
+             * state-swap path at the end of this method).  PR-06 will fix
+             * the tick bugs (first-tick instant output, fuel container
+             * remainder, cook progress reset, output-stacking clamp). */
             if (be.burnTime == 0 && canSmelt && !fuel.isEmpty()) {
                 int fuelBurnTime = ForgeHooks.getBurnTime(fuel, null);
                 if (fuelBurnTime > 0) {
@@ -227,20 +228,18 @@ public class GrinderBlockEntity extends BlockEntity implements MenuProvider {
 
             if (wasBurning != (be.burnTime > 0)) {
                 dirty = true;
-                switchGrinderBlock(level, pos, state, be.burnTime > 0);
+                /* PR-05 change: instead of swapping the Block (which would
+                 * destroy this BlockEntity and lose the in-progress recipe
+                 * and its inventory) we just flip the LIT property on the
+                 * same BlockState.  The state-swap path that referenced
+                 * ModBlocks.GRINDER_ON is now dead and was removed. */
+                level.setBlock(pos, state.setValue(MachineBlock.LIT, be.burnTime > 0),
+                        Block.UPDATE_ALL);
             }
         }
 
         if (dirty) {
             setChanged(level, pos, state);
         }
-    }
-
-    private static void switchGrinderBlock(Level level, BlockPos pos, BlockState state, boolean isBurning) {
-        Direction facing = state.getValue(HorizontalDirectionalBlock.FACING);
-        Block targetBlock = isBurning ? ModBlocks.GRINDER_ON.get() : ModBlocks.GRINDER.get();
-        BlockState newState = targetBlock.defaultBlockState()
-                .setValue(HorizontalDirectionalBlock.FACING, facing);
-        level.setBlock(pos, newState, 3);
     }
 }

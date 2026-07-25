@@ -15,30 +15,24 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, CoffeeWork.MODID);
 
     // ========== Machines ==========
-    public static final RegistryObject<Block> GRINDER = BLOCKS.register("grinder_off",
-            () -> new BlockGrinder(false, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
-    public static final RegistryObject<Block> GRINDER_ON = BLOCKS.register("grinder_on",
-            () -> new BlockGrinder(true, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).lightLevel(s -> 14).requiresCorrectToolForDrops().noOcclusion()));
+    // Single block per machine; the lit state is encoded in the BlockState's
+    // LIT BooleanProperty (see net.langball.coffee.block.MachineBlock).
+    // Each registration no longer takes a 'lightLevel(...)' override because
+    // MachineBlock#getLightEmission reads LIT dynamically.
+    public static final RegistryObject<Block> GRINDER = BLOCKS.register("grinder",
+            () -> new BlockGrinder(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
 
-    public static final RegistryObject<Block> COFFEE_MACHINE = BLOCKS.register("coffeemachine_off",
-            () -> new BlockCoffeeMachine(false, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
-    public static final RegistryObject<Block> COFFEE_MACHINE_ON = BLOCKS.register("coffeemachine_on",
-            () -> new BlockCoffeeMachine(true, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).lightLevel(s -> 14).requiresCorrectToolForDrops().noOcclusion()));
+    public static final RegistryObject<Block> COFFEE_MACHINE = BLOCKS.register("coffee_machine",
+            () -> new BlockCoffeeMachine(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
 
-    public static final RegistryObject<Block> ICECREAM_MACHINE = BLOCKS.register("icecreammachine_off",
-            () -> new BlockIcecreamMachine(false, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
-    public static final RegistryObject<Block> ICECREAM_MACHINE_ON = BLOCKS.register("icecreammachine_on",
-            () -> new BlockIcecreamMachine(true, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).lightLevel(s -> 14).requiresCorrectToolForDrops().noOcclusion()));
+    public static final RegistryObject<Block> ICECREAM_MACHINE = BLOCKS.register("icecream_machine",
+            () -> new BlockIcecreamMachine(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
 
-    public static final RegistryObject<Block> ROLLER = BLOCKS.register("roller_off",
-            () -> new BlockRoller(false, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
-    public static final RegistryObject<Block> ROLLER_ON = BLOCKS.register("roller_on",
-            () -> new BlockRoller(true, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).lightLevel(s -> 14).requiresCorrectToolForDrops().noOcclusion()));
+    public static final RegistryObject<Block> ROLLER = BLOCKS.register("roller",
+            () -> new BlockRoller(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
 
-    public static final RegistryObject<Block> OVEN = BLOCKS.register("oven_off",
-            () -> new BlockClayOven(false, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
-    public static final RegistryObject<Block> OVEN_ON = BLOCKS.register("oven_on",
-            () -> new BlockClayOven(true, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).lightLevel(s -> 14).requiresCorrectToolForDrops().noOcclusion()));
+    public static final RegistryObject<Block> OVEN = BLOCKS.register("oven",
+            () -> new BlockClayOven(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
 
     // ========== Plants ==========
     public static final RegistryObject<Block> COFFEE_TREE = BLOCKS.register("coffee_tree",

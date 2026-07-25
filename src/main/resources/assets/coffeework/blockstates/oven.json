@@ -1,0 +1,20 @@
+{
+  "multipart": [
+    {
+      "when": { "facing": "north" },
+      "apply": { "model": "coffeework:block/clay_oven" }
+    },
+    {
+      "when": { "facing": "south" },
+      "apply": { "model": "coffeework:block/clay_oven", "y": 180 }
+    },
+    {
+      "when": { "facing": "west" },
+      "apply": { "model": "coffeework:block/clay_oven", "y": 270 }
+    },
+    {
+      "when": { "facing": "east" },
+      "apply": { "model": "coffeework:block/clay_oven", "y": 90 }
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 package net.langball.coffee.block.entity;
 
 import net.langball.coffee.CoffeeWork;
+import net.langball.coffee.block.MachineBlock;
 import net.langball.coffee.init.ModBlockEntities;
-import net.langball.coffee.init.ModBlocks;
 import net.langball.coffee.recipes.blocks.RollerRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,7 +19,6 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
@@ -223,20 +222,13 @@ public class RollerBlockEntity extends BlockEntity implements MenuProvider {
 
             if (wasBurning != (be.burnTime > 0)) {
                 dirty = true;
-                switchRollerBlock(level, pos, state, be.burnTime > 0);
+                level.setBlock(pos, state.setValue(MachineBlock.LIT, be.burnTime > 0),
+                        Block.UPDATE_ALL);
             }
         }
 
         if (dirty) {
             setChanged(level, pos, state);
         }
-    }
-
-    private static void switchRollerBlock(Level level, BlockPos pos, BlockState state, boolean isBurning) {
-        Direction facing = state.getValue(HorizontalDirectionalBlock.FACING);
-        Block targetBlock = isBurning ? ModBlocks.ROLLER_ON.get() : ModBlocks.ROLLER.get();
-        BlockState newState = targetBlock.defaultBlockState()
-                .setValue(HorizontalDirectionalBlock.FACING, facing);
-        level.setBlock(pos, newState, 3);
     }
 }
