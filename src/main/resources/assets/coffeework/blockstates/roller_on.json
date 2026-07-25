@@ -1,8 +1,19 @@
 {
-    "variants": {
-        "facing=north": { "model": "coffeework:roller" },
-        "facing=south": { "model": "coffeework:roller", "y": 180 },
-        "facing=west":  { "model": "coffeework:roller", "y": 270 },
-        "facing=east":  { "model": "coffeework:roller", "y": 90 }
+  "variants": {
+    "facing=north": {
+      "model": "coffeework:block/roller"
+    },
+    "facing=south": {
+      "model": "coffeework:block/roller",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "coffeework:block/roller",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "coffeework:block/roller",
+      "y": 90
     }
+  }
 }

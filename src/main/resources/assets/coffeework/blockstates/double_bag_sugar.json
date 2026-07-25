@@ -1,8 +1,19 @@
 {
-    "variants": {
-        "facing=north": { "model": "coffeework:double_bag_sugar" },
-        "facing=south": { "model": "coffeework:double_bag_sugar", "y": 180 },
-        "facing=west":  { "model": "coffeework:double_bag_sugar", "y": 270 },
-        "facing=east":  { "model": "coffeework:double_bag_sugar", "y": 90 }
+  "variants": {
+    "facing=north": {
+      "model": "coffeework:block/double_bag_sugar"
+    },
+    "facing=south": {
+      "model": "coffeework:block/double_bag_sugar",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "coffeework:block/double_bag_sugar",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "coffeework:block/double_bag_sugar",
+      "y": 90
     }
+  }
 }

@@ -1,7 +1,7 @@
 {
-   "variants" : {
-      "normal" : {
-         "model" : "coffeework:xmas_tree"
-      }
-   }
+  "variants": {
+    "normal": {
+      "model": "coffeework:block/xmas_tree"
+    }
+  }
 }

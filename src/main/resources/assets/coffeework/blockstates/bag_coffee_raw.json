@@ -1,8 +1,19 @@
 {
-    "variants": {
-        "facing=north": { "model": "coffeework:bag_coffee_raw" },
-        "facing=south": { "model": "coffeework:bag_coffee_raw", "y": 180 },
-        "facing=west":  { "model": "coffeework:bag_coffee_raw", "y": 270 },
-        "facing=east":  { "model": "coffeework:bag_coffee_raw", "y": 90 }
+  "variants": {
+    "facing=north": {
+      "model": "coffeework:block/bag_coffee_raw"
+    },
+    "facing=south": {
+      "model": "coffeework:block/bag_coffee_raw",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "coffeework:block/bag_coffee_raw",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "coffeework:block/bag_coffee_raw",
+      "y": 90
     }
+  }
 }

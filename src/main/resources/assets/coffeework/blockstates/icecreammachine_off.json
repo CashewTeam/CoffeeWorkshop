@@ -1,8 +1,19 @@
 {
-    "variants": {
-        "facing=north": { "model": "coffeework:icecream_machine" },
-        "facing=south": { "model": "coffeework:icecream_machine", "y": 180 },
-        "facing=west":  { "model": "coffeework:icecream_machine", "y": 270 },
-        "facing=east":  { "model": "coffeework:icecream_machine", "y": 90 }
+  "variants": {
+    "facing=north": {
+      "model": "coffeework:block/icecream_machine"
+    },
+    "facing=south": {
+      "model": "coffeework:block/icecream_machine",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "coffeework:block/icecream_machine",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "coffeework:block/icecream_machine",
+      "y": 90
     }
+  }
 }

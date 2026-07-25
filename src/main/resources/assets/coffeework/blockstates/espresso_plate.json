@@ -1,8 +1,19 @@
 {
-    "variants": {
-        "facing=north": { "model": "coffeework:espresso_plate" },
-        "facing=south": { "model": "coffeework:espresso_plate", "y": 180 },
-        "facing=west":  { "model": "coffeework:espresso_plate", "y": 270 },
-        "facing=east":  { "model": "coffeework:espresso_plate", "y": 90 }
+  "variants": {
+    "facing=north": {
+      "model": "coffeework:block/espresso_plate"
+    },
+    "facing=south": {
+      "model": "coffeework:block/espresso_plate",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "coffeework:block/espresso_plate",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "coffeework:block/espresso_plate",
+      "y": 90
     }
+  }
 }

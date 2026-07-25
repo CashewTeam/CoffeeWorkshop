@@ -1,1 +1,22 @@
-{"variants":{"inventory":{"model":"coffeework:cocoa_plate"},"facing=north":{"model":"coffeework:cocoa_plate"},"facing=south":{"model":"coffeework:cocoa_plate","y":180},"facing=west":{"model":"coffeework:cocoa_plate","y":270},"facing=east":{"model":"coffeework:cocoa_plate","y":90}}}
+{
+  "variants": {
+    "inventory": {
+      "model": "coffeework:block/cocoa_plate"
+    },
+    "facing=north": {
+      "model": "coffeework:block/cocoa_plate"
+    },
+    "facing=south": {
+      "model": "coffeework:block/cocoa_plate",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "coffeework:block/cocoa_plate",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "coffeework:block/cocoa_plate",
+      "y": 90
+    }
+  }
+}

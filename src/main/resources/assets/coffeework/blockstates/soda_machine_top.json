@@ -1,8 +1,19 @@
 {
-    "variants": {
-        "facing=north": { "model": "coffeework:soda_machine_top" },
-        "facing=south": { "model": "coffeework:soda_machine_top", "y": 180 },
-        "facing=west":  { "model": "coffeework:soda_machine_top", "y": 270 },
-        "facing=east":  { "model": "coffeework:soda_machine_top", "y": 90 }
+  "variants": {
+    "facing=north": {
+      "model": "coffeework:block/soda_machine_top"
+    },
+    "facing=south": {
+      "model": "coffeework:block/soda_machine_top",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "coffeework:block/soda_machine_top",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "coffeework:block/soda_machine_top",
+      "y": 90
     }
+  }
 }

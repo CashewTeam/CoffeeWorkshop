@@ -1,1 +1,7 @@
-{"variants":{"normal":{"model":"coffeework:soda_ore"}}}
+{
+  "variants": {
+    "normal": {
+      "model": "coffeework:block/soda_ore"
+    }
+  }
+}

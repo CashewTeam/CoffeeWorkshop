@@ -1,22 +1,22 @@
 {
-   "variants" : {
-      "inventory" : {
-         "model" : "coffeework:cocoa_strong_ice_plate"
-      },
-      "facing=north" : {
-         "model" : "coffeework:cocoa_strong_ice_plate"
-      },
-      "facing=south" : {
-         "model" : "coffeework:cocoa_strong_ice_plate",
-         "y" : 180
-      },
-      "facing=west" : {
-         "model" : "coffeework:cocoa_strong_ice_plate",
-         "y" : 270
-      },
-      "facing=east" : {
-         "model" : "coffeework:cocoa_strong_ice_plate",
-         "y" : 90
-      }
-   }
+  "variants": {
+    "inventory": {
+      "model": "coffeework:block/cocoa_strong_ice_plate"
+    },
+    "facing=north": {
+      "model": "coffeework:block/cocoa_strong_ice_plate"
+    },
+    "facing=south": {
+      "model": "coffeework:block/cocoa_strong_ice_plate",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "coffeework:block/cocoa_strong_ice_plate",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "coffeework:block/cocoa_strong_ice_plate",
+      "y": 90
+    }
+  }
 }
