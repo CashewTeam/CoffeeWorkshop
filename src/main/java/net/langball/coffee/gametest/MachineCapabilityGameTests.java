@@ -1,6 +1,7 @@
 package net.langball.coffee.gametest;
 
 import net.langball.coffee.CoffeeWork;
+import net.langball.coffee.gametest.MachineTestHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -64,10 +65,8 @@ public class MachineCapabilityGameTests {
         helper.setBlock(POS, net.langball.coffee.init.ModBlocks.GRINDER.get());
         var be = helper.getBlockEntity(POS);
 
-        // Put stone in output slot via full handler
-        be.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(full -> {
-            full.insertItem(2, new ItemStack(Items.STONE, 10), false);
-        });
+        // Put stone in output slot directly (bypass isItemValid check)
+        MachineTestHelper.setItem(helper, POS, 2, new ItemStack(Items.STONE, 10));
 
         // Extract from bottom
         be.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).ifPresent(handler -> {

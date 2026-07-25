@@ -13,11 +13,6 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 /**
  * Core machine processing GameTests.
- *
- * <p>Uses a test recipe ({@code coffeework:test_cobble_to_stone}) that
- * grinds cobblestone → stone in 40 ticks, with coal as fuel.  This
- * recipe is intentionally simple and self-contained so that tests do
- * not depend on Phase 3 content.
  */
 @GameTestHolder(CoffeeWork.MODID)
 @PrefixGameTestTemplate(false)
@@ -105,8 +100,8 @@ public class MachineGameTests {
                 new ItemStack(Blocks.COBBLESTONE, 64));
         MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_FUEL,
                 new ItemStack(Items.COAL, 64));
-        // Fill output with a DIFFERENT item (not stone)
-        MachineTestHelper.insertItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_OUTPUT,
+        // Fill output with a DIFFERENT item (not stone) — use setItem to bypass isItemValid
+        MachineTestHelper.setItem(helper, MACHINE_POS, GrinderBlockEntity.SLOT_OUTPUT,
                 new ItemStack(Items.DIRT, 64));
 
         helper.runAfterDelay(50, () -> {

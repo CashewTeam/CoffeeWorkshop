@@ -19,8 +19,25 @@ public final class MachineTestHelper {
     private MachineTestHelper() {}
 
     /**
+     * Places {@code stack} into the machine's inventory slot {@code slot},
+     * bypassing {@code isItemValid} checks.  Use this for pre-filling
+     * slots (including output) in tests.
+     */
+    public static void setItem(GameTestHelper helper, BlockPos pos, int slot, ItemStack stack) {
+        BlockEntity be = helper.getBlockEntity(pos);
+        if (be instanceof MachineBlockEntity mbe) {
+            var handler = mbe.getItemHandler();
+            if (handler instanceof net.minecraftforge.items.ItemStackHandler ish) {
+                ish.setStackInSlot(slot, stack.copy());
+                mbe.setChanged();
+            }
+        }
+    }
+
+    /**
      * Places {@code stack} into the machine's inventory slot {@code slot}.
-     * Returns the remainder if the slot was already occupied.
+     * Goes through normal insertion (respects {@code isItemValid}).
+     * Returns the remainder if insertion was partial.
      */
     public static ItemStack insertItem(GameTestHelper helper, BlockPos pos, int slot, ItemStack stack) {
         BlockEntity be = helper.getBlockEntity(pos);

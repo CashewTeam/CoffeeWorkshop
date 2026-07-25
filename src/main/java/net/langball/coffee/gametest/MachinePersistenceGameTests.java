@@ -2,6 +2,7 @@ package net.langball.coffee.gametest;
 
 import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.block.entity.GrinderBlockEntity;
+import net.langball.coffee.gametest.MachineTestHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -13,7 +14,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 /**
- * Machine persistence GameTests — verify NBT survives save/load cycles.
+ * Machine persistence GameTests.
  */
 @GameTestHolder(CoffeeWork.MODID)
 @PrefixGameTestTemplate(false)
@@ -31,13 +32,13 @@ public class MachinePersistenceGameTests {
         var be = (net.langball.coffee.block.entity.MachineBlockEntity)
                 helper.getBlockEntity(POS);
 
-        // Fill slots
+        // Fill slots (use setItem for output slot since isItemValid blocks it)
         be.getItemHandler().insertItem(GrinderBlockEntity.SLOT_INPUT,
                 new ItemStack(Blocks.COBBLESTONE, 5), false);
         be.getItemHandler().insertItem(GrinderBlockEntity.SLOT_FUEL,
                 new ItemStack(Items.COAL, 3), false);
-        be.getItemHandler().insertItem(GrinderBlockEntity.SLOT_OUTPUT,
-                new ItemStack(Items.STONE, 2), false);
+        MachineTestHelper.setItem(helper, POS, GrinderBlockEntity.SLOT_OUTPUT,
+                new ItemStack(Items.STONE, 2));
 
         // Save
         CompoundTag saved = be.saveWithFullMetadata();
