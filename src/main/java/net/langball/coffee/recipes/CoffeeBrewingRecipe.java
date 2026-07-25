@@ -71,11 +71,7 @@ public record CoffeeBrewingRecipe(
     @Override
     @NotNull
     public ItemStack assemble(@NotNull SimpleContainer inv, @NotNull RegistryAccess registryAccess) {
-        ItemStack output = result.copy();
-        if (output.getItem() instanceof net.langball.coffee.item.DrinkCoffee drink) {
-            drink.initializeFreshStack(output);
-        }
-        return output;
+        return createDisplayResult();
     }
 
     @Override
@@ -86,7 +82,16 @@ public record CoffeeBrewingRecipe(
     @Override
     @NotNull
     public ItemStack getResultItem(@NotNull RegistryAccess registryAccess) {
-        return result;
+        return createDisplayResult();
+    }
+
+    /** Unified result factory — initialises cup NBT on DrinkCoffee outputs. */
+    private ItemStack createDisplayResult() {
+        ItemStack output = result.copy();
+        if (output.getItem() instanceof net.langball.coffee.item.DrinkCoffee drink) {
+            drink.initializeFreshStack(output);
+        }
+        return output;
     }
 
     @Override

@@ -235,6 +235,20 @@ jobs:
             --stacktrace \
             --console=plain
 
+      # Phase 3: Recipe reachability check
+      - name: Check recipe reachability
+        shell: bash
+        run: python tools/report_recipe_reachability.py
+
+      - name: Upload reachability report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recipe-reachability-${{ github.run_number }}
+          path: build/reports/coffeework/recipe-reachability.md
+          if-no-files-found: ignore
+          retention-days: 7
+
       - name: List build outputs
         if: success()
         shell: bash

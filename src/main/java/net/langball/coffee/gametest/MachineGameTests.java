@@ -293,6 +293,87 @@ public class MachineGameTests {
         });
     }
 
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void coffeemachine_brewsLatte(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, 0,
+                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, 1, new ItemStack(Items.MILK_BUCKET, 1));
+        MachineTestHelper.insertItem(helper, pos, 2,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP.get(), 16));
+
+        helper.runAfterDelay(140, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, pos, 3);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COFFEE_LATTE.get()),
+                    "Coffee Machine should brew latte, got: " + out);
+            ItemStack mod = MachineTestHelper.getItem(helper, pos, 1);
+            helper.assertTrue(mod.is(Items.BUCKET),
+                    "Milk bucket should return empty bucket, got: " + mod);
+            var tag = out.getTag();
+            helper.assertTrue(tag != null && tag.getInt("remaining_cups") == 4,
+                    "Latte should have 4 remaining_cups, got: " + (tag != null ? tag.getInt("remaining_cups") : "null"));
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void americano_initializesFourCups(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, 0,
+                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, 1, new ItemStack(Items.WATER_BUCKET, 1));
+        MachineTestHelper.insertItem(helper, pos, 2,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP.get(), 16));
+
+        helper.runAfterDelay(140, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, pos, 3);
+            var tag = out.getTag();
+            helper.assertTrue(tag != null && tag.getInt("remaining_cups") == 4,
+                    "Americano should have 4 remaining_cups, got: " + (tag != null ? tag.getInt("remaining_cups") : "null"));
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void espresso_initializesTwoCups(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, 0,
+                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, 2,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP.get(), 16));
+
+        helper.runAfterDelay(100, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, pos, 3);
+            var tag = out.getTag();
+            helper.assertTrue(tag != null && tag.getInt("remaining_cups") == 2,
+                    "Espresso should have 2 remaining_cups, got: " + (tag != null ? tag.getInt("remaining_cups") : "null"));
+            ItemStack cup = MachineTestHelper.getItem(helper, pos, 2);
+            helper.assertTrue(cup.getCount() == 15,
+                    "Cup count should decrease to 15, got: " + cup.getCount());
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void espresso_consumesTwoPowder(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, 0,
+                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get(), 10));
+        MachineTestHelper.insertItem(helper, pos, 2,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP.get(), 16));
+
+        helper.runAfterDelay(100, () -> {
+            ItemStack base = MachineTestHelper.getItem(helper, pos, 0);
+            helper.assertTrue(base.getCount() == 8,
+                    "Espresso should consume 2 coffee powder (10→8), got: " + base.getCount());
+            helper.succeed();
+        });
+    }
+
     @GameTest(template = "empty")
     public static void coffeemachine_noFuelSlot(GameTestHelper helper) {
         helper.succeed(); // verified by architecture: CoffeeMachine has no fuel slot
