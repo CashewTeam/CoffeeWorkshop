@@ -232,5 +232,10 @@
   "item.coffeework.cup": "Cup",
   "item.coffeework.cup_glass": "Glass",
   "tooltip.coffeework.cups_remaining": "%s/%s cups",
+  "jei.coffeework.category.grinder": "Grinding",
+  "jei.coffeework.category.coffee_machine": "Coffee Brewing",
+  "jei.coffeework.category.icecream_machine": "Ice Cream Making",
+  "jei.coffeework.category.roller": "Rolling",
+  "jei.coffeework.category.oven": "Oven Baking",
   "itemGroup.coffee_workshop": "Coffee Workshop"
 }

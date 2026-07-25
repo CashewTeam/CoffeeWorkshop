@@ -137,11 +137,13 @@ public class ModVillagers {
      * {@code event.enqueueWork()} wrapper.
      */
     public static void registerTrades() {
-        // ---- COFFEE BARISTA (old VillagerCoffee + coffee drinks) ----
+        // ---- COFFEE BARISTA (sells coffee drinks & related materials) ----
         Int2ObjectMap<VillagerTrades.ItemListing[]> baristaTrades = new Int2ObjectOpenHashMap<>();
         baristaTrades.put(1, new VillagerTrades.ItemListing[]{
                 new ItemsForEmeralds(ModItems.COFFEE_AMERICANO.get(), 2, 1, 12, 2),
                 new ItemsForEmeralds(ModItems.ESPRESSO.get(), 3, 1, 12, 2),
+                new ItemsForEmeralds(ModItems.COFFEE_LATTE.get(), 2, 1, 12, 2),
+                new ItemsForEmeralds(ModItems.COFFEE_CAPPUCCINO.get(), 3, 1, 12, 2),
                 new ItemsForEmeralds(ModItems.COFFEE_BEAN.get(), 4, 2, 16, 1),
                 new ItemsForEmeralds(ModItems.COFFEE_POWDER.get(), 6, 4, 16, 1),
                 new ItemsForEmeralds(ModItems.COCOA_POWDER.get(), 8, 4, 16, 1)
@@ -149,9 +151,18 @@ public class ModVillagers {
         baristaTrades.put(2, new VillagerTrades.ItemListing[]{
                 new EmeraldsForItems(ModItems.COFFEE_POWDER.get(), 4, 16, 12, 5),
                 new EmeraldsForItems(ModItems.COCOA_POWDER.get(), 4, 16, 12, 5),
+                new ItemsForEmeralds(ModItems.COFFEE_MACCHIATO.get(), 3, 1, 12, 5),
+                new ItemsForEmeralds(ModItems.COFFEE_MOCHACCINO.get(), 3, 1, 12, 5),
+                new ItemsForEmeralds(ModItems.COFFEE_GREEN_TEA.get(), 2, 1, 12, 5),
+                new ItemsForEmeralds(ModItems.COFFEE_BLACK_TEA.get(), 2, 1, 12, 5),
+                new ItemsForEmeralds(ModItems.COFFEE_MILK_TEA.get(), 2, 1, 12, 5),
                 new ItemsForEmeralds(ModItems.SYRUP_EMPTY.get(), 4, 16, 12, 5)
         });
         baristaTrades.put(3, new VillagerTrades.ItemListing[]{
+                new ItemsForEmeralds(ModItems.COFFEE_LATTE_CARAMEL.get(), 4, 1, 8, 10),
+                new ItemsForEmeralds(ModItems.COFFEE_LATTE_VANILLA.get(), 4, 1, 8, 10),
+                new ItemsForEmeralds(ModItems.COFFEE_COLDBREW.get(), 3, 1, 8, 10),
+                new ItemsForEmeralds(ModItems.COCOA.get(), 2, 1, 8, 10),
                 new ItemsForEmeralds(ModItems.SPICES.get(), 4, 16, 12, 10),
                 new EmeraldsForItems(ModItems.COCOA_POWDER.get(), 2, 8, 12, 10)
         });
