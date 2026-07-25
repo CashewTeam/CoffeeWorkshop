@@ -6,6 +6,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -737,19 +738,40 @@ public class ModItems {
     public static final RegistryObject<Item> SYRUP_EMPTY = ITEMS.register("syrup_empty",
             () -> new Item(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> IRON_BOWL = ITEMS.register("iron_bowl",
-            () -> new Item(new Item.Properties().stacksTo(16)));
+            () -> new Item(new Item.Properties().stacksTo(16)) {
+                @Override public boolean hasCraftingRemainingItem() { return true; }
+                @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
+            });
     public static final RegistryObject<Item> CAKE_MODEL = ITEMS.register("cake_model",
-            () -> new Item(new Item.Properties().stacksTo(16)));
+            () -> new Item(new Item.Properties().stacksTo(16)) {
+                @Override public boolean hasCraftingRemainingItem() { return true; }
+                @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
+            });
     public static final RegistryObject<Item> CAKE_MODEL_SQUARE = ITEMS.register("cake_model_square",
-            () -> new Item(new Item.Properties().stacksTo(16)));
+            () -> new Item(new Item.Properties().stacksTo(16)) {
+                @Override public boolean hasCraftingRemainingItem() { return true; }
+                @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
+            });
     public static final RegistryObject<Item> CAKE_MODEL_PLATE = ITEMS.register("cake_model_plate",
-            () -> new Item(new Item.Properties().stacksTo(16)));
+            () -> new Item(new Item.Properties().stacksTo(16)) {
+                @Override public boolean hasCraftingRemainingItem() { return true; }
+                @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
+            });
     public static final RegistryObject<Item> SMALL_MODEL = ITEMS.register("small_model",
-            () -> new Item(new Item.Properties().stacksTo(16)));
+            () -> new Item(new Item.Properties().stacksTo(16)) {
+                @Override public boolean hasCraftingRemainingItem() { return true; }
+                @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
+            });
     public static final RegistryObject<Item> MOONCAKE_MODEL = ITEMS.register("mooncake_model",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties()) {
+                @Override public boolean hasCraftingRemainingItem() { return true; }
+                @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
+            });
     public static final RegistryObject<Item> MIXING_BOWL = ITEMS.register("mixing_bowl",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties()) {
+                @Override public boolean hasCraftingRemainingItem() { return true; }
+                @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
+            });
 
     // Records
     public static final RegistryObject<Item> RECORD_BLANK = ITEMS.register("record_blank",

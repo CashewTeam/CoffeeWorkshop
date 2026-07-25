@@ -1,0 +1,19 @@
+# CoffeeWorkshop — Line-ending policy
+#
+# All source files use LF line endings regardless of OS.
+# This prevents the repository from being polluted with CRLF/LF
+# noise (427 "modified" files with no real content change was the
+# previous symptom).
+#
+# If a contributor needs CRLF in a specific file, override the rule
+# on that path.
+* text=auto eol=lf
+
+# Generated resources — DataGen output, should never contain CRLF
+*.json text eol=lf
+*.java text eol=lf
+*.gradle text eol=lf
+*.properties text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf

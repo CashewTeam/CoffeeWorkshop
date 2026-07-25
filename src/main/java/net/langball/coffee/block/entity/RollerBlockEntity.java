@@ -87,6 +87,8 @@ public class RollerBlockEntity extends MachineBlockEntity {
 
     @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
+        if (level.isClientSide) return;
+
         boolean wasBurning = burnTime > 0;
         boolean dirty = false;
 
@@ -94,60 +96,58 @@ public class RollerBlockEntity extends MachineBlockEntity {
             burnTime--;
         }
 
-        if (!level.isClientSide) {
-            ItemStack fuel = itemHandler.getStackInSlot(SLOT_FUEL);
-            ItemStack output = itemHandler.getStackInSlot(SLOT_OUTPUT);
-            MachineRecipe recipe = getCurrentRecipe();
+        ItemStack fuel = itemHandler.getStackInSlot(SLOT_FUEL);
+        ItemStack output = itemHandler.getStackInSlot(SLOT_OUTPUT);
+        MachineRecipe recipe = getCurrentRecipe();
 
-            boolean canSmelt = recipe != null
-                    && (output.isEmpty()
-                    || (ItemStack.isSameItemSameTags(output, recipe.result())
-                    && output.getCount() + recipe.result().getCount() <= output.getMaxStackSize()));
+        boolean canSmelt = recipe != null
+                && (output.isEmpty()
+                || (ItemStack.isSameItemSameTags(output, recipe.result())
+                && output.getCount() + recipe.result().getCount() <= output.getMaxStackSize()));
 
-            if (burnTime == 0 && canSmelt && !fuel.isEmpty()) {
-                int fuelBurnTime = ForgeHooks.getBurnTime(fuel, null);
-                if (fuelBurnTime > 0) {
-                    burnTime = fuelBurnTime;
-                    burnTimeTotal = fuelBurnTime;
-                    totalCookTime = recipe.cookingTime();
-                    ItemStack remainder = fuel.getCraftingRemainingItem();
-                    fuel.shrink(1);
-                    if (fuel.isEmpty()) {
-                        itemHandler.setStackInSlot(SLOT_FUEL, remainder);
-                    } else if (!remainder.isEmpty()) {
-                        Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), remainder);
-                    }
-                    dirty = true;
+        if (burnTime == 0 && canSmelt && !fuel.isEmpty()) {
+            int fuelBurnTime = ForgeHooks.getBurnTime(fuel, null);
+            if (fuelBurnTime > 0) {
+                burnTime = fuelBurnTime;
+                burnTimeTotal = fuelBurnTime;
+                totalCookTime = recipe.cookingTime();
+                ItemStack remainder = fuel.getCraftingRemainingItem();
+                fuel.shrink(1);
+                if (fuel.isEmpty()) {
+                    itemHandler.setStackInSlot(SLOT_FUEL, remainder);
+                } else if (!remainder.isEmpty()) {
+                    Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), remainder);
                 }
-            }
-
-            if (burnTime > 0 && canSmelt) {
-                cookTime++;
-                if (cookTime >= totalCookTime) {
-                    cookTime = 0;
-                    totalCookTime = recipe.cookingTime();
-                    if (output.isEmpty()) {
-                        itemHandler.setStackInSlot(SLOT_OUTPUT, recipe.result().copy());
-                    } else {
-                        int newCount = Math.min(output.getCount() + recipe.result().getCount(),
-                                output.getMaxStackSize());
-                        output.setCount(newCount);
-                    }
-                    inputShrink(SLOT_INPUT);
-                    dirty = true;
-                }
-            } else {
-                if (cookTime != 0) {
-                    cookTime = 0;
-                    dirty = true;
-                }
-            }
-
-            if (wasBurning != (burnTime > 0)) {
                 dirty = true;
-                level.setBlock(pos, state.setValue(MachineBlock.LIT, burnTime > 0),
-                        Block.UPDATE_ALL);
             }
+        }
+
+        if (burnTime > 0 && canSmelt) {
+            cookTime++;
+            if (cookTime >= totalCookTime) {
+                cookTime = 0;
+                totalCookTime = recipe.cookingTime();
+                if (output.isEmpty()) {
+                    itemHandler.setStackInSlot(SLOT_OUTPUT, recipe.result().copy());
+                } else {
+                    int newCount = Math.min(output.getCount() + recipe.result().getCount(),
+                            output.getMaxStackSize());
+                    output.setCount(newCount);
+                }
+                consumeOneWithRemainder(SLOT_INPUT);
+                dirty = true;
+            }
+        } else {
+            if (cookTime != 0) {
+                cookTime = 0;
+                dirty = true;
+            }
+        }
+
+        if (wasBurning != (burnTime > 0)) {
+            dirty = true;
+            level.setBlock(pos, state.setValue(MachineBlock.LIT, burnTime > 0),
+                    Block.UPDATE_ALL);
         }
 
         if (dirty) {
@@ -155,13 +155,4 @@ public class RollerBlockEntity extends MachineBlockEntity {
         }
     }
 
-    private void inputShrink(int slot) {
-        ItemStack stack = itemHandler.getStackInSlot(slot);
-        ItemStack container = stack.getCraftingRemainingItem();
-        if (!container.isEmpty()) {
-            itemHandler.setStackInSlot(slot, container);
-        } else {
-            stack.shrink(1);
-        }
-    }
 }

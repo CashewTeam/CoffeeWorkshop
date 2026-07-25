@@ -133,8 +133,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('G', ItemTags.PLANKS)
                 .save(writer, modLoc("syrup_empty"));
 
-        // --- Machines ---
-        shaped(RecipeCategory.MISC, ModBlocks.GRINDER.get())
+        // --- Machines (unlock with Iron Ingot) ---
+        shaped(RecipeCategory.MISC, ModBlocks.GRINDER.get(), Items.IRON_INGOT)
                 .pattern("LLL")
                 .pattern("ISI")
                 .pattern("LHL")
@@ -144,7 +144,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('H', Blocks.FURNACE)
                 .save(writer, modLoc("grinder"));
 
-        shaped(RecipeCategory.MISC, ModBlocks.ROLLER.get())
+        shaped(RecipeCategory.MISC, ModBlocks.ROLLER.get(), Items.IRON_INGOT)
                 .pattern("LIL")
                 .pattern("IHI")
                 .pattern("LIL")
@@ -153,7 +153,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('H', Blocks.FURNACE)
                 .save(writer, modLoc("roller"));
 
-        shaped(RecipeCategory.MISC, ModBlocks.COFFEE_MACHINE.get())
+        shaped(RecipeCategory.MISC, ModBlocks.COFFEE_MACHINE.get(), ModItems.PLATE_IRON.get())
                 .pattern("III")
                 .pattern("ISI")
                 .pattern("LHL")
@@ -163,7 +163,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('H', Items.WATER_BUCKET)
                 .save(writer, modLoc("coffee_machine"));
 
-        shaped(RecipeCategory.MISC, ModBlocks.ICECREAM_MACHINE.get())
+        shaped(RecipeCategory.MISC, ModBlocks.ICECREAM_MACHINE.get(), Items.IRON_INGOT)
                 .pattern("LLL")
                 .pattern("ISI")
                 .pattern("LHL")
@@ -173,7 +173,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('H', Blocks.SNOW_BLOCK)
                 .save(writer, modLoc("icecream_machine"));
 
-        shaped(RecipeCategory.MISC, ModBlocks.OVEN.get())
+        shaped(RecipeCategory.MISC, ModBlocks.OVEN.get(), Items.TERRACOTTA)
                 .pattern("WWW")
                 .pattern("W W")
                 .pattern("WBW")
@@ -645,7 +645,7 @@ public class ModRecipeProvider extends RecipeProvider {
     // HELPER METHODS
     // =======================================================================
 
-    /** Shapeless convenience */
+    /** Shapeless convenience — unlocks with the result (safe default). */
     private static ShapelessRecipeBuilder shapeless(RecipeCategory category, net.minecraft.world.level.ItemLike result) {
         return ShapelessRecipeBuilder.shapeless(category, result)
                 .unlockedBy("has_item", has(result));
@@ -656,7 +656,18 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(result));
     }
 
-    /** Shaped convenience */
+    /** Shapeless convenience — unlocks with a specific item (preferred). */
+    private static ShapelessRecipeBuilder shapeless(RecipeCategory category, net.minecraft.world.level.ItemLike result, net.minecraft.world.level.ItemLike unlockItem) {
+        return ShapelessRecipeBuilder.shapeless(category, result)
+                .unlockedBy("has_item", has(unlockItem));
+    }
+
+    private static ShapelessRecipeBuilder shapeless(RecipeCategory category, net.minecraft.world.level.ItemLike result, int count, net.minecraft.world.level.ItemLike unlockItem) {
+        return ShapelessRecipeBuilder.shapeless(category, result, count)
+                .unlockedBy("has_item", has(unlockItem));
+    }
+
+    /** Shaped convenience — unlocks with the result (safe default). */
     private static ShapedRecipeBuilder shaped(RecipeCategory category, net.minecraft.world.level.ItemLike result) {
         return ShapedRecipeBuilder.shaped(category, result)
                 .unlockedBy("has_item", has(result));
@@ -665,6 +676,17 @@ public class ModRecipeProvider extends RecipeProvider {
     private static ShapedRecipeBuilder shaped(RecipeCategory category, net.minecraft.world.level.ItemLike result, int count) {
         return ShapedRecipeBuilder.shaped(category, result, count)
                 .unlockedBy("has_item", has(result));
+    }
+
+    /** Shaped convenience — unlocks with a specific item (preferred). */
+    private static ShapedRecipeBuilder shaped(RecipeCategory category, net.minecraft.world.level.ItemLike result, net.minecraft.world.level.ItemLike unlockItem) {
+        return ShapedRecipeBuilder.shaped(category, result)
+                .unlockedBy("has_item", has(unlockItem));
+    }
+
+    private static ShapedRecipeBuilder shaped(RecipeCategory category, net.minecraft.world.level.ItemLike result, int count, net.minecraft.world.level.ItemLike unlockItem) {
+        return ShapedRecipeBuilder.shaped(category, result, count)
+                .unlockedBy("has_item", has(unlockItem));
     }
 
     /** Smelting convenience */

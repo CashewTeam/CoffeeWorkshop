@@ -80,19 +80,25 @@ public class BlockCoffeeTree extends Block implements BonemealableBlock {
         int age = state.getValue(AGE);
         ItemStack held = player.getItemInHand(hand);
 
-        // Shearing: always works, drops the block itself
+        // Shearing: drops the block itself and removes the plant
         if (held.is(Items.SHEARS)) {
             if (!level.isClientSide) {
                 popResource(level, pos, new ItemStack(ModItems.COFFEE_TREE_ITEM.get()));
                 held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
+                level.removeBlock(pos, false);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        // Right-click harvest at maturity
+        // Right-click harvest at maturity: drop coffee_bean_raw + chance of seeds
         if (age == 3) {
             if (!level.isClientSide) {
-                popResource(level, pos, new ItemStack(ModItems.COFFEE_SEEDS.get()));
+                int beanCount = 1 + level.random.nextInt(3); // 1-3 beans
+                popResource(level, pos, new ItemStack(ModItems.COFFEE_BEAN_RAW.get(), beanCount));
+                // 0-1 extra seeds
+                if (level.random.nextInt(2) == 0) {
+                    popResource(level, pos, new ItemStack(ModItems.COFFEE_SEEDS.get()));
+                }
                 level.setBlock(pos, state.setValue(AGE, 1), 2);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);

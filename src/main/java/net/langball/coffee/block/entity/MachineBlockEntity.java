@@ -8,11 +8,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -164,6 +166,40 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     public int getComparatorOutput() {
         int total = Math.max(1, totalCookTime);
         return Math.min(15, (cookTime * 15) / total);
+    }
+
+    // ---- Input consumption helpers ---------------------------------------
+
+    /**
+     * Consume one item from the given input slot, correctly handling
+     * crafting remainders (container items).
+     *
+     * <p>The old pattern ({@code setStackInSlot(slot, container)}) would
+     * replace an entire multi-item stack with a single remainder, silently
+     * deleting the other items.  This method shrinks by 1 and only places
+     * the remainder into the slot when the input becomes empty; otherwise
+     * the remainder is ejected into the world.</p>
+     */
+    protected void consumeOneWithRemainder(int slot) {
+        ItemStack input = itemHandler.getStackInSlot(slot);
+        if (input.isEmpty()) return;
+
+        // Simulate consuming a single item to discover its remainder
+        ItemStack one = input.copyWithCount(1);
+        ItemStack remainder = one.getCraftingRemainingItem();
+
+        input.shrink(1);
+
+        if (!remainder.isEmpty()) {
+            if (input.isEmpty()) {
+                // Slot is now empty — put the remainder in
+                itemHandler.setStackInSlot(slot, remainder);
+            } else {
+                // Still other items in the slot — eject remainder
+                Containers.dropItemStack(level, worldPosition.getX(),
+                        worldPosition.getY(), worldPosition.getZ(), remainder);
+            }
+        }
     }
 
     // ---- Tick hook -----------------------------------------------------

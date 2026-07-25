@@ -1,11 +1,11 @@
 {
   "credit": "Made with Blockbench",
   "textures": {
-    "0": "blocks/anvil_base",
+    "0": "block/iron_block",
     "1": "block/iron_block",
     "2": "block/white_wool",
     "3": "coffeework:block/model/texture6",
-    "particle": "blocks/anvil_base"
+    "particle": "block/iron_block"
   },
   "elements": [
     {

@@ -4,7 +4,7 @@
     "0": "block/oak_log",
     "1": "block/oak_planks",
     "2": "block/iron_block",
-    "3": "blocks/anvil_base",
+    "3": "block/iron_block",
     "particle": "block/oak_log"
   },
   "elements": [

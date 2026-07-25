@@ -185,9 +185,18 @@ public abstract class MachineBlock extends BaseEntityBlock {
      * Subclasses opt into their own ticker implementation.  Returning the
      * {@code null} ticker means the block entity will not tick (used by
      * decorative machines if any are added later).
+     *
+     * Machines only tick on the server side to avoid client-side state drift
+     * (e.g. burnTime decrement).  On the client we return {@code null} so the
+     * BE receives no ticks at all; GUI progress and LIT state are synced via
+     * {@link net.minecraft.world.inventory.ContainerData} and block-state
+     * updates from the server.
      */
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide) {
+            return null;
+        }
         return createTicker(level, type);
     }
 

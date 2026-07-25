@@ -80,6 +80,8 @@ public class CoffeeMachineBlockEntity extends MachineBlockEntity {
 
     @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
+        if (level.isClientSide) return;
+
         boolean wasBurning = burnTime > 0;
         boolean dirty = false;
 
@@ -87,44 +89,49 @@ public class CoffeeMachineBlockEntity extends MachineBlockEntity {
             burnTime--;
         }
 
-        if (!level.isClientSide) {
-            ItemStack output = itemHandler.getStackInSlot(SLOT_OUTPUT);
-            MachineRecipe recipe = getCurrentRecipe();
+        ItemStack output = itemHandler.getStackInSlot(SLOT_OUTPUT);
+        MachineRecipe recipe = getCurrentRecipe();
 
-            boolean canSmelt = recipe != null
-                    && (output.isEmpty()
-                    || (ItemStack.isSameItemSameTags(output, recipe.result())
-                    && output.getCount() + recipe.result().getCount() <= output.getMaxStackSize()));
+        boolean canSmelt = recipe != null
+                && (output.isEmpty()
+                || (ItemStack.isSameItemSameTags(output, recipe.result())
+                && output.getCount() + recipe.result().getCount() <= output.getMaxStackSize()));
 
-            /* Self-powered: when idle and work is available, start a burn cycle.
-             * CoffeeMachine has no fuel slot — it always runs for cookingTime ticks. */
-            if (burnTime == 0 && canSmelt) {
-                burnTime = recipe.cookingTime();
-                burnTimeTotal = recipe.cookingTime();
+        /* Self-powered: when idle and work is available, start a burn cycle.
+         * CoffeeMachine has no fuel slot — it always runs for cookingTime ticks. */
+        if (burnTime == 0 && canSmelt) {
+            burnTime = recipe.cookingTime();
+            burnTimeTotal = recipe.cookingTime();
+            totalCookTime = recipe.cookingTime();
+            dirty = true;
+        }
+
+        if (burnTime > 0 && canSmelt) {
+            cookTime++;
+            if (cookTime >= totalCookTime) {
+                cookTime = 0;
                 totalCookTime = recipe.cookingTime();
+                if (output.isEmpty()) {
+                    itemHandler.setStackInSlot(SLOT_OUTPUT, recipe.result().copy());
+                } else {
+                    int newCount = Math.min(output.getCount() + recipe.result().getCount(),
+                            output.getMaxStackSize());
+                    output.setCount(newCount);
+                }
+                consumeOneWithRemainder(SLOT_INPUT);
                 dirty = true;
             }
-
-            if (burnTime > 0 && canSmelt) {
-                cookTime++;
-                if (cookTime >= totalCookTime) {
-                    cookTime = 0;
-                    totalCookTime = recipe.cookingTime();
-                    smeltItem(recipe);
-                    dirty = true;
-                }
-            } else {
-                if (cookTime != 0) {
-                    cookTime = 0;
-                    dirty = true;
-                }
-            }
-
-            if (wasBurning != (burnTime > 0)) {
+        } else {
+            if (cookTime != 0) {
+                cookTime = 0;
                 dirty = true;
-                level.setBlock(pos, state.setValue(MachineBlock.LIT, burnTime > 0),
-                        Block.UPDATE_ALL);
             }
+        }
+
+        if (wasBurning != (burnTime > 0)) {
+            dirty = true;
+            level.setBlock(pos, state.setValue(MachineBlock.LIT, burnTime > 0),
+                    Block.UPDATE_ALL);
         }
 
         if (dirty) {

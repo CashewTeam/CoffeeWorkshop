@@ -2,7 +2,7 @@
   "credit": "Made with Blockbench",
   "textures": {
     "0": "blocks/concrete_yellow",
-    "1": "blocks/anvil_base",
+    "1": "block/iron_block",
     "2": "coffeework:block/model/coffee/coffee_americano",
     "particle": "blocks/concrete_yellow"
   },

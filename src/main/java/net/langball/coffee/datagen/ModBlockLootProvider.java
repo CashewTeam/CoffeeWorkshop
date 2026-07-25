@@ -7,8 +7,15 @@ import net.langball.coffee.init.ModItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Collections;
@@ -30,14 +37,18 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.OVEN.get());
 
         // === Plants ===
-        // Coffee tree: at mature (age=3) drops coffee_seeds, otherwise drops the block itself
-        add(ModBlocks.COFFEE_TREE.get(), createCropDrops(
-                ModBlocks.COFFEE_TREE.get(),
-                ModItems.COFFEE_SEEDS.get(),
-                ModItems.COFFEE_SEEDS.get(),
-                LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.COFFEE_TREE.get())
-                        .setProperties(StatePropertiesPredicate.Builder.properties()
-                                .hasProperty(BlockCoffeeTree.AGE, 3))));
+        // Coffee tree: mature (age=3) drops 1-3 coffee_bean_raw + 0-1 coffee_seeds;
+        // immature drops 0-1 coffee_seeds
+        add(ModBlocks.COFFEE_TREE.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.COFFEE_TREE.get())
+                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                        .hasProperty(BlockCoffeeTree.AGE, 3)))
+                        .add(LootItem.lootTableItem(ModItems.COFFEE_BEAN_RAW.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))))
+                .withPool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(ModItems.COFFEE_SEEDS.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F))))));
 
         // Blueberry bush: self-drop (harvest is done via right-click)
         dropSelf(ModBlocks.BLUEBERRY_BUSH.get());
@@ -54,7 +65,7 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         // === Decor & Utility (self-drop) ===
         dropSelf(ModBlocks.PLATE.get());
         add(ModBlocks.COLD_BREW_POT.get(), noDrop()); // drops handled by BlockColdBrewPot#onRemove
-        dropSelf(ModBlocks.SODA_ORE.get());
+        add(ModBlocks.SODA_ORE.get(), createOreDrop(ModBlocks.SODA_ORE.get(), ModItems.SODA.get()));
         dropSelf(ModBlocks.XMAS_TREE.get());
         dropSelf(ModBlocks.GINGER_HOUSE.get());
 
@@ -76,29 +87,29 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.DOUBLE_BAG_COFFEE_POWDER.get());
         dropSelf(ModBlocks.DOUBLE_BAG_SUGAR.get());
 
-        // === Cakes (self-drop) ===
-        dropSelf(ModBlocks.CAKE_SPONGE.get());
-        dropSelf(ModBlocks.CAKE_SPONGE_CHOCOLATE.get());
-        dropSelf(ModBlocks.CAKE_SPONGE_COFFEE.get());
-        dropSelf(ModBlocks.CAKE_SPONGE_PUMPKIN.get());
-        dropSelf(ModBlocks.CAKE_SPONGE_CARROT.get());
-        dropSelf(ModBlocks.CAKE_SPONGE_REDVELVET.get());
-        dropSelf(ModBlocks.CAKE_SPONGE_LEMON.get());
-        dropSelf(ModBlocks.CAKE_SPONGE_TEA.get());
-        dropSelf(ModBlocks.CAKE_SPONGE_BERRY.get());
-        dropSelf(ModBlocks.CAKE_COFFEE.get());
-        dropSelf(ModBlocks.CAKE_HARVEST.get());
-        dropSelf(ModBlocks.CAKE_LEMON.get());
-        dropSelf(ModBlocks.CAKE_TEA.get());
-        dropSelf(ModBlocks.CAKE_BERRY.get());
-        dropSelf(ModBlocks.CAKE_CHEESE.get());
-        dropSelf(ModBlocks.CAKE_SCHWARZWALD.get());
-        dropSelf(ModBlocks.CAKE_REDVELVET.get());
-        dropSelf(ModBlocks.TIRAMISU.get());
-        dropSelf(ModBlocks.MOUSSE_BERRY.get());
-        dropSelf(ModBlocks.MOUSSE_LEMON.get());
-        dropSelf(ModBlocks.MOUSSE_CHOCOLATE.get());
-        dropSelf(ModBlocks.MOUSSE_COFFEE.get());
+        // === Cakes & Desserts (no drop to prevent "eat half, break, get whole cake" exploit) ===
+        add(ModBlocks.CAKE_SPONGE.get(), noDrop());
+        add(ModBlocks.CAKE_SPONGE_CHOCOLATE.get(), noDrop());
+        add(ModBlocks.CAKE_SPONGE_COFFEE.get(), noDrop());
+        add(ModBlocks.CAKE_SPONGE_PUMPKIN.get(), noDrop());
+        add(ModBlocks.CAKE_SPONGE_CARROT.get(), noDrop());
+        add(ModBlocks.CAKE_SPONGE_REDVELVET.get(), noDrop());
+        add(ModBlocks.CAKE_SPONGE_LEMON.get(), noDrop());
+        add(ModBlocks.CAKE_SPONGE_TEA.get(), noDrop());
+        add(ModBlocks.CAKE_SPONGE_BERRY.get(), noDrop());
+        add(ModBlocks.CAKE_COFFEE.get(), noDrop());
+        add(ModBlocks.CAKE_HARVEST.get(), noDrop());
+        add(ModBlocks.CAKE_LEMON.get(), noDrop());
+        add(ModBlocks.CAKE_TEA.get(), noDrop());
+        add(ModBlocks.CAKE_BERRY.get(), noDrop());
+        add(ModBlocks.CAKE_CHEESE.get(), noDrop());
+        add(ModBlocks.CAKE_SCHWARZWALD.get(), noDrop());
+        add(ModBlocks.CAKE_REDVELVET.get(), noDrop());
+        add(ModBlocks.TIRAMISU.get(), noDrop());
+        add(ModBlocks.MOUSSE_BERRY.get(), noDrop());
+        add(ModBlocks.MOUSSE_LEMON.get(), noDrop());
+        add(ModBlocks.MOUSSE_CHOCOLATE.get(), noDrop());
+        add(ModBlocks.MOUSSE_COFFEE.get(), noDrop());
     }
 
     @Override

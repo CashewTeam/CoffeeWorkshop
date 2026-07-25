@@ -74,12 +74,27 @@ public class DrinkCoffee extends Item {
         return stack;
     }
 
+    /**
+     * Lazy initialisation: if NBT cup data is missing (e.g. from /give or
+     * legacy stacks), set it to this item's configured maxCups so the drink
+     * behaves correctly rather than defaulting to 1.
+     */
+    private void ensureCupData(ItemStack stack) {
+        CompoundTag tag = stack.getOrCreateTag();
+        if (!tag.contains(TAG_MAX_CUPS)) {
+            tag.putInt(TAG_MAX_CUPS, maxCups);
+        }
+        if (!tag.contains(TAG_REMAINING_CUPS)) {
+            tag.putInt(TAG_REMAINING_CUPS, maxCups);
+        }
+    }
+
     public static int getRemainingCups(ItemStack stack) {
         CompoundTag tag = stack.getTag();
         if (tag != null && tag.contains(TAG_REMAINING_CUPS)) {
             return tag.getInt(TAG_REMAINING_CUPS);
         }
-        // Legacy stack without NBT: treat as single cup
+        // Legacy stack without NBT: return 1 (safe default before ensureCupData is called)
         return 1;
     }
 
@@ -106,15 +121,25 @@ public class DrinkCoffee extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
-        super.finishUsingItem(stack, level, livingEntity);
+        // Ensure NBT is initialised even for /give or legacy stacks
+        ensureCupData(stack);
 
+        // Apply food stats manually (do NOT call super.finishUsingItem which
+        // would eat() and shrink the stack, interfering with multi-cup tracking).
+        if (!level.isClientSide) {
+            FoodProperties food = stack.getFoodProperties(livingEntity);
+            if (food != null && livingEntity instanceof Player player) {
+                player.getFoodData().eat(food.getNutrition(), food.getSaturationModifier());
+            }
+        }
+
+        // Trigger stats and advancements (server only)
         if (livingEntity instanceof ServerPlayer serverPlayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
             serverPlayer.awardStat(Stats.ITEM_USED.get(this));
         }
 
         // Apply effects — only the first (or only) variant in the table.
-        // With Plan A each drink item has exactly one variant.
         if (!level.isClientSide && effectTable != null && effectTable.length > 0) {
             MobEffectInstance[] variant = effectTable[0];
             if (variant != null) {
@@ -155,6 +180,7 @@ public class DrinkCoffee extends Item {
             }
         }
 
+        // Creative mode or no cup return: keep the stack
         return stack;
     }
 
@@ -170,6 +196,8 @@ public class DrinkCoffee extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        ensureCupData(stack);
         return ItemUtils.startUsingInstantly(level, player, hand);
     }
 
@@ -179,11 +207,13 @@ public class DrinkCoffee extends Item {
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
+        ensureCupData(stack);
         return hasMultiCup() && getRemainingCups(stack) < getMaxCups(stack);
     }
 
     @Override
     public int getBarWidth(ItemStack stack) {
+        ensureCupData(stack);
         int max = getMaxCups(stack);
         int rem = getRemainingCups(stack);
         return max > 0 ? (rem * 13) / max : 0;
@@ -204,6 +234,7 @@ public class DrinkCoffee extends Item {
     public void appendHoverText(ItemStack stack, @Nullable Level level,
                                 List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
+        ensureCupData(stack);
         if (hasMultiCup()) {
             int rem = getRemainingCups(stack);
             int max = getMaxCups(stack);

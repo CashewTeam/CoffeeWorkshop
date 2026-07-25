@@ -1,20 +1,12 @@
 {
-  "multipart": [
-    {
-      "when": { "facing": "north" },
-      "apply": { "model": "coffeework:block/icecream_machine" }
-    },
-    {
-      "when": { "facing": "south" },
-      "apply": { "model": "coffeework:block/icecream_machine", "y": 180 }
-    },
-    {
-      "when": { "facing": "west" },
-      "apply": { "model": "coffeework:block/icecream_machine", "y": 270 }
-    },
-    {
-      "when": { "facing": "east" },
-      "apply": { "model": "coffeework:block/icecream_machine", "y": 90 }
-    }
-  ]
+  "variants": {
+    "facing=north,lit=false": { "model": "coffeework:block/icecream_machine" },
+    "facing=north,lit=true": { "model": "coffeework:block/icecream_machine_on" },
+    "facing=south,lit=false": { "model": "coffeework:block/icecream_machine", "y": 180 },
+    "facing=south,lit=true": { "model": "coffeework:block/icecream_machine_on", "y": 180 },
+    "facing=west,lit=false": { "model": "coffeework:block/icecream_machine", "y": 270 },
+    "facing=west,lit=true": { "model": "coffeework:block/icecream_machine_on", "y": 270 },
+    "facing=east,lit=false": { "model": "coffeework:block/icecream_machine", "y": 90 },
+    "facing=east,lit=true": { "model": "coffeework:block/icecream_machine_on", "y": 90 }
+  }
 }

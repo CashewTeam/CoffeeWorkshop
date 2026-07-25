@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "blocks/jukebox_side",
-		"1": "blocks/anvil_base",
+		"1": "block/iron_block",
 		"particle": "blocks/jukebox_side"
 	},
 	"elements": [
