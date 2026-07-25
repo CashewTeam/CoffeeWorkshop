@@ -1,1 +1,6 @@
-{"parent":"item/generated","textures":{"layer0":"coffeework:items/bagel"}}
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "coffeework:textures/items/bagel"
+  }
+}

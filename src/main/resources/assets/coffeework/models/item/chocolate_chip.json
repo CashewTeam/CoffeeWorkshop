@@ -1,6 +1,6 @@
 {
-   "parent" : "item/generated",
-   "textures" : {
-      "layer0" : "coffeework:items/chocolate_chip"
-   }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "coffeework:textures/items/chocolate_chip"
+  }
 }

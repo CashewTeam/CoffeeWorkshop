@@ -1,1 +1,6 @@
-{"parent":"item/generated","textures":{"layer0":"coffeework:items/gelatin"}}
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "coffeework:textures/items/gelatin"
+  }
+}

@@ -1,1 +1,6 @@
-{"parent":"item/generated","textures":{"layer0":"coffeework:items/dough_bread_round"}}
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "coffeework:textures/items/dough_bread_round"
+  }
+}

@@ -1,1 +1,6 @@
-{"parent":"item/generated","textures":{"layer0":"coffeework:items/mooncake_raw"}}
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "coffeework:textures/items/mooncake_raw"
+  }
+}

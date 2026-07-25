@@ -1,7 +1,7 @@
 {
-   "parent" : "coffeework:item/coffee_cappuccino",
-   "textures" : {
-      "1" : "coffeework:model/coffee/cup",
-      "2" : "coffeework:model/coffee/coffee_macchiato"
-   }
+  "parent": "coffeework:item/coffee_cappuccino",
+  "textures": {
+    "1": "coffeework:textures/model/coffee/cup",
+    "2": "coffeework:textures/model/coffee/coffee_macchiato"
+  }
 }

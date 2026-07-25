@@ -2,7 +2,7 @@
   "credit": "Made with Blockbench",
   "textures": {
     "0": "block/white_concrete",
-    "1": "coffeework:model/texture5",
+    "1": "coffeework:textures/model/texture5",
     "particle": "block/white_concrete",
     "1_1": "block/white_concrete"
   },
