@@ -252,24 +252,480 @@ public class ModItems {
     public static final RegistryObject<Item> COFFEE_INSTANT_BOX = ITEMS.register("coffee_instant_box",
             () -> new Item(new Item.Properties()));
 
-    // Americano
+    // Americano (returns cup when finished)
     public static final RegistryObject<Item> COFFEE_AMERICANO = ITEMS.register("coffee_americano",
             () -> new DrinkCoffee(
                     new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
-                    new MobEffectInstance[][]{
-                            new MobEffectInstance[]{
-                                    new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3600, 0),
-                                    new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 600, 1),
-                            }
-                    }, 4, new int[]{0, 1}));
-
-    // Espresso
-    public static final RegistryObject<Item> ESPRESSO = ITEMS.register("espresso",
-            () -> new DrinkEspresso(
-                    new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).alwaysEat().build()),
                     new MobEffectInstance[]{
-                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 4800, 1),
-                    }, 2));
+                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3600, 0),
+                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 600, 1),
+                    }, 4, () -> ModItems.CUP.get()));
+
+    // Espresso (returns cup when finished)
+    public static final RegistryObject<Item> ESPRESSO = ITEMS.register("espresso",
+	            () -> new DrinkEspresso(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 4800, 1),
+	                    }, 2, () -> ModItems.CUP.get()));
+
+	    // ========================================================================
+	    // Basic hot drinks
+	    // ========================================================================
+	    public static final RegistryObject<Item> COFFEE_LATTE = ITEMS.register("coffee_latte",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3600, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1200, 0),
+	                    }, 4, () -> ModItems.CUP.get()));
+
+	    public static final RegistryObject<Item> COFFEE_CAPPUCCINO = ITEMS.register("coffee_cappuccino",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1800, 0),
+	                    }, 3, () -> ModItems.CUP.get()));
+
+	    public static final RegistryObject<Item> COFFEE_MACCHIATO = ITEMS.register("coffee_macchiato",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3600, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1200, 0),
+	                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 600, 0),
+	                    }, 3, () -> ModItems.CUP.get()));
+
+	    public static final RegistryObject<Item> COFFEE_MOCHACCINO = ITEMS.register("coffee_mochaccino",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1800, 0),
+	                    }, 3, () -> ModItems.CUP.get()));
+
+	    // ========================================================================
+	    // Tea-based drinks (served in glass)
+	    // ========================================================================
+	    public static final RegistryObject<Item> COFFEE_GREEN_TEA = ITEMS.register("coffee_green_tea",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 2400, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_BLACK_TEA = ITEMS.register("coffee_black_tea",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 3600, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_MILK_TEA = ITEMS.register("coffee_milk_tea",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 3600, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_MANDARIN_DRINK = ITEMS.register("coffee_mandarin_drink",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 2400, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    // ========================================================================
+	    // Cold brew (served in glass)
+	    // ========================================================================
+	    public static final RegistryObject<Item> COFFEE_COLDBREW = ITEMS.register("coffee_coldbrew",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 4800, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    // ========================================================================
+	    // Cocoa drinks (served in cup)
+	    // ========================================================================
+	    public static final RegistryObject<Item> COCOA = ITEMS.register("cocoa",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.SATURATION, 1200, 0),
+	                    }, 3, () -> ModItems.CUP.get()));
+
+		    public static final RegistryObject<Item> COCOA_STRONG = ITEMS.register("cocoa_strong",
+		            () -> new DrinkCoffee(
+		                    new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).alwaysEat().build()),
+		                    new MobEffectInstance[]{
+		                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.SATURATION, 2400, 0),
+		                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 1200, 0),
+		                    }, 2, () -> ModItems.CUP.get()));
+
+	    // ========================================================================
+	    // Iced drink variants (served in glass)
+	    // ========================================================================
+	    public static final RegistryObject<Item> COFFEE_AMERICANO_ICE = ITEMS.register("coffee_americano_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 400, 1),
+	                    }, 4, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_LATTE_ICE = ITEMS.register("coffee_latte_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                    }, 4, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_CAPPUCCINO_ICE = ITEMS.register("coffee_cappuccino_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 1600, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1200, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_MACCHIATO_ICE = ITEMS.register("coffee_macchiato_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 400, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_MOCHACCINO_ICE = ITEMS.register("coffee_mochaccino_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 1600, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1200, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_GREEN_TEA_ICE = ITEMS.register("coffee_green_tea_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1600, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_BLACK_TEA_ICE = ITEMS.register("coffee_black_tea_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 2400, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_MILK_TEA_ICE = ITEMS.register("coffee_milk_tea_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 2400, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_MANDARIN_DRINK_ICE = ITEMS.register("coffee_mandarin_drink_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 1600, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1600, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_ICE = ITEMS.register("coffee_coldbrew_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3200, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COCOA_ICE = ITEMS.register("cocoa_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.SATURATION, 800, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COCOA_STRONG_ICE = ITEMS.register("cocoa_strong_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.SATURATION, 1600, 0),
+	                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 800, 0),
+	                    }, 2, () -> ModItems.CUP_GLASS.get()));
+
+	    // ========================================================================
+	    // Flavored latte variants (hot, served in cup)
+	    // ========================================================================
+	    public static final RegistryObject<Item> COFFEE_LATTE_CARAMEL = ITEMS.register("coffee_latte_caramel",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3600, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1200, 0),
+	                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.DIG_SPEED, 600, 0),
+	                    }, 4, () -> ModItems.CUP.get()));
+
+	    public static final RegistryObject<Item> COFFEE_LATTE_CHOCOLATE = ITEMS.register("coffee_latte_chocolate",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3600, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1200, 0),
+	                    }, 4, () -> ModItems.CUP.get()));
+
+	    public static final RegistryObject<Item> COFFEE_LATTE_FRUIT = ITEMS.register("coffee_latte_fruit",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3600, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1200, 0),
+	                    }, 4, () -> ModItems.CUP.get()));
+
+	    public static final RegistryObject<Item> COFFEE_LATTE_MINT = ITEMS.register("coffee_latte_mint",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3600, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1200, 0),
+	                    }, 4, () -> ModItems.CUP.get()));
+
+	    public static final RegistryObject<Item> COFFEE_LATTE_VANILLA = ITEMS.register("coffee_latte_vanilla",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3600, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1200, 0),
+	                    }, 4, () -> ModItems.CUP.get()));
+
+	    public static final RegistryObject<Item> COFFEE_LATTE_SAKURA = ITEMS.register("coffee_latte_sakura",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3600, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 1200, 0),
+	                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.LUCK, 1200, 0),
+	                    }, 4, () -> ModItems.CUP.get()));
+
+	    // ========================================================================
+	    // Flavored latte variants (iced, served in glass)
+	    // ========================================================================
+	    public static final RegistryObject<Item> COFFEE_LATTE_CARAMEL_ICE = ITEMS.register("coffee_latte_caramel_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.DIG_SPEED, 400, 0),
+	                    }, 4, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_LATTE_CHOCOLATE_ICE = ITEMS.register("coffee_latte_chocolate_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                    }, 4, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_LATTE_FRUIT_ICE = ITEMS.register("coffee_latte_fruit_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                    }, 4, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_LATTE_MINT_ICE = ITEMS.register("coffee_latte_mint_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                    }, 4, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_LATTE_VANILLA_ICE = ITEMS.register("coffee_latte_vanilla_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                    }, 4, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_LATTE_SAKURA_ICE = ITEMS.register("coffee_latte_sakura_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.LUCK, 800, 0),
+	                    }, 4, () -> ModItems.CUP_GLASS.get()));
+
+	    // ========================================================================
+	    // Americano extensions
+	    // ========================================================================
+	    public static final RegistryObject<Item> COFFEE_AMERICANO_FRUIT = ITEMS.register("coffee_americano_fruit",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3600, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 600, 1),
+	                    }, 4, () -> ModItems.CUP.get()));
+
+	    public static final RegistryObject<Item> COFFEE_AMERICANO_FRUIT_ICE = ITEMS.register("coffee_americano_fruit_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 400, 1),
+	                    }, 4, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_AMERICANO_NITRO_ICE = ITEMS.register("coffee_americano_nitro_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 400, 1),
+	                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 600, 1),
+	                    }, 4, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_AMERICANO_NITRO_FRUIT_ICE = ITEMS.register("coffee_americano_nitro_fruit_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 2400, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 400, 1),
+	                            new MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 600, 1),
+	                    }, 4, () -> ModItems.CUP_GLASS.get()));
+
+	    // ========================================================================
+	    // Coldbrew extensions (served in glass)
+	    // ========================================================================
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_FRUIT = ITEMS.register("coffee_coldbrew_fruit",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 4800, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_LATTE = ITEMS.register("coffee_coldbrew_latte",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 4800, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_LATTE_CARAMEL = ITEMS.register("coffee_coldbrew_latte_caramel",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 4800, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_LATTE_CHOCOLATE = ITEMS.register("coffee_coldbrew_latte_chocolate",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 4800, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_LATTE_FRUIT = ITEMS.register("coffee_coldbrew_latte_fruit",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 4800, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_LATTE_MINT = ITEMS.register("coffee_coldbrew_latte_mint",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 4800, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_LATTE_VANILLA = ITEMS.register("coffee_coldbrew_latte_vanilla",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 4800, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 800, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    // ========================================================================
+	    // Coldbrew extensions (iced)
+	    // ========================================================================
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_FRUIT_ICE = ITEMS.register("coffee_coldbrew_fruit_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3200, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_LATTE_ICE = ITEMS.register("coffee_coldbrew_latte_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3200, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 500, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_LATTE_CARAMEL_ICE = ITEMS.register("coffee_coldbrew_latte_caramel_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3200, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 500, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_LATTE_CHOCOLATE_ICE = ITEMS.register("coffee_coldbrew_latte_chocolate_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3200, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 500, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_LATTE_FRUIT_ICE = ITEMS.register("coffee_coldbrew_latte_fruit_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3200, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 500, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_LATTE_MINT_ICE = ITEMS.register("coffee_coldbrew_latte_mint_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3200, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 500, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+	    public static final RegistryObject<Item> COFFEE_COLDBREW_LATTE_VANILLA_ICE = ITEMS.register("coffee_coldbrew_latte_vanilla_ice",
+	            () -> new DrinkCoffee(
+	                    new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+	                    new MobEffectInstance[]{
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.CAFFEINE.get(), 3200, 0),
+	                            new MobEffectInstance(net.langball.coffee.init.ModEffects.RELAX.get(), 500, 0),
+	                    }, 3, () -> ModItems.CUP_GLASS.get()));
+
+    // ========================================================================
+    // Empty cups (returned when finishing a drink)
+    // ========================================================================
+    public static final RegistryObject<Item> CUP = ITEMS.register("cup",
+            () -> new Item(new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> CUP_GLASS = ITEMS.register("cup_glass",
+            () -> new Item(new Item.Properties().stacksTo(16)));
 
     // ========================================================================
     // Tools & Specials

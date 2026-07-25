@@ -1,0 +1,12 @@
+{
+  "type": "coffeework:coffee_brewing",
+  "ingredient": {
+    "item": "minecraft:milk_bucket"
+  },
+  "result": {
+    "item": "coffeework:coffee_mandarin_drink",
+    "count": 1
+  },
+  "experience": 0.3,
+  "cookingtime": 200
+}

@@ -1,0 +1,12 @@
+{
+  "type": "coffeework:coffee_brewing",
+  "ingredient": {
+    "item": "minecraft:water_bucket"
+  },
+  "result": {
+    "item": "coffeework:coffee_black_tea",
+    "count": 1
+  },
+  "experience": 0.2,
+  "cookingtime": 150
+}

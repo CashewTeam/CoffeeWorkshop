@@ -135,6 +135,10 @@ public class ModCreativeTabs {
                         output.accept(ModItems.BAG.get());
                         output.accept(ModItems.SYRUP_EMPTY.get());
 
+                        // Empty cups
+                        output.accept(ModItems.CUP.get());
+                        output.accept(ModItems.CUP_GLASS.get());
+
                         // Cake slices & extra foods
                         output.accept(ModItems.CAKE_SPONGE_SLICE.get());
                         output.accept(ModItems.PIE_CREAM.get());
@@ -145,8 +149,61 @@ public class ModCreativeTabs {
                         output.accept(ModItems.COFFEE_INSTANT_STICK.get());
                         output.accept(ModItems.COFFEE_INSTANT_BOX.get());
                         output.accept(ModItems.COFFEE_INSTANT.get());
-                        output.accept(ModItems.COFFEE_AMERICANO.get());
                         output.accept(ModItems.ESPRESSO.get());
+                        output.accept(ModItems.COFFEE_AMERICANO.get());
+                        output.accept(ModItems.COFFEE_AMERICANO_ICE.get());
+                        output.accept(ModItems.COFFEE_AMERICANO_FRUIT.get());
+                        output.accept(ModItems.COFFEE_AMERICANO_FRUIT_ICE.get());
+                        output.accept(ModItems.COFFEE_AMERICANO_NITRO_ICE.get());
+                        output.accept(ModItems.COFFEE_AMERICANO_NITRO_FRUIT_ICE.get());
+                        output.accept(ModItems.COFFEE_LATTE.get());
+                        output.accept(ModItems.COFFEE_LATTE_ICE.get());
+                        output.accept(ModItems.COFFEE_LATTE_CARAMEL.get());
+                        output.accept(ModItems.COFFEE_LATTE_CARAMEL_ICE.get());
+                        output.accept(ModItems.COFFEE_LATTE_CHOCOLATE.get());
+                        output.accept(ModItems.COFFEE_LATTE_CHOCOLATE_ICE.get());
+                        output.accept(ModItems.COFFEE_LATTE_FRUIT.get());
+                        output.accept(ModItems.COFFEE_LATTE_FRUIT_ICE.get());
+                        output.accept(ModItems.COFFEE_LATTE_MINT.get());
+                        output.accept(ModItems.COFFEE_LATTE_MINT_ICE.get());
+                        output.accept(ModItems.COFFEE_LATTE_VANILLA.get());
+                        output.accept(ModItems.COFFEE_LATTE_VANILLA_ICE.get());
+                        output.accept(ModItems.COFFEE_LATTE_SAKURA.get());
+                        output.accept(ModItems.COFFEE_LATTE_SAKURA_ICE.get());
+                        output.accept(ModItems.COFFEE_CAPPUCCINO.get());
+                        output.accept(ModItems.COFFEE_CAPPUCCINO_ICE.get());
+                        output.accept(ModItems.COFFEE_MACCHIATO.get());
+                        output.accept(ModItems.COFFEE_MACCHIATO_ICE.get());
+                        output.accept(ModItems.COFFEE_MOCHACCINO.get());
+                        output.accept(ModItems.COFFEE_MOCHACCINO_ICE.get());
+                        output.accept(ModItems.COFFEE_GREEN_TEA.get());
+                        output.accept(ModItems.COFFEE_GREEN_TEA_ICE.get());
+                        output.accept(ModItems.COFFEE_BLACK_TEA.get());
+                        output.accept(ModItems.COFFEE_BLACK_TEA_ICE.get());
+                        output.accept(ModItems.COFFEE_MILK_TEA.get());
+                        output.accept(ModItems.COFFEE_MILK_TEA_ICE.get());
+                        output.accept(ModItems.COFFEE_MANDARIN_DRINK.get());
+                        output.accept(ModItems.COFFEE_MANDARIN_DRINK_ICE.get());
+                        output.accept(ModItems.COFFEE_COLDBREW.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_ICE.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_FRUIT.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_FRUIT_ICE.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_LATTE.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_LATTE_ICE.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_LATTE_CARAMEL.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_LATTE_CARAMEL_ICE.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_LATTE_CHOCOLATE.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_LATTE_CHOCOLATE_ICE.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_LATTE_FRUIT.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_LATTE_FRUIT_ICE.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_LATTE_MINT.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_LATTE_MINT_ICE.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_LATTE_VANILLA.get());
+                        output.accept(ModItems.COFFEE_COLDBREW_LATTE_VANILLA_ICE.get());
+                        output.accept(ModItems.COCOA.get());
+                        output.accept(ModItems.COCOA_ICE.get());
+                        output.accept(ModItems.COCOA_STRONG.get());
+                        output.accept(ModItems.COCOA_STRONG_ICE.get());
 
                         // Records
                         output.accept(ModItems.RECORD_BLANK.get());
