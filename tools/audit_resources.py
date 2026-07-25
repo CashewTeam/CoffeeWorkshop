@@ -155,6 +155,58 @@ def check_model_references() -> dict:
     }
 
 
+def check_mod_owned_textures() -> dict:
+    """Verify that every `coffeework:*` texture reference inside
+    models/block/*.json and models/item/*.json (skipping `parent` values
+    and `parent`-style model refs) resolves to a PNG under
+    `assets/coffeework/textures/`.  Catches the `coffeework:items/foo`
+    and `coffeework:blocks/foo` legacy paths that lack the modern
+    `textures/` prefix."""
+    parent_refs: list[tuple[Path, str]] = []
+    bad_textures: list[tuple[Path, str]] = []
+    resolved_textures = 0
+    files_scanned = 0
+    for d in (BLOCK_MODELS_DIR, ITEM_MODELS_DIR):
+        for path in d.glob("*.json"):
+            files_scanned += 1
+            try:
+                data = _read_json(path)
+            except json.JSONDecodeError:
+                continue
+            parent = {None}
+            def walk(n, parent_key=None):
+                nonlocal parent, bad_textures, resolved_textures
+                if isinstance(n, dict):
+                    for k, v in n.items():
+                        if isinstance(v, str) and v.startswith(f"{NAMESPACE}:"):
+                            if k == "parent":
+                                parent_refs.append((path, v))
+                                continue
+                            # Treat anything else as a texture ref.
+                            tail = v[len(NAMESPACE) + 1:]
+                            # If tail already starts with textures/, accept as-is
+                            if tail.startswith("textures/"):
+                                cand = ASSETS_ROOT / (tail + ".png")
+                            else:
+                                cand = ASSETS_ROOT / "textures" / (tail + ".png")
+                            if cand.exists():
+                                resolved_textures += 1
+                            else:
+                                bad_textures.append((path, v))
+                        else:
+                            walk(v, k)
+                elif isinstance(n, list):
+                    for v in n:
+                        walk(v, parent_key)
+            walk(data)
+    return {
+        "files_scanned": files_scanned,
+        "parent_refs": parent_refs,
+        "bad_textures": bad_textures,
+        "resolved": resolved_textures,
+    }
+
+
 def check_vanilla_textures() -> dict:
     """#5: bare vanilla references in models/block and models/item."""
     matches: list[tuple[Path, str]] = []
@@ -278,6 +330,7 @@ def main() -> int:
         "forge": check_forge_keys(),
         "model_refs": check_model_references(),
         "vanilla": check_vanilla_textures(),
+        "mod_textures": check_mod_owned_textures(),
     }
 
     print("== Lang ==")
@@ -315,6 +368,17 @@ def main() -> int:
     print(f"  non-exempt failures: {len(failures)}")
     print(f"  exempt (anvil_base only): {len(review)}")
 
+    print("\n== Mod-owned texture refs in model JSONs ==")
+    modtex = summary["mod_textures"]
+    print(f"  scanned {modtex['files_scanned']} files")
+    print(f"  texture refs resolved: {modtex['resolved']}")
+    print(f"  parent refs (untouched): {len(modtex['parent_refs'])}")
+    if modtex["bad_textures"]:
+        for p, v in modtex["bad_textures"][:10]:
+            print(f"  FAIL: {p.relative_to(REPO_ROOT)}: {v}")
+        if len(modtex["bad_textures"]) > 10:
+            print(f"  ... and {len(modtex['bad_textures']) - 10} more")
+
     # Overall result
     ok = (
         not summary["lang"]["fail"]
@@ -323,6 +387,7 @@ def main() -> int:
         and not summary["model_refs"]["bare_refs"]
         and not summary["model_refs"]["missing_targets"]
         and not failures
+        and not modtex["bad_textures"]
     )
 
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
