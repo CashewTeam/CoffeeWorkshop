@@ -24,6 +24,7 @@ public class BlockRoller extends MachineBlock {
     @Nullable
     @Override
     protected <T extends BlockEntity> BlockEntityTicker<T> createTicker(Level level, BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlockEntities.ROLLER.get(), RollerBlockEntity::tick);
+        return createTickerHelper(type, ModBlockEntities.ROLLER.get(),
+                (l, p, s, be) -> be.tick(l, p, s));
     }
 }

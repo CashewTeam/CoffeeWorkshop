@@ -5,87 +5,36 @@ import net.langball.coffee.block.MachineBlock;
 import net.langball.coffee.init.ModBlockEntities;
 import net.langball.coffee.recipes.blocks.CoffeeMachineRecipes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class CoffeeMachineBlockEntity extends BlockEntity implements MenuProvider {
+public class CoffeeMachineBlockEntity extends MachineBlockEntity {
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;
     private static final int INVENTORY_SIZE = 2;
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(INVENTORY_SIZE) {
-        @Override
-        protected void onContentsChanged(int slot) {
-            setChanged();
-        }
-
-        @Override
-        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return slot != SLOT_OUTPUT;
-        }
-    };
-    private LazyOptional<IItemHandler> lazyHandler = LazyOptional.empty();
-
-    private int cookTime;
-    private int totalCookTime;
-    private int burnTime;
-    private int burnTimeTotal;
-
-    public final ContainerData data = new ContainerData() {
-        @Override
-        public int get(int index) {
-            return switch (index) {
-                case 0 -> cookTime;
-                case 1 -> totalCookTime;
-                case 2 -> burnTime;
-                case 3 -> burnTimeTotal;
-                default -> 0;
-            };
-        }
-
-        @Override
-        public void set(int index, int value) {
-            switch (index) {
-                case 0 -> cookTime = value;
-                case 1 -> totalCookTime = value;
-                case 2 -> burnTime = value;
-                case 3 -> burnTimeTotal = value;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return 4;
-        }
-    };
-
     public CoffeeMachineBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.COFFEE_MACHINE.get(), pos, state);
-    }
+        this.itemHandler = new ItemStackHandler(INVENTORY_SIZE) {
+            @Override
+            protected void onContentsChanged(int slot) {
+                setChanged();
+            }
 
-    public IItemHandler getItemHandler() {
-        return itemHandler;
+            @Override
+            public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+                return slot != SLOT_OUTPUT;
+            }
+        };
     }
 
     @Override
@@ -99,75 +48,27 @@ public class CoffeeMachineBlockEntity extends BlockEntity implements MenuProvide
         return new net.langball.coffee.gui.ContainerCoffeeMachine(id, inventory, itemHandler, data, this);
     }
 
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        lazyHandler = LazyOptional.of(() -> itemHandler);
+    public boolean isBurning() {
+        return burnTime > 0;
     }
 
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        lazyHandler.invalidate();
-    }
-
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return lazyHandler.cast();
-        }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.putInt("BurnTime", burnTime);
-        tag.putInt("CookTime", cookTime);
-        tag.putInt("CookTimeTotal", totalCookTime);
-        tag.putInt("BurnTimeTotal", burnTimeTotal);
-        tag.put("Items", itemHandler.serializeNBT());
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        burnTime = tag.getInt("BurnTime");
-        cookTime = tag.getInt("CookTime");
-        totalCookTime = tag.getInt("CookTimeTotal");
-        burnTimeTotal = tag.getInt("BurnTimeTotal");
-        itemHandler.deserializeNBT(tag.getCompound("Items"));
-    }
-
-    @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        saveAdditional(tag);
-        return tag;
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    /* CoffeeMachine is self-powered — no fuel is consumed.
-     * It runs for getCookTime() ticks per operation. */
+    /** Counterpart to getCookTime() (moved to instance-level for consistency). */
     public static int getCookTime() {
         return 200;
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, CoffeeMachineBlockEntity be) {
-        boolean wasBurning = be.burnTime > 0;
+    @Override
+    public void tick(Level level, BlockPos pos, BlockState state) {
+        boolean wasBurning = burnTime > 0;
         boolean dirty = false;
 
-        if (be.burnTime > 0) {
-            be.burnTime--;
+        if (burnTime > 0) {
+            burnTime--;
         }
 
         if (!level.isClientSide) {
-            ItemStack input = be.itemHandler.getStackInSlot(SLOT_INPUT);
-            ItemStack output = be.itemHandler.getStackInSlot(SLOT_OUTPUT);
+            ItemStack input = itemHandler.getStackInSlot(SLOT_INPUT);
+            ItemStack output = itemHandler.getStackInSlot(SLOT_OUTPUT);
             ItemStack result = !input.isEmpty() ? CoffeeMachineRecipes.instance().getSmeltingResult(input) : ItemStack.EMPTY;
 
             boolean canSmelt = !result.isEmpty()
@@ -175,32 +76,34 @@ public class CoffeeMachineBlockEntity extends BlockEntity implements MenuProvide
                     || (ItemStack.isSameItemSameTags(output, result)
                     && output.getCount() + result.getCount() <= output.getMaxStackSize()));
 
-            /* Self-powered: when idle and work is available, start a burn cycle */
-            if (be.burnTime == 0 && canSmelt) {
-                be.burnTime = getCookTime();
-                be.burnTimeTotal = getCookTime();
-                be.totalCookTime = getCookTime();
+            /* Self-powered: when idle and work is available, start a burn cycle.
+             * CoffeeMachine has no fuel slot — it always runs for getCookTime() ticks. */
+            if (burnTime == 0 && canSmelt) {
+                burnTime = getCookTime();
+                burnTimeTotal = getCookTime();
+                totalCookTime = getCookTime();
                 dirty = true;
-                be.setChanged();
+                setChanged();
             }
 
-            if (be.isBurning() && canSmelt) {
-                be.cookTime++;
-                if (be.cookTime >= be.totalCookTime) {
-                    be.cookTime = 0;
-                    be.totalCookTime = getCookTime();
-                    be.smeltItem(input, result, output);
+            if (burnTime > 0 && canSmelt) {
+                cookTime++;
+                if (cookTime >= totalCookTime) {
+                    cookTime = 0;
+                    totalCookTime = getCookTime();
+                    smeltItem(input, result, output);
                     dirty = true;
                 }
             } else {
-                if (be.cookTime > 0) {
-                    be.cookTime = Math.max(be.cookTime - 2, 0);
+                if (cookTime != 0) {
+                    cookTime = 0;
+                    dirty = true;
                 }
             }
 
-            if (wasBurning != (be.burnTime > 0)) {
+            if (wasBurning != (burnTime > 0)) {
                 dirty = true;
-                level.setBlock(pos, state.setValue(MachineBlock.LIT, be.burnTime > 0),
+                level.setBlock(pos, state.setValue(MachineBlock.LIT, burnTime > 0),
                         Block.UPDATE_ALL);
             }
         }
@@ -214,18 +117,15 @@ public class CoffeeMachineBlockEntity extends BlockEntity implements MenuProvide
         if (output.isEmpty()) {
             itemHandler.setStackInSlot(SLOT_OUTPUT, result.copy());
         } else {
-            output.grow(result.getCount());
+            int newCount = Math.min(output.getCount() + result.getCount(),
+                    output.getMaxStackSize());
+            output.setCount(newCount);
         }
-        /* Handle container items (e.g. glass bottles → empty bottles) */
         ItemStack containerItem = input.getCraftingRemainingItem();
         if (!containerItem.isEmpty()) {
             itemHandler.setStackInSlot(SLOT_INPUT, containerItem);
         } else {
             input.shrink(1);
         }
-    }
-
-    public boolean isBurning() {
-        return burnTime > 0;
     }
 }

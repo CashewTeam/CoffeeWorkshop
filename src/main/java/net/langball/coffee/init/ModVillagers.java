@@ -29,16 +29,16 @@ public class ModVillagers {
 
     /** Coffee machine: workstation for both barista and materials trader */
     public static final RegistryObject<PoiType> COFFEE_POI = POI_TYPES.register("coffee_poi",
-            () -> new PoiType(ImmutableSet.of(
-                    ModBlocks.COFFEE_MACHINE.get().defaultBlockState(),
-                    ModBlocks.COFFEE_MACHINE_ON.get().defaultBlockState()),
+            () -> new PoiType(
+                    ImmutableSet.copyOf(
+                            ModBlocks.COFFEE_MACHINE.get().getStateDefinition().getPossibleStates()),
                     1, 1));
 
     /** Oven: workstation for the food trader */
     public static final RegistryObject<PoiType> OVEN_POI = POI_TYPES.register("oven_poi",
-            () -> new PoiType(ImmutableSet.of(
-                    ModBlocks.OVEN.get().defaultBlockState(),
-                    ModBlocks.OVEN_ON.get().defaultBlockState()),
+            () -> new PoiType(
+                    ImmutableSet.copyOf(
+                            ModBlocks.OVEN.get().getStateDefinition().getPossibleStates()),
                     1, 1));
 
     // ========================== Professions ==========================

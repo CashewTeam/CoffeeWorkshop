@@ -1,14 +1,27 @@
 package net.langball.coffee.block;
 
+import net.langball.coffee.block.entity.MachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -17,8 +30,12 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -85,6 +102,67 @@ public abstract class MachineBlock extends BaseEntityBlock {
     @Override
     public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
         return state.getValue(LIT) ? 13 : 0;
+    }
+
+    // ========== PR-06 additions ============================================
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+                                 Player player, InteractionHand hand,
+                                 BlockHitResult hit) {
+        if (level.isClientSide) {
+            return InteractionResult.sidedSuccess(true);
+        }
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof MenuProvider mp) {
+            NetworkHooks.openScreen((ServerPlayer) player, mp, pos);
+            return InteractionResult.CONSUME;
+        }
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos,
+                         BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock())) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof MachineBlockEntity mbe) {
+                IItemHandler handler = mbe.getItemHandler();
+                for (int i = 0; i < handler.getSlots(); i++) {
+                    Containers.dropItemStack(level,
+                            pos.getX(), pos.getY(), pos.getZ(),
+                            handler.getStackInSlot(i));
+                }
+            }
+            super.onRemove(state, level, pos, newState, movedByPiston);
+        }
+    }
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, Level level,
+                                      BlockPos pos) {
+        BlockEntity be = level.getBlockEntity(pos);
+        return (be instanceof MachineBlockEntity mbe) ? mbe.getComparatorOutput() : 0;
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos,
+                            RandomSource random) {
+        if (!state.getValue(LIT)) return;
+        double x = pos.getX() + 0.5;
+        double y = pos.getY() + 1.0;
+        double z = pos.getZ() + 0.5;
+        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0D, 0.02D, 0.0D);
+        if (random.nextInt(24) == 0) {
+            level.playLocalSound(x, y, z, SoundEvents.FURNACE_FIRE_CRACKLE,
+                    SoundSource.BLOCKS, 0.5F,
+                    random.nextFloat() * 0.2F + 0.6F, false);
+        }
     }
 
     @Nullable

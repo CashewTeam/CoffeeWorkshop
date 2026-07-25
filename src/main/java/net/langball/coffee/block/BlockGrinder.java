@@ -24,6 +24,7 @@ public class BlockGrinder extends MachineBlock {
     @Nullable
     @Override
     protected <T extends BlockEntity> BlockEntityTicker<T> createTicker(Level level, BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlockEntities.GRINDER.get(), GrinderBlockEntity::tick);
+        return createTickerHelper(type, ModBlockEntities.GRINDER.get(),
+                (l, p, s, be) -> be.tick(l, p, s));
     }
 }

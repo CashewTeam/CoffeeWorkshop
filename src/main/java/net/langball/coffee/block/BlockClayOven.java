@@ -24,6 +24,7 @@ public class BlockClayOven extends MachineBlock {
     @Nullable
     @Override
     protected <T extends BlockEntity> BlockEntityTicker<T> createTicker(Level level, BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlockEntities.OVEN.get(), OvenBlockEntity::tick);
+        return createTickerHelper(type, ModBlockEntities.OVEN.get(),
+                (l, p, s, be) -> be.tick(l, p, s));
     }
 }
