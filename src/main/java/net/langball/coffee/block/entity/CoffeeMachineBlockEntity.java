@@ -7,11 +7,11 @@ import net.langball.coffee.init.ModRecipeTypes;
 import net.langball.coffee.recipes.MachineRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,13 +19,22 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class CoffeeMachineBlockEntity extends MachineBlockEntity {
+/**
+ * Coffee Machine block entity — brews drinks from coffee powder etc.
+ *
+ * <p>Self-powered: has no fuel slot.  When idle and a valid recipe is
+ * present, the machine starts a self-cycle for exactly
+ * {@code recipe.cookingTime()} ticks.  The {@code burnTime} field is
+ * repurposed as the self-cycle timer (matches the recipe's duration).
+ *
+ * <p>Extends {@link AbstractProcessingBlockEntity} directly (not the
+ * fueled variant) because it does not consume external fuel.
+ */
+public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
+
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;
     private static final int INVENTORY_SIZE = 2;
-
-    @Nullable
-    private MachineRecipe cachedRecipe;
 
     public CoffeeMachineBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.COFFEE_MACHINE.get(), pos, state);
@@ -33,7 +42,7 @@ public class CoffeeMachineBlockEntity extends MachineBlockEntity {
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
-                if (slot == SLOT_INPUT) cachedRecipe = null;
+                if (slot == SLOT_INPUT) activeRecipeId = null;
             }
 
             @Override
@@ -41,6 +50,32 @@ public class CoffeeMachineBlockEntity extends MachineBlockEntity {
                 return slot != SLOT_OUTPUT;
             }
         };
+    }
+
+    @Override
+    protected RecipeType<MachineRecipe> getRecipeType() {
+        return ModRecipeTypes.COFFEE_BREWING;
+    }
+
+    @Override
+    protected int getInputSlot() { return SLOT_INPUT; }
+
+    @Override
+    protected int getOutputSlot() { return SLOT_OUTPUT; }
+
+    // ---- MachineBlockEntity slot groups for automation -----------------
+
+    @Override
+    protected int[] getInputSlots() { return new int[]{SLOT_INPUT}; }
+
+    @Override
+    protected int[] getFuelSlots() { return new int[0]; } // no fuel slot
+
+    @Override
+    protected int[] getOutputSlots() { return new int[]{SLOT_OUTPUT}; }
+
+    public boolean isBurning() {
+        return burnTime > 0;
     }
 
     @Override
@@ -54,30 +89,6 @@ public class CoffeeMachineBlockEntity extends MachineBlockEntity {
         return new net.langball.coffee.gui.ContainerCoffeeMachine(id, inventory, itemHandler, data, this);
     }
 
-    public boolean isBurning() {
-        return burnTime > 0;
-    }
-
-    // ─── Recipe lookup ─────────────────────────────────────────────────────
-
-    @Nullable
-    private MachineRecipe getCurrentRecipe() {
-        ItemStack input = itemHandler.getStackInSlot(SLOT_INPUT);
-        if (input.isEmpty()) {
-            cachedRecipe = null;
-            return null;
-        }
-        if (cachedRecipe != null && cachedRecipe.matches(new SimpleContainer(input), getLevel())) {
-            return cachedRecipe;
-        }
-        cachedRecipe = getLevel().getRecipeManager()
-                .getRecipeFor(ModRecipeTypes.COFFEE_BREWING, new SimpleContainer(input), getLevel())
-                .orElse(null);
-        return cachedRecipe;
-    }
-
-    // ─── Tick body ─────────────────────────────────────────────────────────
-
     @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide) return;
@@ -85,49 +96,46 @@ public class CoffeeMachineBlockEntity extends MachineBlockEntity {
         boolean wasBurning = burnTime > 0;
         boolean dirty = false;
 
+        // Self-cycle timer
         if (burnTime > 0) {
             burnTime--;
         }
 
-        ItemStack output = itemHandler.getStackInSlot(SLOT_OUTPUT);
         MachineRecipe recipe = getCurrentRecipe();
+        var prevRecipeId = activeRecipeId;
+        boolean canProcess = recipe != null && canAcceptResult(recipe);
 
-        boolean canSmelt = recipe != null
-                && (output.isEmpty()
-                || (ItemStack.isSameItemSameTags(output, recipe.result())
-                && output.getCount() + recipe.result().getCount() <= output.getMaxStackSize()));
-
-        /* Self-powered: when idle and work is available, start a burn cycle.
-         * CoffeeMachine has no fuel slot — it always runs for cookingTime ticks. */
-        if (burnTime == 0 && canSmelt) {
+        // Start a new self-cycle when idle and work is available
+        if (burnTime == 0 && canProcess) {
             burnTime = recipe.cookingTime();
             burnTimeTotal = recipe.cookingTime();
             totalCookTime = recipe.cookingTime();
             dirty = true;
         }
 
-        if (burnTime > 0 && canSmelt) {
+        // Detect recipe change
+        if (recipe != null && prevRecipeId != null && !prevRecipeId.equals(recipe.getId())) {
+            onRecipeChanged(prevRecipeId, recipe.getId());
+            dirty = true;
+        }
+
+        // Advance progress
+        if (burnTime > 0 && canProcess) {
             cookTime++;
             if (cookTime >= totalCookTime) {
                 cookTime = 0;
                 totalCookTime = recipe.cookingTime();
-                if (output.isEmpty()) {
-                    itemHandler.setStackInSlot(SLOT_OUTPUT, recipe.result().copy());
-                } else {
-                    int newCount = Math.min(output.getCount() + recipe.result().getCount(),
-                            output.getMaxStackSize());
-                    output.setCount(newCount);
-                }
-                consumeOneWithRemainder(SLOT_INPUT);
+                processRecipe(recipe);
                 dirty = true;
             }
-        } else {
-            if (cookTime != 0) {
+        } else if (!canProcess && cookTime > 0) {
+            if (recipe == null) {
                 cookTime = 0;
                 dirty = true;
             }
         }
 
+        // Sync LIT
         if (wasBurning != (burnTime > 0)) {
             dirty = true;
             level.setBlock(pos, state.setValue(MachineBlock.LIT, burnTime > 0),
@@ -136,24 +144,6 @@ public class CoffeeMachineBlockEntity extends MachineBlockEntity {
 
         if (dirty) {
             setChanged(level, pos, state);
-        }
-    }
-
-    private void smeltItem(MachineRecipe recipe) {
-        ItemStack input = itemHandler.getStackInSlot(SLOT_INPUT);
-        ItemStack output = itemHandler.getStackInSlot(SLOT_OUTPUT);
-        if (output.isEmpty()) {
-            itemHandler.setStackInSlot(SLOT_OUTPUT, recipe.result().copy());
-        } else {
-            int newCount = Math.min(output.getCount() + recipe.result().getCount(),
-                    output.getMaxStackSize());
-            output.setCount(newCount);
-        }
-        ItemStack container = input.getCraftingRemainingItem();
-        if (!container.isEmpty()) {
-            itemHandler.setStackInSlot(SLOT_INPUT, container);
-        } else {
-            input.shrink(1);
         }
     }
 }

@@ -166,3 +166,93 @@ Three tool scripts under `tools/` were introduced:
 
 The conversion scripts are conservative: they never modify a file unless
 they can prove a real *value* change is needed.
+
+## 2026-07-25 — Phase 2 machine refactor behavior decisions
+
+These decisions define the unified processing-machine semantics adopted
+during Phase 2.  All five machines (Grinder, Roller, Oven, Icecream
+Machine, Coffee Machine) share the same rules unless a decision
+explicitly calls out a machine-specific exception.
+
+### Output-blocking strategy
+
+When the output slot cannot accept the full recipe result (because the
+slot is already occupied by a different item, or the stack has reached
+its maximum size):
+
+- **cookTime is paused**, not reset to zero.  Already-consumed fuel
+  continues to burn down (it was spent to heat the machine, not wasted).
+- New fuel will **not** be consumed while the output remains blocked —
+  the machine will not start a new burn cycle.
+- Coffee Machine behaves identically: it pauses progress and turns off
+  `LIT`; it will not start a new self-cycle until the output clears.
+- When the output is unblocked (player or hopper removes items),
+  processing resumes from the paused `cookTime` for the same recipe.
+  If the input has changed in the meantime, progress is reset (recipe
+  change rule).
+
+### Comparator semantics
+
+- The comparator output represents **processing progress**: 0 when idle,
+  1–14 proportional to `cookTime / totalCookTime`, and 15 when the craft
+  is about to complete.
+
+### Automation direction rules
+
+For fueled machines (Grinder, Roller, Oven, Icecream Machine):
+
+| Direction    | Insert allowed                | Extract allowed |
+|-------------|-------------------------------|-----------------|
+| UP           | input slot only               | no              |
+| HORIZONTAL   | fuel slot only                | no              |
+| DOWN         | no                            | output slot only|
+| `side=null`  | full handler (for GUI/code)   | full handler    |
+
+For Coffee Machine (no fuel slot):
+
+| Direction    | Insert allowed                | Extract allowed |
+|-------------|-------------------------------|-----------------|
+| UP           | input slot only               | no              |
+| HORIZONTAL   | input slot only               | no              |
+| DOWN         | no                            | output slot only|
+| `side=null`  | full handler (for GUI/code)   | full handler    |
+
+### Experience storage
+
+- `recipesUsed` (Map\<ResourceLocation, Integer\>) stored in NBT tracks
+  how many times each recipe completed on this machine.
+- Experience is awarded when a **player** manually removes an item from
+  the output slot (click, shift-click, or hotbar-swap).  The total XP is
+  `recipe.experience × count`.
+- Fractional experience uses the standard furnace probability:
+  `level.random.nextFloat() < (total - (int)total)` → +1 XP.
+- **Hoppers and other automation do not generate experience orbs** when
+  extracting from the output.  The accumulated XP stays in the machine.
+- A player who later manually extracts any remaining output claims all
+  accumulated experience.
+- Breaking the machine does **not** drop stored experience.
+
+### Recipe caching
+
+- Recipe objects are never cached across `/reload`.  Only the
+  `ResourceLocation` (recipe ID) is persisted in NBT.
+- Each tick resolves the active recipe ID through the current
+  `RecipeManager`, falling back to a full recipe-type scan if the ID
+  has changed.
+
+### Recipe change rule
+
+- If the active recipe ID changes (different recipe or input no longer
+  matches), `cookTime` resets to 0 and `totalCookTime` updates to the
+  new recipe's `cookingTime`.
+- If only the input stack count changes (same recipe), progress is
+  **preserved** — the cook continues from where it was.
+
+### Icecream Machine fuel policy
+
+- The legacy `Map<ItemStack, Integer> ICE_FUEL_REGISTRY` (using mutable
+  `ItemStack` as map keys) is replaced by an `IcecreamCoolingFuelPolicy`
+  backed by a `Map<Item, Integer>` plus an optional Tag-based override.
+  Initial fuel entries: `ICE`=200, `PACKED_ICE`=800, `BLUE_ICE`=3600.
+- Standard furnace fuels are *not* accepted as ice cream machine fuel
+  (the machine requires cold sources, not heat).

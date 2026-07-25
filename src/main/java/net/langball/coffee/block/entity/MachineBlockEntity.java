@@ -1,6 +1,7 @@
 package net.langball.coffee.block.entity;
 
 import net.langball.coffee.CoffeeWork;
+import net.langball.coffee.recipes.MachineRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -8,14 +9,19 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,27 +33,32 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 /**
  * Common base for all five processing-machine BlockEntities.
  *
- * The class holds:
+ * <h3>Phase 2 additions</h3>
  * <ul>
- *   <li>an {@link ItemStackHandler} (size determined per subclass)</li>
- *   <li>four tracking fields: {@link #cookTime}, {@link #totalCookTime},
- *       {@link #burnTime}, {@link #burnTimeTotal}</li>
- *   <li>a ready-made {@link ContainerData} implementation ({@link #data})
- *       that exposes those four fields to the server/client sync</li>
- *   <li>save / load / sync boilerplate</li>
- *   <li>capability lifecycle with {@link #reviveCaps()}</li>
- *   <li>furnace-style comparator output via {@link #getComparatorOutput()}</li>
+ *   <li>{@link #activeRecipeId} — recipe ID (not object) persisted in NBT,
+ *       safe across {@code /reload}.</li>
+ *   <li>{@link #recipesUsed} — tracks completions per recipe ID for
+ *       experience award.</li>
+ *   <li>{@link #resolveRecipe(RecipeType, int)} — resolves active recipe
+ *       through RecipeManager, preferring by-key lookup.</li>
+ *   <li>{@link #canAcceptResult(int, ItemStack)} — output slot capacity
+ *       check.</li>
+ *   <li>{@link #insertResult(int, ItemStack)} — merges or places result.</li>
+ *   <li>{@link #markChangedAndSync()} — unified dirty+sync helper.</li>
  * </ul>
  *
  * Subclasses implement:
  * <ul>
  *   <li>{@link #getDisplayName()} – I18N key for the container title</li>
  *   <li>{@link #createMenu(int, Inventory, Player)} – the menu factory</li>
- *   <li>{@link #tick(Level, BlockPos, BlockState)} – the tick body
- *       (called by the static tick method registered in the companion Block)</li>
+ *   <li>{@link #tick(Level, BlockPos, BlockState)} – the tick body</li>
  * </ul>
  */
 public abstract class MachineBlockEntity extends BlockEntity implements MenuProvider {
@@ -56,10 +67,36 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     protected ItemStackHandler itemHandler;
     protected LazyOptional<IItemHandler> lazyHandler = LazyOptional.empty();
 
+    /** Per-direction capability handlers for automation. */
+    protected LazyOptional<IItemHandler> inputHandler = LazyOptional.empty();
+    protected LazyOptional<IItemHandler> fuelHandler = LazyOptional.empty();
+    protected LazyOptional<IItemHandler> outputHandler = LazyOptional.empty();
+
     protected int cookTime;
     protected int totalCookTime;
     protected int burnTime;
     protected int burnTimeTotal;
+
+    /**
+     * ID of the recipe currently being processed (if any).
+     * Stored in NBT; survives /reload because the recipe is re-resolved
+     * through the current RecipeManager on next tick.
+     */
+    @Nullable
+    protected ResourceLocation activeRecipeId;
+
+    /**
+     * Number of times each recipe completed on this machine since the
+     * last time a player manually extracted output.  Used for experience
+     * award.  <em>Not</em> synced to client; only saved in NBT.
+     */
+    final Map<ResourceLocation, Integer> recipesUsed = new HashMap<>();
+
+    /** @return the recipes-used map for experience tracking (package-private
+     *  so {@link net.langball.coffee.gui.slot.SlotMachineResult} can access it). */
+    public Map<ResourceLocation, Integer> getRecipesUsed() {
+        return recipesUsed;
+    }
 
     public final ContainerData data = new ContainerData() {
         @Override public int get(int index) {
@@ -89,12 +126,22 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         super(type, pos, state);
     }
 
-    /** Convenience getter for the inventory handler.
-     *  Subclasses override {@code isItemValid} on the handler if they
-     *  need to restrict which items go into each slot (fuel vs input). */
+    /** Convenience getter for the inventory handler. */
     public IItemHandler getItemHandler() {
         return itemHandler;
     }
+
+    // ---- Abstract slot groups for automation --------------------------
+
+    /** Slot indices that accept input from the top/bottom/etc. */
+    protected abstract int[] getInputSlots();
+
+    /** Slot indices that accept fuel from the sides.  Empty array
+     *  for machines without a fuel slot (e.g. Coffee Machine). */
+    protected abstract int[] getFuelSlots();
+
+    /** Slot indices from which automation may extract items. */
+    protected abstract int[] getOutputSlots();
 
     // ---- Capability lifecycle -------------------------------------------
 
@@ -102,25 +149,65 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     public void onLoad() {
         super.onLoad();
         lazyHandler = LazyOptional.of(() -> itemHandler);
+        inputHandler = LazyOptional.of(() ->
+                new net.langball.coffee.capability.InsertOnlyItemHandler(itemHandler, getInputSlots()));
+        fuelHandler = LazyOptional.of(() -> {
+            int[] fuelSlots = getFuelSlots();
+            if (fuelSlots.length == 0) {
+                // No fuel slots → return a handler that rejects everything
+                return new net.langball.coffee.capability.InsertOnlyItemHandler(itemHandler);
+            }
+            return new net.langball.coffee.capability.InsertOnlyItemHandler(itemHandler, fuelSlots);
+        });
+        outputHandler = LazyOptional.of(() ->
+                new net.langball.coffee.capability.ExtractOnlyItemHandler(itemHandler, getOutputSlots()));
     }
 
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
         lazyHandler.invalidate();
+        inputHandler.invalidate();
+        fuelHandler.invalidate();
+        outputHandler.invalidate();
     }
 
     @Override
     public void reviveCaps() {
         super.reviveCaps();
         lazyHandler = LazyOptional.of(() -> itemHandler);
+        inputHandler = LazyOptional.of(() ->
+                new net.langball.coffee.capability.InsertOnlyItemHandler(itemHandler, getInputSlots()));
+        fuelHandler = LazyOptional.of(() -> {
+            int[] fuelSlots = getFuelSlots();
+            if (fuelSlots.length == 0) {
+                return new net.langball.coffee.capability.InsertOnlyItemHandler(itemHandler);
+            }
+            return new net.langball.coffee.capability.InsertOnlyItemHandler(itemHandler, fuelSlots);
+        });
+        outputHandler = LazyOptional.of(() ->
+                new net.langball.coffee.capability.ExtractOnlyItemHandler(itemHandler, getOutputSlots()));
     }
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap,
                                                        @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return lazyHandler.cast();
+            if (side == null) {
+                return lazyHandler.cast();
+            }
+            return switch (side) {
+                case UP -> inputHandler.cast();
+                case DOWN -> outputHandler.cast();
+                default -> { // horizontal
+                    int[] fuelSlots = getFuelSlots();
+                    if (fuelSlots.length > 0) {
+                        yield fuelHandler.cast();
+                    }
+                    // Coffee Machine: no fuel → horizontal also goes to input
+                    yield inputHandler.cast();
+                }
+            };
         }
         return super.getCapability(cap, side);
     }
@@ -135,6 +222,16 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         tag.putInt("CookTimeTotal", totalCookTime);
         tag.putInt("BurnTimeTotal", burnTimeTotal);
         tag.put("Items", itemHandler.serializeNBT());
+        if (activeRecipeId != null) {
+            tag.putString("ActiveRecipe", activeRecipeId.toString());
+        }
+        if (!recipesUsed.isEmpty()) {
+            CompoundTag used = new CompoundTag();
+            for (var entry : recipesUsed.entrySet()) {
+                used.putInt(entry.getKey().toString(), entry.getValue());
+            }
+            tag.put("RecipesUsed", used);
+        }
     }
 
     @Override
@@ -145,6 +242,20 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         totalCookTime = tag.getInt("CookTimeTotal");
         burnTimeTotal = tag.getInt("BurnTimeTotal");
         itemHandler.deserializeNBT(tag.getCompound("Items"));
+        // Active recipe
+        if (tag.contains("ActiveRecipe")) {
+            activeRecipeId = ResourceLocation.tryParse(tag.getString("ActiveRecipe"));
+        }
+        // Recipes used
+        if (tag.contains("RecipesUsed")) {
+            CompoundTag used = tag.getCompound("RecipesUsed");
+            for (String key : used.getAllKeys()) {
+                ResourceLocation rl = ResourceLocation.tryParse(key);
+                if (rl != null) {
+                    recipesUsed.put(rl, used.getInt(key));
+                }
+            }
+        }
     }
 
     @Override
@@ -168,23 +279,157 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
         return Math.min(15, (cookTime * 15) / total);
     }
 
+    // ---- Unified dirty flag + sync ---------------------------------------
+
+    /**
+     * Marks the block entity as changed and sends a block update to clients
+     * so that LIT state, comparator output, and render data stay in sync.
+     *
+     * <p>Call this whenever the inventory, progress, or LIT state changes.
+     * Avoid calling it every tick unconditionally.
+     */
+    protected void markChangedAndSync() {
+        setChanged();
+        if (level != null) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(),
+                    Block.UPDATE_CLIENTS);
+            level.updateNeighbourForOutputSignal(worldPosition,
+                    getBlockState().getBlock());
+        }
+    }
+
+    // ---- Recipe resolver ------------------------------------------------
+
+    /**
+     * Resolves the matching {@link MachineRecipe} for the given input slot.
+     *
+     * <h3>Lookup strategy</h3>
+     * <ol>
+     *   <li>If {@link #activeRecipeId} is set, look it up by key in the
+     *       current {@link RecipeManager}.  If it still matches the input,
+     *       return it.  If not, clear the ID.</li>
+     *   <li>Otherwise, scan all recipes of the given {@code type} for a
+     *       match.</li>
+     * </ol>
+     *
+     * <p>This method never caches the recipe object itself — only the ID.
+     * After {@code /reload}, the new recipe object is fetched through the
+     * current RecipeManager.</p>
+     *
+     * @param type      the machine-specific RecipeType
+     * @param inputSlot the slot index to check for a matching ingredient
+     * @return the matching recipe, or {@code null} if none
+     */
+    @Nullable
+    protected MachineRecipe resolveRecipe(RecipeType<MachineRecipe> type, int inputSlot) {
+        if (level == null) return null;
+
+        ItemStack input = itemHandler.getStackInSlot(inputSlot);
+        if (input.isEmpty()) {
+            activeRecipeId = null;
+            return null;
+        }
+
+        RecipeManager rm = level.getRecipeManager();
+        SimpleContainer container = new SimpleContainer(input);
+
+        // 1. Try by stored ID first (fast path after /reload)
+        if (activeRecipeId != null) {
+            Optional<? extends net.minecraft.world.item.crafting.Recipe<?>> byId =
+                    rm.byKey(activeRecipeId);
+            if (byId.isPresent() && byId.get() instanceof MachineRecipe recipe
+                    && recipe.getType() == type && recipe.matches(container, level)) {
+                return recipe;
+            }
+            activeRecipeId = null;
+        }
+
+        // 2. Full scan
+        Optional<MachineRecipe> found = rm.getRecipeFor(type, container, level);
+        if (found.isPresent()) {
+            MachineRecipe recipe = found.get();
+            activeRecipeId = recipe.getId();
+            return recipe;
+        }
+        activeRecipeId = null;
+        return null;
+    }
+
+    /**
+     * Checks whether {@code result} can be placed into the output slot.
+     *
+     * <p>Returns {@code true} if:
+     * <ul>
+     *   <li>the slot is empty, or</li>
+     *   <li>the slot contains the same item (ignoring count), has matching
+     *       NBT/components, and the sum does not exceed the item's max
+     *       stack size or the slot's capacity.</li>
+     * </ul>
+     *
+     * @param outputSlot the slot index to check
+     * @param result     the proposed result (count carries expected amount)
+     * @return {@code true} if the result can be accepted
+     */
+    protected boolean canAcceptResult(int outputSlot, ItemStack result) {
+        if (result.isEmpty() || result.getCount() <= 0) return false;
+
+        ItemStack existing = itemHandler.getStackInSlot(outputSlot);
+        if (existing.isEmpty()) return true;
+
+        if (!ItemStack.isSameItemSameTags(existing, result)) return false;
+
+        int total = existing.getCount() + result.getCount();
+        int slotLimit = Math.min(itemHandler.getSlotLimit(outputSlot), result.getMaxStackSize());
+        return total <= slotLimit;
+    }
+
+    /**
+     * Places {@code result} into the output slot, merging with the
+     * existing stack if present.
+     *
+     * <p>Assumes {@link #canAcceptResult(int, ItemStack)} has already
+     * returned {@code true}.  Uses {@link ItemStack#copy()} to avoid
+     * mutating the caller's reference.
+     *
+     * @param outputSlot the slot index
+     * @param result     the result to insert
+     */
+    protected void insertResult(int outputSlot, ItemStack result) {
+        ItemStack existing = itemHandler.getStackInSlot(outputSlot);
+        if (existing.isEmpty()) {
+            itemHandler.setStackInSlot(outputSlot, result.copy());
+        } else {
+            int newCount = Math.min(existing.getCount() + result.getCount(),
+                    Math.min(itemHandler.getSlotLimit(outputSlot), result.getMaxStackSize()));
+            existing.setCount(newCount);
+        }
+    }
+
+    /**
+     * Records one completion of the given recipe for experience tracking.
+     */
+    protected void recordRecipeCompletion(MachineRecipe recipe) {
+        recipesUsed.merge(recipe.getId(), 1, Integer::sum);
+    }
+
+    /**
+     * Resets the processing progress, typically after a recipe change.
+     */
+    protected void resetProgress() {
+        cookTime = 0;
+        totalCookTime = 0;
+    }
+
     // ---- Input consumption helpers ---------------------------------------
 
     /**
      * Consume one item from the given input slot, correctly handling
      * crafting remainders (container items).
-     *
-     * <p>The old pattern ({@code setStackInSlot(slot, container)}) would
-     * replace an entire multi-item stack with a single remainder, silently
-     * deleting the other items.  This method shrinks by 1 and only places
-     * the remainder into the slot when the input becomes empty; otherwise
-     * the remainder is ejected into the world.</p>
      */
     protected void consumeOneWithRemainder(int slot) {
         ItemStack input = itemHandler.getStackInSlot(slot);
         if (input.isEmpty()) return;
 
-        // Simulate consuming a single item to discover its remainder
         ItemStack one = input.copyWithCount(1);
         ItemStack remainder = one.getCraftingRemainingItem();
 
@@ -192,10 +437,8 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
         if (!remainder.isEmpty()) {
             if (input.isEmpty()) {
-                // Slot is now empty — put the remainder in
                 itemHandler.setStackInSlot(slot, remainder);
             } else {
-                // Still other items in the slot — eject remainder
                 Containers.dropItemStack(level, worldPosition.getX(),
                         worldPosition.getY(), worldPosition.getZ(), remainder);
             }
@@ -204,7 +447,6 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
     // ---- Tick hook -----------------------------------------------------
 
-    /** Subclass tick body.  The companion static tick method registered
-     *  on the Block should delegate to this instance method. */
+    /** Subclass tick body. */
     public abstract void tick(Level level, BlockPos pos, BlockState state);
 }

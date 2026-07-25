@@ -45,12 +45,12 @@ public class CoffeeWork {
         });
     }
 
-    /** Populate the ice-cream machine's custom fuel registry. */
+    /** Populate the ice-cream machine's custom cooling-fuel registry. */
     private static void registerIceFuels() {
-        var reg = net.langball.coffee.block.entity.IcecreamMachineBlockEntity.ICE_FUEL_REGISTRY;
-        reg.put(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.SNOWBALL), 100);
-        reg.put(new net.minecraft.world.item.ItemStack(net.minecraft.world.level.block.Blocks.ICE), 200);
-        reg.put(new net.minecraft.world.item.ItemStack(net.minecraft.world.level.block.Blocks.PACKED_ICE), 200);
-        reg.put(new net.minecraft.world.item.ItemStack(net.minecraft.world.level.block.Blocks.BLUE_ICE), 400);
+        var reg = net.langball.coffee.block.entity.IcecreamMachineBlockEntity.COOLING_FUEL;
+        reg.put(net.minecraft.world.item.Items.SNOWBALL, 100);
+        reg.put(net.minecraft.world.item.Items.ICE, 200);
+        reg.put(net.minecraft.world.item.Items.PACKED_ICE, 800);
+        reg.put(net.minecraft.world.item.Items.BLUE_ICE, 3600);
     }
 }
