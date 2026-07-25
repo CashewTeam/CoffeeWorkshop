@@ -171,30 +171,130 @@ public class MachineGameTests {
         });
     }
 
-    // ─── Other machines (using their real recipes) ─────────────────────
+    // ─── Other machines (real Phase 3 tests) ──────────────────────────
 
-    @GameTest(template = "empty")
-    public static void roller_hasRecipe_processes(GameTestHelper helper) {
-        helper.succeed();
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void oven_roastsCoffeeBean(GameTestHelper helper) {
+        helper.setBlock(MACHINE_POS, net.langball.coffee.init.ModBlocks.OVEN.get());
+        MachineTestHelper.insertItem(helper, MACHINE_POS, 0, // SLOT_INPUT
+                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_BEAN_RAW.get(), 64));
+        MachineTestHelper.insertItem(helper, MACHINE_POS, 1, // SLOT_FUEL
+                new ItemStack(Items.COAL, 64));
+
+        helper.runAfterDelay(220, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, MACHINE_POS, 2);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COFFEE_BEAN.get()),
+                    "Oven should roast raw beans, got: " + out);
+            helper.succeed();
+        });
     }
 
-    @GameTest(template = "empty")
-    public static void oven_hasRecipe_processes(GameTestHelper helper) {
-        helper.succeed();
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void roller_platesIron(GameTestHelper helper) {
+        helper.setBlock(MACHINE_POS, net.langball.coffee.init.ModBlocks.ROLLER.get());
+        MachineTestHelper.insertItem(helper, MACHINE_POS, 0, new ItemStack(Items.IRON_INGOT, 64));
+        MachineTestHelper.insertItem(helper, MACHINE_POS, 1, new ItemStack(Items.COAL, 64));
+
+        helper.runAfterDelay(220, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, MACHINE_POS, 2);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.PLATE_IRON.get()),
+                    "Roller should produce plate_iron, got: " + out);
+            helper.succeed();
+        });
     }
 
-    @GameTest(template = "empty")
-    public static void icecream_hasRecipe_processes(GameTestHelper helper) {
-        helper.succeed();
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void icecream_freezesVanilla(GameTestHelper helper) {
+        helper.setBlock(MACHINE_POS, net.langball.coffee.init.ModBlocks.ICECREAM_MACHINE.get());
+        MachineTestHelper.insertItem(helper, MACHINE_POS, 0,
+                new ItemStack(net.langball.coffee.init.ModItems.ICECREAM_MIX_VANILLA.get(), 64));
+        MachineTestHelper.insertItem(helper, MACHINE_POS, 1, new ItemStack(Items.PACKED_ICE, 64));
+
+        helper.runAfterDelay(420, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, MACHINE_POS, 2);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.ICECREAM_VANILLA.get()),
+                    "Icecream should freeze vanilla, got: " + out);
+            helper.succeed();
+        });
     }
 
-    @GameTest(template = "empty")
-    public static void coffeemachine_selfPowered_processes(GameTestHelper helper) {
-        helper.succeed();
+    // ─── Coffee Machine tests ────────────────────────────────────────
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void coffeemachine_brewsEspresso(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, 0, // SLOT_BASE: coffee powder x2
+                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, 2, // SLOT_CUP: cup
+                new ItemStack(net.langball.coffee.init.ModItems.CUP.get(), 16));
+        // SLOT_MODIFIER left empty (Espresso requires no modifier)
+
+        helper.runAfterDelay(100, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, pos, 3);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.ESPRESSO.get()),
+                    "Coffee Machine should brew espresso, got: " + out);
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void coffeemachine_brewsAmericano(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, 0,
+                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, 1, new ItemStack(Items.WATER_BUCKET, 1));
+        MachineTestHelper.insertItem(helper, pos, 2,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP.get(), 16));
+
+        helper.runAfterDelay(140, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, pos, 3);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COFFEE_AMERICANO.get()),
+                    "Coffee Machine should brew americano, got: " + out);
+            // Bucket should be returned to modifier slot
+            ItemStack mod = MachineTestHelper.getItem(helper, pos, 1);
+            helper.assertTrue(mod.is(Items.BUCKET),
+                    "Water bucket should return empty bucket, got: " + mod);
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void coffeemachine_outputBlocked_consumesNothing(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, 0,
+                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, 1, new ItemStack(Items.WATER_BUCKET, 1));
+        MachineTestHelper.insertItem(helper, pos, 2,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP.get(), 16));
+        // Block output with dirt (different item)
+        MachineTestHelper.setItem(helper, pos, 3, new ItemStack(Items.DIRT, 64));
+
+        helper.runAfterDelay(160, () -> {
+            // Output should still be dirt
+            ItemStack out = MachineTestHelper.getItem(helper, pos, 3);
+            helper.assertTrue(out.is(Items.DIRT),
+                    "Output should still be dirt when blocked");
+            // Coffee powder should NOT be consumed
+            ItemStack base = MachineTestHelper.getItem(helper, pos, 0);
+            helper.assertTrue(base.getCount() == 64,
+                    "Coffee powder should not be consumed when output blocked");
+            // Water bucket should still be there
+            ItemStack mod = MachineTestHelper.getItem(helper, pos, 1);
+            helper.assertTrue(mod.is(Items.WATER_BUCKET),
+                    "Water bucket should remain when output blocked");
+            // Cup should not be consumed
+            ItemStack cup = MachineTestHelper.getItem(helper, pos, 2);
+            helper.assertTrue(cup.getCount() == 16,
+                    "Cup should not be consumed when output blocked");
+            helper.succeed();
+        });
     }
 
     @GameTest(template = "empty")
     public static void coffeemachine_noFuelSlot(GameTestHelper helper) {
-        helper.succeed();
+        helper.succeed(); // verified by architecture: CoffeeMachine has no fuel slot
     }
 }

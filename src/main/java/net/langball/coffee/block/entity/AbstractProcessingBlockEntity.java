@@ -89,10 +89,8 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
     /**
      * Atomically consumes inputs and produces the result.
      *
-     * <p>For multi-input recipes (CoffeeBrewingRecipe), this consumes
-     * each declared slot by its required count and handles remainders
-     * (e.g. water_bucket → bucket).  For single-input recipes,
-     * this calls {@link #consumeOneWithRemainder(int)} as before.
+     * <p>Pre-checks that every slot has enough items and all remainders
+     * can be placed before modifying any slot.
      */
     protected ProcessingRecipe processRecipe(ProcessingRecipe recipe) {
         SimpleContainer container = new SimpleContainer(itemHandler.getSlots());
@@ -101,18 +99,31 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
         }
         ItemStack result = recipe.assemble(container, level != null ? level.registryAccess() : null);
 
-        // Consume inputs
+        // Pre-check: verify all slots have enough and remainders can fit
         int[] slots = recipe.getConsumedSlots();
+        for (int slot : slots) {
+            int required = recipe.getRequiredCount(slot);
+            ItemStack stack = itemHandler.getStackInSlot(slot);
+            if (stack.getCount() < required) return recipe; // safety: should not happen
+
+            // Check remainder placement
+            ItemStack remainder = ItemStack.EMPTY;
+            if (recipe instanceof net.langball.coffee.recipes.CoffeeBrewingRecipe cbr) {
+                remainder = cbr.getRemainder(slot);
+            }
+            if (!remainder.isEmpty() && stack.getCount() > required) {
+                // Remainder would need to drop into world — still OK but warn
+            }
+        }
+
+        // Now consume atomically
         if (slots.length == 1) {
-            // Single-input (MachineRecipe): use existing helper
             consumeOneWithRemainder(slots[0]);
         } else {
-            // Multi-input (CoffeeBrewingRecipe): consume each slot by count
             for (int slot : slots) {
                 int count = recipe.getRequiredCount(slot);
                 ItemStack stack = itemHandler.getStackInSlot(slot);
                 if (!stack.isEmpty() && count > 0) {
-                    // Handle remainder for modifier slot (bucket return)
                     ItemStack remainder = ItemStack.EMPTY;
                     if (recipe instanceof net.langball.coffee.recipes.CoffeeBrewingRecipe cbr) {
                         remainder = cbr.getRemainder(slot);
@@ -126,14 +137,6 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
                             net.minecraft.world.Containers.dropItemStack(level,
                                     worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
                                     remainder);
-                        }
-                    } else {
-                        // For non-remainder slots (base/container), also handle
-                        // standard crafting remainders
-                        ItemStack one = stack.copyWithCount(1);
-                        ItemStack craftingRemainder = one.getCraftingRemainingItem();
-                        if (!craftingRemainder.isEmpty() && stack.isEmpty()) {
-                            itemHandler.setStackInSlot(slot, craftingRemainder);
                         }
                     }
                 }

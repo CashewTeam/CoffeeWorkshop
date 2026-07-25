@@ -1,7 +1,7 @@
 package net.langball.coffee.gui.slot;
 
 import net.langball.coffee.block.entity.MachineBlockEntity;
-import net.langball.coffee.recipes.MachineRecipe;
+import net.langball.coffee.recipes.ProcessingRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -113,7 +113,7 @@ public class SlotMachineResult extends SlotItemHandler {
         for (var entry : used.entrySet()) {
             Optional<? extends net.minecraft.world.item.crafting.Recipe<?>> opt =
                     rm.byKey(entry.getKey());
-            if (opt.isPresent() && opt.get() instanceof MachineRecipe recipe) {
+            if (opt.isPresent() && opt.get() instanceof ProcessingRecipe recipe) {
                 totalXp += recipe.experience() * entry.getValue();
             }
         }

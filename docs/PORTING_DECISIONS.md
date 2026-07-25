@@ -256,3 +256,58 @@ For Coffee Machine (no fuel slot):
   Initial fuel entries: `ICE`=200, `PACKED_ICE`=800, `BLUE_ICE`=3600.
 - Standard furnace fuels are *not* accepted as ice cream machine fuel
   (the machine requires cold sources, not heat).
+
+## 2026-07-25 — Phase 3 deferred drinks and Coffee Machine upgrade
+
+### Deferred drink recipes
+
+The following drink items were previously covered by single-input
+`MachineRecipe` JSONs that were removed during Phase 3 because the
+single-input format could not distinguish between drinks sharing the
+same ingredient (e.g. 8 drinks using `milk_bucket` as the sole input).
+
+These items remain registered and functional (they can be obtained via
+creative mode, `/give`, and are correctly consumed with cup return), but
+their machine recipes are deferred to a later phase when the multi-input
+Coffee Machine architecture is extended to support additional modifier
+types (flavored syrups, tea leaves, cocoa-specific inputs).
+
+| Drink | Old recipe status | Target phase |
+|-------|------------------|--------------|
+| Cappuccino | removed (ambiguous milk_bucket input) | Phase 4 |
+| Macchiato | removed (ambiguous milk_bucket input) | Phase 4 |
+| Mochaccino | removed (ambiguous milk_bucket input) | Phase 4 |
+| Cocoa | removed (ambiguous milk_bucket input) | Phase 4 |
+| Cocoa Strong | removed (ambiguous milk_bucket input) | Phase 4 |
+| Milk Tea | removed (ambiguous milk_bucket input) | Phase 4 |
+| Green Tea | removed (ambiguous water_bucket input) | Phase 4 |
+| Black Tea | removed (ambiguous water_bucket input) | Phase 4 |
+| Mandarin Drink | removed (ambiguous water_bucket input) | Phase 4 |
+| Coldbrew | removed (ambiguous coffee_powder input) | Phase 4 |
+
+All flavored latte variants (caramel, chocolate, fruit, mint, vanilla,
+sakura) and iced variants were never published as machine recipes and
+remain creative-only until their recipe schema is designed.
+
+### Coffee Machine slot upgrade
+
+- Coffee Machine upgraded from 2 slots (input, output) to 4 slots
+  (base=0, modifier=1, cup=2, output=3).
+- Old 2-slot NBT is migrated on load: slot 0 → slot 0 (base),
+  slot 1 → slot 3 (output). An `InventoryVersion` tag (value=1) is
+  written to prevent repeated migration.
+- The Coffee Machine uses `CoffeeBrewingRecipe` (multi-input) instead
+  of `MachineRecipe` (single-input).
+
+### Icecream Machine recipe change
+
+- Direct `icecream_vanilla` crafting removed; replaced by
+  `icecream_mix_vanilla` (workbench) → Icecream Machine → vanilla
+  ice cream.
+- New item `icecream_mix_vanilla` registered.
+
+### Cup crafting
+
+- `cup`: 3×paper → 4×cup (shaped)
+- `cup_glass`: 3×glass_pane → 4×cup_glass (shaped)
+- Cups are no longer creative-only.

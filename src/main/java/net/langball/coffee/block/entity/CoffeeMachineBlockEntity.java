@@ -5,6 +5,7 @@ import net.langball.coffee.init.ModBlockEntities;
 import net.langball.coffee.init.ModRecipeTypes;
 import net.langball.coffee.recipes.ProcessingRecipe;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -86,6 +87,40 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
     @Override
     protected boolean shouldBeLit(ProcessingRecipe recipe, boolean canProcess) {
         return canProcess && hasProcessingPower();
+    }
+
+    // ---- NBT migration: old 2-slot → new 4-slot ------------------------
+
+    @Override
+    public void load(CompoundTag tag) {
+        // Migrate from old 2-slot layout if needed
+        if (tag.contains("Items") && !tag.contains("InventoryVersion")) {
+            CompoundTag items = tag.getCompound("Items");
+            int oldSize = items.getList("Items", 10).size();
+            if (oldSize == 2) {
+                // Old layout: slot 0=input, slot 1=output
+                // New layout: slot 0=base, 1=modifier, 2=cup, 3=output
+                // Move old output (slot 1) → new output (slot 3)
+                CompoundTag migrated = new CompoundTag();
+                net.minecraft.nbt.ListTag list = new net.minecraft.nbt.ListTag();
+
+                // Copy old slot 0 → new slot 0 (base)
+                CompoundTag oldInput = items.getList("Items", 10).getCompound(0).copy();
+                oldInput.putByte("Slot", (byte) 0);
+                list.add(oldInput);
+
+                // Move old slot 1 → new slot 3 (output)
+                CompoundTag oldOutput = items.getList("Items", 10).getCompound(1).copy();
+                oldOutput.putByte("Slot", (byte) 3);
+                list.add(oldOutput);
+
+                migrated.put("Items", list);
+                migrated.putInt("Size", 4);
+                tag.put("Items", migrated);
+            }
+        }
+        tag.putInt("InventoryVersion", CURRENT_INVENTORY_VERSION);
+        super.load(tag);
     }
 
     @Override
