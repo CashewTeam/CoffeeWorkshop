@@ -1,0 +1,12 @@
+{
+  "type": "coffeework:coffee_brewing",
+  "ingredient": {
+    "item": "coffeework:coffee_powder"
+  },
+  "result": {
+    "item": "coffeework:espresso",
+    "count": 1
+  },
+  "experience": 0.3,
+  "cookingtime": 200
+}

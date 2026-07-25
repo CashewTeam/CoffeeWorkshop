@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "coffeework:plate_iron"
+    },
+    "W": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "IWI"
+  ],
+  "result": {
+    "item": "coffeework:cake_model_plate"
+  },
+  "show_notification": true
+}

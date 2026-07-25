@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:furnace"
+    },
+    "W": {
+      "item": "minecraft:terracotta"
+    }
+  },
+  "pattern": [
+    "WWW",
+    "W W",
+    "WBW"
+  ],
+  "result": {
+    "item": "coffeework:oven_off"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:coffee_powder"
+    },
+    {
+      "item": "coffeework:coffee_powder"
+    },
+    {
+      "item": "coffeework:coffee_powder"
+    },
+    {
+      "item": "coffeework:coffee_powder"
+    },
+    {
+      "item": "minecraft:water_bucket"
+    },
+    {
+      "item": "coffeework:empty_coldbrew_pot"
+    }
+  ],
+  "result": {
+    "item": "coffeework:coldbrew_pot"
+  }
+}

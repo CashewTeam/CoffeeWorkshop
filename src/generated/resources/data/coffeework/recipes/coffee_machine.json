@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "minecraft:water_bucket"
+    },
+    "I": {
+      "item": "coffeework:plate_iron"
+    },
+    "L": {
+      "item": "minecraft:redstone_block"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "III",
+    "ISI",
+    "LHL"
+  ],
+  "result": {
+    "item": "coffeework:coffee_machine"
+  },
+  "show_notification": true
+}

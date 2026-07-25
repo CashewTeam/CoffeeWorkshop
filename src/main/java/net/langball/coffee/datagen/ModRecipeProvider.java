@@ -195,6 +195,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("WWW")
                 .pattern("WWW")
                 .define('W', ModItems.COFFEE_INSTANT.get())
+                .unlockedBy("has_item", has(ModItems.COFFEE_INSTANT.get()))
                 .save(writer, modLoc("coffee_instant_box"));
 
         // ===================================================================
@@ -646,20 +647,24 @@ public class ModRecipeProvider extends RecipeProvider {
 
     /** Shapeless convenience */
     private static ShapelessRecipeBuilder shapeless(RecipeCategory category, net.minecraft.world.level.ItemLike result) {
-        return ShapelessRecipeBuilder.shapeless(category, result);
+        return ShapelessRecipeBuilder.shapeless(category, result)
+                .unlockedBy("has_item", has(result));
     }
 
     private static ShapelessRecipeBuilder shapeless(RecipeCategory category, net.minecraft.world.level.ItemLike result, int count) {
-        return ShapelessRecipeBuilder.shapeless(category, result, count);
+        return ShapelessRecipeBuilder.shapeless(category, result, count)
+                .unlockedBy("has_item", has(result));
     }
 
     /** Shaped convenience */
     private static ShapedRecipeBuilder shaped(RecipeCategory category, net.minecraft.world.level.ItemLike result) {
-        return ShapedRecipeBuilder.shaped(category, result);
+        return ShapedRecipeBuilder.shaped(category, result)
+                .unlockedBy("has_item", has(result));
     }
 
     private static ShapedRecipeBuilder shaped(RecipeCategory category, net.minecraft.world.level.ItemLike result, int count) {
-        return ShapedRecipeBuilder.shaped(category, result, count);
+        return ShapedRecipeBuilder.shaped(category, result, count)
+                .unlockedBy("has_item", has(result));
     }
 
     /** Smelting convenience */
@@ -670,7 +675,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 output,
                 xp,
                 200
-        );
+        ).unlockedBy("has_" + group, has(input));
     }
 
     /**

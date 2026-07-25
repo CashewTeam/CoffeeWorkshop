@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:cake_model_square"
+    },
+    {
+      "item": "coffeework:cake_sponge"
+    },
+    {
+      "item": "coffeework:cheese"
+    },
+    {
+      "item": "coffeework:espresso"
+    },
+    {
+      "item": "minecraft:milk_bucket"
+    },
+    {
+      "item": "coffeework:cocoa_powder"
+    }
+  ],
+  "result": {
+    "item": "coffeework:tiramisu"
+  }
+}

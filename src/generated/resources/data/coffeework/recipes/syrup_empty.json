@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "minecraft:planks"
+    },
+    "W": {
+      "item": "minecraft:glass_pane"
+    }
+  },
+  "pattern": [
+    "WGW",
+    "W W",
+    " W "
+  ],
+  "result": {
+    "count": 8,
+    "item": "coffeework:syrup_empty"
+  },
+  "show_notification": true
+}

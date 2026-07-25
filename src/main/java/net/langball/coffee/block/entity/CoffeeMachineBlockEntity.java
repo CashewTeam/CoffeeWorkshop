@@ -3,9 +3,11 @@ package net.langball.coffee.block.entity;
 import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.block.MachineBlock;
 import net.langball.coffee.init.ModBlockEntities;
-import net.langball.coffee.recipes.blocks.CoffeeMachineRecipes;
+import net.langball.coffee.init.ModRecipeTypes;
+import net.langball.coffee.recipes.MachineRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -22,12 +24,16 @@ public class CoffeeMachineBlockEntity extends MachineBlockEntity {
     public static final int SLOT_OUTPUT = 1;
     private static final int INVENTORY_SIZE = 2;
 
+    @Nullable
+    private MachineRecipe cachedRecipe;
+
     public CoffeeMachineBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.COFFEE_MACHINE.get(), pos, state);
         this.itemHandler = new ItemStackHandler(INVENTORY_SIZE) {
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
+                if (slot == SLOT_INPUT) cachedRecipe = null;
             }
 
             @Override
@@ -52,10 +58,25 @@ public class CoffeeMachineBlockEntity extends MachineBlockEntity {
         return burnTime > 0;
     }
 
-    /** Counterpart to getCookTime() (moved to instance-level for consistency). */
-    public static int getCookTime() {
-        return 200;
+    // ─── Recipe lookup ─────────────────────────────────────────────────────
+
+    @Nullable
+    private MachineRecipe getCurrentRecipe() {
+        ItemStack input = itemHandler.getStackInSlot(SLOT_INPUT);
+        if (input.isEmpty()) {
+            cachedRecipe = null;
+            return null;
+        }
+        if (cachedRecipe != null && cachedRecipe.matches(new SimpleContainer(input), getLevel())) {
+            return cachedRecipe;
+        }
+        cachedRecipe = getLevel().getRecipeManager()
+                .getRecipeFor(ModRecipeTypes.COFFEE_BREWING, new SimpleContainer(input), getLevel())
+                .orElse(null);
+        return cachedRecipe;
     }
+
+    // ─── Tick body ─────────────────────────────────────────────────────────
 
     @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
@@ -67,31 +88,29 @@ public class CoffeeMachineBlockEntity extends MachineBlockEntity {
         }
 
         if (!level.isClientSide) {
-            ItemStack input = itemHandler.getStackInSlot(SLOT_INPUT);
             ItemStack output = itemHandler.getStackInSlot(SLOT_OUTPUT);
-            ItemStack result = !input.isEmpty() ? CoffeeMachineRecipes.instance().getSmeltingResult(input) : ItemStack.EMPTY;
+            MachineRecipe recipe = getCurrentRecipe();
 
-            boolean canSmelt = !result.isEmpty()
+            boolean canSmelt = recipe != null
                     && (output.isEmpty()
-                    || (ItemStack.isSameItemSameTags(output, result)
-                    && output.getCount() + result.getCount() <= output.getMaxStackSize()));
+                    || (ItemStack.isSameItemSameTags(output, recipe.result())
+                    && output.getCount() + recipe.result().getCount() <= output.getMaxStackSize()));
 
             /* Self-powered: when idle and work is available, start a burn cycle.
-             * CoffeeMachine has no fuel slot — it always runs for getCookTime() ticks. */
+             * CoffeeMachine has no fuel slot — it always runs for cookingTime ticks. */
             if (burnTime == 0 && canSmelt) {
-                burnTime = getCookTime();
-                burnTimeTotal = getCookTime();
-                totalCookTime = getCookTime();
+                burnTime = recipe.cookingTime();
+                burnTimeTotal = recipe.cookingTime();
+                totalCookTime = recipe.cookingTime();
                 dirty = true;
-                setChanged();
             }
 
             if (burnTime > 0 && canSmelt) {
                 cookTime++;
                 if (cookTime >= totalCookTime) {
                     cookTime = 0;
-                    totalCookTime = getCookTime();
-                    smeltItem(input, result, output);
+                    totalCookTime = recipe.cookingTime();
+                    smeltItem(recipe);
                     dirty = true;
                 }
             } else {
@@ -113,17 +132,19 @@ public class CoffeeMachineBlockEntity extends MachineBlockEntity {
         }
     }
 
-    private void smeltItem(ItemStack input, ItemStack result, ItemStack output) {
+    private void smeltItem(MachineRecipe recipe) {
+        ItemStack input = itemHandler.getStackInSlot(SLOT_INPUT);
+        ItemStack output = itemHandler.getStackInSlot(SLOT_OUTPUT);
         if (output.isEmpty()) {
-            itemHandler.setStackInSlot(SLOT_OUTPUT, result.copy());
+            itemHandler.setStackInSlot(SLOT_OUTPUT, recipe.result().copy());
         } else {
-            int newCount = Math.min(output.getCount() + result.getCount(),
+            int newCount = Math.min(output.getCount() + recipe.result().getCount(),
                     output.getMaxStackSize());
             output.setCount(newCount);
         }
-        ItemStack containerItem = input.getCraftingRemainingItem();
-        if (!containerItem.isEmpty()) {
-            itemHandler.setStackInSlot(SLOT_INPUT, containerItem);
+        ItemStack container = input.getCraftingRemainingItem();
+        if (!container.isEmpty()) {
+            itemHandler.setStackInSlot(SLOT_INPUT, container);
         } else {
             input.shrink(1);
         }

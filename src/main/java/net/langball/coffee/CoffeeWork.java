@@ -6,6 +6,7 @@ import net.langball.coffee.gui.GuiIcecreamMachine;
 import net.langball.coffee.gui.GuiOven;
 import net.langball.coffee.gui.GuiRoller;
 import net.langball.coffee.init.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +19,10 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class CoffeeWork {
     public static final String MODID = "coffeework";
     public static final String NAME = "Coffee Workshop";
+
+    public static ResourceLocation id(String path) {
+        return new ResourceLocation(MODID, path);
+    }
 
     public CoffeeWork() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, net.langball.coffee.ModConfig.SPEC);
@@ -34,6 +39,7 @@ public class CoffeeWork {
         ModFeatures.FEATURES.register(modBus);
         ModVillagers.POI_TYPES.register(modBus);
         ModVillagers.PROFESSIONS.register(modBus);
+        ModRecipeTypes.SERIALIZERS.register(modBus);
 
         modBus.addListener(this::commonSetup);
         modBus.addListener(this::clientSetup);
@@ -42,7 +48,17 @@ public class CoffeeWork {
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             ModVillagers.registerTrades();
+            registerIceFuels();
         });
+    }
+
+    /** Populate the ice-cream machine's custom fuel registry. */
+    private static void registerIceFuels() {
+        var reg = net.langball.coffee.block.entity.IcecreamMachineBlockEntity.ICE_FUEL_REGISTRY;
+        reg.put(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.SNOWBALL), 100);
+        reg.put(new net.minecraft.world.item.ItemStack(net.minecraft.world.level.block.Blocks.ICE), 200);
+        reg.put(new net.minecraft.world.item.ItemStack(net.minecraft.world.level.block.Blocks.PACKED_ICE), 200);
+        reg.put(new net.minecraft.world.item.ItemStack(net.minecraft.world.level.block.Blocks.BLUE_ICE), 400);
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {

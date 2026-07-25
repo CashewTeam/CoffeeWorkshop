@@ -3,10 +3,12 @@ package net.langball.coffee.block.entity;
 import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.block.MachineBlock;
 import net.langball.coffee.init.ModBlockEntities;
-import net.langball.coffee.recipes.blocks.OvenRecipes;
+import net.langball.coffee.init.ModRecipeTypes;
+import net.langball.coffee.recipes.MachineRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -25,12 +27,16 @@ public class OvenBlockEntity extends MachineBlockEntity {
     public static final int SLOT_OUTPUT = 2;
     private static final int INVENTORY_SIZE = 3;
 
+    @Nullable
+    private MachineRecipe cachedRecipe;
+
     public OvenBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.OVEN.get(), pos, state);
         this.itemHandler = new ItemStackHandler(INVENTORY_SIZE) {
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
+                if (slot == SLOT_INPUT) cachedRecipe = null;
             }
 
             @Override
@@ -59,13 +65,25 @@ public class OvenBlockEntity extends MachineBlockEntity {
         return ForgeHooks.getBurnTime(stack, null) > 0;
     }
 
-    private static int getItemBurnTime(ItemStack stack) {
-        return ForgeHooks.getBurnTime(stack, null);
+    // ─── Recipe lookup ─────────────────────────────────────────────────────
+
+    @Nullable
+    private MachineRecipe getCurrentRecipe() {
+        ItemStack input = itemHandler.getStackInSlot(SLOT_INPUT);
+        if (input.isEmpty()) {
+            cachedRecipe = null;
+            return null;
+        }
+        if (cachedRecipe != null && cachedRecipe.matches(new SimpleContainer(input), getLevel())) {
+            return cachedRecipe;
+        }
+        cachedRecipe = getLevel().getRecipeManager()
+                .getRecipeFor(ModRecipeTypes.OVEN_BAKING, new SimpleContainer(input), getLevel())
+                .orElse(null);
+        return cachedRecipe;
     }
 
-    public static int getCookTime(ItemStack stack) {
-        return 100;
-    }
+    // ─── Tick body ─────────────────────────────────────────────────────────
 
     @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
@@ -78,21 +96,20 @@ public class OvenBlockEntity extends MachineBlockEntity {
 
         if (!level.isClientSide) {
             ItemStack fuel = itemHandler.getStackInSlot(SLOT_FUEL);
-            ItemStack input = itemHandler.getStackInSlot(SLOT_INPUT);
             ItemStack output = itemHandler.getStackInSlot(SLOT_OUTPUT);
-            ItemStack result = !input.isEmpty() ? OvenRecipes.instance().getSmeltingResult(input) : ItemStack.EMPTY;
+            MachineRecipe recipe = getCurrentRecipe();
 
-            boolean canSmelt = !result.isEmpty()
+            boolean canSmelt = recipe != null
                     && (output.isEmpty()
-                    || (ItemStack.isSameItemSameTags(output, result)
-                    && output.getCount() + result.getCount() <= output.getMaxStackSize()));
+                    || (ItemStack.isSameItemSameTags(output, recipe.result())
+                    && output.getCount() + recipe.result().getCount() <= output.getMaxStackSize()));
 
             if (burnTime == 0 && canSmelt && !fuel.isEmpty()) {
                 int fuelBurnTime = ForgeHooks.getBurnTime(fuel, null);
                 if (fuelBurnTime > 0) {
                     burnTime = fuelBurnTime;
                     burnTimeTotal = fuelBurnTime;
-                    totalCookTime = getCookTime(input);
+                    totalCookTime = recipe.cookingTime();
                     ItemStack remainder = fuel.getCraftingRemainingItem();
                     fuel.shrink(1);
                     if (fuel.isEmpty()) {
@@ -107,16 +124,16 @@ public class OvenBlockEntity extends MachineBlockEntity {
             if (burnTime > 0 && canSmelt) {
                 cookTime++;
                 if (cookTime >= totalCookTime) {
-                    totalCookTime = getCookTime(input);
                     cookTime = 0;
+                    totalCookTime = recipe.cookingTime();
                     if (output.isEmpty()) {
-                        itemHandler.setStackInSlot(SLOT_OUTPUT, result.copy());
+                        itemHandler.setStackInSlot(SLOT_OUTPUT, recipe.result().copy());
                     } else {
-                        int newCount = Math.min(output.getCount() + result.getCount(),
+                        int newCount = Math.min(output.getCount() + recipe.result().getCount(),
                                 output.getMaxStackSize());
                         output.setCount(newCount);
                     }
-                    input.shrink(1);
+                    inputShrink(SLOT_INPUT);
                     dirty = true;
                 }
             } else {
@@ -135,6 +152,16 @@ public class OvenBlockEntity extends MachineBlockEntity {
 
         if (dirty) {
             setChanged(level, pos, state);
+        }
+    }
+
+    private void inputShrink(int slot) {
+        ItemStack stack = itemHandler.getStackInSlot(slot);
+        ItemStack container = stack.getCraftingRemainingItem();
+        if (!container.isEmpty()) {
+            itemHandler.setStackInSlot(slot, container);
+        } else {
+            stack.shrink(1);
         }
     }
 }

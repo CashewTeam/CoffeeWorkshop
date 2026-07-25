@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "W": {
+      "item": "coffeework:dough_ginger"
+    }
+  },
+  "pattern": [
+    " W ",
+    "WWW",
+    "WWW"
+  ],
+  "result": {
+    "item": "coffeework:ginger_house"
+  },
+  "show_notification": true
+}

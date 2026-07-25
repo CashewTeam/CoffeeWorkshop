@@ -3,8 +3,10 @@ package net.langball.coffee.gui;
 import net.langball.coffee.gui.slot.SlotGrinderOutput;
 import net.langball.coffee.init.ModBlocks;
 import net.langball.coffee.init.ModMenuTypes;
-import net.langball.coffee.recipes.blocks.GrinderRecipes;
+import net.langball.coffee.init.ModRecipeTypes;
+import net.langball.coffee.recipes.MachineRecipe;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -13,6 +15,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -82,7 +85,7 @@ public class ContainerGrinder extends AbstractContainerMenu {
                 slot.onQuickCraft(itemstack1, itemstack);
             } else if (index != 0 && index != 1) {
                 // From player inventory or hotbar
-                if (!GrinderRecipes.instance().getSmeltingResult(itemstack1).isEmpty()) {
+                if (hasRecipe(itemstack1, ModRecipeTypes.GRINDING)) {
                     // Valid recipe input → input slot (index 0)
                     if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
                         return ItemStack.EMPTY;
@@ -136,6 +139,16 @@ public class ContainerGrinder extends AbstractContainerMenu {
                     return validBlocks.contains(world.getBlockState(pos).getBlock())
                             && player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 64.0;
                 }, true);
+    }
+
+    /**
+     * Checks whether the given stack is a valid input for the grinder's recipe type.
+     * Used by {@link #quickMoveStack(Player, int)} for auto-fill logic.
+     */
+    private boolean hasRecipe(ItemStack stack, RecipeType<MachineRecipe> type) {
+        return level.getRecipeManager()
+                .getRecipeFor(type, new SimpleContainer(stack), level)
+                .isPresent();
     }
 
     /** Resolves an IItemHandler from the BlockEntity at the given position, or returns an empty handler. */

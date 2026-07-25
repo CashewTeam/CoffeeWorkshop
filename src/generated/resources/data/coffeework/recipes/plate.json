@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:white_dye"
+    },
+    "W": {
+      "item": "minecraft:terracotta"
+    }
+  },
+  "pattern": [
+    "   ",
+    "WDW",
+    " W "
+  ],
+  "result": {
+    "item": "coffeework:plate"
+  },
+  "show_notification": true
+}

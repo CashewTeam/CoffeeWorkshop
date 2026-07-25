@@ -1,0 +1,12 @@
+{
+  "type": "coffeework:oven_baking",
+  "ingredient": {
+    "item": "coffeework:dough_bread"
+  },
+  "result": {
+    "item": "minecraft:bread",
+    "count": 1
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

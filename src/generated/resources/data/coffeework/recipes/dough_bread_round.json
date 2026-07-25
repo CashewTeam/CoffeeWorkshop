@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:dough"
+    }
+  ],
+  "result": {
+    "item": "coffeework:dough_bread_round"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "coffeework:grinding",
+  "ingredient": {
+    "item": "minecraft:cocoa_beans"
+  },
+  "result": {
+    "item": "coffeework:cocoa_powder",
+    "count": 1
+  },
+  "experience": 0.2,
+  "cookingtime": 200
+}

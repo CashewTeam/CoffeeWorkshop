@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "W": {
+      "item": "coffeework:plate_iron"
+    }
+  },
+  "pattern": [
+    "I I",
+    "W W",
+    " W "
+  ],
+  "result": {
+    "item": "coffeework:iron_bowl"
+  },
+  "show_notification": true
+}

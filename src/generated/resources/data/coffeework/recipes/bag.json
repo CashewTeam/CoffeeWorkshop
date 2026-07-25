@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:string"
+    },
+    "W": {
+      "item": "coffeework:bag_cloth"
+    }
+  },
+  "pattern": [
+    " W ",
+    "DWD",
+    " W "
+  ],
+  "result": {
+    "count": 4,
+    "item": "coffeework:bag"
+  },
+  "show_notification": true
+}
