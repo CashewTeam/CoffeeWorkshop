@@ -1,13 +1,15 @@
 modLoader="javafml"
 loaderVersion="[47,)"
 license="MIT"
-issueTrackerUrl="https://github.com/your-repo/coffeework/issues"
+issueTrackerUrl="https://github.com/CashewTeam/CoffeeWorkshop/issues"
 
 [[mods]]
     modId="coffeework"
     version="1.2.8.1"
     displayName="Coffee Workshop"
-    updateJSONURL="https://example.com/coffeework/update.json"
+    # updateJSONURL intentionally omitted: no update server is hosted yet.
+    # When one is set up, restore the field with the real URL; Forge Update
+    # Checker will reject a placeholder URL.
     logoFile="logo.png"
     credits="Mojang, Limuliya.Izefia.lillian"
     authors="MCMOD Modding Group"
