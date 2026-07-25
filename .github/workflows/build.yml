@@ -9,13 +9,11 @@ on:
     branches:
       - "1.20.1"
 
-  # 允许在 GitHub Actions 页面手动运行
   workflow_dispatch:
 
 permissions:
   contents: read
 
-# 同一分支推送新提交时，取消旧的构建任务
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -26,18 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
 
-    env:
-      # 避免 Gradle daemon 在 CI 中长期驻留
-      GRADLE_OPTS: >-
-        -Dorg.gradle.daemon=false
-        -Dorg.gradle.console=plain
-        -Dfile.encoding=UTF-8
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 防止被恶意或意外替换的 gradle-wrapper.jar 执行代码
       - name: Validate Gradle wrapper
         uses: gradle/actions/wrapper-validation@v4
 
@@ -47,36 +37,44 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      # setup-java 会设置适用于当前 Linux Runner 的 JAVA_HOME。
+      # 这里通过 GRADLE_OPTS 覆盖项目 gradle.properties 中的 Windows 路径。
+      - name: Configure Java environment for Gradle
+        shell: bash
+        run: |
+          echo "JAVA_HOME=$JAVA_HOME"
+          echo "JAVA_HOME_17_X64=$JAVA_HOME"
+
+          echo "GRADLE_OPTS=-Dorg.gradle.java.home=$JAVA_HOME -Dorg.gradle.daemon=false -Dorg.gradle.console=plain -Dfile.encoding=UTF-8" >> "$GITHUB_ENV"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # 自动缓存 Gradle Wrapper、依赖和构建缓存
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: ${{ github.event_name == 'pull_request' }}
 
-      # Windows 提交可能丢失可执行权限
       - name: Make Gradle wrapper executable
         run: chmod +x gradlew
 
       - name: Show build environment
+        shell: bash
         run: |
+          echo "JAVA_HOME=$JAVA_HOME"
+          echo "GRADLE_OPTS=$GRADLE_OPTS"
           java -version
           python --version
           ./gradlew --version
 
-      # 单独执行，便于快速定位 Java 编译错误
       - name: Compile Java
         run: ./gradlew compileJava --no-daemon --stacktrace
 
-      # 生成配方、Advancement、Loot Table、Tag 等资源
       - name: Run DataGen
         run: ./gradlew runData --no-daemon --stacktrace
 
-      # 同时检测已跟踪文件变化和新生成的未跟踪文件
       - name: Verify generated resources
         shell: bash
         run: |
@@ -98,8 +96,9 @@ jobs:
             echo "Tracked file diff:"
             git diff -- src/generated/resources || true
             echo
-            echo "Run the following command locally and commit the results:"
+            echo "Please run locally:"
             echo "  ./gradlew runData"
+            echo "Then commit the generated changes."
             exit 1
           fi
 
@@ -108,7 +107,6 @@ jobs:
       - name: Audit resources
         run: python tools/audit_resources.py
 
-      # build 会执行 processResources、test、jar 和 reobfJar
       - name: Build mod
         run: ./gradlew build --no-daemon --stacktrace
 
@@ -118,7 +116,6 @@ jobs:
           echo "Generated JAR files:"
           find build/libs -maxdepth 1 -type f -name "*.jar" -print
 
-      # 构建成功后上传可安装的模组 JAR
       - name: Upload mod JAR
         if: success()
         uses: actions/upload-artifact@v4
@@ -128,7 +125,6 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-      # 即使构建失败也上传审计、测试等报告
       - name: Upload build reports
         if: always()
         uses: actions/upload-artifact@v4
