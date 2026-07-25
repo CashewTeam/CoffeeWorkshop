@@ -44,7 +44,7 @@ public class ModRecipeProvider extends RecipeProvider {
         // ===================================================================
 
         // --- Tools & Molds ---
-        shaped(RecipeCategory.MISC, ModItems.EMPTY_COLDBREW_POT.get())
+        shaped(RecipeCategory.MISC, ModItems.EMPTY_COLDBREW_POT.get(), Items.IRON_INGOT)
                 .pattern(" I ")
                 .pattern("WWW")
                 .pattern("III")
@@ -52,7 +52,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('W', Items.GLASS_PANE)
                 .save(writer, modLoc("empty_coldbrew_pot"));
 
-        shaped(RecipeCategory.MISC, ModItems.CAKE_MODEL.get())
+        shaped(RecipeCategory.MISC, ModItems.CAKE_MODEL.get(), Items.IRON_INGOT)
                 .pattern(" I ")
                 .pattern("IWI")
                 .pattern(" I ")
@@ -60,21 +60,21 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('W', ModItems.PLATE_IRON.get())
                 .save(writer, modLoc("cake_model"));
 
-        shaped(RecipeCategory.MISC, ModItems.MIXING_BOWL.get())
+        shaped(RecipeCategory.MISC, ModItems.MIXING_BOWL.get(), Items.IRON_INGOT)
                 .pattern("I I")
                 .pattern(" W ")
                 .define('I', Items.IRON_INGOT)
                 .define('W', ModItems.PLATE_IRON.get())
                 .save(writer, modLoc("mixing_bowl"));
 
-        shaped(RecipeCategory.MISC, ModItems.SMALL_MODEL.get(), 8)
+        shaped(RecipeCategory.MISC, ModItems.SMALL_MODEL.get(), 8, Items.IRON_INGOT)
                 .pattern("I")
                 .pattern("W")
                 .define('I', Items.IRON_INGOT)
                 .define('W', ModItems.PLATE_IRON.get())
                 .save(writer, modLoc("small_model"));
 
-        shaped(RecipeCategory.MISC, ModItems.IRON_BOWL.get())
+        shaped(RecipeCategory.MISC, ModItems.IRON_BOWL.get(), Items.IRON_INGOT)
                 .pattern("I I")
                 .pattern("W W")
                 .pattern(" W ")
@@ -82,26 +82,26 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('W', ModItems.PLATE_IRON.get())
                 .save(writer, modLoc("iron_bowl"));
 
-        shaped(RecipeCategory.MISC, ModItems.MOONCAKE_MODEL.get())
+        shaped(RecipeCategory.MISC, ModItems.MOONCAKE_MODEL.get(), Items.IRON_INGOT)
                 .pattern("IWI")
                 .define('I', Items.IRON_INGOT)
                 .define('W', ModItems.PLATE_IRON.get())
                 .save(writer, modLoc("mooncake_model"));
 
-        shaped(RecipeCategory.MISC, ModItems.CAKE_MODEL_PLATE.get())
+        shaped(RecipeCategory.MISC, ModItems.CAKE_MODEL_PLATE.get(), Items.IRON_INGOT)
                 .pattern("IWI")
                 .define('I', ModItems.PLATE_IRON.get())
                 .define('W', Items.IRON_INGOT)
                 .save(writer, modLoc("cake_model_plate"));
 
-        shaped(RecipeCategory.MISC, ModItems.CAKE_MODEL_SQUARE.get())
+        shaped(RecipeCategory.MISC, ModItems.CAKE_MODEL_SQUARE.get(), Items.IRON_INGOT)
                 .pattern("IWI")
                 .define('I', ModItems.PLATE_IRON.get())
                 .define('W', ModItems.CAKE_MODEL_PLATE.get())
                 .save(writer, modLoc("cake_model_square"));
 
         // --- Containers & Decor ---
-        shaped(RecipeCategory.DECORATIONS, ModBlocks.PLATE.get())
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.PLATE.get(), Items.IRON_INGOT)
                 .pattern("   ")
                 .pattern("WDW")
                 .pattern(" W ")
@@ -109,7 +109,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('D', Items.WHITE_DYE)
                 .save(writer, modLoc("plate"));
 
-        shaped(RecipeCategory.MISC, ModItems.BAG_CLOTH.get(), 8)
+        shaped(RecipeCategory.MISC, ModItems.BAG_CLOTH.get(), 8, Items.IRON_INGOT)
                 .pattern(" D ")
                 .pattern("DWD")
                 .pattern(" D ")
@@ -117,7 +117,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('W', Blocks.WHITE_WOOL)
                 .save(writer, modLoc("bag_cloth"));
 
-        shaped(RecipeCategory.MISC, ModItems.BAG.get(), 4)
+        shaped(RecipeCategory.MISC, ModItems.BAG.get(), 4, Items.IRON_INGOT)
                 .pattern(" W ")
                 .pattern("DWD")
                 .pattern(" W ")
@@ -125,7 +125,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('D', Items.STRING)
                 .save(writer, modLoc("bag"));
 
-        shaped(RecipeCategory.MISC, ModItems.SYRUP_EMPTY.get(), 8)
+        shaped(RecipeCategory.MISC, ModItems.SYRUP_EMPTY.get(), 8, Items.IRON_INGOT)
                 .pattern("WGW")
                 .pattern("W W")
                 .pattern(" W ")
@@ -182,7 +182,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("oven"));
 
         // --- Buildings & Decor ---
-        shaped(RecipeCategory.DECORATIONS, ModBlocks.GINGER_HOUSE.get())
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.GINGER_HOUSE.get(), Items.IRON_INGOT)
                 .pattern(" W ")
                 .pattern("WWW")
                 .pattern("WWW")
@@ -203,98 +203,98 @@ public class ModRecipeProvider extends RecipeProvider {
         // ===================================================================
 
         // --- Materials ---
-        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_PASTRY.get())
+        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_PASTRY.get(), Items.IRON_INGOT)
                 .requires(ModItems.DOUGH.get())
                 .requires(ModItems.BUTTER.get())
                 .requires(Items.EGG)
                 .save(writer, modLoc("dough_pastry"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_GINGER.get())
+        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_GINGER.get(), Items.IRON_INGOT)
                 .requires(ModItems.DOUGH.get())
                 .requires(ModItems.SPICES.get())
                 .save(writer, modLoc("dough_ginger"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.SPICES.get(), 4)
+        shapeless(RecipeCategory.FOOD, ModItems.SPICES.get(), 4, Items.IRON_INGOT)
                 .requires(Items.COCOA_BEANS)
                 .requires(Items.COCOA_BEANS)
                 .requires(Items.COCOA_BEANS)
                 .requires(Items.COCOA_BEANS)
                 .save(writer, modLoc("spices"));
 
-        shapeless(RecipeCategory.MISC, ModItems.GELATIN.get(), 4)
+        shapeless(RecipeCategory.MISC, ModItems.GELATIN.get(), 4, Items.IRON_INGOT)
                 .requires(Items.SLIME_BALL)
                 .requires(Items.SLIME_BALL)
                 .requires(Items.WHITE_DYE)
                 .save(writer, modLoc("gelatin"));
 
         // --- Seeds ---
-        shapeless(RecipeCategory.MISC, ModItems.VANILLA_SEEDS.get(), 2)
+        shapeless(RecipeCategory.MISC, ModItems.VANILLA_SEEDS.get(), 2, Items.IRON_INGOT)
                 .requires(ModItems.VANILLA.get())
                 .save(writer, modLoc("vanilla_seeds_from_vanilla"));
 
         // --- Dough variants ---
-        shapeless(RecipeCategory.FOOD, ModItems.DOUGH.get())
+        shapeless(RecipeCategory.FOOD, ModItems.DOUGH.get(), Items.IRON_INGOT)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(ModItems.FLOUR.get())
                 .requires(Items.MILK_BUCKET)
                 .save(writer, modLoc("dough"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_BREAD.get())
+        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_BREAD.get(), Items.IRON_INGOT)
                 .requires(ModItems.DOUGH.get())
                 .requires(ModItems.FLOUR.get())
                 .save(writer, modLoc("dough_bread"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_BREAD_ROUND.get())
+        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_BREAD_ROUND.get(), Items.IRON_INGOT)
                 .requires(ModItems.DOUGH.get())
                 .save(writer, modLoc("dough_bread_round"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_BAGUETTE.get())
+        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_BAGUETTE.get(), Items.IRON_INGOT)
                 .requires(ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
                 .save(writer, modLoc("dough_baguette"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_BAGEL.get())
+        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_BAGEL.get(), Items.IRON_INGOT)
                 .requires(ModItems.DOUGH.get())
                 .requires(Items.EGG)
                 .save(writer, modLoc("dough_bagel"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_TOAST.get())
+        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_TOAST.get(), Items.IRON_INGOT)
                 .requires(ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
                 .requires(Items.EGG)
                 .save(writer, modLoc("dough_toast"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_COOKIE.get())
+        shapeless(RecipeCategory.FOOD, ModItems.DOUGH_COOKIE.get(), Items.IRON_INGOT)
                 .requires(ModItems.DOUGH.get())
                 .requires(ModItems.CHOCOLATE_CHIP.get())
                 .save(writer, modLoc("dough_cookie"));
 
         // --- Dairy & Fermentation ---
-        shapeless(RecipeCategory.FOOD, ModItems.YEAST.get(), 8)
+        shapeless(RecipeCategory.FOOD, ModItems.YEAST.get(), 8, Items.IRON_INGOT)
                 .requires(Items.BROWN_MUSHROOM)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.SUGAR)
                 .save(writer, modLoc("yeast"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.BUTTER.get())
+        shapeless(RecipeCategory.FOOD, ModItems.BUTTER.get(), Items.IRON_INGOT)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.MILK_BUCKET)
                 .save(writer, modLoc("butter"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.CHEESE.get())
+        shapeless(RecipeCategory.FOOD, ModItems.CHEESE.get(), Items.IRON_INGOT)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(ModItems.YEAST.get())
                 .save(writer, modLoc("cheese"));
 
         // --- Sweets ---
-        shapeless(RecipeCategory.FOOD, ModItems.CHOCOLATE_BAR.get())
+        shapeless(RecipeCategory.FOOD, ModItems.CHOCOLATE_BAR.get(), Items.IRON_INGOT)
                 .requires(ModItems.COCOA_BATTER.get())
                 .requires(ModItems.COCOA_BATTER.get())
                 .requires(Items.SUGAR)
                 .save(writer, modLoc("chocolate_bar"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.FIELD_RATION.get())
+        shapeless(RecipeCategory.FOOD, ModItems.FIELD_RATION.get(), Items.IRON_INGOT)
                 .requires(ModItems.COCOA_BATTER.get())
                 .requires(ModItems.COCOA_BATTER.get())
                 .requires(Items.SUGAR)
@@ -302,14 +302,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.FLOUR.get())
                 .save(writer, modLoc("field_ration"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.BROWNIE.get())
+        shapeless(RecipeCategory.FOOD, ModItems.BROWNIE.get(), Items.IRON_INGOT)
                 .requires(ModItems.CAKE_MODEL_SQUARE.get())
                 .requires(ModItems.COCOA_BATTER.get())
                 .requires(ModItems.CHOCOLATE_CHIP.get())
                 .save(writer, modLoc("brownie"));
 
         // --- Sandwiches ---
-        shapeless(RecipeCategory.FOOD, ModItems.SANDWICH_BLT.get())
+        shapeless(RecipeCategory.FOOD, ModItems.SANDWICH_BLT.get(), Items.IRON_INGOT)
                 .requires(Items.BREAD)
                 .requires(Items.COOKED_PORKCHOP)
                 .requires(Items.BEETROOT)    // lettuce substitute
@@ -317,12 +317,12 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("sandwich_blt"));
 
         // --- Beverage items ---
-        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT.get(), 9)
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT.get(), 9, Items.IRON_INGOT)
                 .requires(ModItems.COFFEE_INSTANT_BOX.get())
                 .save(writer, modLoc("coffee_instant_from_box"));
 
         // Cold Brew Pot (filled)
-        shapeless(RecipeCategory.MISC, ModBlocks.COLD_BREW_POT.get())
+        shapeless(RecipeCategory.MISC, ModBlocks.COLD_BREW_POT.get(), Items.IRON_INGOT)
                 .requires(ModItems.COFFEE_POWDER.get())
                 .requires(ModItems.COFFEE_POWDER.get())
                 .requires(ModItems.COFFEE_POWDER.get())
@@ -332,29 +332,29 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("coldbrew_pot"));
 
         // --- Records ---
-        shapeless(RecipeCategory.MISC, ModItems.RECORD_BLANK.get())
+        shapeless(RecipeCategory.MISC, ModItems.RECORD_BLANK.get(), Items.IRON_INGOT)
                 .requires(ModItems.PLATE_IRON.get())
                 .requires(Items.BLACK_DYE)
                 .requires(Items.BLACK_DYE)
                 .save(writer, modLoc("record_blank"));
 
-        shapeless(RecipeCategory.MISC, ModItems.RECORD_KUSA_NOSHI_TO_NE.get())
+        shapeless(RecipeCategory.MISC, ModItems.RECORD_KUSA_NOSHI_TO_NE.get(), Items.IRON_INGOT)
                 .requires(ModItems.RECORD_BLANK.get())
                 .requires(Items.BLACK_DYE)
                 .save(writer, modLoc("record_kusa_noshi_to_ne"));
 
-        shapeless(RecipeCategory.MISC, ModItems.RECORD_LAZY_LADY_KAGUYA.get())
+        shapeless(RecipeCategory.MISC, ModItems.RECORD_LAZY_LADY_KAGUYA.get(), Items.IRON_INGOT)
                 .requires(ModItems.RECORD_BLANK.get())
                 .requires(Items.RED_DYE)
                 .save(writer, modLoc("record_lazy_lady_kaguya"));
 
-        shapeless(RecipeCategory.MISC, ModItems.RECORD_THE_GRIMOIRE_OF_MARISA.get())
+        shapeless(RecipeCategory.MISC, ModItems.RECORD_THE_GRIMOIRE_OF_MARISA.get(), Items.IRON_INGOT)
                 .requires(ModItems.RECORD_BLANK.get())
                 .requires(Items.YELLOW_DYE)
                 .save(writer, modLoc("record_the_grimoire_of_marisa"));
 
         // --- Decoration ---
-        shapeless(RecipeCategory.DECORATIONS, ModBlocks.XMAS_TREE.get())
+        shapeless(RecipeCategory.DECORATIONS, ModBlocks.XMAS_TREE.get(), Items.IRON_INGOT)
                 .requires(ItemTags.SAPLINGS)
                 .requires(ItemTags.LEAVES)
                 .requires(ItemTags.LEAVES)
@@ -396,7 +396,7 @@ public class ModRecipeProvider extends RecipeProvider {
         // ===================================================================
         // Simplified direct recipes (original used batter intermediates)
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE.get(), Items.IRON_INGOT)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.EGG)
                 .requires(Items.MILK_BUCKET)
@@ -404,7 +404,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.SUGAR)
                 .save(writer, modLoc("cake_sponge"));
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_CHOCOLATE.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_CHOCOLATE.get(), Items.IRON_INGOT)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.EGG)
                 .requires(Items.MILK_BUCKET)
@@ -413,7 +413,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.COCOA_POWDER.get())
                 .save(writer, modLoc("cake_sponge_chocolate"));
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_COFFEE.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_COFFEE.get(), Items.IRON_INGOT)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.EGG)
                 .requires(Items.MILK_BUCKET)
@@ -422,7 +422,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.COFFEE_POWDER.get())
                 .save(writer, modLoc("cake_sponge_coffee"));
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_PUMPKIN.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_PUMPKIN.get(), Items.IRON_INGOT)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.EGG)
                 .requires(Items.MILK_BUCKET)
@@ -431,7 +431,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.PUMPKIN)
                 .save(writer, modLoc("cake_sponge_pumpkin"));
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_CARROT.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_CARROT.get(), Items.IRON_INGOT)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.EGG)
                 .requires(Items.MILK_BUCKET)
@@ -440,7 +440,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.CARROT)
                 .save(writer, modLoc("cake_sponge_carrot"));
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_REDVELVET.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_REDVELVET.get(), Items.IRON_INGOT)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.EGG)
                 .requires(Items.MILK_BUCKET)
@@ -449,7 +449,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.RED_DYE)
                 .save(writer, modLoc("cake_sponge_redvelvet"));
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_LEMON.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_LEMON.get(), Items.IRON_INGOT)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.EGG)
                 .requires(Items.MILK_BUCKET)
@@ -458,7 +458,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.YELLOW_DYE)
                 .save(writer, modLoc("cake_sponge_lemon"));
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_TEA.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_TEA.get(), Items.IRON_INGOT)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.EGG)
                 .requires(Items.MILK_BUCKET)
@@ -467,7 +467,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.GREEN_DYE)
                 .save(writer, modLoc("cake_sponge_tea"));
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_BERRY.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_BERRY.get(), Items.IRON_INGOT)
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.EGG)
                 .requires(Items.MILK_BUCKET)
@@ -481,7 +481,7 @@ public class ModRecipeProvider extends RecipeProvider {
         // ===================================================================
 
         // Vanilla Cake (replaces vanilla recipe)
-        shapeless(RecipeCategory.FOOD, Blocks.CAKE)
+        shapeless(RecipeCategory.FOOD, Blocks.CAKE, ModBlocks.CAKE_SPONGE.get())
                 .requires(ModBlocks.CAKE_SPONGE.get())
                 .requires(Items.SUGAR)
                 .requires(Items.MILK_BUCKET)
@@ -489,7 +489,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("cake_vanilla"));
 
         // Coffee Cake
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_COFFEE.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_COFFEE.get(), Items.IRON_INGOT)
                 .requires(ModBlocks.CAKE_SPONGE_COFFEE.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.SUGAR)
@@ -497,7 +497,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("cake_coffee"));
 
         // Harvest Cake (pumpkin + carrot)
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_HARVEST.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_HARVEST.get(), Items.IRON_INGOT)
                 .requires(ModBlocks.CAKE_SPONGE_PUMPKIN.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.SUGAR)
@@ -505,7 +505,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("cake_harvest"));
 
         // Berry Cake
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_BERRY.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_BERRY.get(), Items.IRON_INGOT)
                 .requires(ModBlocks.CAKE_SPONGE_BERRY.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.SUGAR)
@@ -513,7 +513,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("cake_berry"));
 
         // Lemon Cake
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_LEMON.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_LEMON.get(), Items.IRON_INGOT)
                 .requires(ModBlocks.CAKE_SPONGE_LEMON.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.SUGAR)
@@ -521,7 +521,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("cake_lemon"));
 
         // Tea Cake
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_TEA.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_TEA.get(), Items.IRON_INGOT)
                 .requires(ModBlocks.CAKE_SPONGE_TEA.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.SUGAR)
@@ -529,7 +529,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("cake_tea"));
 
         // Red Velvet Cake
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_REDVELVET.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_REDVELVET.get(), Items.IRON_INGOT)
                 .requires(ModBlocks.CAKE_SPONGE_REDVELVET.get())
                 .requires(Items.SUGAR)
                 .requires(Items.MILK_BUCKET)
@@ -537,7 +537,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("cake_redvelvet"));
 
         // Cheese Cake
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_CHEESE.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_CHEESE.get(), Items.IRON_INGOT)
                 .requires(ModItems.CAKE_MODEL.get())
                 .requires(ModItems.CHEESE.get())
                 .requires(Items.MILK_BUCKET)
@@ -545,7 +545,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("cake_cheese"));
 
         // Black Forest Cake (Schwarzwald)
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SCHWARZWALD.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SCHWARZWALD.get(), Items.IRON_INGOT)
                 .requires(ModBlocks.CAKE_SPONGE_CHOCOLATE.get())
                 .requires(Items.SUGAR)
                 .requires(Items.MILK_BUCKET)
@@ -557,7 +557,7 @@ public class ModRecipeProvider extends RecipeProvider {
         // ===================================================================
         // Simplified: originally used icecream machine; now direct crafting
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.MOUSSE_BERRY.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.MOUSSE_BERRY.get(), Items.IRON_INGOT)
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.EGG)
                 .requires(ModItems.GELATIN.get())
@@ -565,7 +565,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.SWEET_BERRIES)
                 .save(writer, modLoc("mousse_berry"));
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.MOUSSE_CHOCOLATE.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.MOUSSE_CHOCOLATE.get(), Items.IRON_INGOT)
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.EGG)
                 .requires(ModItems.GELATIN.get())
@@ -573,7 +573,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.COCOA_POWDER.get())
                 .save(writer, modLoc("mousse_chocolate"));
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.MOUSSE_LEMON.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.MOUSSE_LEMON.get(), Items.IRON_INGOT)
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.EGG)
                 .requires(ModItems.GELATIN.get())
@@ -581,7 +581,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.YELLOW_DYE)
                 .save(writer, modLoc("mousse_lemon"));
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.MOUSSE_COFFEE.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.MOUSSE_COFFEE.get(), Items.IRON_INGOT)
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.EGG)
                 .requires(ModItems.GELATIN.get())
@@ -590,7 +590,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("mousse_coffee"));
 
         // Tiramisu
-        shapeless(RecipeCategory.FOOD, ModBlocks.TIRAMISU.get())
+        shapeless(RecipeCategory.FOOD, ModBlocks.TIRAMISU.get(), Items.IRON_INGOT)
                 .requires(ModItems.CAKE_MODEL_SQUARE.get())
                 .requires(ModBlocks.CAKE_SPONGE.get())
                 .requires(ModItems.CHEESE.get())
@@ -603,7 +603,7 @@ public class ModRecipeProvider extends RecipeProvider {
         // PIE RECIPES
         // ===================================================================
         // Cream Pie
-        shapeless(RecipeCategory.FOOD, ModItems.PIE_CREAM.get())
+        shapeless(RecipeCategory.FOOD, ModItems.PIE_CREAM.get(), Items.IRON_INGOT)
                 .requires(ModItems.PLATE_DOUGH_PASTRY.get())
                 .requires(Items.SUGAR)
                 .requires(Items.MILK_BUCKET)
@@ -613,7 +613,7 @@ public class ModRecipeProvider extends RecipeProvider {
         // ICE CREAM RECIPES
         // ===================================================================
         // Vanilla Ice Cream (simplified)
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_VANILLA.get())
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_VANILLA.get(), Items.IRON_INGOT)
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.SUGAR)
                 .requires(ModItems.VANILLA.get())
@@ -625,17 +625,17 @@ public class ModRecipeProvider extends RecipeProvider {
         // ===================================================================
         // These were originally Roller machine recipes; manual 2x2 crafting as fallback
 
-        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH.get())
+        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH.get(), Items.IRON_INGOT)
                 .pattern("DD")
                 .define('D', ModItems.DOUGH.get())
                 .save(writer, modLoc("plate_dough"));
 
-        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH_PASTRY.get())
+        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH_PASTRY.get(), Items.IRON_INGOT)
                 .pattern("DD")
                 .define('D', ModItems.DOUGH_PASTRY.get())
                 .save(writer, modLoc("plate_dough_pastry"));
 
-        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH_GINGER.get())
+        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH_GINGER.get(), Items.IRON_INGOT)
                 .pattern("DD")
                 .define('D', ModItems.DOUGH_GINGER.get())
                 .save(writer, modLoc("plate_dough_ginger"));
@@ -645,18 +645,7 @@ public class ModRecipeProvider extends RecipeProvider {
     // HELPER METHODS
     // =======================================================================
 
-    /** Shapeless convenience — unlocks with the result (safe default). */
-    private static ShapelessRecipeBuilder shapeless(RecipeCategory category, net.minecraft.world.level.ItemLike result) {
-        return ShapelessRecipeBuilder.shapeless(category, result)
-                .unlockedBy("has_item", has(result));
-    }
-
-    private static ShapelessRecipeBuilder shapeless(RecipeCategory category, net.minecraft.world.level.ItemLike result, int count) {
-        return ShapelessRecipeBuilder.shapeless(category, result, count)
-                .unlockedBy("has_item", has(result));
-    }
-
-    /** Shapeless convenience — unlocks with a specific item (preferred). */
+    /** Shapeless convenience — unlocks with the given item. */
     private static ShapelessRecipeBuilder shapeless(RecipeCategory category, net.minecraft.world.level.ItemLike result, net.minecraft.world.level.ItemLike unlockItem) {
         return ShapelessRecipeBuilder.shapeless(category, result)
                 .unlockedBy("has_item", has(unlockItem));
@@ -667,18 +656,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(unlockItem));
     }
 
-    /** Shaped convenience — unlocks with the result (safe default). */
-    private static ShapedRecipeBuilder shaped(RecipeCategory category, net.minecraft.world.level.ItemLike result) {
-        return ShapedRecipeBuilder.shaped(category, result)
-                .unlockedBy("has_item", has(result));
-    }
-
-    private static ShapedRecipeBuilder shaped(RecipeCategory category, net.minecraft.world.level.ItemLike result, int count) {
-        return ShapedRecipeBuilder.shaped(category, result, count)
-                .unlockedBy("has_item", has(result));
-    }
-
-    /** Shaped convenience — unlocks with a specific item (preferred). */
+    /** Shaped convenience — unlocks with the given item. */
     private static ShapedRecipeBuilder shaped(RecipeCategory category, net.minecraft.world.level.ItemLike result, net.minecraft.world.level.ItemLike unlockItem) {
         return ShapedRecipeBuilder.shaped(category, result)
                 .unlockedBy("has_item", has(unlockItem));
@@ -713,24 +691,24 @@ public class ModRecipeProvider extends RecipeProvider {
                                     net.minecraft.world.level.ItemLike ingredient,
                                     String name) {
         // Fill bag
-        shapeless(RecipeCategory.DECORATIONS, bagBlock)
+        shapeless(RecipeCategory.DECORATIONS, bagBlock, ModItems.BAG.get())
                 .requires(ModItems.BAG.get())
                 .requires(ingredient, 8)
                 .save(writer, modLoc("bag_" + name));
 
         // Empty bag
-        shapeless(RecipeCategory.MISC, ingredient, 8)
+        shapeless(RecipeCategory.MISC, ingredient, 8, bagBlock)
                 .requires(bagBlock)
                 .save(writer, modLoc(name + "_from_bag"));
 
         // Merge into double
-        shapeless(RecipeCategory.DECORATIONS, doubleBagBlock)
+        shapeless(RecipeCategory.DECORATIONS, doubleBagBlock, bagBlock)
                 .requires(bagBlock)
                 .requires(bagBlock)
                 .save(writer, modLoc("double_bag_" + name));
 
         // Split double
-        shapeless(RecipeCategory.DECORATIONS, bagBlock, 2)
+        shapeless(RecipeCategory.DECORATIONS, bagBlock, 2, doubleBagBlock)
                 .requires(doubleBagBlock)
                 .save(writer, modLoc(name + "_from_double_bag"));
     }
@@ -741,21 +719,21 @@ public class ModRecipeProvider extends RecipeProvider {
                                            net.minecraft.world.level.ItemLike doubleBagBlock,
                                            net.minecraft.world.level.ItemLike ingredient,
                                            String name) {
-        shapeless(RecipeCategory.DECORATIONS, bagBlock)
+        shapeless(RecipeCategory.DECORATIONS, bagBlock, ModItems.BAG.get())
                 .requires(ModItems.BAG.get())
                 .requires(ingredient, 8)
                 .save(writer, modLoc("bag_" + name));
 
-        shapeless(RecipeCategory.MISC, ingredient, 8)
+        shapeless(RecipeCategory.MISC, ingredient, 8, bagBlock)
                 .requires(bagBlock)
                 .save(writer, modLoc(name + "_from_bag"));
 
-        shapeless(RecipeCategory.DECORATIONS, doubleBagBlock)
+        shapeless(RecipeCategory.DECORATIONS, doubleBagBlock, bagBlock)
                 .requires(bagBlock)
                 .requires(bagBlock)
                 .save(writer, modLoc("double_bag_" + name));
 
-        shapeless(RecipeCategory.DECORATIONS, bagBlock, 2)
+        shapeless(RecipeCategory.DECORATIONS, bagBlock, 2, doubleBagBlock)
                 .requires(doubleBagBlock)
                 .save(writer, modLoc(name + "_from_double_bag"));
     }

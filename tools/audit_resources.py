@@ -14,8 +14,7 @@ Checks performed:
   4.  Every `coffeework:block/<name>` reference resolves to an existing
       file in `models/block/`.
   5.  No bare vanilla `blocks/<old_name>` references inside
-      `models/block/` and `models/item/` — except `blocks/anvil_base`,
-      which has no clean modern equivalent and is listed for human review.
+      `models/block/` and `models/item/`.
   6.  No key uses the obsolete `coffeeworkshop` namespace inside lang JSON.
 
 Exit code:
@@ -56,9 +55,7 @@ OBSOLETE_VANILLA = {
     "blocks/wool_colored_brown",
     "blocks/stone_slab_side",
     "blocks/stone_slab_top",
-    "blocks/anvil_base",  # accept-as-is, only flagged for review
 }
-REVIEW_ONLY = {"blocks/anvil_base"}
 
 
 def _read_json(path: Path):
@@ -80,10 +77,10 @@ def check_lang_json() -> dict:
     """#1 + #6: every lang file is JSON; no coffeeworkshop namespace leak."""
     files = sorted(LANG_DIR.glob("*.json"))
     legacy = sorted(LANG_DIR.glob("*.lang"))
-    if legacy:
-        # Tolerated: legacy .lang files left around intentionally.
-        pass
     fail = []
+    if legacy:
+        for lf in legacy:
+            fail.append(f"Legacy .lang file still present: {lf}")
     coffeeworkshop_keys: list[tuple[Path, str]] = []
     counts = {}
     for path in files:
@@ -240,7 +237,7 @@ def _format_md(summary: dict) -> str:
         out.append(f"  - `{name}`: {n} keys")
     if summary["lang"]["legacy_lang_present"]:
         out.append("")
-        out.append("Legacy `.lang` files left in place (ignored by loader):")
+        out.append("FAIL: Legacy `.lang` files still present:")
         for n in summary["lang"]["legacy_lang_present"]:
             out.append(f"- `{n}`")
     if summary["lang"]["coffeeworkshop_keys"]:
@@ -283,19 +280,14 @@ def _format_md(summary: dict) -> str:
     out.append("")
     vt = summary["vanilla"]
     out.append(f"- Files scanned: {vt['files_scanned']}")
-    failures = [m for m in vt["matches"] if m[1] not in REVIEW_ONLY]
+    failures = [m for m in vt["matches"]]
     if failures:
         out.append("")
         out.append("FAIL: obsolete `blocks/...` vanilla references:")
         for path, v in failures:
             out.append(f"- `{path}`: `{v}`")
     else:
-        out.append("- PASS: zero obsolete vanilla references (anvil_base exempt).")
-    review_only = [m for m in vt["matches"] if m[1] in REVIEW_ONLY]
-    if review_only:
-        out.append("")
-        out.append(f"- Files awaiting human texture review: {len({p for p, _ in review_only})}")
-        out.append("- See `manual_texture_review.md` for the per-file list.")
+        out.append("- PASS: zero obsolete vanilla references.")
 
     out.append("")
     out.append("---")
@@ -304,19 +296,13 @@ def _format_md(summary: dict) -> str:
 
 
 def _format_manual_review(vanilla_matches) -> str:
+    if not vanilla_matches:
+        return ""
     files: dict[Path, set[str]] = {}
     for path, v in vanilla_matches:
-        if v in REVIEW_ONLY:
-            files.setdefault(path, set()).add(v)
+        files.setdefault(path, set()).add(v)
     out = ["# Manual texture review list", ""]
-    out.append("These files still reference `blocks/anvil_base`. "
-               "There is no direct modern equivalent in 1.20.1 vanilla "
-               "textures. Each entry needs a human decision:")
-    out.append("")
-    out.append("- pick a modern vanilla texture (`block/smithing_table_top`, "
-               "`block/dark_oak_log`, ...), or")
-    out.append("- add a custom retexture to the mod's own textures and "
-               "reference it via `coffeework:textures/...`.")
+    out.append("The following files reference obsolete vanilla texture paths:")
     out.append("")
     for path, keys in sorted(files.items()):
         out.append(f"- `{path.relative_to(REPO_ROOT)}`: {sorted(keys)}")
@@ -362,11 +348,9 @@ def main() -> int:
             print("  FAIL missing:", p, v)
 
     print("\n== Vanilla textures ==")
-    failures = [m for m in summary["vanilla"]["matches"] if m[1] not in REVIEW_ONLY]
-    review = [m for m in summary["vanilla"]["matches"] if m[1] in REVIEW_ONLY]
+    failures = [m for m in summary["vanilla"]["matches"]]
     print(f"  scanned {summary['vanilla']['files_scanned']} files")
-    print(f"  non-exempt failures: {len(failures)}")
-    print(f"  exempt (anvil_base only): {len(review)}")
+    print(f"  obsolete vanilla references: {len(failures)}")
 
     print("\n== Mod-owned texture refs in model JSONs ==")
     modtex = summary["mod_textures"]

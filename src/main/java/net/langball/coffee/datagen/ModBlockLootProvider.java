@@ -65,7 +65,12 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         // === Decor & Utility (self-drop) ===
         dropSelf(ModBlocks.PLATE.get());
         add(ModBlocks.COLD_BREW_POT.get(), noDrop()); // drops handled by BlockColdBrewPot#onRemove
-        add(ModBlocks.SODA_ORE.get(), createOreDrop(ModBlocks.SODA_ORE.get(), ModItems.SODA.get()));
+        // Soda ore: drops 4-8 soda material, with Fortune bonus
+        add(ModBlocks.SODA_ORE.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(ModItems.SODA.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 8.0F)))
+                                .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))));
         dropSelf(ModBlocks.XMAS_TREE.get());
         dropSelf(ModBlocks.GINGER_HOUSE.get());
 

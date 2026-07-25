@@ -154,33 +154,29 @@ public class DrinkCoffee extends Item {
         // Handle multi-cup logic
         if (livingEntity instanceof Player player && !player.getAbilities().instabuild) {
             boolean multiCup = net.langball.coffee.ModConfig.ENABLE_MULTI_CUP.get() && hasMultiCup();
+            boolean cupReturn = net.langball.coffee.ModConfig.ENABLE_EMPTY_CUP_RETURN.get()
+                    && emptyCupItem != null && emptyCupItem.get() != null;
 
             if (multiCup) {
                 int remaining = getRemainingCups(stack);
                 remaining--;
 
                 if (remaining <= 0) {
-                    // Last cup consumed — return empty cup if configured
-                    if (net.langball.coffee.ModConfig.ENABLE_EMPTY_CUP_RETURN.get()
-                            && emptyCupItem != null && emptyCupItem.get() != null) {
-                        return new ItemStack(emptyCupItem.get());
-                    }
-                    return ItemStack.EMPTY;
+                    // Last cup consumed — return empty cup if configured, else consume
+                    return cupReturn ? new ItemStack(emptyCupItem.get()) : ItemStack.EMPTY;
                 } else {
                     // Still has remaining servings
                     setRemainingCups(stack, remaining);
                     return stack;
                 }
             } else {
-                // Single-cup behaviour
-                if (net.langball.coffee.ModConfig.ENABLE_EMPTY_CUP_RETURN.get()
-                        && emptyCupItem != null && emptyCupItem.get() != null) {
-                    return new ItemStack(emptyCupItem.get());
-                }
+                // Single-cup: the drink MUST be consumed in survival.
+                // Returning the original `stack` here would allow infinite drinking.
+                return cupReturn ? new ItemStack(emptyCupItem.get()) : ItemStack.EMPTY;
             }
         }
 
-        // Creative mode or no cup return: keep the stack
+        // Creative mode: keep the stack
         return stack;
     }
 
