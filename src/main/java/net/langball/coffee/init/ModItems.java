@@ -189,6 +189,8 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> EMPTY_COLDBREW_POT = ITEMS.register("empty_coldbrew_pot",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> COLDBREW_BOTTLE = ITEMS.register("coldbrew_bottle",
+            () -> new Item(new Item.Properties()));
 
     // ========================================================================
     // Foods (with FoodProperties)

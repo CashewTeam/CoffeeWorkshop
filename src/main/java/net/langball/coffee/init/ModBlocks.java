@@ -94,53 +94,53 @@ public class ModBlocks {
 
     // ========== Cakes (sponge, layer 1) ==========
     public static final RegistryObject<Block> CAKE_SPONGE = BLOCKS.register("cake_sponge",
-            () -> new BlockCakeBasic(1, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(1, 2, 0.2F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_SPONGE_CHOCOLATE = BLOCKS.register("cake_sponge_chocolate",
-            () -> new BlockCakeBasic(1, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(1, 2, 0.2F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_SPONGE_COFFEE = BLOCKS.register("cake_sponge_coffee",
-            () -> new BlockCakeBasic(1, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(1, 2, 0.2F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_SPONGE_PUMPKIN = BLOCKS.register("cake_sponge_pumpkin",
-            () -> new BlockCakeBasic(1, BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_ORANGE).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(1, 2, 0.2F, BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_ORANGE).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_SPONGE_CARROT = BLOCKS.register("cake_sponge_carrot",
-            () -> new BlockCakeBasic(1, BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_ORANGE).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(1, 2, 0.2F, BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_ORANGE).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_SPONGE_REDVELVET = BLOCKS.register("cake_sponge_redvelvet",
-            () -> new BlockCakeBasic(1, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(1, 2, 0.2F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_SPONGE_LEMON = BLOCKS.register("cake_sponge_lemon",
-            () -> new BlockCakeBasic(1, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(1, 2, 0.2F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_SPONGE_TEA = BLOCKS.register("cake_sponge_tea",
-            () -> new BlockCakeBasic(1, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(1, 2, 0.2F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_SPONGE_BERRY = BLOCKS.register("cake_sponge_berry",
-            () -> new BlockCakeBasic(1, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(1, 2, 0.2F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(0.5F).sound(SoundType.WOOL)));
 
     // ========== Cakes (large, layer 3) ==========
     public static final RegistryObject<Block> CAKE_COFFEE = BLOCKS.register("cake_coffee",
-            () -> new BlockCakeBasic(3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_HARVEST = BLOCKS.register("cake_harvest",
-            () -> new BlockCakeBasic(3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_LEMON = BLOCKS.register("cake_lemon",
-            () -> new BlockCakeBasic(3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_TEA = BLOCKS.register("cake_tea",
-            () -> new BlockCakeBasic(3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_BERRY = BLOCKS.register("cake_berry",
-            () -> new BlockCakeBasic(3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_CHEESE = BLOCKS.register("cake_cheese",
-            () -> new BlockCakeBasic(3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_SCHWARZWALD = BLOCKS.register("cake_schwarzwald",
-            () -> new BlockCakeBasic(3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> CAKE_REDVELVET = BLOCKS.register("cake_redvelvet",
-            () -> new BlockCakeBasic(3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).strength(0.5F).sound(SoundType.WOOL)));
 
     // ========== Special cakes ==========
     public static final RegistryObject<Block> TIRAMISU = BLOCKS.register("tiramisu",
-            () -> new BlockCakeBasic(5, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(5, 6, 0.5F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
 
     // ========== Mousse ==========
     public static final RegistryObject<Block> MOUSSE_BERRY = BLOCKS.register("mousse_berry",
-            () -> new BlockCakeBasic(3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> MOUSSE_LEMON = BLOCKS.register("mousse_lemon",
-            () -> new BlockCakeBasic(3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> MOUSSE_CHOCOLATE = BLOCKS.register("mousse_chocolate",
-            () -> new BlockCakeBasic(3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> MOUSSE_COFFEE = BLOCKS.register("mousse_coffee",
-            () -> new BlockCakeBasic(3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
+            () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
 }

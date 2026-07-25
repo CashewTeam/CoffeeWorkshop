@@ -1,5 +1,6 @@
 package net.langball.coffee.block;
 
+import net.langball.coffee.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -9,11 +10,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -54,12 +55,31 @@ public class BlockBlueBerryBush extends Block implements BonemealableBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        BlockPos below = pos.below();
+        BlockState soil = level.getBlockState(below);
+        return soil.is(Blocks.GRASS_BLOCK) || soil.is(Blocks.DIRT) || soil.is(Blocks.COARSE_DIRT)
+                || soil.is(Blocks.PODZOL) || soil.is(Blocks.FARMLAND) || soil.is(Blocks.ROOTED_DIRT);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, level, pos, block, fromPos, isMoving);
+        if (!level.isClientSide && !state.canSurvive(level, pos)) {
+            level.destroyBlock(pos, true);
+        }
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
                                   InteractionHand hand, BlockHitResult hit) {
         int age = state.getValue(AGE);
         if (age == 3) {
             int count = 1 + level.random.nextInt(2);
-            popResource(level, pos, new ItemStack(net.langball.coffee.init.ModItems.BLUEBERRY.get(), count));
+            popResource(level, pos, new ItemStack(ModItems.BLUEBERRY.get(), count));
             level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
             level.setBlock(pos, state.setValue(AGE, 1), 2);
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -81,5 +101,10 @@ public class BlockBlueBerryBush extends Block implements BonemealableBlock {
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         int age = Math.min(3, state.getValue(AGE) + random.nextInt(2) + 1);
         level.setBlock(pos, state.setValue(AGE, age), 2);
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return new ItemStack(ModItems.BLUEBERRY_BUSH_ITEM.get());
     }
 }
