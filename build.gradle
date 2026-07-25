@@ -58,7 +58,8 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven {
-        url 'https://maven.blamejared.com'
+        name = "Jared's Maven"
+        url = "https://maven.blamejared.com/"
     }
     maven {
         name = "ModMaven"
@@ -68,6 +69,16 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.4.10'
+
+    // 编译时只使用 JEI API
+    compileOnly fg.deobf(
+            'mezz.jei:jei-1.20.1-forge-api:15.20.0.134'
+    )
+
+    // runClient 时加载完整 JEI
+    runtimeOnly fg.deobf(
+            'mezz.jei:jei-1.20.1-forge:15.20.0.134'
+    )
 }
 
 jar {
