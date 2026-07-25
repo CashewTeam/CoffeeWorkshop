@@ -21,7 +21,7 @@ public class DataGenerators {
         PackOutput output = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
-        // Recipes
+        // Recipes (crafting, smelting, shapeless + machine recipes)
         generator.addProvider(event.includeServer(), new ModRecipeProvider(output));
 
         // Loot Tables

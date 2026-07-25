@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:rolling",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": {
+    "item": "coffeework:plate_iron"
+  }
+}

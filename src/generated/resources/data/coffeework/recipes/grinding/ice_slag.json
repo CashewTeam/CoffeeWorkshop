@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:grinding",
+  "cookingtime": 200,
+  "experience": 0.05,
+  "ingredient": {
+    "item": "minecraft:ice"
+  },
+  "result": {
+    "item": "coffeework:ice_slag"
+  }
+}

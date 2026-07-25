@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:oven_baking",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "coffeework:dough_bagel"
+  },
+  "result": {
+    "item": "coffeework:bagel"
+  }
+}

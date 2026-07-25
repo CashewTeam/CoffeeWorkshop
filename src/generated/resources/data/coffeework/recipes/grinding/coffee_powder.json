@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:grinding",
+  "cookingtime": 200,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "coffeework:coffee_bean"
+  },
+  "result": {
+    "item": "coffeework:coffee_powder"
+  }
+}

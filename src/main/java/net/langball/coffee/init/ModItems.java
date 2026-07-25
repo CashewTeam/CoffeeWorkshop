@@ -235,6 +235,8 @@ public class ModItems {
             () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.9F).build())));
 
     // Ice creams
+    public static final RegistryObject<Item> ICECREAM_MIX_VANILLA = ITEMS.register("icecream_mix_vanilla",
+            () -> new Item(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> ICECREAM_VANILLA = ITEMS.register("icecream_vanilla",
             () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).build())));
 

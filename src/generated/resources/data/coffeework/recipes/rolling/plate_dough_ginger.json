@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:rolling",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "coffeework:dough_ginger"
+  },
+  "result": {
+    "item": "coffeework:plate_dough_ginger"
+  }
+}

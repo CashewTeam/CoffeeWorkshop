@@ -22,18 +22,14 @@ public class ModRecipeProvider extends RecipeProvider {
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> writer) {
         // ===================================================================
-        // SMELTING (Furnace)
+        // SMELTING (Furnace) — only legacy paths not yet replaced by machines
         // ===================================================================
-        smelting(ModItems.COFFEE_BEAN_RAW.get(), ModItems.COFFEE_BEAN.get(), 0.35F, "coffee_bean").save(writer, modLoc("coffee_bean_from_raw"));
+        // Cocoa beans → cocoa powder (keep as alternative to Grinder)
         smelting(Items.COCOA_BEANS, ModItems.COCOA_POWDER.get(), 0.35F, "cocoa_powder").save(writer, modLoc("cocoa_powder_from_beans"));
 
-        // Dough → Baked goods
-        smelting(ModItems.DOUGH_BREAD.get(), Items.BREAD, 0.35F, "bread").save(writer, modLoc("bread_from_dough_bread"));
-        smelting(ModItems.DOUGH_BREAD_ROUND.get(), ModItems.BREAD_ROUND.get(), 0.35F, "bread_round").save(writer, modLoc("bread_round_from_dough"));
-        smelting(ModItems.DOUGH_BAGUETTE.get(), ModItems.BAGUETTE.get(), 0.35F, "baguette").save(writer, modLoc("baguette_from_dough"));
-        smelting(ModItems.DOUGH_BAGEL.get(), ModItems.BAGEL.get(), 0.35F, "bagel").save(writer, modLoc("bagel_from_dough"));
-        smelting(ModItems.DOUGH_TOAST.get(), ModItems.TOAST.get(), 0.35F, "toast").save(writer, modLoc("toast_from_dough"));
-        smelting(ModItems.DOUGH_COOKIE.get(), Items.COOKIE, 0.35F, "cookie").save(writer, modLoc("cookie_from_dough_cookie"));
+        // NOTE: coffee_bean_raw → coffee_bean smelting REMOVED — use Oven machine
+        // NOTE: dough_bread → bread smelting REMOVED — use Oven machine
+        // NOTE: all dough variant smelting REMOVED — use Oven machine
 
         // Smelt plate_dough_ginger → gingerbread (using a generic output since we don't have dessert_1[8])
         // TODO: Add gingerbread item when porting dessert items
@@ -612,33 +608,21 @@ public class ModRecipeProvider extends RecipeProvider {
         // ===================================================================
         // ICE CREAM RECIPES
         // ===================================================================
-        // Vanilla Ice Cream (simplified)
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_VANILLA.get(), Items.MILK_BUCKET)
+        // Vanilla Ice Cream Mix (workbench → machine)
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_MIX_VANILLA.get(), Items.MILK_BUCKET)
+                .requires(ModItems.MIXING_BOWL.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.SUGAR)
                 .requires(ModItems.VANILLA.get())
-                .requires(ModItems.ICE_SLAG.get())
-                .save(writer, modLoc("icecream_vanilla"));
+                .save(writer, modLoc("icecream_mix_vanilla"));
+
+        // NOTE: plate_dough, plate_dough_pastry, plate_dough_ginger crafting
+        // fallbacks REMOVED — use Roller machine instead
 
         // ===================================================================
-        // PLATE DOUGH (Rolled dough)
+        // MACHINE RECIPES (Grinder, Oven, Roller, Icecream Machine)
         // ===================================================================
-        // These were originally Roller machine recipes; manual 2x2 crafting as fallback
-
-        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH.get(), ModItems.DOUGH.get())
-                .pattern("DD")
-                .define('D', ModItems.DOUGH.get())
-                .save(writer, modLoc("plate_dough"));
-
-        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH_PASTRY.get(), ModItems.DOUGH_PASTRY.get())
-                .pattern("DD")
-                .define('D', ModItems.DOUGH_PASTRY.get())
-                .save(writer, modLoc("plate_dough_pastry"));
-
-        shaped(RecipeCategory.FOOD, ModItems.PLATE_DOUGH_GINGER.get(), ModItems.DOUGH_GINGER.get())
-                .pattern("DD")
-                .define('D', ModItems.DOUGH_GINGER.get())
-                .save(writer, modLoc("plate_dough_ginger"));
+        ModMachineRecipeProvider.buildRecipes(writer);
     }
 
     // =======================================================================

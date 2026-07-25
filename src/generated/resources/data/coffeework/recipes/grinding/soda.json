@@ -1,0 +1,12 @@
+{
+  "type": "coffeework:grinding",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "coffeework:soda_ore"
+  },
+  "result": {
+    "count": 4,
+    "item": "coffeework:soda"
+  }
+}

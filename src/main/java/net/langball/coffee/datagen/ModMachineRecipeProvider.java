@@ -1,0 +1,134 @@
+package net.langball.coffee.datagen;
+
+import net.langball.coffee.CoffeeWork;
+import net.langball.coffee.datagen.recipe.MachineRecipeBuilder;
+import net.langball.coffee.init.ModItems;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
+
+import java.util.function.Consumer;
+
+/**
+ * Generates all machine processing recipes via DataGen builders.
+ *
+ * <p>Called from {@link ModRecipeProvider#buildRecipes(Consumer)}.
+ * Not a standalone RecipeProvider to avoid duplicate provider errors.
+ */
+public final class ModMachineRecipeProvider {
+
+    private ModMachineRecipeProvider() {}
+
+    public static void buildRecipes(Consumer<FinishedRecipe> writer) {
+        buildGrindingRecipes(writer);
+        buildOvenRecipes(writer);
+        buildRollingRecipes(writer);
+        buildIcecreamRecipes(writer);
+    }
+
+    private static void buildGrindingRecipes(Consumer<FinishedRecipe> writer) {
+        MachineRecipeBuilder.grinding(Ingredient.of(ModItems.COFFEE_BEAN.get()),
+                new ItemStack(ModItems.COFFEE_POWDER.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("grinding/coffee_powder"));
+
+        MachineRecipeBuilder.grinding(Ingredient.of(Items.COCOA_BEANS),
+                new ItemStack(ModItems.COCOA_POWDER.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("grinding/cocoa_powder"));
+
+        MachineRecipeBuilder.grinding(Ingredient.of(Items.WHEAT),
+                new ItemStack(ModItems.FLOUR.get()))
+                .experience(0.1F).cookingTime(200)
+                .save(writer, id("grinding/flour"));
+
+        MachineRecipeBuilder.grinding(Ingredient.of(ModItems.COCOA_POWDER.get()),
+                new ItemStack(ModItems.COCOA_BATTER.get()))
+                .experience(0.15F).cookingTime(200)
+                .save(writer, id("grinding/cocoa_batter"));
+
+        MachineRecipeBuilder.grinding(Ingredient.of(Blocks.ICE),
+                new ItemStack(ModItems.ICE_SLAG.get()))
+                .experience(0.05F).cookingTime(200)
+                .save(writer, id("grinding/ice_slag"));
+
+        MachineRecipeBuilder.grinding(Ingredient.of(ModItems.SODA_ORE.get()),
+                new ItemStack(ModItems.SODA.get(), 4))
+                .experience(0.1F).cookingTime(200)
+                .save(writer, id("grinding/soda"));
+    }
+
+    private static void buildOvenRecipes(Consumer<FinishedRecipe> writer) {
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.COFFEE_BEAN_RAW.get()),
+                new ItemStack(ModItems.COFFEE_BEAN.get()))
+                .experience(0.35F).cookingTime(200)
+                .save(writer, id("oven_baking/coffee_bean"));
+
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.DOUGH_BREAD.get()),
+                new ItemStack(Items.BREAD))
+                .experience(0.35F).cookingTime(200)
+                .save(writer, id("oven_baking/bread"));
+
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.DOUGH_BREAD_ROUND.get()),
+                new ItemStack(ModItems.BREAD_ROUND.get()))
+                .experience(0.35F).cookingTime(200)
+                .save(writer, id("oven_baking/bread_round"));
+
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.DOUGH_BAGUETTE.get()),
+                new ItemStack(ModItems.BAGUETTE.get()))
+                .experience(0.35F).cookingTime(200)
+                .save(writer, id("oven_baking/baguette"));
+
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.DOUGH_BAGEL.get()),
+                new ItemStack(ModItems.BAGEL.get()))
+                .experience(0.35F).cookingTime(200)
+                .save(writer, id("oven_baking/bagel"));
+
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.DOUGH_TOAST.get()),
+                new ItemStack(ModItems.TOAST.get()))
+                .experience(0.35F).cookingTime(200)
+                .save(writer, id("oven_baking/toast"));
+
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.DOUGH_COOKIE.get()),
+                new ItemStack(Items.COOKIE))
+                .experience(0.35F).cookingTime(200)
+                .save(writer, id("oven_baking/cookie"));
+    }
+
+    private static void buildRollingRecipes(Consumer<FinishedRecipe> writer) {
+        MachineRecipeBuilder.rolling(Ingredient.of(Items.IRON_INGOT),
+                new ItemStack(ModItems.PLATE_IRON.get()))
+                .experience(0.1F).cookingTime(200)
+                .save(writer, id("rolling/plate_iron"));
+
+        MachineRecipeBuilder.rolling(Ingredient.of(ModItems.DOUGH.get()),
+                new ItemStack(ModItems.PLATE_DOUGH.get()))
+                .experience(0.1F).cookingTime(200)
+                .save(writer, id("rolling/plate_dough"));
+
+        MachineRecipeBuilder.rolling(Ingredient.of(ModItems.DOUGH_PASTRY.get()),
+                new ItemStack(ModItems.PLATE_DOUGH_PASTRY.get()))
+                .experience(0.1F).cookingTime(200)
+                .save(writer, id("rolling/plate_dough_pastry"));
+
+        MachineRecipeBuilder.rolling(Ingredient.of(ModItems.DOUGH_GINGER.get()),
+                new ItemStack(ModItems.PLATE_DOUGH_GINGER.get()))
+                .experience(0.1F).cookingTime(200)
+                .save(writer, id("rolling/plate_dough_ginger"));
+    }
+
+    private static void buildIcecreamRecipes(Consumer<FinishedRecipe> writer) {
+        MachineRecipeBuilder.icecreamMaking(
+                Ingredient.of(ModItems.ICECREAM_MIX_VANILLA.get()),
+                new ItemStack(ModItems.ICECREAM_VANILLA.get()))
+                .experience(0.2F).cookingTime(400)
+                .save(writer, id("icecream_making/vanilla"));
+    }
+
+    private static ResourceLocation id(String path) {
+        return CoffeeWork.id(path);
+    }
+}
