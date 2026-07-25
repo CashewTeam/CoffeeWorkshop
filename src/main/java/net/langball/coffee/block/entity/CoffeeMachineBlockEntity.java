@@ -81,6 +81,15 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
         burnTimeTotal = recipe.cookingTime();
     }
 
+    /**
+     * Coffee Machine turns off LIT immediately when output is blocked,
+     * rather than waiting for the current self-cycle to expire.
+     */
+    @Override
+    protected boolean shouldBeLit(MachineRecipe recipe, boolean canProcess) {
+        return canProcess && hasProcessingPower();
+    }
+
     // ---- MenuProvider ------------------------------------------------------
 
     @Override

@@ -38,6 +38,8 @@ public class SlotMachineResult extends SlotItemHandler {
 
     private final MachineBlockEntity machine;
     private final Level level;
+    /** Number of items actually removed in the current interaction. */
+    private int removedCount;
 
     public SlotMachineResult(IItemHandler handler, int slot, int x, int y,
                              MachineBlockEntity machine, Level level) {
@@ -52,37 +54,45 @@ public class SlotMachineResult extends SlotItemHandler {
     }
 
     /**
-     * Called during shift-click (quick-move).  We do NOT fire
-     * {@code onCraftedBy} here — vanilla's slot framework will call
-     * {@link #onTake} afterwards, where we handle everything once.
+     * Tracks the number of items actually removed by this interaction.
+     * Vanilla-compatible: called by both click and shift-click paths.
      */
     @Override
-    protected void onQuickCraft(@NotNull ItemStack stack, int amount) {
-        // Intentionally empty — crafted callback + XP + awards all
-        // happen in onTake() to avoid double-firing.
+    @NotNull
+    public ItemStack remove(int amount) {
+        ItemStack taken = super.remove(amount);
+        removedCount = taken.getCount();
+        return taken;
     }
 
     /**
-     * Called when a player manually removes an item from this slot
-     * (click, shift-click, or hotbar swap).  Fires:
-     * <ol>
-     *   <li>Crafted callback on the item (once per interaction).</li>
-     *   <li>Accumulated recipe experience (with fractional probability).</li>
-     *   <li>Recipe Awards / Advancements for all recipes completed.</li>
-     * </ol>
+     * Called during shift-click (quick-move).  Does NOT fire onCraftedBy
+     * here — onTake() handles everything once, using the recorded count.
+     */
+    @Override
+    protected void onQuickCraft(@NotNull ItemStack stack, int amount) {
+        // Intentionally empty: crafted callback + XP + awards happen in onTake()
+    }
+
+    /**
+     * Called when a player manually removes an item from this slot.
+     * Fires crafted callback, awards experience, and grants recipe
+     * advancements — exactly once per interaction, with the correct
+     * number of items taken (from {@link #remove(int)}).
      */
     @Override
     public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
-        // 1. Crafted callback (vanilla-compatible: Player is non-null)
-        if (player instanceof ServerPlayer sp) {
-            int count = stack.getCount();
-            // Trigger the item's own crafted callback
-            stack.onCraftedBy(level, player, count);
+        int taken = removedCount > 0 ? removedCount : stack.getCount();
+        removedCount = 0;
 
-            // 2. Award experience
+        if (player instanceof ServerPlayer sp) {
+            // Crafted callback with correct count
+            stack.onCraftedBy(level, player, taken);
+
+            // Award experience
             awardExperience(sp);
 
-            // 3. Trigger Recipe Awards / Advancements
+            // Trigger Recipe Awards / Advancements
             awardRecipes(sp);
         }
 

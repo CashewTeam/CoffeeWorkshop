@@ -108,6 +108,19 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
     // ---- LIT state --------------------------------------------------------
 
     /**
+     * Returns {@code true} when the machine should appear lit.
+     *
+     * <p>Fuel machines rely on {@code burnTime > 0}.  Self-powered
+     * machines (CoffeeMachine) may override this to also check
+     * {@code canProcess} so the LIT turns off immediately when the
+     * output is blocked, rather than waiting for the current cycle
+     * to expire.
+     */
+    protected boolean shouldBeLit(MachineRecipe recipe, boolean canProcess) {
+        return hasProcessingPower();
+    }
+
+    /**
      * Updates the block's {@link MachineBlock#LIT} property if it differs
      * from the current state.
      */
@@ -145,9 +158,16 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
     /**
      * Decrements the power timer each tick.  Fueled and self-powered
      * machines both call this at the start of their tick.
+     *
+     * <p>Calls {@link #setChanged()} when burnTime actually decrements
+     * so the chunk is marked dirty for saving.  This is separate from
+     * {@link #markChangedAndSync()} which also sends a block update.
      */
     protected void tickProcessingPower() {
-        if (burnTime > 0) burnTime--;
+        if (burnTime > 0) {
+            burnTime--;
+            setChanged();
+        }
     }
 
     // ---- Shared tick body --------------------------------------------------
@@ -165,7 +185,7 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
     protected void tickProcessing(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide) return;
 
-        // Decrement power timer
+        // Decrement power timer (calls setChanged if burnTime changed)
         tickProcessingPower();
 
         // Snapshot the recipe ID *before* resolution, so we can detect changes
@@ -183,6 +203,13 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
             }
         }
 
+        // /reload may change cookingTime without changing recipe ID
+        if (recipe != null && totalCookTime != recipe.cookingTime()
+                && java.util.Objects.equals(previousRecipeId, activeRecipeId)) {
+            totalCookTime = recipe.cookingTime();
+            cookTime = Math.min(cookTime, totalCookTime - 1);
+        }
+
         boolean canProcess = recipe != null && canAcceptResult(recipe);
 
         // If idle but work is available, try to start a power cycle
@@ -193,12 +220,13 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
         // Advance progress while power is available and recipe is valid
         if (hasProcessingPower() && canProcess) {
             cookTime++;
+            setChanged(); // persist cookTime progress every tick
             if (cookTime >= totalCookTime) {
                 cookTime = 0;
                 totalCookTime = recipe.cookingTime();
                 processRecipe(recipe);
                 markChangedAndSync();
-                return; // markChangedAndSync already handled dirty
+                return;
             }
         } else if (!canProcess && cookTime > 0) {
             if (recipe == null) {
@@ -206,6 +234,6 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
             }
         }
 
-        updateLitState(hasProcessingPower());
+        updateLitState(shouldBeLit(recipe, canProcess));
     }
 }
