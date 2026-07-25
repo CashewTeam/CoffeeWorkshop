@@ -44,7 +44,7 @@ public class ContainerOven extends AbstractMachineMenu {
     }
 
     @Override
-    protected RecipeType<MachineRecipe> getRecipeType() {
+    protected RecipeType<?> getRecipeType() {
         return ModRecipeTypes.OVEN_BAKING;
     }
 

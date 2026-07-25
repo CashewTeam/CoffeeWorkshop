@@ -2,6 +2,7 @@ package net.langball.coffee.block.entity;
 
 import net.langball.coffee.block.MachineBlock;
 import net.langball.coffee.recipes.MachineRecipe;
+import net.langball.coffee.recipes.ProcessingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.SimpleContainer;
@@ -15,20 +16,10 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Mid-level base shared by all processing machines.
  *
- * <p>This class owns the <em>what</em> of recipe-driven processing:
- * recipe resolution, output checking, result insertion, progress
- * tracking, and LIT state synchronisation.  It does <strong>not</strong>
- * handle fuel — that is added by {@link AbstractFueledProcessingBlockEntity}.
- *
- * <h3>Concrete subclass contract</h3>
- * Subclasses must implement:
- * <ul>
- *   <li>{@link #getRecipeType()} — which RecipeType to query</li>
- *   <li>{@link #getInputSlot()} — input slot index</li>
- *   <li>{@link #getOutputSlot()} — output slot index</li>
- *   <li>{@link #tick(Level, BlockPos, BlockState)} — delegates to
- *       {@link #tickProcessing(Level, BlockPos, BlockState)}</li>
- * </ul>
+ * <p>Works against {@link ProcessingRecipe} so that both single-input
+ * ({@link MachineRecipe}) and multi-input
+ * ({@link net.langball.coffee.recipes.CoffeeBrewingRecipe}) recipes
+ * are handled by the same engine.
  */
 public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
 
@@ -39,65 +30,121 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
 
     // ---- Abstract contract ------------------------------------------------
 
-    /** The recipe type this machine queries. */
-    protected abstract RecipeType<MachineRecipe> getRecipeType();
-
-    /** Index of the input slot (where ingredients go). */
+    protected abstract RecipeType<?> getRecipeType();
     protected abstract int getInputSlot();
-
-    /** Index of the output slot (where results appear). */
     protected abstract int getOutputSlot();
 
     // ---- Recipe resolution -----------------------------------------------
 
-    /**
-     * Resolves the matching recipe from the current RecipeManager.
-     *
-     * <p>Uses {@link #resolveRecipe(RecipeType, int)} on the base class
-     * to get a {@code /reload}-safe recipe.  Tracks the previous recipe
-     * ID so it can detect recipe changes.
-     */
     @Nullable
-    protected MachineRecipe getCurrentRecipe() {
-        return resolveRecipe(getRecipeType(), getInputSlot());
+    protected ProcessingRecipe getCurrentRecipe() {
+        if (level == null) return null;
+
+        ItemStack input = itemHandler.getStackInSlot(getInputSlot());
+        if (input.isEmpty()) {
+            activeRecipeId = null;
+            return null;
+        }
+
+        var rm = level.getRecipeManager();
+        SimpleContainer container = new SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            container.setItem(i, itemHandler.getStackInSlot(i));
+        }
+
+        // 1. Try by stored ID
+        if (activeRecipeId != null) {
+            var byId = rm.byKey(activeRecipeId);
+            if (byId.isPresent() && byId.get() instanceof ProcessingRecipe pr
+                    && pr.getType() == getRecipeType() && pr.matches(container, level)) {
+                return pr;
+            }
+            activeRecipeId = null;
+        }
+
+        // 2. Full scan via RecipeManager
+        var found = rm.getRecipeFor((RecipeType) getRecipeType(), container, level);
+        if (found.isPresent() && found.get() instanceof ProcessingRecipe pr) {
+            activeRecipeId = pr.getId();
+            return pr;
+        }
+        activeRecipeId = null;
+        return null;
     }
 
     // ---- Output helpers ---------------------------------------------------
 
-    /**
-     * Returns {@code true} when the given recipe result can be placed
-     * into the output slot.
-     */
-    protected boolean canAcceptResult(MachineRecipe recipe) {
+    protected boolean canAcceptResult(ProcessingRecipe recipe) {
         if (recipe == null) return false;
-        ItemStack result = recipe.assemble(new SimpleContainer(itemHandler.getStackInSlot(getInputSlot())),
-                level != null ? level.registryAccess() : null);
+        SimpleContainer container = new SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            container.setItem(i, itemHandler.getStackInSlot(i));
+        }
+        ItemStack result = recipe.assemble(container, level != null ? level.registryAccess() : null);
         return canAcceptResult(getOutputSlot(), result);
     }
 
     // ---- Processing helpers -----------------------------------------------
 
     /**
-     * Atomically consumes one input, produces the result, and records
-     * the recipe completion for experience tracking.
+     * Atomically consumes inputs and produces the result.
      *
-     * <p>Caller must have already verified {@link #canAcceptResult(MachineRecipe)}.
-     *
-     * @return the recipe that was processed (for caller convenience)
+     * <p>For multi-input recipes (CoffeeBrewingRecipe), this consumes
+     * each declared slot by its required count and handles remainders
+     * (e.g. water_bucket → bucket).  For single-input recipes,
+     * this calls {@link #consumeOneWithRemainder(int)} as before.
      */
-    protected MachineRecipe processRecipe(MachineRecipe recipe) {
-        ItemStack result = recipe.assemble(new SimpleContainer(itemHandler.getStackInSlot(getInputSlot())),
-                level != null ? level.registryAccess() : null);
-        consumeOneWithRemainder(getInputSlot());
+    protected ProcessingRecipe processRecipe(ProcessingRecipe recipe) {
+        SimpleContainer container = new SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            container.setItem(i, itemHandler.getStackInSlot(i));
+        }
+        ItemStack result = recipe.assemble(container, level != null ? level.registryAccess() : null);
+
+        // Consume inputs
+        int[] slots = recipe.getConsumedSlots();
+        if (slots.length == 1) {
+            // Single-input (MachineRecipe): use existing helper
+            consumeOneWithRemainder(slots[0]);
+        } else {
+            // Multi-input (CoffeeBrewingRecipe): consume each slot by count
+            for (int slot : slots) {
+                int count = recipe.getRequiredCount(slot);
+                ItemStack stack = itemHandler.getStackInSlot(slot);
+                if (!stack.isEmpty() && count > 0) {
+                    // Handle remainder for modifier slot (bucket return)
+                    ItemStack remainder = ItemStack.EMPTY;
+                    if (recipe instanceof net.langball.coffee.recipes.CoffeeBrewingRecipe cbr) {
+                        remainder = cbr.getRemainder(slot);
+                    }
+
+                    stack.shrink(count);
+                    if (!remainder.isEmpty()) {
+                        if (stack.isEmpty()) {
+                            itemHandler.setStackInSlot(slot, remainder);
+                        } else {
+                            net.minecraft.world.Containers.dropItemStack(level,
+                                    worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
+                                    remainder);
+                        }
+                    } else {
+                        // For non-remainder slots (base/container), also handle
+                        // standard crafting remainders
+                        ItemStack one = stack.copyWithCount(1);
+                        ItemStack craftingRemainder = one.getCraftingRemainingItem();
+                        if (!craftingRemainder.isEmpty() && stack.isEmpty()) {
+                            itemHandler.setStackInSlot(slot, craftingRemainder);
+                        }
+                    }
+                }
+            }
+        }
+
         insertResult(getOutputSlot(), result);
         recordRecipeCompletion(recipe);
         return recipe;
     }
 
-    /**
-     * Called when the active recipe changes (including becoming null).
-     * Default implementation resets progress.
-     */
     protected void onRecipeChanged(@Nullable ResourceLocation oldId,
                                    @Nullable ResourceLocation newId) {
         if (oldId == null && newId == null) return;
@@ -105,25 +152,16 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
         resetProgress();
     }
 
+    protected void recordRecipeCompletion(ProcessingRecipe recipe) {
+        recipesUsed.merge(recipe.getId(), 1, Integer::sum);
+    }
+
     // ---- LIT state --------------------------------------------------------
 
-    /**
-     * Returns {@code true} when the machine should appear lit.
-     *
-     * <p>Fuel machines rely on {@code burnTime > 0}.  Self-powered
-     * machines (CoffeeMachine) may override this to also check
-     * {@code canProcess} so the LIT turns off immediately when the
-     * output is blocked, rather than waiting for the current cycle
-     * to expire.
-     */
-    protected boolean shouldBeLit(MachineRecipe recipe, boolean canProcess) {
+    protected boolean shouldBeLit(ProcessingRecipe recipe, boolean canProcess) {
         return hasProcessingPower();
     }
 
-    /**
-     * Updates the block's {@link MachineBlock#LIT} property if it differs
-     * from the current state.
-     */
     protected void updateLitState(boolean lit) {
         if (level == null) return;
         BlockState state = getBlockState();
@@ -133,36 +171,15 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
         }
     }
 
-    // ---- Power hooks (for self-powered / non-fuel machines) ----------------
+    // ---- Power hooks -------------------------------------------------------
 
-    /**
-     * Returns {@code true} when the machine currently has processing
-     * power available.  Fueled machines override this to check
-     * {@code burnTime > 0}; self-powered machines start their own
-     * cycle.
-     */
     protected boolean hasProcessingPower() {
         return burnTime > 0;
     }
 
-    /**
-     * Attempts to begin a processing-power cycle for the given recipe.
-     * Called once per tick when {@link #hasProcessingPower()} is false
-     * but a valid recipe is ready.  Subclasses set {@code burnTime}
-     * and {@code burnTimeTotal} here.
-     */
-    protected void startProcessingPower(MachineRecipe recipe) {
-        // default: no-op (fueled machines override in their own tick)
+    protected void startProcessingPower(ProcessingRecipe recipe) {
     }
 
-    /**
-     * Decrements the power timer each tick.  Fueled and self-powered
-     * machines both call this at the start of their tick.
-     *
-     * <p>Calls {@link #setChanged()} when burnTime actually decrements
-     * so the chunk is marked dirty for saving.  This is separate from
-     * {@link #markChangedAndSync()} which also sends a block update.
-     */
     protected void tickProcessingPower() {
         if (burnTime > 0) {
             burnTime--;
@@ -172,27 +189,14 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
 
     // ---- Shared tick body --------------------------------------------------
 
-    /**
-     * Common server-side tick for <em>all</em> processing machines.
-     *
-     * <p>The fueled variant ({@link AbstractFueledProcessingBlockEntity})
-     * extends this with explicit fuel-slot logic, but the recipe-change
-     * detection, progress advance, and craft-completion steps are
-     * identical.  Self-powered machines (CoffeeMachine) call this
-     * directly and override {@link #startProcessingPower(MachineRecipe)}
-     * to initiate a self-cycle.
-     */
     protected void tickProcessing(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide) return;
 
-        // Decrement power timer (calls setChanged if burnTime changed)
         tickProcessingPower();
 
-        // Snapshot the recipe ID *before* resolution, so we can detect changes
         ResourceLocation previousRecipeId = activeRecipeId;
-        MachineRecipe recipe = getCurrentRecipe();
+        ProcessingRecipe recipe = getCurrentRecipe();
 
-        // Detect recipe change
         if (!java.util.Objects.equals(previousRecipeId, activeRecipeId)) {
             onRecipeChanged(previousRecipeId, activeRecipeId);
             if (recipe != null) {
@@ -203,7 +207,6 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
             }
         }
 
-        // /reload may change cookingTime without changing recipe ID
         if (recipe != null && totalCookTime != recipe.cookingTime()
                 && java.util.Objects.equals(previousRecipeId, activeRecipeId)) {
             totalCookTime = recipe.cookingTime();
@@ -212,16 +215,14 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
 
         boolean canProcess = recipe != null && canAcceptResult(recipe);
 
-        // If idle but work is available, try to start a power cycle
         if (!hasProcessingPower() && canProcess) {
             startProcessingPower(recipe);
         }
 
-        // Advance progress while power is available and recipe is valid
         if (hasProcessingPower() && canProcess) {
             int oldSignal = totalCookTime > 0 ? (cookTime * 15) / totalCookTime : 0;
             cookTime++;
-            setChanged(); // persist cookTime progress every tick
+            setChanged();
             int newSignal = totalCookTime > 0 ? (cookTime * 15) / totalCookTime : 0;
             if (oldSignal != newSignal && level != null) {
                 level.updateNeighbourForOutputSignal(worldPosition,

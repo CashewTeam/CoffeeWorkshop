@@ -64,7 +64,7 @@ public abstract class AbstractMachineMenu extends AbstractContainerMenu {
     // ---- Abstract contract (subclass provides) ----------------------------
 
     protected abstract void addMachineSlots();
-    protected abstract RecipeType<MachineRecipe> getRecipeType();
+    protected abstract RecipeType<?> getRecipeType();
     protected abstract Set<Block> getValidBlocks();
     protected abstract int getOutputSlotIndex();
     protected abstract boolean isFuelItem(ItemStack stack);
@@ -106,7 +106,7 @@ public abstract class AbstractMachineMenu extends AbstractContainerMenu {
 
     protected boolean hasRecipe(ItemStack stack) {
         return level.getRecipeManager()
-                .getRecipeFor(getRecipeType(), new SimpleContainer(stack), level)
+                .getRecipeFor((RecipeType) getRecipeType(), new SimpleContainer(stack), level)
                 .isPresent();
     }
 

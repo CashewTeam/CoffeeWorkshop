@@ -1,6 +1,7 @@
 package net.langball.coffee.init;
 
 import net.langball.coffee.CoffeeWork;
+import net.langball.coffee.recipes.CoffeeBrewingRecipeSerializer;
 import net.langball.coffee.recipes.MachineRecipe;
 import net.langball.coffee.recipes.MachineRecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -56,8 +57,8 @@ public final class ModRecipeTypes {
     public static final RegistryObject<MachineRecipeSerializer> GRINDING_SERIALIZER =
             SERIALIZERS.register("grinding", () -> new MachineRecipeSerializer(GRINDING));
 
-    public static final RegistryObject<MachineRecipeSerializer> COFFEE_BREWING_SERIALIZER =
-            SERIALIZERS.register("coffee_brewing", () -> new MachineRecipeSerializer(COFFEE_BREWING));
+    public static final RegistryObject<CoffeeBrewingRecipeSerializer> COFFEE_BREWING_SERIALIZER =
+            SERIALIZERS.register("coffee_brewing", CoffeeBrewingRecipeSerializer::new);
 
     public static final RegistryObject<MachineRecipeSerializer> ICECREAM_MAKING_SERIALIZER =
             SERIALIZERS.register("icecream_making", () -> new MachineRecipeSerializer(ICECREAM_MAKING));

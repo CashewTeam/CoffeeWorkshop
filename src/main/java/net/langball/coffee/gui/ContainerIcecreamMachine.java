@@ -44,7 +44,7 @@ public class ContainerIcecreamMachine extends AbstractMachineMenu {
     }
 
     @Override
-    protected RecipeType<MachineRecipe> getRecipeType() {
+    protected RecipeType<?> getRecipeType() {
         return ModRecipeTypes.ICECREAM_MAKING;
     }
 

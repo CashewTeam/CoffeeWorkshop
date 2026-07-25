@@ -74,6 +74,16 @@ public class DrinkCoffee extends Item {
         return stack;
     }
 
+    /** @return the configured max cups for this drink item. */
+    public int getConfiguredMaxCups() {
+        return maxCups;
+    }
+
+    /** Initialises cup NBT on a freshly crafted stack. */
+    public ItemStack initializeFreshStack(ItemStack stack) {
+        return initCupCount(stack, maxCups);
+    }
+
     /**
      * Lazy initialisation: if NBT cup data is missing (e.g. from /give or
      * legacy stacks), set it to this item's configured maxCups so the drink

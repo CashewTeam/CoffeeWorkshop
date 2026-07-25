@@ -43,7 +43,7 @@ public record MachineRecipe(
         int cookingTime,
         RecipeType<?> type,
         RecipeSerializer<?> serializer
-) implements Recipe<SimpleContainer> {
+) implements Recipe<SimpleContainer>, ProcessingRecipe {
 
     @Override
     public boolean matches(@NotNull SimpleContainer container, @NotNull Level level) {
@@ -83,5 +83,17 @@ public record MachineRecipe(
     @NotNull
     public RecipeType<?> getType() {
         return type;
+    }
+
+    // ── ProcessingRecipe impl ──────────────────────────────────────────
+
+    @Override
+    public int[] getConsumedSlots() {
+        return new int[]{0}; // single-input machine: always slot 0
+    }
+
+    @Override
+    public int getRequiredCount(int slot) {
+        return slot == 0 ? 1 : 0;
     }
 }

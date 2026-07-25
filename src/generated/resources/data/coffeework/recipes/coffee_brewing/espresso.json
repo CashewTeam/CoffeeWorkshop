@@ -1,0 +1,20 @@
+{
+  "type": "coffeework:coffee_brewing",
+  "base": {
+    "count": 2,
+    "ingredient": {
+      "item": "coffeework:coffee_powder"
+    }
+  },
+  "container": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:cup"
+    }
+  },
+  "cookingtime": 80,
+  "experience": 0.2,
+  "result": {
+    "item": "coffeework:espresso"
+  }
+}

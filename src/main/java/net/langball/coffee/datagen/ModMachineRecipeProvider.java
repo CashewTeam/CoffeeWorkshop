@@ -1,6 +1,7 @@
 package net.langball.coffee.datagen;
 
 import net.langball.coffee.CoffeeWork;
+import net.langball.coffee.datagen.recipe.CoffeeBrewingRecipeBuilder;
 import net.langball.coffee.datagen.recipe.MachineRecipeBuilder;
 import net.langball.coffee.init.ModItems;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -27,6 +28,7 @@ public final class ModMachineRecipeProvider {
         buildOvenRecipes(writer);
         buildRollingRecipes(writer);
         buildIcecreamRecipes(writer);
+        buildCoffeeRecipes(writer);
     }
 
     private static void buildGrindingRecipes(Consumer<FinishedRecipe> writer) {
@@ -126,6 +128,31 @@ public final class ModMachineRecipeProvider {
                 new ItemStack(ModItems.ICECREAM_VANILLA.get()))
                 .experience(0.2F).cookingTime(400)
                 .save(writer, id("icecream_making/vanilla"));
+    }
+
+    private static void buildCoffeeRecipes(Consumer<FinishedRecipe> writer) {
+        // Espresso: 2 coffee_powder + 1 cup (no modifier)
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.ESPRESSO.get()))
+                .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 2)
+                .container(Ingredient.of(ModItems.CUP.get()), 1)
+                .experience(0.2F).cookingTime(80)
+                .save(writer, id("coffee_brewing/espresso"));
+
+        // Americano: 1 coffee_powder + water_bucket + 1 cup
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_AMERICANO.get()))
+                .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 1)
+                .modifier(Ingredient.of(Items.WATER_BUCKET), 1)
+                .container(Ingredient.of(ModItems.CUP.get()), 1)
+                .experience(0.2F).cookingTime(120)
+                .save(writer, id("coffee_brewing/americano"));
+
+        // Latte: 1 coffee_powder + milk_bucket + 1 cup
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_LATTE.get()))
+                .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 1)
+                .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
+                .container(Ingredient.of(ModItems.CUP.get()), 1)
+                .experience(0.25F).cookingTime(120)
+                .save(writer, id("coffee_brewing/latte"));
     }
 
     private static ResourceLocation id(String path) {

@@ -1,7 +1,7 @@
 package net.langball.coffee.block.entity;
 
 import net.langball.coffee.block.MachineBlock;
-import net.langball.coffee.recipes.MachineRecipe;
+import net.langball.coffee.recipes.ProcessingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
@@ -64,7 +64,7 @@ public abstract class AbstractFueledProcessingBlockEntity extends AbstractProces
      * and {@link #burnTimeTotal}.
      */
     @Override
-    protected void startProcessingPower(MachineRecipe recipe) {
+    protected void startProcessingPower(ProcessingRecipe recipe) {
         ItemStack fuel = itemHandler.getStackInSlot(getFuelSlot());
         if (fuel.isEmpty()) return;
 

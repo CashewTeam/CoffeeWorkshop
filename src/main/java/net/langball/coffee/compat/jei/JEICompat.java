@@ -2,13 +2,9 @@ package net.langball.coffee.compat.jei;
 
 import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.init.ModBlocks;
-import net.langball.coffee.init.ModRecipeTypes;
-import net.langball.coffee.recipes.MachineRecipe;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-
-import java.util.List;
 
 @mezz.jei.api.JeiPlugin
 public class JEICompat implements mezz.jei.api.IModPlugin {
@@ -30,7 +26,7 @@ public class JEICompat implements mezz.jei.api.IModPlugin {
                         Component.translatable("jei.coffeework.category.grinder"),
                         guiHelper,
                         new ItemStack(ModBlocks.GRINDER.get())),
-                new MachineRecipeCategory(
+                new CoffeeBrewingRecipeCategory(
                         JEIRecipeTypes.COFFEE_BREWING,
                         Component.translatable("jei.coffeework.category.coffee_machine"),
                         guiHelper,
@@ -56,19 +52,19 @@ public class JEICompat implements mezz.jei.api.IModPlugin {
     @Override
     public void registerRecipes(mezz.jei.api.registration.IRecipeRegistration registration) {
         registration.addRecipes(JEIRecipeTypes.GRINDING,
-                JEIRecipeTypes.getRecipes(JEIRecipeTypes.GRINDING, ModRecipeTypes.GRINDING));
+                JEIRecipeTypes.getMachineRecipes(net.langball.coffee.init.ModRecipeTypes.GRINDING));
 
         registration.addRecipes(JEIRecipeTypes.COFFEE_BREWING,
-                JEIRecipeTypes.getRecipes(JEIRecipeTypes.COFFEE_BREWING, ModRecipeTypes.COFFEE_BREWING));
+                JEIRecipeTypes.getCoffeeRecipes());
 
         registration.addRecipes(JEIRecipeTypes.ICECREAM_MAKING,
-                JEIRecipeTypes.getRecipes(JEIRecipeTypes.ICECREAM_MAKING, ModRecipeTypes.ICECREAM_MAKING));
+                JEIRecipeTypes.getMachineRecipes(net.langball.coffee.init.ModRecipeTypes.ICECREAM_MAKING));
 
         registration.addRecipes(JEIRecipeTypes.ROLLING,
-                JEIRecipeTypes.getRecipes(JEIRecipeTypes.ROLLING, ModRecipeTypes.ROLLING));
+                JEIRecipeTypes.getMachineRecipes(net.langball.coffee.init.ModRecipeTypes.ROLLING));
 
         registration.addRecipes(JEIRecipeTypes.OVEN_BAKING,
-                JEIRecipeTypes.getRecipes(JEIRecipeTypes.OVEN_BAKING, ModRecipeTypes.OVEN_BAKING));
+                JEIRecipeTypes.getMachineRecipes(net.langball.coffee.init.ModRecipeTypes.OVEN_BAKING));
     }
 
     @Override

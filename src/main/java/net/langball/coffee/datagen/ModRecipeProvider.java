@@ -317,6 +317,20 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.COFFEE_INSTANT_BOX.get())
                 .save(writer, modLoc("coffee_instant_from_box"));
 
+        // Cup (paper cup for hot drinks)
+        shaped(RecipeCategory.MISC, ModItems.CUP.get(), 4, Items.PAPER)
+                .pattern("P P")
+                .pattern(" P ")
+                .define('P', Items.PAPER)
+                .save(writer, modLoc("cup"));
+
+        // Glass cup (for iced/tea drinks)
+        shaped(RecipeCategory.MISC, ModItems.CUP_GLASS.get(), 4, Items.GLASS_PANE)
+                .pattern("G G")
+                .pattern(" G ")
+                .define('G', Items.GLASS_PANE)
+                .save(writer, modLoc("cup_glass"));
+
         // Cold Brew Pot (filled)
         shapeless(RecipeCategory.MISC, ModBlocks.COLD_BREW_POT.get(), ModItems.EMPTY_COLDBREW_POT.get())
                 .requires(ModItems.COFFEE_POWDER.get())

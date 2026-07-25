@@ -44,7 +44,7 @@ public class ContainerRoller extends AbstractMachineMenu {
     }
 
     @Override
-    protected RecipeType<MachineRecipe> getRecipeType() {
+    protected RecipeType<?> getRecipeType() {
         return ModRecipeTypes.ROLLING;
     }
 

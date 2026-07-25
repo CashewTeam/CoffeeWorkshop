@@ -3,7 +3,7 @@ package net.langball.coffee.block.entity;
 import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.init.ModBlockEntities;
 import net.langball.coffee.init.ModRecipeTypes;
-import net.langball.coffee.recipes.MachineRecipe;
+import net.langball.coffee.recipes.ProcessingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,19 +18,25 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Coffee Machine block entity — brews drinks from coffee powder etc.
+ * Coffee Machine block entity — brews drinks from coffee powder, water/milk, and cups.
  *
- * <p>Self-powered: has no fuel slot.  Overrides
- * {@link #startProcessingPower(MachineRecipe)} to begin a self-cycle
- * for exactly {@code recipe.cookingTime()} ticks.  All other tick
- * logic (recipe resolution, progress, output, LIT) is inherited from
- * {@link AbstractProcessingBlockEntity#tickProcessing(Level, BlockPos, BlockState)}.
+ * <p>Self-powered (no fuel slot).  Four-slot layout:
+ * <ul>
+ *   <li>Slot 0 — coffee powder (base ingredient)</li>
+ *   <li>Slot 1 — water bucket / milk bucket (modifier, or empty for Espresso)</li>
+ *   <li>Slot 2 — cup (container)</li>
+ *   <li>Slot 3 — output</li>
+ * </ul>
  */
 public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
 
-    public static final int SLOT_INPUT = 0;
-    public static final int SLOT_OUTPUT = 1;
-    private static final int INVENTORY_SIZE = 2;
+    public static final int SLOT_BASE = 0;
+    public static final int SLOT_MODIFIER = 1;
+    public static final int SLOT_CUP = 2;
+    public static final int SLOT_OUTPUT = 3;
+    private static final int INVENTORY_SIZE = 4;
+    /** Version tag for NBT migration from old 2-slot layout. */
+    private static final int CURRENT_INVENTORY_VERSION = 1;
 
     public CoffeeMachineBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.COFFEE_MACHINE.get(), pos, state);
@@ -48,20 +54,18 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
     }
 
     @Override
-    protected RecipeType<MachineRecipe> getRecipeType() {
+    protected RecipeType<?> getRecipeType() {
         return ModRecipeTypes.COFFEE_BREWING;
     }
 
     @Override
-    protected int getInputSlot() { return SLOT_INPUT; }
+    protected int getInputSlot() { return SLOT_BASE; }
 
     @Override
     protected int getOutputSlot() { return SLOT_OUTPUT; }
 
-    // ---- MachineBlockEntity slot groups for automation -----------------
-
     @Override
-    protected int[] getInputSlots() { return new int[]{SLOT_INPUT}; }
+    protected int[] getInputSlots() { return new int[]{SLOT_BASE, SLOT_MODIFIER, SLOT_CUP}; }
 
     @Override
     protected int[] getFuelSlots() { return new int[0]; }
@@ -73,24 +77,16 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
         return burnTime > 0;
     }
 
-    // ---- Self-powered hooks ------------------------------------------------
-
     @Override
-    protected void startProcessingPower(MachineRecipe recipe) {
+    protected void startProcessingPower(ProcessingRecipe recipe) {
         burnTime = recipe.cookingTime();
         burnTimeTotal = recipe.cookingTime();
     }
 
-    /**
-     * Coffee Machine turns off LIT immediately when output is blocked,
-     * rather than waiting for the current self-cycle to expire.
-     */
     @Override
-    protected boolean shouldBeLit(MachineRecipe recipe, boolean canProcess) {
+    protected boolean shouldBeLit(ProcessingRecipe recipe, boolean canProcess) {
         return canProcess && hasProcessingPower();
     }
-
-    // ---- MenuProvider ------------------------------------------------------
 
     @Override
     public Component getDisplayName() {
@@ -102,8 +98,6 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
     public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
         return new net.langball.coffee.gui.ContainerCoffeeMachine(id, inventory, itemHandler, data, this);
     }
-
-    // ---- Tick --------------------------------------------------------------
 
     @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
