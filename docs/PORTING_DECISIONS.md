@@ -311,3 +311,14 @@ remain creative-only until their recipe schema is designed.
 - `cup`: 3×paper → 4×cup (shaped)
 - `cup_glass`: 3×glass_pane → 4×cup_glass (shaped)
 - Cups are no longer creative-only.
+
+### Phase 3 Worldgen verification
+
+- Coffee Tree worldgen is fully configured:
+  - `CoffeeTreeFeature.java` — places coffee tree crop on grass/dirt/farmland
+  - `worldgen/configured_feature/coffee_tree.json`
+  - `worldgen/placed_feature/coffee_tree.json` (in_square + heightmap + biome)
+  - `forge/biome_modifier/add_coffee_tree.json` (overworld, vegetal_decoration)
+  - Rarity config: `coffee_tree_rarity=2` → 2/8 = 25% chance per placement
+- Vanilla crop worldgen (`vanilla_crop`) similarly configured.
+- First coffee seed is obtainable in new survival worlds without commands.
