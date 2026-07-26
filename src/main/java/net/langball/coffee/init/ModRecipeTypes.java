@@ -76,6 +76,11 @@ public final class ModRecipeTypes {
             SERIALIZERS.register("cooling",
                     net.langball.coffee.recipes.CoolingRecipe.Serializer::new);
 
+    /** Custom serializer for DrinkTransformRecipe — drink + additive → flavored drink (NBT-preserving). */
+    public static final RegistryObject<net.langball.coffee.recipes.DrinkTransformRecipe.Serializer> DRINK_TRANSFORM_SERIALIZER =
+            SERIALIZERS.register("drink_transform",
+                    net.langball.coffee.recipes.DrinkTransformRecipe.Serializer::new);
+
     private ModRecipeTypes() {
     }
 }

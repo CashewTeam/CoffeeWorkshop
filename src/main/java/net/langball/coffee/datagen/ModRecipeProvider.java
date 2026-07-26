@@ -720,12 +720,34 @@ public class ModRecipeProvider extends RecipeProvider {
         // COOLING RECIPES (hot drink + ice_slag → iced drink)
 
         // Nitro Fruit Americano: nitro_ice + fruit_syrup → nitro_fruit_ice
-        // (matches the 1.12.2 shapeless recipe pattern)
-        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_AMERICANO_NITRO_FRUIT_ICE.get(),
-                ModItems.COFFEE_AMERICANO_NITRO_ICE.get())
-                .requires(ModItems.COFFEE_AMERICANO_NITRO_ICE.get())
-                .requires(ModItems.SYRUP_FRUIT.get())
-                .save(writer, modLoc("coffee_americano_nitro_fruit_ice"));
+        // Uses DrinkTransformRecipe to preserve remaining_cups NBT.
+        {
+            var sourceItem = ModItems.COFFEE_AMERICANO_NITRO_ICE.get();
+            var additiveItem = ModItems.SYRUP_FRUIT.get();
+            var resultItem = ModItems.COFFEE_AMERICANO_NITRO_FRUIT_ICE.get();
+            final ResourceLocation sourceId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(sourceItem);
+            final ResourceLocation additiveId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(additiveItem);
+            final ResourceLocation resultId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(resultItem);
+            final ResourceLocation recipeId = modLoc("drink_transform/coffee_americano_nitro_fruit_ice");
+            writer.accept(new FinishedRecipe() {
+                @Override
+                public void serializeRecipeData(com.google.gson.JsonObject json) {
+                    json.addProperty("source", sourceId.toString());
+                    json.addProperty("additive", additiveId.toString());
+                    json.addProperty("result", resultId.toString());
+                }
+                @Override
+                public ResourceLocation getId() { return recipeId; }
+                @Override
+                public RecipeSerializer<?> getType() {
+                    return net.langball.coffee.init.ModRecipeTypes.DRINK_TRANSFORM_SERIALIZER.get();
+                }
+                @Override @org.jetbrains.annotations.Nullable
+                public ResourceLocation getAdvancementId() { return null; }
+                @Override @org.jetbrains.annotations.Nullable
+                public com.google.gson.JsonObject serializeAdvancement() { return null; }
+            });
+        }
 
         // ===================================================================
         // COOLING RECIPES (custom CoolingRecipe serializer, NBT-preserving)

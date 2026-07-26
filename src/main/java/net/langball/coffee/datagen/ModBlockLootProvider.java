@@ -37,9 +37,10 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.OVEN.get());
 
         // === Plants ===
-        // Coffee tree: Silk Touch or Shears → block itself;
-        // mature (age=3) drops 1-3 coffee_bean_raw + 0-1 coffee_seeds;
-        // immature drops 0-1 coffee_seeds
+        // Coffee tree: Silk Touch or Shears → block itself (mutually exclusive).
+        // No Silk Touch / no Shears: mature (age=3) drops 1-3 coffee_bean_raw + 0-1 seeds;
+        // immature drops 0-1 coffee_seeds.
+        // The regular pools carry inverse conditions so they do NOT stack with tool drops.
         add(ModBlocks.COFFEE_TREE.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .when(HAS_SILK_TOUCH)
@@ -48,12 +49,16 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
                         .when(HAS_SHEARS)
                         .add(LootItem.lootTableItem(ModBlocks.COFFEE_TREE.get())))
                 .withPool(LootPool.lootPool()
+                        .when(HAS_SILK_TOUCH.invert())
+                        .when(HAS_SHEARS.invert())
                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.COFFEE_TREE.get())
                                 .setProperties(StatePropertiesPredicate.Builder.properties()
                                         .hasProperty(BlockCoffeeTree.AGE, 3)))
                         .add(LootItem.lootTableItem(ModItems.COFFEE_BEAN_RAW.get())
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))))
                 .withPool(LootPool.lootPool()
+                        .when(HAS_SILK_TOUCH.invert())
+                        .when(HAS_SHEARS.invert())
                         .add(LootItem.lootTableItem(ModItems.COFFEE_SEEDS.get())
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F))))));
 

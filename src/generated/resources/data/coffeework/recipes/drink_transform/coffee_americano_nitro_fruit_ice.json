@@ -1,0 +1,6 @@
+{
+  "type": "coffeework:drink_transform",
+  "additive": "coffeework:syrup_fruit",
+  "result": "coffeework:coffee_americano_nitro_fruit_ice",
+  "source": "coffeework:coffee_americano_nitro_ice"
+}
