@@ -124,8 +124,20 @@ public class ModItems {
     public static RegistryObject<Item> CAKE_SPONGE_SLICE;
     public static RegistryObject<Item> PIE_CREAM;
     public static RegistryObject<Item> SANDWICH_BLT;
+    public static RegistryObject<Item> SANDWICH_BACON_EGG;
+    public static RegistryObject<Item> SANDWICH_BEEF_CHEESE;
+    public static RegistryObject<Item> SANDWICH_BLT_LARGE;
+    public static RegistryObject<Item> SANDWICH_CLUB;
+    public static RegistryObject<Item> SANDWICH_CLUB_LARGE;
+    public static RegistryObject<Item> SANDWICH_HAM_CHEESE;
     public static RegistryObject<Item> ICECREAM_MIX_VANILLA;
     public static RegistryObject<Item> ICECREAM_VANILLA;
+    public static RegistryObject<Item> ICECREAM_APPLE;
+    public static RegistryObject<Item> ICECREAM_BERRY;
+    public static RegistryObject<Item> ICECREAM_CHOCOLATE;
+    public static RegistryObject<Item> ICECREAM_COFFEE;
+    public static RegistryObject<Item> ICECREAM_LEMON;
+    public static RegistryObject<Item> ICECREAM_MELON;
 
     // ========================================================================
     // Coffee & Drinks — ModCoffeeItems
@@ -136,6 +148,8 @@ public class ModItems {
     public static RegistryObject<Item> COFFEE_INSTANT;
     public static RegistryObject<Item> COFFEE_INSTANT_STICK;
     public static RegistryObject<Item> COFFEE_INSTANT_BOX;
+    public static RegistryObject<Item> COFFEE_INSTANT_CUP_UNOPEN;
+    public static RegistryObject<Item> COFFEE_INSTANT_CUP;
     public static RegistryObject<Item> ESPRESSO;
     public static RegistryObject<Item> COFFEE_AMERICANO;
     public static RegistryObject<Item> COFFEE_LATTE;

@@ -7,7 +7,8 @@
 | Metric | Count | Target |
 |---|---|---|
 | UNASSIGNED status | 0 | 0 |
-| Missing target owner | 0 | 0 |
+| Missing target_owner (non-ACTIVE) | 0 | 0 |
+| Missing runtime_owner (ACTIVE/MERGED) | 0 | 0 |
 | TBD phase | 0 | 0 |
 
 ## Summary
@@ -15,51 +16,53 @@
 | Metric | Count |
 |---|---|
 | Total legacy assets | 639 |
-| **ACTIVE_RUNTIME_ASSET** (already in use) | 175 |
-| **MERGED_RUNTIME_VARIANT** (old ID merged) | 27 |
-| TO_PORT_STANDALONE (needs registration) | 100 |
+| **ACTIVE_RUNTIME_ASSET** (already in use) | 173 |
+| **MERGED_RUNTIME_VARIANT** (old ID merged) | 28 |
+| TO_PORT_STANDALONE (needs registration) | 101 |
 | TO_PORT_INTERMEDIATE (raw/model/base) | 108 |
 | TO_WIRE_STATE_VARIANT (block states) | 16 |
 | TO_WIRE_DISPLAY_VARIANT (display system) | 191 |
 | TO_PORT_MACHINE (machine devices) | 17 |
 | TO_PORT_DECOR (decor blocks) | 5 |
+
+**Display Variants**: 191 asset files / 70 unique drink variants
+
 | **UNASSIGNED** (not yet determined) | 0 |
 
 ## By Content Family
 
 | Family | Total | Active | Merged | Standalone | Intermediate | State | Display | Machine | Decor | Unassigned |
 |---|---|---|---|---|---|---|---|---|---|---|
-| bags | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| bags | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | bakery | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 |
-| cake_jiggy | 2 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
-| cake_mousse | 27 | 21 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 |
+| cake_jiggy | 27 | 0 | 0 | 9 | 18 | 0 | 0 | 0 | 0 | 0 |
+| cake_mousse | 36 | 28 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 |
 | cake_roll | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
-| cake_system | 209 | 112 | 0 | 24 | 59 | 14 | 0 | 0 | 0 | 0 |
-| coffee_drinks | 250 | 28 | 8 | 10 | 11 | 1 | 191 | 1 | 0 | 0 |
-| confectionery | 14 | 0 | 0 | 12 | 2 | 0 | 0 | 0 | 0 | 0 |
-| crops | 12 | 12 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| cake_system | 216 | 126 | 0 | 22 | 53 | 15 | 0 | 0 | 0 | 0 |
+| coffee_drinks | 189 | 7 | 5 | 3 | 1 | 0 | 173 | 0 | 0 | 0 |
+| confectionery | 27 | 0 | 0 | 11 | 2 | 0 | 14 | 0 | 0 | 0 |
+| crops | 13 | 12 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | decor_bar | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
 | decor_phonograph | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
-| icecream | 7 | 0 | 2 | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
+| icecream | 4 | 0 | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 0 |
 | icecream_cookie | 7 | 0 | 0 | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
-| icecream_cream | 6 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
-| machines | 8 | 1 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| icecream_cream | 13 | 0 | 0 | 13 | 0 | 0 | 0 | 0 | 0 | 0 |
+| machines | 10 | 0 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | materials | 16 | 0 | 5 | 2 | 9 | 0 | 0 | 0 | 0 | 0 |
-| pastry | 38 | 0 | 0 | 20 | 18 | 0 | 0 | 0 | 0 | 0 |
-| pie | 6 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
+| pastry | 33 | 0 | 0 | 18 | 15 | 0 | 0 | 0 | 0 | 0 |
+| pie | 8 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | records | 3 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | sandwich | 6 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | soda_machine | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
 | syrups | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| traditional_brew | 11 | 0 | 0 | 1 | 0 | 0 | 0 | 10 | 0 | 0 |
+| traditional_brew | 14 | 0 | 0 | 1 | 0 | 0 | 2 | 11 | 0 | 0 |
 
-## ACTIVE_RUNTIME_ASSET (175 assets)
+## ACTIVE_RUNTIME_ASSET (173 assets)
 
 These are already wired to existing blockstates, recipes, or registered items.
 
 | Asset ID | Runtime Owner | Role |
 |---|---|---|
-| `bag` | coffeework:bag | registered_block_model |
 | `blueberry_stage0` | coffeework:blueberry_bush | blockstate:variants=age=0 |
 | `blueberry_stage1` | coffeework:blueberry_bush | blockstate:variants=age=1 |
 | `blueberry_stage2` | coffeework:blueberry_bush | blockstate:variants=age=2 |
@@ -189,8 +192,7 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `coffee_stage3` | coffeework:coffee_tree | blockstate:variants=age=3 |
 | `coldbrew_pot_finished` | coffeework:coldbrew_pot | blockstate:variants=ferm=7 |
 | `coldbrew_pot_finished` | coffeework:coldbrew_pot | blockstate:variants=ferm=7 |
-| `empty_coldbrew_pot` | coffeework:empty_coldbrew_pot | registered_block_model |
-| `grinder_off` | coffeework:grinder_off | registered_block_model |
+| `empty_coldbrew_pot` | coffeework:coldbrew_pot | blockstate:variants=ferm=8 |
 | `mousse_berry_slice1` | coffeework:mousse_berry | blockstate:variants=bites=1 |
 | `mousse_berry_slice2` | coffeework:mousse_berry | blockstate:variants=bites=2 |
 | `mousse_berry_slice3` | coffeework:mousse_berry | blockstate:variants=bites=3 |

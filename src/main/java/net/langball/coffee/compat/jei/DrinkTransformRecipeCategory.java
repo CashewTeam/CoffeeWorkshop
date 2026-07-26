@@ -44,9 +44,6 @@ public class DrinkTransformRecipeCategory extends AbstractRecipeCategory<DrinkTr
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, DrinkTransformRecipe recipe, IFocusGroup focuses) {
         // Input 1: source drink
-        ItemStack sourceStack = recipe.getResultItem(
-                Minecraft.getInstance().level != null
-                        ? Minecraft.getInstance().level.registryAccess() : null);
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 19)
                 .addItemStack(new ItemStack(recipe.getSource()));
 
@@ -68,6 +65,7 @@ public class DrinkTransformRecipeCategory extends AbstractRecipeCategory<DrinkTr
         staticArrow.draw(graphics, 58, 20);
 
         Font font = Minecraft.getInstance().font;
-        graphics.drawString(font, "Transform", 55, 4, 0xFF808080, false);
+        Component actionText = Component.translatable("jei.coffeework.drink_transform.action");
+        graphics.drawString(font, actionText, 55, 4, 0xFF808080, false);
     }
 }

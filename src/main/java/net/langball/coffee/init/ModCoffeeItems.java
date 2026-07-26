@@ -36,6 +36,15 @@ public class ModCoffeeItems {
         ModItems.COFFEE_INSTANT_BOX = items.register("coffee_instant_box",
                 () -> new Item(new Item.Properties()));
 
+        // ── Cup-based instant coffee (Phase 5.2-A) ──
+        ModItems.COFFEE_INSTANT_CUP_UNOPEN = items.register("coffee_instant_cup_unopen",
+                () -> new Item(new Item.Properties().stacksTo(16)));
+
+        ModItems.COFFEE_INSTANT_CUP = items.register("coffee_instant_cup",
+                () -> new DrinkCoffeeInstant(
+                        new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+                        new MobEffectInstance[]{}, 3, true, () -> ModItems.CUP.get()));
+
         // ── Espresso ──
         ModItems.ESPRESSO = items.register("espresso",
                 () -> new DrinkEspresso(

@@ -358,6 +358,53 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.BEETROOT)    // tomato substitute
                 .save(writer, modLoc("sandwich_blt"));
 
+        // Phase 5.2-C: Six sandwich variants
+        // Bacon + Egg
+        shapeless(RecipeCategory.FOOD, ModItems.SANDWICH_BACON_EGG.get(), Items.BREAD)
+                .requires(Items.BREAD)
+                .requires(Items.COOKED_PORKCHOP)
+                .requires(Items.EGG)
+                .save(writer, modLoc("sandwich_bacon_egg"));
+
+        // Beef + Cheese (double bread)
+        shapeless(RecipeCategory.FOOD, ModItems.SANDWICH_BEEF_CHEESE.get(), Items.BREAD)
+                .requires(Items.BREAD)
+                .requires(Items.BREAD)
+                .requires(Items.COOKED_BEEF)
+                .requires(ModItems.CHEESE.get())
+                .save(writer, modLoc("sandwich_beef_cheese"));
+
+        // BLT Large (double bread)
+        shapeless(RecipeCategory.FOOD, ModItems.SANDWICH_BLT_LARGE.get(), Items.BREAD)
+                .requires(Items.BREAD)
+                .requires(Items.BREAD)
+                .requires(Items.COOKED_PORKCHOP)
+                .requires(Items.COOKED_PORKCHOP)
+                .requires(Items.BEETROOT)
+                .requires(Items.BEETROOT)
+                .save(writer, modLoc("sandwich_blt_large"));
+
+        // Club Sandwich
+        shapeless(RecipeCategory.FOOD, ModItems.SANDWICH_CLUB.get(), ModItems.SANDWICH_BLT.get())
+                .requires(ModItems.SANDWICH_BACON_EGG.get())
+                .requires(Items.BREAD)
+                .requires(Items.COOKED_CHICKEN)
+                .save(writer, modLoc("sandwich_club"));
+
+        // Club XL (double bread + double fillings)
+        shapeless(RecipeCategory.FOOD, ModItems.SANDWICH_CLUB_LARGE.get(), ModItems.SANDWICH_CLUB.get())
+                .requires(Items.BREAD)
+                .requires(Items.BREAD)
+                .requires(ModItems.SANDWICH_BLT_LARGE.get())
+                .save(writer, modLoc("sandwich_club_large"));
+
+        // Ham + Cheese
+        shapeless(RecipeCategory.FOOD, ModItems.SANDWICH_HAM_CHEESE.get(), Items.BREAD)
+                .requires(Items.BREAD)
+                .requires(Items.COOKED_PORKCHOP)
+                .requires(ModItems.CHEESE.get())
+                .save(writer, modLoc("sandwich_ham_cheese"));
+
         // --- Beverage items ---
         // Instant coffee: coffee_powder + water + stir_stick (returns bucket)
         shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT.get(), ModItems.COFFEE_INSTANT_STICK.get())
@@ -370,6 +417,19 @@ public class ModRecipeProvider extends RecipeProvider {
         shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT.get(), 9, ModItems.COFFEE_INSTANT_BOX.get())
                 .requires(ModItems.COFFEE_INSTANT_BOX.get())
                 .save(writer, modLoc("coffee_instant_from_box"));
+
+        // Cup-based instant coffee (Phase 5.2-A)
+        // Unopened cup: instant stick + paper cup
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT_CUP_UNOPEN.get(), ModItems.COFFEE_INSTANT_STICK.get())
+                .requires(ModItems.COFFEE_INSTANT_STICK.get())
+                .requires(ModItems.CUP.get())
+                .save(writer, modLoc("coffee_instant_cup_unopen"));
+
+        // Open cup: add water (bucket returns)
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT_CUP.get(), ModItems.COFFEE_INSTANT_CUP_UNOPEN.get())
+                .requires(ModItems.COFFEE_INSTANT_CUP_UNOPEN.get())
+                .requires(Items.WATER_BUCKET)
+                .save(writer, modLoc("coffee_instant_cup_from_unopen"));
 
         // Cup (paper cup for hot drinks)
         shaped(RecipeCategory.MISC, ModItems.CUP.get(), 4, Items.PAPER)
@@ -705,6 +765,32 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.SUGAR)
                 .requires(ModItems.VANILLA.get())
                 .save(writer, modLoc("icecream_mix_vanilla"));
+
+        // Phase 5.2-B: Flavored ice creams (mix + flavor → ice cream)
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_APPLE.get(), ModItems.ICECREAM_MIX_VANILLA.get())
+                .requires(ModItems.ICECREAM_MIX_VANILLA.get())
+                .requires(Items.APPLE)
+                .save(writer, modLoc("icecream_apple"));
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_BERRY.get(), ModItems.ICECREAM_MIX_VANILLA.get())
+                .requires(ModItems.ICECREAM_MIX_VANILLA.get())
+                .requires(Items.SWEET_BERRIES)
+                .save(writer, modLoc("icecream_berry"));
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_CHOCOLATE.get(), ModItems.ICECREAM_MIX_VANILLA.get())
+                .requires(ModItems.ICECREAM_MIX_VANILLA.get())
+                .requires(ModItems.COCOA_POWDER.get())
+                .save(writer, modLoc("icecream_chocolate"));
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_COFFEE.get(), ModItems.ICECREAM_MIX_VANILLA.get())
+                .requires(ModItems.ICECREAM_MIX_VANILLA.get())
+                .requires(ModItems.COFFEE_POWDER.get())
+                .save(writer, modLoc("icecream_coffee"));
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_LEMON.get(), ModItems.ICECREAM_MIX_VANILLA.get())
+                .requires(ModItems.ICECREAM_MIX_VANILLA.get())
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("icecream_lemon"));
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_MELON.get(), ModItems.ICECREAM_MIX_VANILLA.get())
+                .requires(ModItems.ICECREAM_MIX_VANILLA.get())
+                .requires(Items.MELON_SLICE)
+                .save(writer, modLoc("icecream_melon"));
 
         // NOTE: plate_dough, plate_dough_pastry, plate_dough_ginger crafting
         // fallbacks REMOVED — use Roller machine instead

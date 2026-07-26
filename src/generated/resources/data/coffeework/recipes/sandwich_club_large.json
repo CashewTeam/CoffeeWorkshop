@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:bread"
+    },
+    {
+      "item": "minecraft:bread"
+    },
+    {
+      "item": "coffeework:sandwich_blt_large"
+    }
+  ],
+  "result": {
+    "item": "coffeework:sandwich_club_large"
+  }
+}

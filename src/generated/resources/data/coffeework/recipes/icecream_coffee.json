@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:icecream_mix_vanilla"
+    },
+    {
+      "item": "coffeework:coffee_powder"
+    }
+  ],
+  "result": {
+    "item": "coffeework:icecream_coffee"
+  }
+}

@@ -8,25 +8,25 @@
 | Registry Type | Count |
 |---|---|
 | block | 49 |
-| item | 176 |
+| item | 190 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **236** |
-| **Orphan Assets** | **639** |
+| **Total Registered** | **250** |
+| **Orphan Assets** | **625** |
 
 ## Item Completeness Matrix
 
 | Metric | Count | % |
 |---|---|---|
-| Model | 176/176 | 100% |
-| Texture | 176/176 | 100% |
-| en_us Key Coverage | 176/176 | 100% |
-| zh_cn Key Coverage | 176/176 | 100% |
-| ja_jp Key Coverage | 176/176 | 100% |
-| Creative Tab | 176/176 | 100% |
-| Survival Source | 176/176 | 100% |
+| Model | 190/190 | 100% |
+| Texture | 190/190 | 100% |
+| en_us Key Coverage | 190/190 | 100% |
+| zh_cn Key Coverage | 190/190 | 100% |
+| ja_jp Key Coverage | 190/190 | 100% |
+| Creative Tab | 190/190 | 100% |
+| Survival Source | 190/190 | 100% |
 
 ## Registered Items
 
@@ -112,6 +112,8 @@
 | `coffee_green_tea_ice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `coffee_instant` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `coffee_instant_box` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
+| `coffee_instant_cup` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `coffee_instant_cup_unopen` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `coffee_instant_stick` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `coffee_latte` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `coffee_latte_caramel` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
@@ -167,7 +169,13 @@
 | `ginger_house` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `grinder_off` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `ice_slag` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `icecream_apple` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `icecream_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `icecream_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `icecream_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `icecream_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `icecream_machine` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
+| `icecream_melon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `icecream_mix_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `icecream_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `iron_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -189,7 +197,13 @@
 | `record_lazy_lady_kaguya` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `record_the_grimoire_of_marisa` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `roller` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
+| `sandwich_bacon_egg` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `sandwich_beef_cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `sandwich_blt` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `sandwich_blt_large` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `sandwich_club` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `sandwich_club_large` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `sandwich_ham_cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `small_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `soda` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `soda_ore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
@@ -286,30 +300,8 @@
 | ASSET_ARCHIVE | 521 |
 | MERGED | 14 |
 | PORT_LATER | 52 |
-| PORT_NOW | 14 |
 | REDESIGN | 5 |
 | REMOVED | 33 |
-
-### PORT_NOW (14)
-
-High value, low effort — should be restored now.
-
-```
-  item_model: coffee_instant_cup
-  item_model: coffee_instant_cup_unopen
-  item_model: icecream_apple
-  item_model: icecream_berry
-  item_model: icecream_chocolate
-  item_model: icecream_coffee
-  item_model: icecream_lemon
-  item_model: icecream_melon
-  item_model: sandwich_bacon_egg
-  item_model: sandwich_beef_cheese
-  item_model: sandwich_blt_large
-  item_model: sandwich_club
-  item_model: sandwich_club_large
-  item_model: sandwich_ham_cheese
-```
 
 ### PORT_LATER (52)
 

@@ -152,12 +152,26 @@ public class ModCreativeTabs {
                         output.accept(ModItems.CAKE_SPONGE_SLICE.get());
                         output.accept(ModItems.PIE_CREAM.get());
                         output.accept(ModItems.SANDWICH_BLT.get());
+                        output.accept(ModItems.SANDWICH_BACON_EGG.get());
+                        output.accept(ModItems.SANDWICH_BEEF_CHEESE.get());
+                        output.accept(ModItems.SANDWICH_BLT_LARGE.get());
+                        output.accept(ModItems.SANDWICH_CLUB.get());
+                        output.accept(ModItems.SANDWICH_CLUB_LARGE.get());
+                        output.accept(ModItems.SANDWICH_HAM_CHEESE.get());
                         output.accept(ModItems.ICECREAM_VANILLA.get());
+                        output.accept(ModItems.ICECREAM_APPLE.get());
+                        output.accept(ModItems.ICECREAM_BERRY.get());
+                        output.accept(ModItems.ICECREAM_CHOCOLATE.get());
+                        output.accept(ModItems.ICECREAM_COFFEE.get());
+                        output.accept(ModItems.ICECREAM_LEMON.get());
+                        output.accept(ModItems.ICECREAM_MELON.get());
                         output.accept(ModItems.ICECREAM_MIX_VANILLA.get());
 
                         // Drinks
                         output.accept(ModItems.COFFEE_INSTANT_STICK.get());
                         output.accept(ModItems.COFFEE_INSTANT_BOX.get());
+                        output.accept(ModItems.COFFEE_INSTANT_CUP_UNOPEN.get());
+                        output.accept(ModItems.COFFEE_INSTANT_CUP.get());
                         output.accept(ModItems.COFFEE_INSTANT.get());
                         output.accept(ModItems.ESPRESSO.get());
                         output.accept(ModItems.COFFEE_AMERICANO.get());

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:bread"
+    },
+    {
+      "item": "minecraft:cooked_porkchop"
+    },
+    {
+      "item": "coffeework:cheese"
+    }
+  ],
+  "result": {
+    "item": "coffeework:sandwich_ham_cheese"
+  }
+}

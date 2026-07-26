@@ -1,32 +1,31 @@
 {
   "stats": {
-    "registered": 236,
+    "registered": 250,
     "by_type": {
-      "item": 176,
+      "item": 190,
       "block": 49,
       "mob_effect": 3,
       "villager_profession": 3,
       "poi_type": 2,
       "sound_event": 3
     },
-    "orphan_assets": 639,
+    "orphan_assets": 625,
     "orphan_by_classification": {
       "ASSET_ARCHIVE": 521,
       "REDESIGN": 5,
       "REMOVED": 33,
       "MERGED": 14,
-      "PORT_NOW": 14,
       "PORT_LATER": 52
     },
     "completeness": {
-      "model_ok": 176,
-      "texture_ok": 176,
-      "lang_en_ok": 176,
-      "lang_zh_ok": 176,
-      "lang_ja_ok": 176,
-      "creative_tab_ok": 176,
-      "has_source": 176,
-      "total_items": 176
+      "model_ok": 190,
+      "texture_ok": 190,
+      "lang_en_ok": 190,
+      "lang_zh_ok": 190,
+      "lang_ja_ok": 190,
+      "creative_tab_ok": 190,
+      "has_source": 190,
+      "total_items": 190
     }
   },
   "registry": [
@@ -1360,6 +1359,38 @@
       "block_item": false
     },
     {
+      "id": "coffee_instant_cup",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_instant_cup_unopen",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "coffee_instant_stick",
       "type": "item",
       "registered": true,
@@ -2274,6 +2305,86 @@
       "block_item": false
     },
     {
+      "id": "icecream_apple",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "icecream_berry",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "icecream_chocolate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "icecream_coffee",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "icecream_lemon",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "icecream_machine",
       "type": "item",
       "registered": true,
@@ -2290,6 +2401,22 @@
       ],
       "block_item": true,
       "block_of": "icecream_machine"
+    },
+    {
+      "id": "icecream_melon",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
     },
     {
       "id": "icecream_mix_vanilla",
@@ -2638,7 +2765,103 @@
       "block_of": "roller"
     },
     {
+      "id": "sandwich_bacon_egg",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "sandwich_beef_cheese",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "sandwich_blt",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "sandwich_blt_large",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "sandwich_club",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "sandwich_club_large",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "sandwich_ham_cheese",
       "type": "item",
       "registered": true,
       "model": true,
@@ -4140,16 +4363,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "coffee_instant_cup",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "coffee_instant_cup_unopen",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
       "id": "coffee_instant_plate",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
@@ -4438,36 +4651,6 @@
       "id": "hardtack_raw",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "icecream_apple",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "icecream_berry",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "icecream_chocolate",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "icecream_coffee",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "icecream_lemon",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "icecream_melon",
-      "type": "item_model",
-      "classification": "PORT_NOW"
     },
     {
       "id": "icecreammachine_off",
@@ -4983,36 +5166,6 @@
       "id": "roller_on",
       "type": "item_model",
       "classification": "MERGED"
-    },
-    {
-      "id": "sandwich_bacon_egg",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "sandwich_beef_cheese",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "sandwich_blt_large",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "sandwich_club",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "sandwich_club_large",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "sandwich_ham_cheese",
-      "type": "item_model",
-      "classification": "PORT_NOW"
     },
     {
       "id": "smore",

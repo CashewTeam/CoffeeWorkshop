@@ -50,6 +50,8 @@ INITIAL_ITEMS = {
     "minecraft:blue_ice", "minecraft:furnace", "minecraft:pumpkin",
     "minecraft:carrot", "minecraft:sweet_berries", "minecraft:cookie",
     "minecraft:beetroot", "minecraft:cooked_porkchop",
+    "minecraft:cooked_beef", "minecraft:cooked_chicken",
+    "minecraft:apple", "minecraft:melon_slice",
     "minecraft:snowball", "minecraft:spruce_sapling",
     "minecraft:oak_sapling", "minecraft:cherry_sapling",
     "minecraft:bread", "minecraft:sand", "minecraft:gravel",

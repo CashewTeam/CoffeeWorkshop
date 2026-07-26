@@ -49,10 +49,38 @@ public class ModBakeryItems {
         ModItems.SANDWICH_BLT = items.register("sandwich_blt",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.9F).build())));
 
+        // Phase 5.2-C: Six sandwich variants
+        ModItems.SANDWICH_BACON_EGG = items.register("sandwich_bacon_egg",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.9F).build())));
+        ModItems.SANDWICH_BEEF_CHEESE = items.register("sandwich_beef_cheese",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(12).saturationMod(1.0F).build())));
+        ModItems.SANDWICH_BLT_LARGE = items.register("sandwich_blt_large",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(14).saturationMod(1.0F).build())));
+        ModItems.SANDWICH_CLUB = items.register("sandwich_club",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(12).saturationMod(1.0F).build())));
+        ModItems.SANDWICH_CLUB_LARGE = items.register("sandwich_club_large",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(16).saturationMod(1.0F).build())));
+        ModItems.SANDWICH_HAM_CHEESE = items.register("sandwich_ham_cheese",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.9F).build())));
+
         // ── Ice creams ──
         ModItems.ICECREAM_MIX_VANILLA = items.register("icecream_mix_vanilla",
                 () -> new Item(new Item.Properties().stacksTo(16)));
         ModItems.ICECREAM_VANILLA = items.register("icecream_vanilla",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).build())));
+
+        // Phase 5.2-B: Six flavored ice creams
+        ModItems.ICECREAM_APPLE = items.register("icecream_apple",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).build())));
+        ModItems.ICECREAM_BERRY = items.register("icecream_berry",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).build())));
+        ModItems.ICECREAM_CHOCOLATE = items.register("icecream_chocolate",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).build())));
+        ModItems.ICECREAM_COFFEE = items.register("icecream_coffee",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).build())));
+        ModItems.ICECREAM_LEMON = items.register("icecream_lemon",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).build())));
+        ModItems.ICECREAM_MELON = items.register("icecream_melon",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).build())));
     }
 }
