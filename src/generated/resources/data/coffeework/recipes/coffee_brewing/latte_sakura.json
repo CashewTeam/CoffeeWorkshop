@@ -1,0 +1,32 @@
+{
+  "type": "coffeework:coffee_brewing",
+  "additive": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:syrup_sakura"
+    }
+  },
+  "base": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:coffee_powder"
+    }
+  },
+  "container": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:cup"
+    }
+  },
+  "cookingtime": 120,
+  "experience": 0.3,
+  "modifier": {
+    "count": 1,
+    "ingredient": {
+      "item": "minecraft:milk_bucket"
+    }
+  },
+  "result": {
+    "item": "coffeework:coffee_latte_sakura"
+  }
+}

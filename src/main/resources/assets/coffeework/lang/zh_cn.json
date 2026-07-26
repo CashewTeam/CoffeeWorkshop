@@ -505,6 +505,12 @@
   "entity.minecraft.villager.coffeework.baker": "烘焙师",
   "item.coffeework.tea_leaf": "茶叶",
   "item.coffeework.black_tea_leaf": "红茶叶",
+  "item.coffeework.syrup_caramel": "焦糖糖浆",
+  "item.coffeework.syrup_chocolate": "巧克力糖浆",
+  "item.coffeework.syrup_fruit": "水果糖浆",
+  "item.coffeework.syrup_mint": "薄荷糖浆",
+  "item.coffeework.syrup_vanilla": "香草糖浆",
+  "item.coffeework.syrup_sakura": "樱花糖浆",
   "item.coffeework.record_kusa_noshi_to_ne.desc": "草の詩",
   "item.coffeework.record_lazy_lady_kaguya.desc": "怠惰的辉夜",
   "item.coffeework.record_the_grimoire_of_marisa.desc": "魔理沙的魔法书"

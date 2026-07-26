@@ -400,3 +400,40 @@ All Phase 3 deferred drinks now have machine recipes:
 Flavored latte variants (caramel, chocolate, fruit, mint, vanilla, sakura),
 their iced versions, iced tea/cocoa variants, coldbrew extensions, and
 flavored syrup system remain creative-only pending Phase 4 P1.
+
+### Phase 4 P1 additions
+
+See above for Phase 4 P1 items that were implemented alongside P0.
+All 6 syrup items, flavored lattes, iced extensions, coldbrew
+extensions, and Americano extensions have survival recipes.
+
+### Chocolate chip production gap (Phase 4 review)
+
+- `chocolate_chip` was registered as an item and used in `cocoa_strong`,
+  `dough_cookie`, and `brownie` recipes, but had no production recipe.
+  **Fix**: added Grinder recipe `chocolate_bar` → `chocolate_chip` × 2.
+- This matches the old 1.12.2 behavior where chocolate chips were
+  ground from chocolate bars.
+
+### Known slot limitations for P1 drinks
+
+The 5-slot Coffee Machine (base/modifier/additive/container/output) cannot
+express recipes that need both `ice_slag` AND a flavored syrup simultaneously
+(only one additive slot).  The following registered items therefore have no
+survival recipe and remain creative-only:
+
+- `cocoa_strong_ice` — needs `chocolate_chip` + `ice_slag`
+- `coffee_coldbrew_fruit_ice` — ambiguous signature with `coldbrew_fruit`
+- `coffee_coldbrew_latte_*_ice` (6 items) — need milk + syrup + ice_slag
+- `coffee_americano_nitro_fruit_ice` — soda + syrup can't coexist
+
+These will be resolved in a future slot-extension phase.
+
+### Shift-click routing limitation
+
+- Coffee Machine shift-click sends all recipe-matching items to slot 0
+  (base) rather than routing to the appropriate slot (buckets → modifier,
+  cups → container, syrups → additive, sugar → additive, etc.).
+- The machine remains functional because the recipe system checks all
+  slots; items in wrong slots simply don't match a recipe.
+- Enhanced shift-click routing is deferred to a future UX improvement.

@@ -1,0 +1,26 @@
+{
+  "type": "coffeework:coffee_brewing",
+  "additive": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:syrup_fruit"
+    }
+  },
+  "base": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:coldbrew_bottle"
+    }
+  },
+  "container": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:cup_glass"
+    }
+  },
+  "cookingtime": 160,
+  "experience": 0.35,
+  "result": {
+    "item": "coffeework:coffee_coldbrew_fruit"
+  }
+}

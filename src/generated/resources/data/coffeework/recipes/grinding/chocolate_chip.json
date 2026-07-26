@@ -1,0 +1,12 @@
+{
+  "type": "coffeework:grinding",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "coffeework:chocolate_bar"
+  },
+  "result": {
+    "count": 2,
+    "item": "coffeework:chocolate_chip"
+  }
+}

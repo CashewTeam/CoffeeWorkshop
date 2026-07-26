@@ -129,6 +129,43 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('G', ItemTags.PLANKS)
                 .save(writer, modLoc("syrup_empty"));
 
+        // Flavored syrups: syrup_empty + flavor ingredient + sugar (shapeless)
+        shapeless(RecipeCategory.MISC, ModItems.SYRUP_CARAMEL.get(), ModItems.SYRUP_EMPTY.get())
+                .requires(ModItems.SYRUP_EMPTY.get())
+                .requires(Items.SUGAR)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("syrup_caramel"));
+
+        shapeless(RecipeCategory.MISC, ModItems.SYRUP_CHOCOLATE.get(), ModItems.SYRUP_EMPTY.get())
+                .requires(ModItems.SYRUP_EMPTY.get())
+                .requires(ModItems.COCOA_POWDER.get())
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("syrup_chocolate"));
+
+        shapeless(RecipeCategory.MISC, ModItems.SYRUP_FRUIT.get(), ModItems.SYRUP_EMPTY.get())
+                .requires(ModItems.SYRUP_EMPTY.get())
+                .requires(Items.SWEET_BERRIES)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("syrup_fruit"));
+
+        shapeless(RecipeCategory.MISC, ModItems.SYRUP_MINT.get(), ModItems.SYRUP_EMPTY.get())
+                .requires(ModItems.SYRUP_EMPTY.get())
+                .requires(Items.VINE)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("syrup_mint"));
+
+        shapeless(RecipeCategory.MISC, ModItems.SYRUP_VANILLA.get(), ModItems.SYRUP_EMPTY.get())
+                .requires(ModItems.SYRUP_EMPTY.get())
+                .requires(ModItems.VANILLA.get())
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("syrup_vanilla"));
+
+        shapeless(RecipeCategory.MISC, ModItems.SYRUP_SAKURA.get(), ModItems.SYRUP_EMPTY.get())
+                .requires(ModItems.SYRUP_EMPTY.get())
+                .requires(Items.CHERRY_SAPLING)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("syrup_sakura"));
+
         // --- Machines (unlock with Iron Ingot) ---
         shaped(RecipeCategory.MISC, ModBlocks.GRINDER.get(), Items.IRON_INGOT)
                 .pattern("LLL")

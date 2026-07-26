@@ -1,0 +1,26 @@
+{
+  "type": "coffeework:coffee_brewing",
+  "base": {
+    "count": 2,
+    "ingredient": {
+      "item": "coffeework:coffee_powder"
+    }
+  },
+  "container": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:cup_glass"
+    }
+  },
+  "cookingtime": 140,
+  "experience": 0.25,
+  "modifier": {
+    "count": 1,
+    "ingredient": {
+      "item": "minecraft:milk_bucket"
+    }
+  },
+  "result": {
+    "item": "coffeework:coffee_macchiato_ice"
+  }
+}

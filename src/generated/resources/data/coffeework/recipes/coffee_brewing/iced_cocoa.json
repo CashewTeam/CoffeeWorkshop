@@ -1,0 +1,32 @@
+{
+  "type": "coffeework:coffee_brewing",
+  "additive": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:ice_slag"
+    }
+  },
+  "base": {
+    "count": 2,
+    "ingredient": {
+      "item": "coffeework:cocoa_powder"
+    }
+  },
+  "container": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:cup_glass"
+    }
+  },
+  "cookingtime": 120,
+  "experience": 0.2,
+  "modifier": {
+    "count": 1,
+    "ingredient": {
+      "item": "minecraft:milk_bucket"
+    }
+  },
+  "result": {
+    "item": "coffeework:cocoa_ice"
+  }
+}

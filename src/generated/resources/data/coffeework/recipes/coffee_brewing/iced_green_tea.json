@@ -1,0 +1,32 @@
+{
+  "type": "coffeework:coffee_brewing",
+  "additive": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:ice_slag"
+    }
+  },
+  "base": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:tea_leaf"
+    }
+  },
+  "container": {
+    "count": 1,
+    "ingredient": {
+      "item": "coffeework:cup_glass"
+    }
+  },
+  "cookingtime": 100,
+  "experience": 0.15,
+  "modifier": {
+    "count": 1,
+    "ingredient": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "result": {
+    "item": "coffeework:coffee_green_tea_ice"
+  }
+}
