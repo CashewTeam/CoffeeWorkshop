@@ -54,11 +54,16 @@ public class ContainerCoffeeMachine extends AbstractMachineMenu {
 
     @Override
     protected void addMachineSlots() {
-        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_BASE, 30, 20));
-        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_MODIFIER, 50, 44));
-        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_ADDITIVE, 70, 20));
-        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_CONTAINER, 90, 44));
-        this.addSlot(new SlotMachineResult(itemHandler, CoffeeMachineBlockEntity.SLOT_OUTPUT, 130, 32,
+        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_BASE,
+                CoffeeMachineGuiLayout.BASE_X, CoffeeMachineGuiLayout.BASE_Y));
+        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_MODIFIER,
+                CoffeeMachineGuiLayout.MODIFIER_X, CoffeeMachineGuiLayout.MODIFIER_Y));
+        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_ADDITIVE,
+                CoffeeMachineGuiLayout.ADDITIVE_X, CoffeeMachineGuiLayout.ADDITIVE_Y));
+        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_CONTAINER,
+                CoffeeMachineGuiLayout.CONTAINER_X, CoffeeMachineGuiLayout.CONTAINER_Y));
+        this.addSlot(new SlotMachineResult(itemHandler, CoffeeMachineBlockEntity.SLOT_OUTPUT,
+                CoffeeMachineGuiLayout.OUTPUT_X, CoffeeMachineGuiLayout.OUTPUT_Y,
                 blockEntity, level));
     }
 
@@ -117,11 +122,20 @@ public class ContainerCoffeeMachine extends AbstractMachineMenu {
     }
 
     /**
-     * Resolves the target slot for a shift-clicked item.  Returns the
-     * highest-priority valid slot that is currently empty (or can stack
-     * with the item), or -1 if the item isn't valid for any slot.
+     * Resolves the target slot for a shift-clicked item.
      *
-     * <p>Priority order: container > base > modifier > additive.
+     * <p>Uses a three-tier scoring approach:
+     * <ol>
+     *   <li><b>Complete recipe (score 2):</b> inserting this item into a slot
+     *       would cause the machine to match a valid CoffeeBrewingRecipe.</li>
+     *   <li><b>Partial match (score 1):</b> after insertion, at least two
+     *       slots contain items that belong to the same recipe's roles.</li>
+     *   <li><b>Fixed priority (score 0):</b> container > base > modifier >
+     *       additive, verified by insertion simulation.</li>
+     * </ol>
+     *
+     * <p>Returns the highest-scoring slot (ties broken by priority order),
+     * or -1 if no valid slot can accept the item.
      */
     private int findSlotForStack(ItemStack stack) {
         if (stack.isEmpty()) return -1;
@@ -134,15 +148,77 @@ public class ContainerCoffeeMachine extends AbstractMachineMenu {
         };
 
         java.util.Set<Integer> validSlots = itemToValidSlots.get(stack.getItem());
-        if (validSlots == null) return -1; // item not valid for any role
+        if (validSlots == null) return -1;
+
+        int bestSlot = -1;
+        int bestScore = -1;
 
         for (int slot : prioritySlots) {
-            if (!validSlots.contains(slot)) continue; // strict role check
-            ItemStack current = itemHandler.getStackInSlot(slot);
-            if (current.isEmpty()) return slot;
-            if (net.minecraftforge.items.ItemHandlerHelper.canItemStacksStack(current, stack)) return slot;
+            if (!validSlots.contains(slot)) continue;
+
+            // 1. Simulate insertion to verify capacity
+            ItemStack remainder = itemHandler.insertItem(slot, stack, true);
+            if (remainder.isEmpty() && stack.getCount() > 0) continue; // full rejection
+            boolean canInsert = remainder.isEmpty() || remainder.getCount() < stack.getCount();
+            if (!canInsert) continue;
+
+            // 2. Compute recipe-match score for this slot
+            int score = computeSlotScore(slot, stack);
+
+            if (score > bestScore) {
+                bestScore = score;
+                bestSlot = slot;
+            }
         }
-        return -1;
+        return bestSlot;
+    }
+
+    /**
+     * Computes a recipe-match score for placing {@code stack} into {@code slot}.
+     *
+     * <p>Score 2 = a complete CoffeeBrewingRecipe would match the hypothetical
+     * machine state.  Score 1 = at least two slots are filled with items that
+     * match the same recipe's roles (partial alignment).  Score 0 = no recipe
+     * alignment detected.
+     */
+    private int computeSlotScore(int slot, ItemStack stack) {
+        if (level == null) return 0;
+
+        // Build hypothetical container state: current slots + stack in candidate slot
+        net.minecraft.world.SimpleContainer hypo = new net.minecraft.world.SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            hypo.setItem(i, i == slot ? stack.copy() : itemHandler.getStackInSlot(i).copy());
+        }
+
+        var allRecipes = level.getRecipeManager()
+                .getAllRecipesFor((RecipeType<CoffeeBrewingRecipe>) getRecipeType());
+
+        // Check for complete recipe match
+        for (CoffeeBrewingRecipe r : allRecipes) {
+            if (r.matches(hypo, level)) {
+                return 2; // complete recipe
+            }
+        }
+
+        // Check for partial match (≥2 slots aligned to same recipe)
+        for (CoffeeBrewingRecipe r : allRecipes) {
+            int aligned = 0;
+            // Check each slot against this recipe's role
+            if (r.base().ingredient().test(hypo.getItem(CoffeeMachineBlockEntity.SLOT_BASE)))
+                aligned++;
+            if (r.modifier() != null && r.modifier().ingredient().test(hypo.getItem(CoffeeMachineBlockEntity.SLOT_MODIFIER)))
+                aligned++;
+            else if (r.modifier() == null && hypo.getItem(CoffeeMachineBlockEntity.SLOT_MODIFIER).isEmpty())
+                aligned++;
+            if (r.additive() != null && r.additive().ingredient().test(hypo.getItem(CoffeeMachineBlockEntity.SLOT_ADDITIVE)))
+                aligned++;
+            else if (r.additive() == null && hypo.getItem(CoffeeMachineBlockEntity.SLOT_ADDITIVE).isEmpty())
+                aligned++;
+            if (r.container().ingredient().test(hypo.getItem(CoffeeMachineBlockEntity.SLOT_CONTAINER)))
+                aligned++;
+            if (aligned >= 2) return 1;
+        }
+        return 0;
     }
 
     @Override

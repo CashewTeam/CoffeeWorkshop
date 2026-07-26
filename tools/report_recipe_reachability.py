@@ -54,7 +54,21 @@ INITIAL_ITEMS = {
     "minecraft:oak_sapling", "minecraft:cherry_sapling",
     "minecraft:bread", "minecraft:sand", "minecraft:gravel",
     "minecraft:vine", "minecraft:oak_leaves",
+    "minecraft:spruce_log", "minecraft:birch_log",
+    "minecraft:spruce_planks", "minecraft:birch_planks",
     "minecraft:glass_bottle",
+}
+
+# Common vanilla Tag → concrete item mappings.  Used as a fallback when
+# the script can't find a local Tag JSON for a vanilla namespace.
+# Only items already in INITIAL_ITEMS (or immediately craftable from them)
+# are listed — items that would be unreachable would weaken the chain.
+VANILLA_TAG_FALLBACKS = {
+    "#minecraft:logs": {"minecraft:oak_log", "minecraft:spruce_log", "minecraft:birch_log"},
+    "#minecraft:planks": {"minecraft:oak_planks", "minecraft:spruce_planks", "minecraft:birch_planks"},
+    "#minecraft:leaves": {"minecraft:oak_leaves"},
+    "#minecraft:dye": {"minecraft:white_dye", "minecraft:black_dye", "minecraft:red_dye",
+                      "minecraft:yellow_dye", "minecraft:green_dye"},
 }
 
 # Mod items that require worldgen (not recipes).
@@ -89,11 +103,18 @@ MACHINE_BLOCKS = {
 def load_tag_items(tag_id):
     """Expand a tag ID (like '#minecraft:logs') to a set of concrete item IDs.
     Strict path resolution: <root>/<namespace>/tags/items/<path>.json.
+    Falls back to a small built-in map of common vanilla Tags.
     """
     raw = tag_id.lstrip("#")
     if ":" not in raw:
         return set()
     ns, path = raw.split(":", 1)
+
+    # Fallback to known vanilla tag mappings BEFORE filesystem search
+    full_key = f"#{ns}:{path}"
+    if full_key in VANILLA_TAG_FALLBACKS:
+        return set(VANILLA_TAG_FALLBACKS[full_key])
+
     # Resolve from mod's generated data first, then vanilla data
     TAG_ROOTS = [
         REPO_ROOT / "src" / "generated" / "resources" / "data",
@@ -126,7 +147,9 @@ def expand_tag(tag_id):
 # ── Recipe loading ────────────────────────────────────────────────────
 
 def load_recipes():
-    """Load all JSON recipes from all recipe directories."""
+    """Load all JSON recipes from all recipe directories.
+    Returns (recipes, parse_errors).  Parse errors are returned so that
+    main() can fail the CI gate on broken JSON."""
     recipes = []
     errors = []
     for recipe_dir in RECIPE_DIRS:
@@ -136,15 +159,13 @@ def load_recipes():
                     data = json.loads(f.read_text(encoding="utf-8"))
                     data["_file"] = str(f.relative_to(REPO_ROOT))
                     recipes.append(data)
-                except json.JSONDecodeError as e:
-                    errors.append((str(f.relative_to(REPO_ROOT)), str(e)))
-                except Exception as e:
+                except (json.JSONDecodeError, Exception) as e:
                     errors.append((str(f.relative_to(REPO_ROOT)), str(e)))
     if errors:
-        print(f"  WARN: {len(errors)} JSON parse error(s) encountered:", file=sys.stderr)
-        for f, e in errors[:10]:
+        print(f"  ERROR: {len(errors)} JSON parse error(s):", file=sys.stderr)
+        for f, e in errors[:20]:
             print(f"    {f}: {e}", file=sys.stderr)
-    return recipes
+    return recipes, errors
 
 # ── Ingredient extraction ─────────────────────────────────────────────
 
@@ -339,7 +360,7 @@ def analyze(all_recipes, reachable):
 # ── Report generation ─────────────────────────────────────────────────
 
 def main():
-    all_recipes = load_recipes()
+    all_recipes, parse_errors = load_recipes()
     reachable = compute_reachability(all_recipes)
     machine_types, unreachable, unused, consumables, ambiguous = analyze(all_recipes, reachable)
 
@@ -455,6 +476,9 @@ def main():
     print(f"Wrote {REPORT_PATH}")
 
     # ── CI exit code ──────────────────────────────────────────────────
+    if parse_errors:
+        print(f"\nFAIL: {len(parse_errors)} JSON parse error(s) — fix recipes before proceeding")
+        sys.exit(1)
     if critical_failures:
         print(f"\nFAIL: {len(critical_failures)} critical chain items unreachable")
         for inp, out in critical_failures:
