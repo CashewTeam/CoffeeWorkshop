@@ -20,6 +20,10 @@ import sys
 from pathlib import Path
 from collections import defaultdict
 
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
 MAIN = SRC / "main"
@@ -460,6 +464,98 @@ def scan_trades():
     return resolved
 
 
+def parse_cake_slice_items(field_to_id):
+    """Parse ModCakeBlocks.java to extract all slice item IDs from BlockCakeBasic constructors.
+    
+    Unlike audit_content_surface.py, this returns a simpler dict compatible with build_manifest.
+    """
+    cake_blocks_file = JAVA / "init" / "ModCakeBlocks.java"
+    if not cake_blocks_file.exists():
+        return {'slice_item_ids': set(), 'cake_to_slice': {}}
+    
+    text = cake_blocks_file.read_text(encoding="utf-8")
+    
+    cake_to_slice = {}
+    slice_field_names = set()
+    
+    # Parse blocks.register("cake_id", ... () -> ModItems.SLICE_FIELD.get()));
+    for m in re.finditer(
+        r'blocks\.register\("([^"]+)"[^)]*\)\s*->\s*new\s+BlockCakeBasic\([^)]*\)\s*->\s*ModItems\.(\w+)\.get\(\)\)',
+        text
+    ):
+        cake_id = m.group(1)
+        slice_field = m.group(2)
+        slice_field_names.add(slice_field)
+        slice_id = field_to_id.get(slice_field.lower(), slice_field.lower())
+        cake_to_slice[cake_id] = slice_id
+    
+    # Also catch multi-line patterns: () -> ModItems.SFIELD.get()));
+    for m in re.finditer(r'\(\)\s*->\s*ModItems\.(\w+)\.get\(\)\)\s*\)\s*;', text):
+        slice_field_names.add(m.group(1))
+    
+    slice_item_ids = set()
+    for field in slice_field_names:
+        item_id = field_to_id.get(field.lower(), field.lower())
+        slice_item_ids.add(item_id)
+    
+    # coldbrew_bottle from ColdBrewPot interaction (not cake)
+    slice_item_ids.add("coldbrew_bottle")
+    
+    return {'slice_item_ids': slice_item_ids, 'cake_to_slice': cake_to_slice}
+
+
+def validate_slice_item_integrity_manifest(cake_to_slice, registered_items, item_models, en_lang, manifest):
+    """Add integrity issues to the manifest for cake→slice item consistency.
+    
+    Checks:
+    1. Each interact (slice) item must be referenced by ≥1 registered BlockCakeBasic
+    2. Each cake with sliceItem must have the slice item registered
+    3. Each slice item must have a model and language key
+    """
+    issues = []
+    
+    all_slice_ids = set(cake_to_slice.values())
+    
+    for slice_id in sorted(all_slice_ids):
+        cakes_using = [c for c, s in cake_to_slice.items() if s == slice_id]
+        if not cakes_using:
+            issues.append({
+                "severity": "P1",
+                "type": "orphan_slice_item",
+                "id": slice_id,
+                "detail": f"Slice item '{slice_id}' not referenced by any BlockCakeBasic registration"
+            })
+    
+    for cake_id, slice_id in sorted(cake_to_slice.items()):
+        if slice_id not in registered_items:
+            issues.append({
+                "severity": "P0",
+                "type": "cake_missing_slice_registry",
+                "id": cake_id,
+                "detail": f"Cake '{cake_id}' references slice '{slice_id}' which is not registered"
+            })
+    
+    for slice_id in sorted(all_slice_ids):
+        if slice_id in registered_items:
+            if slice_id not in item_models:
+                issues.append({
+                    "severity": "P0",
+                    "type": "slice_missing_model",
+                    "id": slice_id,
+                    "detail": f"Slice item '{slice_id}' has no item model JSON"
+                })
+            key = f"item.coffeework.{slice_id}"
+            if key not in en_lang:
+                issues.append({
+                    "severity": "P0",
+                    "type": "slice_missing_lang",
+                    "id": slice_id,
+                    "detail": f"Slice item '{slice_id}' is missing en_us language key"
+                })
+    
+    return issues
+
+
 def check_model_texture_refs():
     """Check texture references in item models."""
     missing = defaultdict(list)
@@ -631,15 +727,9 @@ def build_manifest():
     
     # Worldgen items (from features)
     worldgen_items = {"coffee_tree", "blueberry_bush", "soda_ore"}
-    # Block interaction items (obtained via right-click / use on blocks)
-    block_interact_items = {"coldbrew_bottle",
-        "cake_slices", "cake_berry_slices", "cake_cheese_slices", "cake_coffee_slices",
-        "cake_harvest_slices", "cake_lemon_slices", "cake_redvelvet_slices",
-        "cake_schwarzwald_slices", "cake_tea_slices", "cake_sponge_berry_slices",
-        "cake_sponge_carrot_slices", "cake_sponge_chocolate_slices", "cake_sponge_coffee_slices",
-        "cake_sponge_lemon_slices", "cake_sponge_pumpkin_slices", "cake_sponge_redvelvet_slices",
-        "cake_sponge_tea_slices", "cake_sponge_slice",
-    }
+    # Block interaction items — dynamically parsed from ModCakeBlocks.java
+    cake_slice_data = parse_cake_slice_items(field_to_id)
+    block_interact_items = cake_slice_data['slice_item_ids']
     
     # Recipe outputs
     recipe_outputs = set()
@@ -752,6 +842,19 @@ def build_manifest():
         else:
             entry["ogg_exists"] = False
         manifest.append(entry)
+    
+    # Slice item integrity checks (gate: cake→slice consistency)
+    slice_integrity_issues = validate_slice_item_integrity_manifest(
+        cake_slice_data['cake_to_slice'], items, item_models, en_lang, manifest)
+    # Append as virtual entries for reporting
+    for issue in slice_integrity_issues:
+        manifest.append({
+            "id": issue["id"],
+            "type": f"integrity_{issue['type']}",
+            "registered": False,
+            "detail": issue["detail"],
+            "severity": issue["severity"],
+        })
     
     # Classify orphan assets
     orphan_assets = []

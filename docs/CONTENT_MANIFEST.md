@@ -26,7 +26,7 @@
 | zh_cn Key Coverage | 297/297 | 100% |
 | ja_jp Key Coverage | 297/297 | 100% |
 | Creative Tab | 297/297 | 100% |
-| Survival Source | 296/297 | 99% |
+| Survival Source | 297/297 | 100% |
 
 ## Registered Items
 
@@ -323,7 +323,7 @@
 | `syrup_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `tea_leaf` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `tiramisu` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `tiramisu_slice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `tiramisu_slice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `toast` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot |
 | `vanilla_seeds` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |

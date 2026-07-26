@@ -24,6 +24,10 @@ import sys
 from pathlib import Path
 from collections import defaultdict
 
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
 MAIN = SRC / "main"
@@ -400,6 +404,123 @@ def check_worldgen_items():
     return worldgen_items
 
 
+def parse_cake_slice_items():
+    """Parse ModCakeBlocks.java to extract all slice item IDs from BlockCakeBasic constructors.
+    
+    Returns a dict with:
+        {'slice_item_ids': set(), 'cake_to_slice': {cake_id: slice_id, ...}}
+    
+    This replaces the old hardcoded interact_items set.
+    """
+    cake_blocks_file = JAVA / "init" / "ModCakeBlocks.java"
+    if not cake_blocks_file.exists():
+        return {'slice_item_ids': set(), 'cake_to_slice': {}}
+    
+    text = cake_blocks_file.read_text(encoding="utf-8")
+    field_to_id = build_field_to_id_map()
+    block_field_to_id = build_block_field_to_id_map()
+    
+    # Parse each blocks.register("cake_id", ..., () -> ModItems.SLICE_FIELD.get()));
+    # Pattern: blocks.register("CID") ... () -> ModItems.SFIELD.get()))
+    cake_to_slice = {}
+    slice_field_names = set()
+    
+    for m in re.finditer(
+        r'blocks\.register\("([^"]+)"[^)]*\)\s*->\s*new\s+BlockCakeBasic\([^)]*\)\s*->\s*ModItems\.(\w+)\.get\(\)\)',
+        text
+    ):
+        cake_id = m.group(1)
+        slice_field = m.group(2)
+        slice_field_names.add(slice_field)
+        slice_id = field_to_id.get(slice_field.lower(), slice_field.lower())
+        cake_to_slice[cake_id] = slice_id
+    
+    # Alternative pattern for multi-line: () -> ModItems.SFIELD.get()))
+    for m in re.finditer(r'\(\)\s*->\s*ModItems\.(\w+)\.get\(\)\)\s*\)\s*;', text):
+        slice_field = m.group(1)
+        slice_field_names.add(slice_field)
+    
+    slice_item_ids = set()
+    for field in slice_field_names:
+        item_id = field_to_id.get(field.lower(), field.lower())
+        slice_item_ids.add(item_id)
+    
+    # Also include coldbrew_bottle (obtained from ColdBrewPot interaction, not cake)
+    slice_item_ids.add("coldbrew_bottle")
+    
+    return {'slice_item_ids': slice_item_ids, 'cake_to_slice': cake_to_slice}
+
+
+def build_block_field_to_id_map():
+    """Build Java field name → registry ID mapping for block registrations."""
+    field_to_id = {}
+    blocks_text = _read_init_files("Mod*Blocks*.java")
+    if blocks_text:
+        pattern = r'public static final RegistryObject<Block>\s+(\w+)\s*=\s*BLOCKS\.register\("([^"]+)"'
+        for m in re.finditer(pattern, blocks_text):
+            field_to_id[m.group(1).lower()] = m.group(2)
+        pattern2 = r'ModBlocks\.(\w+)\s*=\s*blocks\.register\("([^"]+)"'
+        for m in re.finditer(pattern2, blocks_text):
+            if m.group(1).lower() not in field_to_id:
+                field_to_id[m.group(1).lower()] = m.group(2)
+    return field_to_id
+
+
+def validate_slice_item_integrity(cake_to_slice, registry_items, item_models, lang_keys):
+    """Gate checks for cake→slice item integrity:
+    1. Every interact (slice) item is referenced by at least one registered BlockCakeBasic
+    2. Every cake with a sliceItem configured has the slice item registered
+    3. Every slice item has model, texture, and language keys
+    """
+    issues = []
+    en_data = lang_keys.get("en_us.json", {})
+    
+    all_slice_ids = set(cake_to_slice.values())
+    registered_cake_ids = set(cake_to_slice.keys())
+    
+    # Gate 1: each slice item must be referenced by at least one registered BlockCakeBasic
+    for slice_id in sorted(all_slice_ids):
+        cakes_using = [c for c, s in cake_to_slice.items() if s == slice_id]
+        if not cakes_using:
+            issues.append({
+                "severity": "P1",
+                "type": "orphan_slice_item",
+                "id": slice_id,
+                "detail": f"Slice item 'coffeework:{slice_id}' is not referenced by any BlockCakeBasic registration"
+            })
+    
+    # Gate 2: every cake with sliceItem must have the slice item registered
+    for cake_id, slice_id in sorted(cake_to_slice.items()):
+        if slice_id not in registry_items:
+            issues.append({
+                "severity": "P0",
+                "type": "cake_missing_slice_registry",
+                "id": cake_id,
+                "detail": f"Cake 'coffeework:{cake_id}' references slice item 'coffeework:{slice_id}' which is not registered"
+            })
+    
+    # Gate 3: every slice item must have model, texture, and language
+    for slice_id in sorted(all_slice_ids):
+        if slice_id in registry_items:
+            if slice_id not in item_models:
+                issues.append({
+                    "severity": "P0",
+                    "type": "slice_missing_model",
+                    "id": slice_id,
+                    "detail": f"Slice item 'coffeework:{slice_id}' has no item model JSON"
+                })
+            key = f"item.coffeework.{slice_id}"
+            if key not in en_data:
+                issues.append({
+                    "severity": "P0",
+                    "type": "slice_missing_lang",
+                    "id": slice_id,
+                    "detail": f"Slice item 'coffeework:{slice_id}' is missing en_us language key"
+                })
+    
+    return issues
+
+
 def build_report():
     print("Coffee Workshop Content Surface Audit")
     print("=" * 60)
@@ -548,18 +669,9 @@ def build_report():
                 "detail": f"Item 'coffeework:{item_id}' is registered but not in creative tab"
             })
     
-    # 9. Survival source check
-    # Items obtainable via block interaction (e.g. cake slicing with plate)
-    interact_items = {
-        "coldbrew_bottle",
-        "cake_slices", "cake_berry_slices", "cake_cheese_slices", "cake_coffee_slices",
-        "cake_harvest_slices", "cake_lemon_slices", "cake_redvelvet_slices",
-        "cake_schwarzwald_slices", "cake_tea_slices", "cake_sponge_berry_slices",
-        "cake_sponge_carrot_slices", "cake_sponge_chocolate_slices", "cake_sponge_coffee_slices",
-        "cake_sponge_lemon_slices", "cake_sponge_pumpkin_slices", "cake_sponge_redvelvet_slices",
-        "cake_sponge_tea_slices", "cake_sponge_slice",
-        "tiramisu_slice",
-    }
+    # 9. Survival source check — dynamically parsed from ModCakeBlocks.java
+    cake_slice_data = parse_cake_slice_items()
+    interact_items = cake_slice_data['slice_item_ids']
     all_sources = recipe_outputs | loot_items | traded_items | worldgen_items | interact_items
     # Special items that are tools/molds (no "source" needed but should be craftable)
     tool_like = {"cake_model", "cake_model_square", "cake_model_plate", "small_model",
@@ -580,6 +692,11 @@ def build_report():
             "id": item_id,
             "detail": f"Item 'coffeework:{item_id}' has no recipe, loot, trade, or worldgen source found"
         })
+    
+    # 9b. Slice item integrity gate checks
+    slice_integrity_issues = validate_slice_item_integrity(
+        cake_slice_data['cake_to_slice'], registry_items, item_models, lang_keys)
+    issues.extend(slice_integrity_issues)
     
     # 10. Duplicate / legacy models (old naming)
     legacy_models = []
