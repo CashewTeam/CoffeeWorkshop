@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:icecream_making",
+  "cookingtime": 400,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "coffeework:cream_berry"
+  },
+  "result": {
+    "item": "coffeework:icecream_berry"
+  }
+}

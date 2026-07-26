@@ -140,65 +140,113 @@ public final class ModMachineRecipeProvider {
                 .experience(0.15F).cookingTime(200)
                 .save(writer, id("oven_baking/puff_from_raw"));
 
-        // Phase 5.4/7: Raw intermediates → finished cakes (production chain)
+        // Phase 7: Ginger bread man raw → oven
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.GINGER_BREAD_MAN_RAW.get()),
+                new ItemStack(ModItems.GINGER_BREAD_MAN.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/ginger_bread_man_from_raw"));
+
+        // Phase 5.4: Raw → oven → Model → craft → Block (1.12.2 chain)
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_CHEESE_RAW.get()),
-                new ItemStack(ModBlocks.CAKE_CHEESE.get()))
-                .experience(0.35F).cookingTime(300)
+                new ItemStack(ModItems.CAKE_CHEESE_MODEL.get()))
+                .experience(0F).cookingTime(300)
                 .save(writer, id("oven_baking/cake_cheese_from_raw"));
-        // Tiramisu is assembled from pre-made components (sponge + cheese + espresso + cocoa),
-        // NOT produced from raw batter — no tiramisu_raw oven recipe.
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_RAW.get()),
-                new ItemStack(ModBlocks.CAKE_SPONGE.get()))
-                .experience(0.35F).cookingTime(200)
+                new ItemStack(ModItems.CAKE_SPONGE_MODEL.get()))
+                .experience(0F).cookingTime(200)
                 .save(writer, id("oven_baking/sponge_from_raw"));
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_BERRY_RAW.get()),
-                new ItemStack(ModBlocks.CAKE_SPONGE_BERRY.get()))
-                .experience(0.35F).cookingTime(200)
+                new ItemStack(ModItems.CAKE_SPONGE_BERRY_MODEL.get()))
+                .experience(0F).cookingTime(200)
                 .save(writer, id("oven_baking/sponge_berry_from_raw"));
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_CHOCOLATE_RAW.get()),
-                new ItemStack(ModBlocks.CAKE_SPONGE_CHOCOLATE.get()))
-                .experience(0.35F).cookingTime(200)
+                new ItemStack(ModItems.CAKE_SPONGE_CHOCOLATE_MODEL.get()))
+                .experience(0F).cookingTime(200)
                 .save(writer, id("oven_baking/sponge_chocolate_from_raw"));
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_COFFEE_RAW.get()),
-                new ItemStack(ModBlocks.CAKE_SPONGE_COFFEE.get()))
-                .experience(0.35F).cookingTime(200)
+                new ItemStack(ModItems.CAKE_SPONGE_COFFEE_MODEL.get()))
+                .experience(0F).cookingTime(200)
                 .save(writer, id("oven_baking/sponge_coffee_from_raw"));
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_PUMPKIN_RAW.get()),
-                new ItemStack(ModBlocks.CAKE_SPONGE_PUMPKIN.get()))
-                .experience(0.35F).cookingTime(200)
+                new ItemStack(ModItems.CAKE_SPONGE_PUMPKIN_MODEL.get()))
+                .experience(0F).cookingTime(200)
                 .save(writer, id("oven_baking/sponge_pumpkin_from_raw"));
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_CARROT_RAW.get()),
-                new ItemStack(ModBlocks.CAKE_SPONGE_CARROT.get()))
-                .experience(0.35F).cookingTime(200)
+                new ItemStack(ModItems.CAKE_SPONGE_CARROT_MODEL.get()))
+                .experience(0F).cookingTime(200)
                 .save(writer, id("oven_baking/sponge_carrot_from_raw"));
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_REDVELVET_RAW.get()),
-                new ItemStack(ModBlocks.CAKE_SPONGE_REDVELVET.get()))
-                .experience(0.35F).cookingTime(200)
+                new ItemStack(ModItems.CAKE_SPONGE_REDVELVET_MODEL.get()))
+                .experience(0F).cookingTime(200)
                 .save(writer, id("oven_baking/sponge_redvelvet_from_raw"));
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_LEMON_RAW.get()),
-                new ItemStack(ModBlocks.CAKE_SPONGE_LEMON.get()))
-                .experience(0.35F).cookingTime(200)
+                new ItemStack(ModItems.CAKE_SPONGE_LEMON_MODEL.get()))
+                .experience(0F).cookingTime(200)
                 .save(writer, id("oven_baking/sponge_lemon_from_raw"));
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_TEA_RAW.get()),
-                new ItemStack(ModBlocks.CAKE_SPONGE_TEA.get()))
-                .experience(0.35F).cookingTime(200)
+                new ItemStack(ModItems.CAKE_SPONGE_TEA_MODEL.get()))
+                .experience(0F).cookingTime(200)
                 .save(writer, id("oven_baking/sponge_tea_from_raw"));
 
-        // Mousse: raw → Icecream Machine (cold-set dessert, not oven-baked)
+        // Phase 5.4: Cake plate raw → oven → plate model
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_PLATE_RAW.get()),
+                new ItemStack(ModItems.CAKE_SPONGE_PLATE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/sponge_plate_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_BERRY_PLATE_RAW.get()),
+                new ItemStack(ModItems.CAKE_SPONGE_BERRY_PLATE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/sponge_berry_plate_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_CARROT_PLATE_RAW.get()),
+                new ItemStack(ModItems.CAKE_SPONGE_CARROT_PLATE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/sponge_carrot_plate_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_CHOCOLATE_PLATE_RAW.get()),
+                new ItemStack(ModItems.CAKE_SPONGE_CHOCOLATE_PLATE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/sponge_chocolate_plate_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_COFFEE_PLATE_RAW.get()),
+                new ItemStack(ModItems.CAKE_SPONGE_COFFEE_PLATE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/sponge_coffee_plate_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_LEMON_PLATE_RAW.get()),
+                new ItemStack(ModItems.CAKE_SPONGE_LEMON_PLATE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/sponge_lemon_plate_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_PUMPKIN_PLATE_RAW.get()),
+                new ItemStack(ModItems.CAKE_SPONGE_PUMPKIN_PLATE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/sponge_pumpkin_plate_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_REDVELVET_PLATE_RAW.get()),
+                new ItemStack(ModItems.CAKE_SPONGE_REDVELVET_PLATE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/sponge_redvelvet_plate_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_SPONGE_TEA_PLATE_RAW.get()),
+                new ItemStack(ModItems.CAKE_SPONGE_TEA_PLATE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/sponge_tea_plate_from_raw"));
+
+        // Phase 7: Jiggy raw → oven → jiggy model
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.JIGGY_CAKE_RAW.get()),
+                new ItemStack(ModItems.JIGGY_CAKE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/jiggy_from_raw"));
+
+        // Mousse: raw → Icecream Machine → model (1.12.2 cold-set)
         MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.MOUSSE_BERRY_RAW.get()),
-                new ItemStack(ModBlocks.MOUSSE_BERRY.get()))
+                new ItemStack(ModItems.MOUSSE_BERRY_MODEL.get()))
                 .experience(0.25F).cookingTime(300)
                 .save(writer, id("icecream_making/mousse_berry_from_raw"));
         MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.MOUSSE_CHOCOLATE_RAW.get()),
-                new ItemStack(ModBlocks.MOUSSE_CHOCOLATE.get()))
+                new ItemStack(ModItems.MOUSSE_CHOCOLATE_MODEL.get()))
                 .experience(0.25F).cookingTime(300)
                 .save(writer, id("icecream_making/mousse_chocolate_from_raw"));
         MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.MOUSSE_COFFEE_RAW.get()),
-                new ItemStack(ModBlocks.MOUSSE_COFFEE.get()))
+                new ItemStack(ModItems.MOUSSE_COFFEE_MODEL.get()))
                 .experience(0.25F).cookingTime(300)
                 .save(writer, id("icecream_making/mousse_coffee_from_raw"));
         MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.MOUSSE_LEMON_RAW.get()),
-                new ItemStack(ModBlocks.MOUSSE_LEMON.get()))
+                new ItemStack(ModItems.MOUSSE_LEMON_MODEL.get()))
                 .experience(0.25F).cookingTime(300)
                 .save(writer, id("icecream_making/mousse_lemon_from_raw"));
 
@@ -343,6 +391,38 @@ public final class ModMachineRecipeProvider {
                 new ItemStack(ModItems.CREAM_MILK.get()))
                 .experience(0.1F).cookingTime(400)
                 .save(writer, id("icecream_making/cream_milk"));
+
+        // Phase 6: Cream → Icecream Machine → icecream (1.12.2)
+        MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.CREAM_APPLE.get()),
+                new ItemStack(ModItems.ICECREAM_APPLE.get()))
+                .experience(0.2F).cookingTime(400)
+                .save(writer, id("icecream_making/apple"));
+        MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.CREAM_BERRY.get()),
+                new ItemStack(ModItems.ICECREAM_BERRY.get()))
+                .experience(0.2F).cookingTime(400)
+                .save(writer, id("icecream_making/berry"));
+        MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.CREAM_CHOCOLATE.get()),
+                new ItemStack(ModItems.ICECREAM_CHOCOLATE.get()))
+                .experience(0.2F).cookingTime(400)
+                .save(writer, id("icecream_making/chocolate"));
+        MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.CREAM_COFFEE.get()),
+                new ItemStack(ModItems.ICECREAM_COFFEE.get()))
+                .experience(0.2F).cookingTime(400)
+                .save(writer, id("icecream_making/coffee"));
+        MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.CREAM_LEMON.get()),
+                new ItemStack(ModItems.ICECREAM_LEMON.get()))
+                .experience(0.2F).cookingTime(400)
+                .save(writer, id("icecream_making/lemon"));
+        MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.CREAM_MELON.get()),
+                new ItemStack(ModItems.ICECREAM_MELON.get()))
+                .experience(0.2F).cookingTime(400)
+                .save(writer, id("icecream_making/melon"));
+
+        // Tiramisu raw → Icecream Machine → model
+        MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.TIRAMISU_RAW.get()),
+                new ItemStack(ModItems.TIRAMISU_MODEL.get()))
+                .experience(0.5F).cookingTime(500)
+                .save(writer, id("icecream_making/tiramisu_from_raw"));
     }
 
     private static void buildCoffeeRecipes(Consumer<FinishedRecipe> writer) {

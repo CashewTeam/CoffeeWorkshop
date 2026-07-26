@@ -15,13 +15,13 @@
       "item": "coffeework:espresso"
     },
     {
-      "item": "minecraft:milk_bucket"
+      "item": "coffeework:cream_milk"
     },
     {
       "item": "coffeework:cocoa_powder"
     }
   ],
   "result": {
-    "item": "coffeework:tiramisu"
+    "item": "coffeework:tiramisu_raw"
   }
 }

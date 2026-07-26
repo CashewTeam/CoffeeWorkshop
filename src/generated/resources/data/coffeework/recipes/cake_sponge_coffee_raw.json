@@ -3,22 +3,10 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "coffeework:mixing_bowl"
+      "item": "coffeework:iron_bowl_batter_coffee"
     },
     {
-      "item": "coffeework:flour"
-    },
-    {
-      "item": "minecraft:milk_bucket"
-    },
-    {
-      "item": "coffeework:coffee_powder"
-    },
-    {
-      "item": "minecraft:egg"
-    },
-    {
-      "item": "minecraft:sugar"
+      "item": "coffeework:cake_model"
     }
   ],
   "result": {

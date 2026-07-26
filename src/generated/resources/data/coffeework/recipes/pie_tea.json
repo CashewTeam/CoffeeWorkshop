@@ -6,6 +6,12 @@
       "item": "coffeework:plate_dough_pastry"
     },
     {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "coffeework:cream_milk"
+    },
+    {
       "item": "coffeework:tea_leaf"
     }
   ],

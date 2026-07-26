@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:icecream_making",
+  "cookingtime": 500,
+  "experience": 0.5,
+  "ingredient": {
+    "item": "coffeework:tiramisu_raw"
+  },
+  "result": {
+    "item": "coffeework:tiramisu_model"
+  }
+}

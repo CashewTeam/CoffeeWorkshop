@@ -521,3 +521,62 @@ These will be resolved in a future slot-extension phase.
 - The machine remains functional because the recipe system checks all
   slots; items in wrong slots simply don't match a recipe.
 - Enhanced shift-click routing is deferred to a future UX improvement.
+
+---
+
+## 2026-07-27 — Phase 5.4–7 Bakery Chain Restoration
+
+### Furnace/Oven dual-channel
+
+1.12.2 supported both vanilla Furnace smelting AND the custom Oven machine
+for raw→cooked recipes (`GameRegistry.addSmelting` + `OvenRecipes.addSmeltingRecipe`).
+
+In 1.20.1, only the coffeework Oven (`oven_baking` recipe type) is supported.
+Vanilla furnace smelting is NOT registered for raw→model or raw→cooked
+transitions.
+
+**Decision:** Oven-only, no vanilla furnace fallback. Reason:
+- Custom Oven is the standard baking machine in the mod
+- Data-driven recipes (`MachineRecipeBuilder`) have no vanilla furnace equivalent
+- Adding vanilla furnace recipes would require `SimpleCookingRecipeBuilder`
+  registration with separate advancement logic, doubling recipe maintenance
+- Players already use the Oven for all baking operations
+
+### Raw item count choice
+
+1.12.2 used metadata-based items (e.g. `muffin(meta 0-8 raw, 9-17 cooked)`).
+In 1.20.1, each flavor is a separate registered item. Output counts match
+1.12.2 where possible:
+- Croissant raw: 2 per craft (matching `dessert_1:2,X`)
+- Puff raw: 8 per craft (matching `dessert_1:8,12`)
+- Muffin raw: 3 per craft (matching `muffin:3,X`)
+- Soufflé raw: 4 per craft (matching `souffle:4,X`)
+- Mooncake raw: 2 per craft (matching `mooncake:2,X`)
+
+### Jiggy raw/model as generic items
+
+1.12.2 had flavor-specific jiggy raw/model via metadata (0-8 per flavor).
+All 9 flavors shared the same model JSON and texture PNG. In 1.20.1,
+a single generic `jiggy_cake_raw` item and `jiggy_cake_model` item serve
+all 9 jiggy cake flavors. The flavor is carried by the batter input.
+
+### Tiramisu_slice
+
+`tiramisu_slice` does not exist in 1.12.2. It is registered in 1.20.1
+as an extension content item with nutrition 6, obtained via plate-based
+cake slicing on the Tiramisu block.
+
+### Sprite Sheet Updates (2026-07-27)
+
+- All model and texture files moved from `assets/coffeework/textures/items/`
+  to `assets/coffeework/textures/item/` (singular) for 1.20.1 compatibility.
+- Model JSON `layer0` references updated accordingly.
+
+### Cream recipe dual-path
+
+1.12.2 produced `cream_milk` via workbench: `mixing_bowl + milk + vanilla`.
+The icecream machine also accepted milk → cream_milk.
+In 1.20.1, both paths exist:
+- Workbench: `mixing_bowl + milk + vanilla` (shapeless)
+- Machine: `milk_bucket → icecream_making → cream_milk`
+

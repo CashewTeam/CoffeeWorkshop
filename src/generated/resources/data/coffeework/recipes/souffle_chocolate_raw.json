@@ -3,10 +3,10 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "coffeework:dough"
+      "item": "coffeework:iron_bowl_egg"
     },
     {
-      "item": "minecraft:egg"
+      "item": "coffeework:flour"
     },
     {
       "item": "minecraft:sugar"
@@ -16,6 +16,18 @@
     },
     {
       "item": "coffeework:cocoa_powder"
+    },
+    {
+      "item": "coffeework:small_model"
+    },
+    {
+      "item": "coffeework:small_model"
+    },
+    {
+      "item": "coffeework:small_model"
+    },
+    {
+      "item": "coffeework:small_model"
     }
   ],
   "result": {

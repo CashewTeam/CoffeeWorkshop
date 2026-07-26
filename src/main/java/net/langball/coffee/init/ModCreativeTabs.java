@@ -127,19 +127,72 @@ public class ModCreativeTabs {
 
                         // Phase 5.4: Cake intermediates
                         output.accept(ModItems.CAKE_SPONGE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_MODEL.get());
                         output.accept(ModItems.CAKE_CHEESE_RAW.get());
+                        output.accept(ModItems.CAKE_CHEESE_MODEL.get());
                         output.accept(ModItems.CAKE_SPONGE_BERRY_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_BERRY_MODEL.get());
                         output.accept(ModItems.CAKE_SPONGE_CHOCOLATE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_CHOCOLATE_MODEL.get());
                         output.accept(ModItems.CAKE_SPONGE_COFFEE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_COFFEE_MODEL.get());
                         output.accept(ModItems.CAKE_SPONGE_PUMPKIN_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_PUMPKIN_MODEL.get());
                         output.accept(ModItems.CAKE_SPONGE_CARROT_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_CARROT_MODEL.get());
                         output.accept(ModItems.CAKE_SPONGE_REDVELVET_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_REDVELVET_MODEL.get());
                         output.accept(ModItems.CAKE_SPONGE_LEMON_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_LEMON_MODEL.get());
                         output.accept(ModItems.CAKE_SPONGE_TEA_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_TEA_MODEL.get());
                         output.accept(ModItems.MOUSSE_BERRY_RAW.get());
                         output.accept(ModItems.MOUSSE_CHOCOLATE_RAW.get());
                         output.accept(ModItems.MOUSSE_COFFEE_RAW.get());
                         output.accept(ModItems.MOUSSE_LEMON_RAW.get());
+
+                        // Phase 5.4: Cake plate intermediates
+                        output.accept(ModItems.CAKE_SPONGE_PLATE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_PLATE_MODEL.get());
+                        output.accept(ModItems.CAKE_SPONGE_BASE.get());
+                        output.accept(ModItems.CAKE_SPONGE_BERRY_PLATE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_BERRY_PLATE_MODEL.get());
+                        output.accept(ModItems.CAKE_SPONGE_BERRY_BASE.get());
+                        output.accept(ModItems.CAKE_SPONGE_CARROT_PLATE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_CARROT_PLATE_MODEL.get());
+                        output.accept(ModItems.CAKE_SPONGE_CARROT_BASE.get());
+                        output.accept(ModItems.CAKE_SPONGE_CHOCOLATE_PLATE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_CHOCOLATE_PLATE_MODEL.get());
+                        output.accept(ModItems.CAKE_SPONGE_CHOCOLATE_BASE.get());
+                        output.accept(ModItems.CAKE_SPONGE_COFFEE_PLATE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_COFFEE_PLATE_MODEL.get());
+                        output.accept(ModItems.CAKE_SPONGE_COFFEE_BASE.get());
+                        output.accept(ModItems.CAKE_SPONGE_LEMON_PLATE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_LEMON_PLATE_MODEL.get());
+                        output.accept(ModItems.CAKE_SPONGE_LEMON_BASE.get());
+                        output.accept(ModItems.CAKE_SPONGE_PUMPKIN_PLATE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_PUMPKIN_PLATE_MODEL.get());
+                        output.accept(ModItems.CAKE_SPONGE_PUMPKIN_BASE.get());
+                        output.accept(ModItems.CAKE_SPONGE_REDVELVET_PLATE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_REDVELVET_PLATE_MODEL.get());
+                        output.accept(ModItems.CAKE_SPONGE_REDVELVET_BASE.get());
+                        output.accept(ModItems.CAKE_SPONGE_TEA_PLATE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_TEA_PLATE_MODEL.get());
+                        output.accept(ModItems.CAKE_SPONGE_TEA_BASE.get());
+
+                        // Phase 5.4: Jiggy intermediates
+                        output.accept(ModItems.JIGGY_CAKE_RAW.get());
+                        output.accept(ModItems.JIGGY_CAKE_MODEL.get());
+
+                        // Phase 5.4: Mousse model intermediates
+                        output.accept(ModItems.MOUSSE_BERRY_MODEL.get());
+                        output.accept(ModItems.MOUSSE_CHOCOLATE_MODEL.get());
+                        output.accept(ModItems.MOUSSE_COFFEE_MODEL.get());
+                        output.accept(ModItems.MOUSSE_LEMON_MODEL.get());
+
+                        // Phase 5.4: Tiramisu intermediates
+                        output.accept(ModItems.TIRAMISU_RAW.get());
+                        output.accept(ModItems.TIRAMISU_MODEL.get());
 
                         // Phase 5.4: Cake rolls
                         output.accept(ModItems.CAKE_ROLL.get());
@@ -223,6 +276,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.CROISSANT_CHOCOLATE.get());
                         output.accept(ModItems.GINGER_BREAD.get());
                         output.accept(ModItems.GINGER_BREAD_MAN.get());
+                        output.accept(ModItems.GINGER_BREAD_MAN_RAW.get());
                         output.accept(ModItems.PUFF.get());
                         output.accept(ModItems.MILLE_FEUILLE.get());
                         output.accept(ModItems.CROISSANT_RAW.get());

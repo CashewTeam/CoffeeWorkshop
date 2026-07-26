@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "coffeework:dough_ginger"
+              "coffeework:cake_sponge_redvelvet_base"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "coffeework:ginger_bread_man"
+        "recipe": "coffeework:cake_redvelvet_roll_from_base"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "coffeework:ginger_bread_man"
+      "coffeework:cake_redvelvet_roll_from_base"
     ]
   },
   "sends_telemetry_event": false

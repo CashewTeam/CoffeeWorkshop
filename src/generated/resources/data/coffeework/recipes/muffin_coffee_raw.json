@@ -3,16 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "coffeework:dough"
-    },
-    {
-      "item": "minecraft:egg"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "coffeework:coffee_powder"
+      "item": "coffeework:iron_bowl_batter_coffee"
     }
   ],
   "result": {

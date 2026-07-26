@@ -123,6 +123,62 @@ public class ModItems {
     public static RegistryObject<Item> CAKE_SPONGE_LEMON_RAW;
     public static RegistryObject<Item> CAKE_SPONGE_TEA_RAW;
 
+    // Phase 5.4: Cake model intermediates (raw→oven→model→craft→block)
+    // 1.12.2 model_cake items with metadata per flavor
+    public static RegistryObject<Item> CAKE_SPONGE_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_BERRY_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_CARROT_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_CHOCOLATE_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_COFFEE_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_LEMON_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_PUMPKIN_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_REDVELVET_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_TEA_MODEL;
+    public static RegistryObject<Item> CAKE_CHEESE_MODEL;
+
+    // Phase 5.4: Cake plate intermediates (raw→model→base)
+    public static RegistryObject<Item> CAKE_SPONGE_PLATE_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_PLATE_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_BASE;
+    public static RegistryObject<Item> CAKE_SPONGE_BERRY_PLATE_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_BERRY_PLATE_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_BERRY_BASE;
+    public static RegistryObject<Item> CAKE_SPONGE_CARROT_PLATE_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_CARROT_PLATE_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_CARROT_BASE;
+    public static RegistryObject<Item> CAKE_SPONGE_CHOCOLATE_PLATE_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_CHOCOLATE_PLATE_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_CHOCOLATE_BASE;
+    public static RegistryObject<Item> CAKE_SPONGE_COFFEE_PLATE_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_COFFEE_PLATE_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_COFFEE_BASE;
+    public static RegistryObject<Item> CAKE_SPONGE_LEMON_PLATE_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_LEMON_PLATE_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_LEMON_BASE;
+    public static RegistryObject<Item> CAKE_SPONGE_PUMPKIN_PLATE_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_PUMPKIN_PLATE_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_PUMPKIN_BASE;
+    public static RegistryObject<Item> CAKE_SPONGE_REDVELVET_PLATE_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_REDVELVET_PLATE_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_REDVELVET_BASE;
+    public static RegistryObject<Item> CAKE_SPONGE_TEA_PLATE_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_TEA_PLATE_MODEL;
+    public static RegistryObject<Item> CAKE_SPONGE_TEA_BASE;
+
+    // Phase 5.4: Jiggy cake intermediates (generic, shared models)
+    public static RegistryObject<Item> JIGGY_CAKE_RAW;
+    public static RegistryObject<Item> JIGGY_CAKE_MODEL;
+
+    // Phase 5.4: Mousse model intermediates
+    public static RegistryObject<Item> MOUSSE_BERRY_MODEL;
+    public static RegistryObject<Item> MOUSSE_CHOCOLATE_MODEL;
+    public static RegistryObject<Item> MOUSSE_COFFEE_MODEL;
+    public static RegistryObject<Item> MOUSSE_LEMON_MODEL;
+
+    // Phase 5.4: Tiramisu intermediates
+    public static RegistryObject<Item> TIRAMISU_RAW;
+    public static RegistryObject<Item> TIRAMISU_MODEL;
+
     // Phase 6: Creams
     public static RegistryObject<Item> CREAM_MILK;
     public static RegistryObject<Item> CREAM_APPLE;
@@ -167,6 +223,7 @@ public class ModItems {
     public static RegistryObject<Item> CROISSANT_CHOCOLATE;
     public static RegistryObject<Item> GINGER_BREAD;
     public static RegistryObject<Item> GINGER_BREAD_MAN;
+    public static RegistryObject<Item> GINGER_BREAD_MAN_RAW;
     public static RegistryObject<Item> PUFF;
     public static RegistryObject<Item> MILLE_FEUILLE;
 
