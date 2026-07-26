@@ -358,6 +358,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("sandwich_blt"));
 
         // --- Beverage items ---
+        // Instant coffee: coffee_powder + water + stir_stick (returns bucket)
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT.get(), ModItems.COFFEE_INSTANT_STICK.get())
+                .requires(ModItems.COFFEE_POWDER.get())
+                .requires(Items.WATER_BUCKET)
+                .requires(ModItems.COFFEE_INSTANT_STICK.get())
+                .save(writer, modLoc("coffee_instant"));
+
+        // Instant coffee from box
         shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT.get(), 9, ModItems.COFFEE_INSTANT_BOX.get())
                 .requires(ModItems.COFFEE_INSTANT_BOX.get())
                 .save(writer, modLoc("coffee_instant_from_box"));
@@ -381,6 +389,18 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("LL")
                 .define('L', Items.OAK_LEAVES)
                 .save(writer, modLoc("tea_leaf"));
+
+        // Cocoa bean (mod item) from vanilla cocoa beans
+        smelting(Items.COCOA_BEANS, ModItems.COCOA_BEAN.get(), 0.1F, "cocoa_bean")
+                .save(writer, modLoc("cocoa_bean"));
+
+        // Coffee instant stir stick from vanilla stick
+        shaped(RecipeCategory.MISC, ModItems.COFFEE_INSTANT_STICK.get(), 4, Items.STICK)
+                .pattern("S")
+                .pattern("P")
+                .define('S', Items.STICK)
+                .define('P', Items.PAPER)
+                .save(writer, modLoc("coffee_instant_stick"));
 
         // Black tea leaf (smelt green tea leaf)
         smelting(ModItems.TEA_LEAF.get(), ModItems.BLACK_TEA_LEAF.get(), 0.1F, "black_tea_leaf")
@@ -687,6 +707,69 @@ public class ModRecipeProvider extends RecipeProvider {
 
         // NOTE: plate_dough, plate_dough_pastry, plate_dough_ginger crafting
         // fallbacks REMOVED — use Roller machine instead
+
+        // ===================================================================
+        // COOLING RECIPES (hot drink + ice_slag → iced drink)
+        // These handle iced variants that cannot be expressed in the Coffee
+        // Machine because they would need both a flavor additive AND ice_slag
+        // simultaneously (single additive slot limitation).
+        // ===================================================================
+
+        // americano_nitro_ice + ice_slag → americano_nitro_fruit_ice
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_AMERICANO_NITRO_FRUIT_ICE.get(),
+                ModItems.COFFEE_AMERICANO_NITRO_ICE.get())
+                .requires(ModItems.COFFEE_AMERICANO_NITRO_ICE.get())
+                .requires(ModItems.ICE_SLAG.get())
+                .save(writer, modLoc("cooling/americano_nitro_fruit_ice"));
+
+        // coldbrew_fruit + ice_slag → coldbrew_fruit_ice
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_COLDBREW_FRUIT_ICE.get(),
+                ModItems.COFFEE_COLDBREW_FRUIT.get())
+                .requires(ModItems.COFFEE_COLDBREW_FRUIT.get())
+                .requires(ModItems.ICE_SLAG.get())
+                .save(writer, modLoc("cooling/coldbrew_fruit_ice"));
+
+        // coldbrew_latte_caramel + ice_slag → coldbrew_latte_caramel_ice
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_COLDBREW_LATTE_CARAMEL_ICE.get(),
+                ModItems.COFFEE_COLDBREW_LATTE_CARAMEL.get())
+                .requires(ModItems.COFFEE_COLDBREW_LATTE_CARAMEL.get())
+                .requires(ModItems.ICE_SLAG.get())
+                .save(writer, modLoc("cooling/coldbrew_latte_caramel_ice"));
+
+        // coldbrew_latte_chocolate + ice_slag → coldbrew_latte_chocolate_ice
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_COLDBREW_LATTE_CHOCOLATE_ICE.get(),
+                ModItems.COFFEE_COLDBREW_LATTE_CHOCOLATE.get())
+                .requires(ModItems.COFFEE_COLDBREW_LATTE_CHOCOLATE.get())
+                .requires(ModItems.ICE_SLAG.get())
+                .save(writer, modLoc("cooling/coldbrew_latte_chocolate_ice"));
+
+        // coldbrew_latte_fruit + ice_slag → coldbrew_latte_fruit_ice
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_COLDBREW_LATTE_FRUIT_ICE.get(),
+                ModItems.COFFEE_COLDBREW_LATTE_FRUIT.get())
+                .requires(ModItems.COFFEE_COLDBREW_LATTE_FRUIT.get())
+                .requires(ModItems.ICE_SLAG.get())
+                .save(writer, modLoc("cooling/coldbrew_latte_fruit_ice"));
+
+        // coldbrew_latte_mint + ice_slag → coldbrew_latte_mint_ice
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_COLDBREW_LATTE_MINT_ICE.get(),
+                ModItems.COFFEE_COLDBREW_LATTE_MINT.get())
+                .requires(ModItems.COFFEE_COLDBREW_LATTE_MINT.get())
+                .requires(ModItems.ICE_SLAG.get())
+                .save(writer, modLoc("cooling/coldbrew_latte_mint_ice"));
+
+        // coldbrew_latte_vanilla + ice_slag → coldbrew_latte_vanilla_ice
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_COLDBREW_LATTE_VANILLA_ICE.get(),
+                ModItems.COFFEE_COLDBREW_LATTE_VANILLA.get())
+                .requires(ModItems.COFFEE_COLDBREW_LATTE_VANILLA.get())
+                .requires(ModItems.ICE_SLAG.get())
+                .save(writer, modLoc("cooling/coldbrew_latte_vanilla_ice"));
+
+        // mandarin_drink + ice_slag → mandarin_drink_ice
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_MANDARIN_DRINK_ICE.get(),
+                ModItems.COFFEE_MANDARIN_DRINK.get())
+                .requires(ModItems.COFFEE_MANDARIN_DRINK.get())
+                .requires(ModItems.ICE_SLAG.get())
+                .save(writer, modLoc("cooling/mandarin_drink_ice"));
 
         // ===================================================================
         // MACHINE RECIPES (Grinder, Oven, Roller, Icecream Machine)

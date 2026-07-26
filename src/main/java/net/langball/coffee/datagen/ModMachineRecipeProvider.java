@@ -453,11 +453,31 @@ public final class ModMachineRecipeProvider {
                 .experience(0.2F).cookingTime(120)
                 .save(writer, id("coffee_brewing/iced_cocoa"));
 
-        // Iced Cocoa Strong: 2×cocoa_powder + milk_bucket + ice_slag + cup_glass
-        // (Same signature as Iced Cocoa! Both use ice_slag + cup_glass.)
-        // SKIPPED — ambiguous. Use Iced Cocoa for both (cocoa_strong_ice item
-        // remains creative-only until slot system can express both chocolate_chip
-        // and ice_slag simultaneously).
+        // Iced Cocoa Strong: 2×cocoa_powder + milk_bucket + chocolate_chip + cup_glass
+        // (hot cocoa_strong uses CUP → cup_glass differentiator avoids ambiguity)
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COCOA_STRONG_ICE.get()))
+                .base(Ingredient.of(ModItems.COCOA_POWDER.get()), 2)
+                .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
+                .additive(Ingredient.of(ModItems.CHOCOLATE_CHIP.get()), 1)
+                .container(Ingredient.of(ModItems.CUP_GLASS.get()), 1)
+                .experience(0.3F).cookingTime(160)
+                .save(writer, id("coffee_brewing/iced_cocoa_strong"));
+
+        // Iced Mandarin Drink: SKIPPED — same signature as Iced Latte.
+        // Iced Coldbrew Fruit: SKIPPED — same signature as Iced Coldbrew.
+        // Iced Coldbrew Latte flavored variants (caramel/choc/fruit/mint/vanilla):
+        //   SKIPPED — all share same signature coldbrew_bottle+milk+ice_slag+cup_glass.
+        // These use the cooling crafting recipe: hot drink + ice_slag → iced drink.
+
+        // Iced Coldbrew Latte: coldbrew_bottle + milk_bucket + ice_slag + cup_glass
+        // (hot coldbrew_latte has no additive → ice_slag distinguishes)
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_COLDBREW_LATTE_ICE.get()))
+                .base(Ingredient.of(ModItems.COLDBREW_BOTTLE.get()), 1)
+                .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
+                .additive(Ingredient.of(ModItems.ICE_SLAG.get()), 1)
+                .container(Ingredient.of(ModItems.CUP_GLASS.get()), 1)
+                .experience(0.3F).cookingTime(180)
+                .save(writer, id("coffee_brewing/iced_coldbrew_latte"));
 
         // ═══════════════════════════════════════════════════════════════════
         // Phase 4 P1: Americano extensions
