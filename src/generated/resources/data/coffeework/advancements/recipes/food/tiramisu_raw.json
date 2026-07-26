@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_croissant": {
+    "has_item": {
       "conditions": {
         "items": [
           {
             "items": [
-              "coffeework:dough_pastry"
+              "coffeework:mixing_bowl"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "coffeework:croissant"
+        "recipe": "coffeework:tiramisu_raw"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_croissant",
+      "has_item",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "coffeework:croissant"
+      "coffeework:tiramisu_raw"
     ]
   },
   "sends_telemetry_event": false

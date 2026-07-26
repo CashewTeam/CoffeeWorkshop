@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:jiggy_cake"
+    },
+    {
+      "item": "minecraft:pumpkin"
+    }
+  ],
+  "result": {
+    "item": "coffeework:jiggy_cake_pumpkin"
+  }
+}

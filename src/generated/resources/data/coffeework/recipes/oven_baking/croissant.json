@@ -1,10 +1,11 @@
 {
-  "type": "minecraft:smelting",
-  "category": "food",
+  "type": "coffeework:oven_baking",
   "cookingtime": 200,
   "experience": 0.15,
   "ingredient": {
     "item": "coffeework:dough_pastry"
   },
-  "result": "coffeework:croissant"
+  "result": {
+    "item": "coffeework:croissant"
+  }
 }

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:mooncake_model"
+    },
+    {
+      "item": "coffeework:dough"
+    },
+    {
+      "item": "minecraft:cooked_porkchop"
+    }
+  ],
+  "result": {
+    "item": "coffeework:mooncake_ham"
+  }
+}

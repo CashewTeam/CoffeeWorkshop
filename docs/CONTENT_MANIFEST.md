@@ -26,7 +26,7 @@
 | zh_cn Key Coverage | 291/291 | 100% |
 | ja_jp Key Coverage | 291/291 | 100% |
 | Creative Tab | 291/291 | 100% |
-| Survival Source | 244/291 | 83% |
+| Survival Source | 274/291 | 94% |
 
 ## Registered Items
 
@@ -52,10 +52,10 @@
 | `cake_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_berry_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_berry_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `cake_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_carrot_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_cheese_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_cheese_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_cheese_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_chocolate_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -79,15 +79,15 @@
 | `cake_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_sponge` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_sponge_berry_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_berry_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_berry_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_sponge_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_carrot_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_sponge_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_sponge_chocolate_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_chocolate_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_chocolate_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_sponge_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_sponge_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_coffee_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_sponge_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_lemon_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
@@ -194,7 +194,7 @@
 | `cream_melon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cream_milk` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `croissant` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `croissant_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `croissant_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cup` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cup_glass` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `custard` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -219,8 +219,8 @@
 | `field_ration` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `flour` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `gelatin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `ginger_bread` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `ginger_bread_man` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `ginger_bread` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `ginger_bread_man` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `ginger_house` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `grinder_off` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `hardtack` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -236,42 +236,42 @@
 | `icecream_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `iron_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `jiggy_cake_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `jiggy_cake_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `jiggy_cake_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `jiggy_cake_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `jiggy_cake_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `jiggy_cake_pumpkin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `jiggy_cake_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `jiggy_cake_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `jiggy_cake_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_pumpkin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | trade |
 | `marshmallow` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `marshmallow_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `marshmallow_roast` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `milk_form` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `mille_feuille` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `mille_feuille` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mixing_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake_egg` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `mooncake_fruit` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `mooncake_ham` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `mooncake_fruit` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `mooncake_ham` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `mousse_berry_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `mousse_berry_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `mousse_chocolate_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `mousse_chocolate_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `mousse_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `mousse_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `muffin_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `muffin_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `muffin_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `muffin_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `muffin_pumpkin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `muffin_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `muffin_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `muffin_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_pumpkin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `oven_off` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `pie_apple` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `pie_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -288,7 +288,7 @@
 | `plate_dough_pastry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `plate_iron` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `puff` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `puff` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `record_blank` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `record_kusa_noshi_to_ne` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `record_lazy_lady_kaguya` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -317,7 +317,7 @@
 | `syrup_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `tea_leaf` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `tiramisu` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `tiramisu_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `tiramisu_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `toast` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot |
 | `vanilla_seeds` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
