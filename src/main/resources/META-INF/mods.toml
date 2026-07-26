@@ -11,12 +11,21 @@ issueTrackerUrl="https://github.com/CashewTeam/CoffeeWorkshop/issues"
     # When one is set up, restore the field with the real URL; Forge Update
     # Checker will reject a placeholder URL.
     logoFile="logo.png"
-    credits="Mojang, Limuliya.Izefia.lillian"
-    authors="MCMOD Modding Group"
+    credits="Mojang, Limuliya.Izefia.lillian, CashewTeam"
+    authors="MCMOD Modding Group, CashewTeam"
     description='''
         Bring me a coffee. Get a move on!
-
-        一个关于咖啡的 Minecraft 模组，添加了咖啡种植、加工、烘焙、饮品制作等一系列内容。
+        
+        Coffee Workshop adds a complete coffee production chain to Minecraft:
+        grow coffee trees, harvest and roast beans, grind them into powder,
+        and brew hot or iced drinks in a Coffee Machine.
+        
+        Features: 5 processing machines, 80+ drink recipes, 9 sponge cake
+        flavors, 8 full cakes, 4 mousses, breads, ice cream, villager
+        trading, world-gen coffee trees and blueberry bushes.
+        
+        一个关于咖啡的 Minecraft 模组，添加了咖啡种植、加工、烘焙、
+        饮品制作、蛋糕甜点、村民交易等一系列内容。
     '''
 
     [[dependencies.coffeework]]

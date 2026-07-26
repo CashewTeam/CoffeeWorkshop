@@ -1,12 +1,96 @@
 # Coffee Workshop — Porting Decisions (1.20.1)
 
-This file records decisions taken during the 1.12.2 → 1.20.1 port. It is the
-canonical place to record changes to registry IDs, data formats, or play
-semantics. Add a new dated entry whenever such a decision is made so future
-maintainers can trace why a name or behaviour is the way it is.
+This file records decisions taken during the 1.12.2 → 1.20.1 port.
 
-For the high-level audit and phased plan see
-`CoffeeWorkshop_1.20.1_移植审计与开发计划.md`.
+---
+
+## 2026-07-26 — Porting Closure: P0 resolution
+
+### Language completion
+
+- All three language files (`en_us.json`, `zh_cn.json`, `ja_jp.json`) now have
+  **identical key sets** (252 keys each), fully covering all registered items,
+  blocks, effects, professions, GUI labels, JEI categories, container titles,
+  and record descriptions.
+- 43 English placeholder values (raw registry names) replaced with proper
+  display names (e.g. `"bag_coffee"` → `"Coffee Bean Bag"`).
+- Chinese typos fixed: `冰淇凌` → `冰淇淋`, `烘培` → `烘焙`.
+- `coffee_seed` (singular) key renamed to `coffee_seeds` (plural) to match
+  registry.
+- ~620 unregistered-item language keys removed from `zh_cn` and `ja_jp` and
+  archived to `reference/reports/removed_keys_*.json` for later restoration.
+
+### Mob effect icons
+
+- Placeholder 18×18 PNG icons created for `caffeine` (brown), `relax` (light blue),
+  and `golden_heart` (gold).  These prevent missing-texture artifacts in the
+  potion HUD and item tooltips.
+
+### Creative tab completion
+
+- 8 missing items added: `tea_leaf`, `black_tea_leaf`, `coldbrew_bottle`,
+  `syrup_caramel`, `syrup_chocolate`, `syrup_fruit`, `syrup_mint`,
+  `syrup_vanilla`, `syrup_sakura`.
+
+### Trade arbitrage fixed
+
+- **Coffee Powder**: Barista buy 4→6E / Barista sell 4→4E (previously 16E,
+  allowing 10E profit per cycle).
+- **Cocoa Powder**: Barista buy 4→8E / Barista sell 4→6E (previously 16E, 8E profit).
+- **Roast Coffee Bean**: Materials Trader buy 1→2E (previously 4E, allowing
+  cross-profession arbitrage with Barista sell 2→8E).
+
+### Shift-click routing (retrospective from Phase 4)
+
+- `ContainerCoffeeMachine.findSlotForStack()` P0 bug fixed: inverted
+  remainder.isEmpty() check caused all valid slots to be skipped when
+  machine was empty.
+- `computeSlotScore()` now properly merges accepted count into hypothetical
+  container state during recipe-match scoring.
+- Empty optional slots (modifier==null, additive==null) no longer inflate
+  partial-match scores.
+- 5 new GameTests verify role-based slot routing.
+
+### Content manifest
+
+- `docs/content_manifest.json` and `docs/CONTENT_MANIFEST.md` generated
+  by `tools/build_content_manifest.py` — cross-references all 190
+  registered entities against models, textures, translations, creative
+  tab, recipes, loot tables, and trades.
+- 689 orphan assets (models/textures/blockstates without registration)
+  classified into: ASSET_ARCHIVE (569), PORT_LATER (52), PORT_NOW (14),
+  REMOVED (33), MERGED (16), REDESIGN (5).
+- Old `docs/CONTENT_INVENTORY.md` (Phase 0 baseline) archived to
+  `reference/reports/CONTENT_INVENTORY_PHASE0.md`.
+
+### Audit tooling
+
+- `tools/audit_content_surface.py` — five-way cross-reference audit
+  (registry ↔ model ↔ texture ↔ lang ↔ source). 0 P0 issues on current code.
+- `tools/cleanup_lang.py` — removes unregistered-content language keys,
+  archives them for restoration.
+- `tools/fix_lang.py` — bulk translation fix/insertion.
+
+### PORTING_DECISIONS stale entries
+
+The following earlier entries describe issues now resolved:
+
+- **Phase 3 deferred drinks** (2026-07-25): All 15 P0 drinks now have
+  machine recipes via Phase 4 P1 completion.
+- **Shift-click routing limitation** (2026-07-25): Fixed in Phase 4
+  closure (see shift-click routing entry above).
+- **P1 deferred items** (2026-07-25): Flavored syrups, flavored lattes,
+  iced extensions, and coldbrew extensions now all have survival recipes.
+- **Chocolate chip production gap**: Resolved with grinder recipe.
+
+Remaining known limitations (2026-07-26):
+- Single additive slot means some P1 drink combinations (e.g. ice_slag +
+  syrup simultaneously) remain creative-only.  See "Known slot limitations
+  for P1 drinks" below.
+- ~64% of items have survival sources; 46 items are creative/trade-only.
+- 3 villager professions lack custom overlay textures (use default appearance).
+- ~70 old drink-plate block models and blockstates not ported — planned
+  for unified drink display system redesign.
 
 ---
 
