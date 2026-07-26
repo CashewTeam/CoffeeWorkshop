@@ -74,6 +74,10 @@ public final class ModRecipeTypes {
             SERIALIZERS.register("cooling",
                     net.langball.coffee.recipes.CoolingRecipe.Serializer::new);
 
+    /** RecipeType for CoolingRecipe (used by RecipeManager queries). */
+    public static final net.minecraft.world.item.crafting.RecipeType<net.langball.coffee.recipes.CoolingRecipe> COOLING_TYPE =
+            net.minecraft.world.item.crafting.RecipeType.simple(CoffeeWork.id("cooling"));
+
     private ModRecipeTypes() {
     }
 }

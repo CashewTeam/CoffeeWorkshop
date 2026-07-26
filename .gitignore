@@ -20,6 +20,10 @@ build
 # generated resources cache (regenerated on every runData)
 src/generated/resources/.cache/
 
+# python
+__pycache__/
+*.pyc
+
 # other
 eclipse
 run

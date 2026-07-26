@@ -729,8 +729,11 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     private void registerCoolingRecipes(Consumer<FinishedRecipe> writer) {
+        // hot_drink → iced_drink mappings.
+        // NOTE: americano_nitro_fruit_ice is NOT generated here because the
+        // hot variant (americano_nitro_ice) lacks fruit syrup — adding ice alone
+        // does not produce a fruit-flavored drink.  That item remains creative-only.
         var mappings = new Object[][]{
-                {ModItems.COFFEE_AMERICANO_NITRO_ICE, ModItems.COFFEE_AMERICANO_NITRO_FRUIT_ICE},
                 {ModItems.COFFEE_COLDBREW_FRUIT, ModItems.COFFEE_COLDBREW_FRUIT_ICE},
                 {ModItems.COFFEE_COLDBREW_LATTE_CARAMEL, ModItems.COFFEE_COLDBREW_LATTE_CARAMEL_ICE},
                 {ModItems.COFFEE_COLDBREW_LATTE_CHOCOLATE, ModItems.COFFEE_COLDBREW_LATTE_CHOCOLATE_ICE},
@@ -740,22 +743,25 @@ public class ModRecipeProvider extends RecipeProvider {
                 {ModItems.COFFEE_MANDARIN_DRINK, ModItems.COFFEE_MANDARIN_DRINK_ICE},
         };
 
-        int idx = 0;
         for (Object[] mapping : mappings) {
-            idx++;
-            var hotItem = ((java.util.function.Supplier<net.minecraft.world.item.Item>) mapping[0]).get();
-            var icedItem = ((java.util.function.Supplier<net.minecraft.world.item.Item>) mapping[1]).get();
-            final int n = idx;
+            var hotSupplier = (java.util.function.Supplier<net.minecraft.world.item.Item>) mapping[0];
+            var icedSupplier = (java.util.function.Supplier<net.minecraft.world.item.Item>) mapping[1];
+            var hotItem = hotSupplier.get();
+            var icedItem = icedSupplier.get();
+            // Stable semantic IDs: cooling/<hot_name>_to_<iced_name>
+            String hotPath = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(hotItem).getPath();
+            String icedPath = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(icedItem).getPath();
             final ResourceLocation hotId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(hotItem);
-            final ResourceLocation icedId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(icedItem);
+            final ResourceLocation recipeId = modLoc("cooling/" + hotPath + "_to_" + icedPath);
             writer.accept(new FinishedRecipe() {
                 @Override
                 public void serializeRecipeData(com.google.gson.JsonObject json) {
                     json.addProperty("hot", hotId.toString());
-                    json.addProperty("iced", icedId.toString());
+                    json.addProperty("iced", net.minecraft.core.registries.BuiltInRegistries.ITEM
+                            .getKey(icedItem).toString());
                 }
                 @Override
-                public ResourceLocation getId() { return modLoc("cooling/" + n); }
+                public ResourceLocation getId() { return recipeId; }
                 @Override
                 public RecipeSerializer<?> getType() {
                     return net.langball.coffee.init.ModRecipeTypes.COOLING_SERIALIZER.get();

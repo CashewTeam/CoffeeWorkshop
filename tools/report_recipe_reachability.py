@@ -57,14 +57,22 @@ INITIAL_ITEMS = {
     "minecraft:glass_bottle",
 }
 
-# Mod items that require worldgen or other non-recipe sources.
+# Mod items that require worldgen (not recipes).
+# NOTE: coldbrew_bottle is intentionally NOT whitelisted — it must be reached
+# via the coldbrew_pot + glass_bottle + tick chain, not a JSON recipe.
 WORLDGEN_SOURCES = {
     "coffeework:coffee_seeds": "worldgen (coffee tree)",
     "coffeework:coffee_bean_raw": "harvest from mature coffee tree",
     "coffeework:vanilla_seeds": "crafted from vanilla (vanilla crop worldgen)",
     "coffeework:vanilla": "harvest from vanilla crop (worldgen)",
     "coffeework:soda_ore": "worldgen (soda ore block)",
-    "coffeework:coldbrew_bottle": "cold brew pot fermentation + glass bottle extraction",
+}
+
+# Explicit non-JSON production edges (recipes that the script can't model
+# as JSON, e.g., block interactions).
+NON_RECIPE_EDGES = {
+    # coldbrew_pot (full) + glass_bottle → coldbrew_bottle (after random ticks complete)
+    "coffeework:coldbrew_bottle": ["coffeework:coldbrew_pot", "minecraft:glass_bottle"],
 }
 
 # Machine recipe types and their required machine blocks.
@@ -80,21 +88,34 @@ MACHINE_BLOCKS = {
 
 def load_tag_items(tag_id):
     """Expand a tag ID (like '#minecraft:logs') to a set of concrete item IDs."""
-    ns, path = tag_id.lstrip("#").split(":", 1)
+    raw = tag_id.lstrip("#")
+    if ":" not in raw:
+        return set()
+    ns, path = raw.split(":", 1)
+    path_parts = path.split("/")
     for tag_dir in TAG_DIRS:
-        tag_file = tag_dir / f"{path.replace('/', os.sep)}.json"
-        if tag_file.exists():
+        # Match namespace AND path
+        ns_dir = tag_dir.parent / "tags" / "items"
+        # Try both ns subdir and direct (modern structure: namespace/path)
+        candidate = ns_dir / ns / "/".join(path_parts) if (ns_dir / ns).exists() else tag_dir / ns / "/".join(path_parts)
+        # Simpler: just look in the right namespace subdir
+        candidate = tag_dir.parent / "tags" / "items" / ns / "/".join(path_parts)
+        if not candidate.exists():
+            # Legacy: try without ns subdir if ns is coffeework
+            candidate = tag_dir.parent / "tags" / "items" / "/".join(path_parts)
+        if candidate.exists():
             try:
-                data = json.loads(tag_file.read_text(encoding="utf-8"))
-                items = set()
-                for entry in data.get("values", []):
-                    if entry.startswith("#"):
-                        items.update(load_tag_items(entry))
-                    else:
-                        items.add(entry)
-                return items
-            except Exception:
-                pass
+                data = json.loads(candidate.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as e:
+                print(f"  WARN: Failed to parse tag {tag_id} at {candidate}: {e}", file=sys.stderr)
+                return set()
+            items = set()
+            for entry in data.get("values", []):
+                if entry.startswith("#"):
+                    items.update(load_tag_items(entry))
+                else:
+                    items.add(entry)
+            return items
     # Tag not found — return empty (won't block reachability)
     return set()
 
@@ -109,6 +130,7 @@ def expand_tag(tag_id):
 def load_recipes():
     """Load all JSON recipes from all recipe directories."""
     recipes = []
+    errors = []
     for recipe_dir in RECIPE_DIRS:
         if recipe_dir.exists():
             for f in sorted(recipe_dir.rglob("*.json")):
@@ -116,8 +138,14 @@ def load_recipes():
                     data = json.loads(f.read_text(encoding="utf-8"))
                     data["_file"] = str(f.relative_to(REPO_ROOT))
                     recipes.append(data)
-                except Exception:
-                    pass
+                except json.JSONDecodeError as e:
+                    errors.append((str(f.relative_to(REPO_ROOT)), str(e)))
+                except Exception as e:
+                    errors.append((str(f.relative_to(REPO_ROOT)), str(e)))
+    if errors:
+        print(f"  WARN: {len(errors)} JSON parse error(s) encountered:", file=sys.stderr)
+        for f, e in errors[:10]:
+            print(f"    {f}: {e}", file=sys.stderr)
     return recipes
 
 # ── Ingredient extraction ─────────────────────────────────────────────
@@ -126,6 +154,13 @@ def extract_ingredients(recipe):
     """Extract input item IDs from a recipe JSON, expanding tags."""
     items = set()
     t = recipe.get("type", "")
+
+    # Custom Cooling recipes: hot + ice_slag
+    if t == "coffeework:cooling":
+        if "hot" in recipe:
+            items.add(recipe["hot"])
+        items.add("coffeework:ice_slag")
+        return items
 
     # Single Ingredient (MachineRecipe)
     ing = recipe.get("ingredient")
@@ -213,9 +248,25 @@ def compute_reachability(all_recipes):
         if result:
             recipe_map[result].append(r)
 
+    # Custom non-recipe edges (e.g., block interactions that produce items)
+    # are pre-loaded: ensure they're queued once their dependencies are reachable.
+    non_recipe_check = set(NON_RECIPE_EDGES.keys()) - reachable
+
     changed = True
     while changed:
         changed = False
+        # 1) Check non-recipe edges (block interactions etc.)
+        for result_id in list(non_recipe_check):
+            if result_id in reachable:
+                non_recipe_check.discard(result_id)
+                continue
+            deps = NON_RECIPE_EDGES.get(result_id, [])
+            if all(dep in reachable for dep in deps):
+                reachable.add(result_id)
+                non_recipe_check.discard(result_id)
+                changed = True
+                continue
+        # 2) Check JSON recipes
         for recipe in all_recipes:
             result = extract_result(recipe)
             if not result or result in reachable:

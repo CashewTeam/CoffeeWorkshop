@@ -45,7 +45,12 @@ public class JEICompat implements mezz.jei.api.IModPlugin {
                         JEIRecipeTypes.OVEN_BAKING,
                         Component.translatable("jei.coffeework.category.oven"),
                         guiHelper,
-                        new ItemStack(ModBlocks.OVEN.get()))
+                        new ItemStack(ModBlocks.OVEN.get())),
+                new CoolingRecipeCategory(
+                        JEIRecipeTypes.COOLING,
+                        Component.translatable("jei.coffeework.category.cooling"),
+                        guiHelper,
+                        new ItemStack(net.langball.coffee.init.ModItems.ICE_SLAG.get()))
         );
     }
 
@@ -65,6 +70,9 @@ public class JEICompat implements mezz.jei.api.IModPlugin {
 
         registration.addRecipes(JEIRecipeTypes.OVEN_BAKING,
                 JEIRecipeTypes.getMachineRecipes(net.langball.coffee.init.ModRecipeTypes.OVEN_BAKING));
+
+        registration.addRecipes(JEIRecipeTypes.COOLING,
+                JEIRecipeTypes.getCoolingRecipes());
     }
 
     @Override
@@ -74,5 +82,7 @@ public class JEICompat implements mezz.jei.api.IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ICECREAM_MACHINE.get()), JEIRecipeTypes.ICECREAM_MAKING);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ROLLER.get()), JEIRecipeTypes.ROLLING);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.OVEN.get()), JEIRecipeTypes.OVEN_BAKING);
+        registration.addRecipeCatalyst(new ItemStack(net.langball.coffee.init.ModItems.ICE_SLAG.get()),
+                JEIRecipeTypes.COOLING);
     }
 }
