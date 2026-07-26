@@ -3,13 +3,14 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "coffeework:icecream_vanilla"
+      "item": "minecraft:oak_leaves"
     },
     {
-      "item": "coffeework:lemon"
+      "item": "minecraft:oak_leaves"
     }
   ],
   "result": {
-    "item": "coffeework:icecream_lemon"
+    "count": 2,
+    "item": "coffeework:lemon"
   }
 }

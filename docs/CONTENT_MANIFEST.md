@@ -8,25 +8,25 @@
 | Registry Type | Count |
 |---|---|
 | block | 49 |
-| item | 190 |
+| item | 191 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **250** |
+| **Total Registered** | **251** |
 | **Orphan Assets** | **625** |
 
 ## Item Completeness Matrix
 
 | Metric | Count | % |
 |---|---|---|
-| Model | 190/190 | 100% |
-| Texture | 190/190 | 100% |
-| en_us Key Coverage | 190/190 | 100% |
-| zh_cn Key Coverage | 190/190 | 100% |
-| ja_jp Key Coverage | 190/190 | 100% |
-| Creative Tab | 190/190 | 100% |
-| Survival Source | 190/190 | 100% |
+| Model | 191/191 | 100% |
+| Texture | 191/191 | 100% |
+| en_us Key Coverage | 191/191 | 100% |
+| zh_cn Key Coverage | 191/191 | 100% |
+| ja_jp Key Coverage | 191/191 | 100% |
+| Creative Tab | 191/191 | 100% |
+| Survival Source | 191/191 | 100% |
 
 ## Registered Items
 
@@ -179,6 +179,7 @@
 | `icecream_mix_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `icecream_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `iron_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mixing_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |

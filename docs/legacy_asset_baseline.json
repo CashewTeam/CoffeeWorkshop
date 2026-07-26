@@ -1,0 +1,3202 @@
+{
+  "version": "1.0",
+  "description": "Immutable baseline of all 639 legacy assets from the 1.12.2 port. This list never shrinks — restored assets are tracked as ACTIVE within it.",
+  "total_baseline_assets": 639,
+  "baseline_assets": [
+    {
+      "id": "bag",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "bar_stone_inner",
+      "type": "block_model",
+      "classification": "REDESIGN"
+    },
+    {
+      "id": "bar_stone_normal",
+      "type": "block_model",
+      "classification": "REDESIGN"
+    },
+    {
+      "id": "bar_wooden_inner",
+      "type": "block_model",
+      "classification": "REDESIGN"
+    },
+    {
+      "id": "bar_wooden_normal",
+      "type": "block_model",
+      "classification": "REDESIGN"
+    },
+    {
+      "id": "blueberry_stage0",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "blueberry_stage1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "blueberry_stage2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "blueberry_stage3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "brownie_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "brownie_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_berry_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_berry_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_berry_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_berry_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_berry_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_berry_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_berry_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_berry_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_berry_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_carrot",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_carrot_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_carrot_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_carrot_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_carrot_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_carrot_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_carrot_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_carrot_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_carrot_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_chocolate_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_coffee_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_coffee_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_coffee_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_coffee_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_coffee_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_coffee_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_coffee_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_coffee_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_coffee_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_harvest_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_harvest_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_harvest_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_harvest_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_harvest_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_harvest_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_harvest_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_harvest_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_lemon_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_lemon_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_lemon_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_lemon_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_lemon_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_lemon_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_lemon_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_lemon_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_lemon_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_pumpkin_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_redvelvet_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_redvelvet_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_redvelvet_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_redvelvet_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_redvelvet_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_redvelvet_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_redvelvet_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_redvelvet_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_redvelvet_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_schwarzwald_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_schwarzwald_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_schwarzwald_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_schwarzwald_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_schwarzwald_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_schwarzwald_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_schwarzwald_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_schwarzwald_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_slices",
+      "type": "item_model",
+      "classification": "REDESIGN"
+    },
+    {
+      "id": "cake_sponge_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_tea_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_tea_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_tea_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_tea_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_tea_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_tea_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_tea_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_tea_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_tea_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "caramel",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "caramel_apple",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "clay_oven",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "clay_oven",
+      "type": "block_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "clay_oven_on",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "clay_oven_on",
+      "type": "block_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "cocoa_gingerbread_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cocoa_gingerbread_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cocoa_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cocoa_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cocoa_marshmallow_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cocoa_marshmallow_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cocoa_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cocoa_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cocoa_strong_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cocoa_strong_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cocoa_strong_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cocoa_strong_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_american_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_american_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_fruit_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_fruit_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_fruit_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_fruit_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_fruit_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_fruit_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_nitro_fruit_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_nitro_fruit_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_nitro_fruit_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_nitro_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_nitro_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_nitro_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_bean_light",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_berry_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_berry_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_black_tea_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_black_tea_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_black_tea_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_black_tea_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_black_tea_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_black_tea_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_cappuccino_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_cappuccino_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_cappuccino_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_cappuccino_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_cappuccino_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_cappuccino_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_cheese_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_cheese_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_fruit_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_fruit_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_fruit_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_fruit_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_fruit_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_fruit_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_caramel_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_caramel_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_caramel_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_caramel_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_caramel_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_caramel_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_chocolate_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_chocolate_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_chocolate_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_chocolate_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_chocolate_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_chocolate_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_fruit_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_fruit_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_fruit_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_fruit_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_fruit_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_fruit_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_mint_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_mint_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_mint_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_mint_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_mint_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_mint_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_vanilla_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_vanilla_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_vanilla_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_vanilla_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_vanilla_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_vanilla_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_cream_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_cream_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_green_tea_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_green_tea_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_green_tea_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_green_tea_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_green_tea_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_green_tea_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_ice",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_icecream_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_icecream_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_instant_cup",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "coffee_instant_cup_unopen",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "coffee_instant_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_instant_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_instant_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_caramel_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_caramel_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_caramel_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_caramel_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_caramel_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_caramel_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_chocolate_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_chocolate_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_chocolate_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_chocolate_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_chocolate_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_chocolate_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_fruit_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_fruit_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_fruit_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_fruit_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_fruit_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_fruit_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_mint_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_mint_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_mint_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_mint_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_mint_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_mint_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_sakura_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_sakura_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_sakura_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_sakura_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_vanilla_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_vanilla_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_vanilla_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_vanilla_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_vanilla_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_vanilla_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_macchiato_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_macchiato_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_macchiato_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_macchiato_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_macchiato_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_macchiato_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mandarin_drink_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mandarin_drink_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mandarin_drink_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mandarin_drink_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mandarin_drink_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mandarin_drink_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_milk_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_milk_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_milk_tea_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_milk_tea_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_milk_tea_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_milk_tea_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_milk_tea_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_milk_tea_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mint_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mint_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mochaccino_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mochaccino_ice_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mochaccino_ice_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mochaccino_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mochaccino_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mochaccino_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_pot",
+      "type": "block_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "coffee_pot_1",
+      "type": "block_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "coffee_pot_2",
+      "type": "block_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "coffee_pot_3",
+      "type": "block_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "coffee_pot_4",
+      "type": "block_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "coffee_powder_light",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_seed",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_stage0",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_stage1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_stage2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_stage3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_turkey_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_turkey_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_vanilla_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_vanilla_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffeemachine_off",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "coffeemachine_on",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "coldbrew_pot_finished",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coldbrew_pot_finished",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cookie_black",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "cookie_black_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cookie_icecream_apple",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_icecream_berry",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_icecream_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_icecream_coffee",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_icecream_lemon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_icecream_melon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_icecream_vanilla",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_oreo",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "cream_apple",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cream_berry",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cream_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cream_coffee",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cream_lemon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cream_melon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cream_milk",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "croissant",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "croissant_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "croissant_chocolate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "croissant_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "crop_coffee",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "custard",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "d_bar",
+      "type": "item_texture",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "dirty_pastry_bun",
+      "type": "item_texture",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "empty_coldbrew_pot",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "espresso_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "espresso_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "espresso_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "field_ration_d",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "ginger_bread",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "ginger_bread_man",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "ginger_bread_man_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "grinder_off",
+      "type": "block_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "grinder_on",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "hardtack",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "hardtack_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "icecream_apple",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "icecream_berry",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "icecream_chocolate",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "icecream_coffee",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "icecream_lemon",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "icecream_melon",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "icecreammachine_off",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "icecreammachine_on",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "iron_bowl_batter",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_berry",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_carrot",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_chocolate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_coffee",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_lemon",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_pumpkin",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_red",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_tea",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_cheese",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_egg",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_berry",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_berry_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_berry_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_carrot",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_carrot_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_carrot_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_chocolate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_chocolate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_coffee",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_coffee_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_coffee_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_lemon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_lemon_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_lemon_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_pumpkin",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_pumpkin_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_pumpkin_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_redvelvet",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_redvelvet_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_redvelvet_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_tea",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_tea_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_tea_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "marshmallow",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "marshmallow_chocolate",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "marshmallow_roast",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "milk_form",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "mille_feuille",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "moka_bottom",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "moka_pot_heated",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "moka_pot_unheated",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "moka_top",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "mooncake",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "mooncake_egg",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "mooncake_egg_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mooncake_fruit",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "mooncake_fruit_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mooncake_ham",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "mooncake_ham_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mooncake_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_berry_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_berry_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_berry_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_berry_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_berry_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_berry_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_berry_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_berry_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_berry_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_chocolate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_chocolate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_chocolate_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_chocolate_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_chocolate_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_chocolate_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_chocolate_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_chocolate_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_chocolate_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_coffee_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_coffee_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_coffee_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_coffee_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_coffee_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_coffee_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_coffee_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_coffee_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_coffee_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_lemon_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_lemon_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_lemon_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_lemon_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_lemon_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_lemon_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_lemon_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_lemon_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_lemon_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_berry",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_berry_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_carrot",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_carrot_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_chocolate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_coffee",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_coffee_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_lemon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_lemon_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_pumpkin",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_pumpkin_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_redvelvet",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_redvelvet_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_tea",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_tea_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "phonograph",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "pie_apple",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_berry",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_caramel",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_coffee",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_lemon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_melon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_tea",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "plate_ginger",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "plate_pastry",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "plate_pastry_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "pot",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "puff",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "puff_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "records_kusa_noshi_to_ne",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "records_lazy_lady_kaguya",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "records_the_grimoire_of_marisa",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "roller_off",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "roller_on",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "sandwich_bacon_egg",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "sandwich_beef_cheese",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "sandwich_blt_large",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "sandwich_club",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "sandwich_club_large",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "sandwich_ham_cheese",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "smore",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "soda_machine_bottom",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "soda_machine_bottom",
+      "type": "block_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "soda_machine_bottom",
+      "type": "blockstate",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "soda_machine_top",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "soda_machine_top",
+      "type": "block_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "soda_machine_top",
+      "type": "blockstate",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "souffle",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "souffle_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "souffle_chocolate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "souffle_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "strong_cocoa_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "strong_cocoa_plate",
+      "type": "blockstate",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "syrup_brown",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "syrup_full",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "tiramisu_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "tiramisu_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "tiramisu_slice1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "tiramisu_slice2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "tiramisu_slice3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "tiramisu_slice4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "tiramisu_slice5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "tiramisu_slice6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "tiramisu_uneaten",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "turkey_coffee_pot",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "turkey_coffee_pot_heated",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "turkey_coffee_pot_unheated",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "vanilla_stage_0",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "vanilla_stage_1",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "vanilla_stage_2",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "vanilla_stage_3",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "vanilla_stage_4",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "vanilla_stage_5",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "vanilla_stage_6",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "vanilla_stage_7",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    }
+  ]
+}

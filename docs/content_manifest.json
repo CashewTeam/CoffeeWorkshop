@@ -1,8 +1,8 @@
 {
   "stats": {
-    "registered": 250,
+    "registered": 251,
     "by_type": {
-      "item": 190,
+      "item": 191,
       "block": 49,
       "mob_effect": 3,
       "villager_profession": 3,
@@ -18,14 +18,14 @@
       "PORT_LATER": 52
     },
     "completeness": {
-      "model_ok": 190,
-      "texture_ok": 190,
-      "lang_en_ok": 190,
-      "lang_zh_ok": 190,
-      "lang_ja_ok": 190,
-      "creative_tab_ok": 190,
-      "has_source": 190,
-      "total_items": 190
+      "model_ok": 191,
+      "texture_ok": 191,
+      "lang_en_ok": 191,
+      "lang_zh_ok": 191,
+      "lang_ja_ok": 191,
+      "creative_tab_ok": 191,
+      "has_source": 191,
+      "total_items": 191
     }
   },
   "registry": [
@@ -2452,6 +2452,22 @@
     },
     {
       "id": "iron_bowl",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "lemon",
       "type": "item",
       "registered": true,
       "model": true,

@@ -42,6 +42,7 @@ ASSETS_ROOT = REPO_ROOT / "src" / "main" / "resources" / "assets" / "coffeework"
 DATA_ROOT = REPO_ROOT / "src" / "main" / "resources" / "data" / "coffeework"
 GEN_DATA_ROOT = REPO_ROOT / "src" / "generated" / "resources" / "data" / "coffeework"
 MANIFEST_PATH = REPO_ROOT / "docs" / "content_manifest.json"
+BASELINE_PATH = REPO_ROOT / "docs" / "legacy_asset_baseline.json"
 LEGACY_MATRIX_JSON = REPO_ROOT / "docs" / "legacy_content_matrix.json"
 LEGACY_MATRIX_MD = REPO_ROOT / "docs" / "LEGACY_CONTENT_MATRIX.md"
 REPORT_DIR = REPO_ROOT / "build" / "reports"
@@ -775,7 +776,7 @@ def _classify_orphan(orphan: dict, registry_ids: set,
     return result
 
 
-def _build_summary(classified: list) -> dict:
+def _build_summary(classified: list, total_baseline: int, baseline_registered: int) -> dict:
     """Build summary statistics with new quality metrics."""
     total = len(classified)
     by_status = defaultdict(int)
@@ -819,6 +820,8 @@ def _build_summary(classified: list) -> dict:
 
     return {
         "total_legacy_assets": total,
+        "total_baseline_assets": total_baseline,
+        "restored_from_baseline": baseline_registered,
         "by_status": dict(by_status),
         "by_type": dict(by_type),
         "by_family": {k: {"total": v["total"], "by_status": dict(v["by_status"])}
@@ -864,9 +867,12 @@ def _format_md(summary: dict, classified: list) -> str:
     out.append("")
     out.append(f"| Metric | Count |")
     out.append(f"|---|---|")
-    out.append(f"| Total legacy assets | {summary['total_legacy_assets']} |")
+    out.append(f"| **Fixed baseline assets** | **{summary.get('total_baseline_assets', summary['total_legacy_assets'])}** |")
+    out.append(f"| Restored (now registered) | +{summary.get('restored_from_baseline', 0)} |")
+    out.append(f"| Total legacy assets (tracked) | {summary['total_legacy_assets']} |")
     out.append(f"| **ACTIVE_RUNTIME_ASSET** (already in use) | {summary['active_runtime']} |")
     out.append(f"| **MERGED_RUNTIME_VARIANT** (old ID merged) | {summary['merged']} |")
+    out.append(f"| **→ Runtime covered** | **{summary['active_runtime'] + summary['merged']}/{summary.get('total_baseline_assets', summary['total_legacy_assets'])}** |")
     out.append(f"| TO_PORT_STANDALONE (needs registration) | {summary['to_port_standalone']} |")
     out.append(f"| TO_PORT_INTERMEDIATE (raw/model/base) | {summary['to_port_intermediate']} |")
     out.append(f"| TO_WIRE_STATE_VARIANT (block states) | {summary['to_wire_state']} |")
@@ -937,13 +943,22 @@ def _format_md(summary: dict, classified: list) -> str:
     return "\n".join(out)
 
 
+def _load_baseline() -> dict:
+    """Load the immutable 639-asset baseline."""
+    return _read_json(BASELINE_PATH) or {"baseline_assets": [], "total_baseline_assets": 0}
+
+
 def main() -> int:
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Load manifest
+    # Load manifest (for registry data and current state)
     manifest = _load_manifest()
-    orphans = manifest.get("orphan_assets", [])
     registry = manifest.get("registry", [])
+
+    # Load immutable baseline — always 639 assets
+    baseline = _load_baseline()
+    baseline_assets = baseline.get("baseline_assets", [])
+    total_baseline = baseline.get("total_baseline_assets", len(baseline_assets))
 
     # Collect data
     registry_ids = {e["id"] for e in registry if e.get("registered")}
@@ -953,22 +968,27 @@ def main() -> int:
     active_typed = _collect_registered_item_models(registry)
     recipe_outputs = _collect_recipe_intermediates()
 
+    # Count how many baseline assets are now registered
+    baseline_registered = sum(1 for a in baseline_assets if a["id"] in registry_ids)
+
+    print(f"Baseline assets: {total_baseline}")
+    print(f"Baseline assets now registered: {baseline_registered}")
     print(f"Registry entries: {len(registry_ids)}")
     print(f"Registered items: {len(registered_item_ids)}, blocks: {len(registered_block_ids)}")
     print(f"Active blockstate refs (registered blocks only): {len(active_blockstate)}")
     print(f"Active typed assets: {len(active_typed)}")
     print(f"Recipe outputs: {len(recipe_outputs)}")
 
-    # Classify each orphan
+    # Classify each baseline asset (always 639 — never shrinks)
     classified = []
-    for orphan in orphans:
+    for orphan in baseline_assets:
         entry = _classify_orphan(orphan, registry_ids,
                                  registered_item_ids, registered_block_ids,
                                  active_blockstate, active_typed, recipe_outputs)
         classified.append(entry)
 
     # Build summary
-    summary = _build_summary(classified)
+    summary = _build_summary(classified, total_baseline, baseline_registered)
 
     # Write reports
     REPORT_JSON.write_text(json.dumps({
@@ -1012,8 +1032,10 @@ def main() -> int:
 
     # Summary
     print(f"\n=== Legacy Coverage Summary v2 ===")
-    print(f"Total: {summary['total_legacy_assets']}")
-    print(f"Active + Merged (already covered): {summary['active_runtime'] + summary['merged']}")
+    print(f"Baseline: {summary.get('total_baseline_assets', 0)}")
+    print(f"Restored (now registered): +{summary.get('restored_from_baseline', 0)}")
+    print(f"Tracked: {summary['total_legacy_assets']}")
+    print(f"Active + Merged (runtime covered): {summary['active_runtime'] + summary['merged']}/{summary.get('total_baseline_assets', summary['total_legacy_assets'])}")
     print(f"To port: {summary['to_port_standalone'] + summary['to_port_intermediate'] + summary['to_wire_state'] + summary['to_wire_display'] + summary['to_port_machine'] + summary['to_port_decor']}")
     print(f"UNASSIGNED: {summary['unassigned']}")
     print(f"Missing target owner: {summary['missing_target_owner']}")

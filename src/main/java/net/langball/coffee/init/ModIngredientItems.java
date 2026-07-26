@@ -159,5 +159,8 @@ public class ModIngredientItems {
                 () -> new Item(new Item.Properties()));
         ModItems.BAG = items.register("bag",
                 () -> new Item(new Item.Properties()));
+        // Phase 5.2: Lemon ingredient (survival: oak/birch leaf drop or villager trade)
+        ModItems.LEMON = items.register("lemon",
+                () -> new Item(new Item.Properties()));
     }
 }

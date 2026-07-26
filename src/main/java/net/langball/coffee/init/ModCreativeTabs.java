@@ -142,6 +142,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.SYRUP_SAKURA.get());
                         output.accept(ModItems.TEA_LEAF.get());
                         output.accept(ModItems.BLACK_TEA_LEAF.get());
+                        output.accept(ModItems.LEMON.get());
                         output.accept(ModItems.COLDBREW_BOTTLE.get());
 
                         // Empty cups

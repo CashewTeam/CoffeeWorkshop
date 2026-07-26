@@ -15,9 +15,12 @@
 
 | Metric | Count |
 |---|---|
-| Total legacy assets | 625 |
-| **ACTIVE_RUNTIME_ASSET** (already in use) | 173 |
+| **Fixed baseline assets** | **639** |
+| Restored (now registered) | +17 |
+| Total legacy assets (tracked) | 639 |
+| **ACTIVE_RUNTIME_ASSET** (already in use) | 187 |
 | **MERGED_RUNTIME_VARIANT** (old ID merged) | 28 |
+| **→ Runtime covered** | **215/639** |
 | TO_PORT_STANDALONE (needs registration) | 87 |
 | TO_PORT_INTERMEDIATE (raw/model/base) | 108 |
 | TO_WIRE_STATE_VARIANT (block states) | 16 |
@@ -39,24 +42,25 @@
 | cake_mousse | 36 | 28 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 |
 | cake_roll | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
 | cake_system | 216 | 126 | 0 | 22 | 53 | 15 | 0 | 0 | 0 | 0 |
-| coffee_drinks | 187 | 7 | 5 | 1 | 1 | 0 | 173 | 0 | 0 | 0 |
+| coffee_drinks | 189 | 9 | 5 | 1 | 1 | 0 | 173 | 0 | 0 | 0 |
 | confectionery | 27 | 0 | 0 | 11 | 2 | 0 | 14 | 0 | 0 | 0 |
 | crops | 13 | 12 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | decor_bar | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
 | decor_phonograph | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 | icecream | 4 | 0 | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 0 |
 | icecream_cookie | 7 | 0 | 0 | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
-| icecream_cream | 7 | 0 | 0 | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
+| icecream_cream | 13 | 6 | 0 | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
 | machines | 10 | 0 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | materials | 16 | 0 | 5 | 2 | 9 | 0 | 0 | 0 | 0 | 0 |
 | pastry | 33 | 0 | 0 | 18 | 15 | 0 | 0 | 0 | 0 | 0 |
 | pie | 8 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | records | 3 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| sandwich | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | soda_machine | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
 | syrups | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | traditional_brew | 14 | 0 | 0 | 1 | 0 | 0 | 2 | 11 | 0 | 0 |
 
-## ACTIVE_RUNTIME_ASSET (173 assets)
+## ACTIVE_RUNTIME_ASSET (187 assets)
 
 These are already wired to existing blockstates, recipes, or registered items.
 
@@ -185,6 +189,8 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `cake_tea_slice5` | coffeework:cake_tea | blockstate:variants=bites=5 |
 | `cake_tea_slice6` | coffeework:cake_tea | blockstate:variants=bites=6 |
 | `cake_tea_uneaten` | coffeework:cake_tea | blockstate:variants=bites=0 |
+| `coffee_instant_cup` | coffeework:coffee_instant_cup | registered_item_model |
+| `coffee_instant_cup_unopen` | coffeework:coffee_instant_cup_unopen | registered_item_model |
 | `coffee_stage0` | coffeework:coffee_tree | blockstate:variants=age=0 |
 | `coffee_stage1` | coffeework:coffee_tree | blockstate:variants=age=1 |
 | `coffee_stage2` | coffeework:coffee_tree | blockstate:variants=age=2 |
@@ -192,6 +198,12 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `coldbrew_pot_finished` | coffeework:coldbrew_pot | blockstate:variants=ferm=7 |
 | `coldbrew_pot_finished` | coffeework:coldbrew_pot | blockstate:variants=ferm=7 |
 | `empty_coldbrew_pot` | coffeework:coldbrew_pot | blockstate:variants=ferm=8 |
+| `icecream_apple` | coffeework:icecream_apple | registered_item_model |
+| `icecream_berry` | coffeework:icecream_berry | registered_item_model |
+| `icecream_chocolate` | coffeework:icecream_chocolate | registered_item_model |
+| `icecream_coffee` | coffeework:icecream_coffee | registered_item_model |
+| `icecream_lemon` | coffeework:icecream_lemon | registered_item_model |
+| `icecream_melon` | coffeework:icecream_melon | registered_item_model |
 | `mousse_berry_slice1` | coffeework:mousse_berry | blockstate:variants=bites=1 |
 | `mousse_berry_slice2` | coffeework:mousse_berry | blockstate:variants=bites=2 |
 | `mousse_berry_slice3` | coffeework:mousse_berry | blockstate:variants=bites=3 |
@@ -220,6 +232,12 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `mousse_lemon_slice5` | coffeework:mousse_lemon | blockstate:variants=bites=5 |
 | `mousse_lemon_slice6` | coffeework:mousse_lemon | blockstate:variants=bites=6 |
 | `mousse_lemon_uneaten` | coffeework:mousse_lemon | blockstate:variants=bites=0 |
+| `sandwich_bacon_egg` | coffeework:sandwich_bacon_egg | registered_item_model |
+| `sandwich_beef_cheese` | coffeework:sandwich_beef_cheese | registered_item_model |
+| `sandwich_blt_large` | coffeework:sandwich_blt_large | registered_item_model |
+| `sandwich_club` | coffeework:sandwich_club | registered_item_model |
+| `sandwich_club_large` | coffeework:sandwich_club_large | registered_item_model |
+| `sandwich_ham_cheese` | coffeework:sandwich_ham_cheese | registered_item_model |
 | `tiramisu_slice1` | coffeework:tiramisu | blockstate:variants=bites=1 |
 | `tiramisu_slice2` | coffeework:tiramisu | blockstate:variants=bites=2 |
 | `tiramisu_slice3` | coffeework:tiramisu | blockstate:variants=bites=3 |

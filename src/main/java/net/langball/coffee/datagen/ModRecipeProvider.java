@@ -450,12 +450,18 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('L', Items.OAK_LEAVES)
                 .save(writer, modLoc("tea_leaf"));
 
+        // Lemon (from oak leaves — temporary until dedicated lemon source)
+        shapeless(RecipeCategory.FOOD, ModItems.LEMON.get(), 2, Items.OAK_LEAVES)
+                .requires(Items.OAK_LEAVES)
+                .requires(Items.OAK_LEAVES)
+                .save(writer, modLoc("lemon"));
+
         // Cocoa bean (mod item) from vanilla cocoa beans
         smelting(Items.COCOA_BEANS, ModItems.COCOA_BEAN.get(), 0.1F, "cocoa_bean")
                 .save(writer, modLoc("cocoa_bean"));
 
         // Coffee instant stir stick (instant coffee powder in stick form)
-        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT_STICK.get(), 2, Items.PAPER)
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT_STICK.get(), 3, Items.PAPER)
                 .requires(Items.PAPER)
                 .requires(ModItems.COFFEE_POWDER.get())
                 .requires(Items.SUGAR)
@@ -783,7 +789,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("icecream_coffee"));
         shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_LEMON.get(), ModItems.ICECREAM_VANILLA.get())
                 .requires(ModItems.ICECREAM_VANILLA.get())
-                .requires(Items.GLISTERING_MELON_SLICE)
+                .requires(ModItems.LEMON.get())
                 .save(writer, modLoc("icecream_lemon"));
         shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_MELON.get(), ModItems.ICECREAM_VANILLA.get())
                 .requires(ModItems.ICECREAM_VANILLA.get())

@@ -221,6 +221,7 @@ public class ModItems {
     // ========================================================================
     public static RegistryObject<Item> VANILLA;
     public static RegistryObject<Item> BAG;
+    public static RegistryObject<Item> LEMON;
     public static RegistryObject<Item> SYRUP_EMPTY;
     public static RegistryObject<Item> SYRUP_CARAMEL;
     public static RegistryObject<Item> SYRUP_CHOCOLATE;
