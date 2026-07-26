@@ -105,17 +105,23 @@ public class ModItems {
     public static RegistryObject<Item> CAKE_SPONGE_PUMPKIN_SLICES;
     public static RegistryObject<Item> CAKE_SPONGE_REDVELVET_SLICES;
     public static RegistryObject<Item> CAKE_SPONGE_TEA_SLICES;
+    public static RegistryObject<Item> TIRAMISU_SLICE;
 
     // Phase 5.4: Cake intermediates (raw/model)
     public static RegistryObject<Item> CAKE_SPONGE_RAW;
     public static RegistryObject<Item> CAKE_CHEESE_RAW;
-    public static RegistryObject<Item> TIRAMISU_RAW;
     public static RegistryObject<Item> CAKE_SPONGE_BERRY_RAW;
     public static RegistryObject<Item> CAKE_SPONGE_CHOCOLATE_RAW;
     public static RegistryObject<Item> CAKE_SPONGE_COFFEE_RAW;
     public static RegistryObject<Item> MOUSSE_BERRY_RAW;
     public static RegistryObject<Item> MOUSSE_CHOCOLATE_RAW;
     public static RegistryObject<Item> MOUSSE_COFFEE_RAW;
+    public static RegistryObject<Item> MOUSSE_LEMON_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_PUMPKIN_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_CARROT_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_REDVELVET_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_LEMON_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_TEA_RAW;
 
     // Phase 6: Creams
     public static RegistryObject<Item> CREAM_MILK;

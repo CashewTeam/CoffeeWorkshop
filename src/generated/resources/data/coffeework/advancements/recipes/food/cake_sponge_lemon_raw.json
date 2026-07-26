@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "coffeework:tiramisu_raw"
+        "recipe": "coffeework:cake_sponge_lemon_raw"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "coffeework:tiramisu_raw"
+      "coffeework:cake_sponge_lemon_raw"
     ]
   },
   "sends_telemetry_event": false

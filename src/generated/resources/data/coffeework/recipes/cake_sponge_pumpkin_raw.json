@@ -6,22 +6,22 @@
       "item": "coffeework:mixing_bowl"
     },
     {
-      "item": "minecraft:egg"
+      "item": "coffeework:flour"
     },
     {
       "item": "minecraft:milk_bucket"
     },
     {
-      "item": "coffeework:flour"
+      "item": "minecraft:pumpkin"
+    },
+    {
+      "item": "minecraft:egg"
     },
     {
       "item": "minecraft:sugar"
-    },
-    {
-      "item": "minecraft:carrot"
     }
   ],
   "result": {
-    "item": "coffeework:cake_sponge_carrot"
+    "item": "coffeework:cake_sponge_pumpkin_raw"
   }
 }

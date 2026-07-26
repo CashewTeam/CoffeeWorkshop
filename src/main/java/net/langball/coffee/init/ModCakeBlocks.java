@@ -78,7 +78,7 @@ public class ModCakeBlocks {
         // ── Special cakes ──
         ModBlocks.TIRAMISU = blocks.register("tiramisu",
                 () -> new BlockCakeBasic(5, 6, 0.5F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL),
-                        () -> ModItems.CAKE_SLICES.get()));
+                        () -> ModItems.TIRAMISU_SLICE.get()));
 
         // ── Mousses ──
         ModBlocks.MOUSSE_BERRY = blocks.register("mousse_berry",

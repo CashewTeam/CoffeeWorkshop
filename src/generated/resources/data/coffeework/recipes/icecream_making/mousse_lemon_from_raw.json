@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:icecream_making",
+  "cookingtime": 300,
+  "experience": 0.25,
+  "ingredient": {
+    "item": "coffeework:mousse_lemon_raw"
+  },
+  "result": {
+    "item": "coffeework:mousse_lemon"
+  }
+}

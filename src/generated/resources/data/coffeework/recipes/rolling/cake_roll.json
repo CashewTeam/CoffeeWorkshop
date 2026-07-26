@@ -1,9 +1,9 @@
 {
   "type": "coffeework:rolling",
   "cookingtime": 200,
-  "experience": 0.1,
+  "experience": 0.15,
   "ingredient": {
-    "item": "coffeework:cake_sponge_raw"
+    "item": "coffeework:cake_sponge"
   },
   "result": {
     "item": "coffeework:cake_roll"

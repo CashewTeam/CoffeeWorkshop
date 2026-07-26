@@ -128,13 +128,18 @@ public class ModCreativeTabs {
                         // Phase 5.4: Cake intermediates
                         output.accept(ModItems.CAKE_SPONGE_RAW.get());
                         output.accept(ModItems.CAKE_CHEESE_RAW.get());
-                        output.accept(ModItems.TIRAMISU_RAW.get());
                         output.accept(ModItems.CAKE_SPONGE_BERRY_RAW.get());
                         output.accept(ModItems.CAKE_SPONGE_CHOCOLATE_RAW.get());
                         output.accept(ModItems.CAKE_SPONGE_COFFEE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_PUMPKIN_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_CARROT_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_REDVELVET_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_LEMON_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_TEA_RAW.get());
                         output.accept(ModItems.MOUSSE_BERRY_RAW.get());
                         output.accept(ModItems.MOUSSE_CHOCOLATE_RAW.get());
                         output.accept(ModItems.MOUSSE_COFFEE_RAW.get());
+                        output.accept(ModItems.MOUSSE_LEMON_RAW.get());
 
                         // Phase 5.4: Cake rolls
                         output.accept(ModItems.CAKE_ROLL.get());
@@ -165,6 +170,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.CAKE_SPONGE_PUMPKIN_SLICES.get());
                         output.accept(ModItems.CAKE_SPONGE_REDVELVET_SLICES.get());
                         output.accept(ModItems.CAKE_SPONGE_TEA_SLICES.get());
+                        output.accept(ModItems.TIRAMISU_SLICE.get());
 
                         // Phase 6: Creams & Cookie Ice Creams
                         output.accept(ModItems.CREAM_MILK.get());

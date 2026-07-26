@@ -6,19 +6,22 @@
       "item": "coffeework:mixing_bowl"
     },
     {
-      "item": "minecraft:egg"
+      "item": "coffeework:gelatin"
     },
     {
       "item": "minecraft:milk_bucket"
     },
     {
-      "item": "coffeework:flour"
+      "item": "minecraft:yellow_dye"
+    },
+    {
+      "item": "minecraft:egg"
     },
     {
       "item": "minecraft:sugar"
     }
   ],
   "result": {
-    "item": "coffeework:cake_sponge"
+    "item": "coffeework:mousse_lemon_raw"
   }
 }

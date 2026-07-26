@@ -1,7 +1,7 @@
 {
-  "type": "coffeework:oven_baking",
-  "cookingtime": 250,
-  "experience": 0.2,
+  "type": "coffeework:icecream_making",
+  "cookingtime": 300,
+  "experience": 0.25,
   "ingredient": {
     "item": "coffeework:mousse_chocolate_raw"
   },

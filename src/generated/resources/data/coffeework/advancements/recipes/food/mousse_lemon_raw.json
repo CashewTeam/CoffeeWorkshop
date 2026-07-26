@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "coffeework:cake_model"
+              "coffeework:mixing_bowl"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "coffeework:mousse_chocolate"
+        "recipe": "coffeework:mousse_lemon_raw"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "coffeework:mousse_chocolate"
+      "coffeework:mousse_lemon_raw"
     ]
   },
   "sends_telemetry_event": false

@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:oven_baking",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "coffeework:cake_sponge_tea_raw"
+  },
+  "result": {
+    "item": "coffeework:cake_sponge_tea"
+  }
+}

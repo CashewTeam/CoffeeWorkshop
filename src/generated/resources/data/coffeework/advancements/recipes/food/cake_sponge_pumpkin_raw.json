@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "minecraft:egg"
+              "coffeework:mixing_bowl"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "coffeework:cake_sponge_berry"
+        "recipe": "coffeework:cake_sponge_pumpkin_raw"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "coffeework:cake_sponge_berry"
+      "coffeework:cake_sponge_pumpkin_raw"
     ]
   },
   "sends_telemetry_event": false

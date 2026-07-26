@@ -103,30 +103,31 @@ public class BlockCakeBasic extends Block {
         return eat(level, pos, state, player);
     }
 
+    /**
+     * Cut a slice from the cake using a plate.  Matches the eat logic exactly:
+     * 7 uses from BITES 0–6 — one slice per bite, block removed at the last bite.
+     *
+     * <p>Plate is <b>not consumed</b> — it acts as a reusable serving tool.
+     * The slice item is a standalone food; eating it does not return a plate.
+     */
     private InteractionResult cutSlice(Level level, BlockPos pos, BlockState state,
                                         Player player, InteractionHand hand) {
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
         int bites = state.getValue(BITES);
-        if (bites >= 6) {
-            // Cake is fully consumed — nothing left to slice
-            return InteractionResult.PASS;
-        }
 
         // Give the player a slice item
         ItemStack slice = new ItemStack(sliceItem.get());
         if (!player.getInventory().add(slice)) {
-            // Inventory full — drop at feet
             level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5,
                     pos.getZ() + 0.5, slice));
         }
 
-        // Increment BITES
-        int newBites = bites + 1;
-        if (newBites >= 6) {
-            level.removeBlock(pos, false);
+        // Advance BITES (same semantics as eat: 7 uses from BITES 0–6)
+        if (bites < 6) {
+            level.setBlock(pos, state.setValue(BITES, bites + 1), 3);
         } else {
-            level.setBlock(pos, state.setValue(BITES, newBites), 3);
+            level.removeBlock(pos, false);
         }
 
         level.playSound(null, pos, SoundEvents.WOOL_BREAK, SoundSource.BLOCKS, 0.8F, 1.0F);

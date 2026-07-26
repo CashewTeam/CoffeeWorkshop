@@ -1,30 +1,30 @@
 {
   "stats": {
-    "registered": 352,
+    "registered": 358,
     "by_type": {
-      "item": 291,
+      "item": 297,
       "block": 50,
       "mob_effect": 3,
       "villager_profession": 3,
       "poi_type": 2,
       "sound_event": 3
     },
-    "orphan_assets": 525,
+    "orphan_assets": 520,
     "orphan_by_classification": {
-      "ASSET_ARCHIVE": 486,
+      "ASSET_ARCHIVE": 481,
       "MERGED": 14,
       "REMOVED": 21,
       "REDESIGN": 4
     },
     "completeness": {
-      "model_ok": 291,
-      "texture_ok": 291,
-      "lang_en_ok": 291,
-      "lang_zh_ok": 291,
-      "lang_ja_ok": 291,
-      "creative_tab_ok": 291,
-      "has_source": 291,
-      "total_items": 291
+      "model_ok": 297,
+      "texture_ok": 297,
+      "lang_en_ok": 297,
+      "lang_zh_ok": 297,
+      "lang_ja_ok": 297,
+      "creative_tab_ok": 297,
+      "has_source": 296,
+      "total_items": 297
     }
   },
   "registry": [
@@ -859,6 +859,22 @@
       "block_of": "cake_sponge_carrot"
     },
     {
+      "id": "cake_sponge_carrot_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "cake_sponge_carrot_slices",
       "type": "item",
       "registered": true,
@@ -990,6 +1006,22 @@
       "block_of": "cake_sponge_lemon"
     },
     {
+      "id": "cake_sponge_lemon_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "cake_sponge_lemon_slices",
       "type": "item",
       "registered": true,
@@ -1021,6 +1053,22 @@
       ],
       "block_item": true,
       "block_of": "cake_sponge_pumpkin"
+    },
+    {
+      "id": "cake_sponge_pumpkin_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
     },
     {
       "id": "cake_sponge_pumpkin_slices",
@@ -1072,6 +1120,22 @@
       "block_of": "cake_sponge_redvelvet"
     },
     {
+      "id": "cake_sponge_redvelvet_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "cake_sponge_redvelvet_slices",
       "type": "item",
       "registered": true,
@@ -1119,6 +1183,22 @@
       ],
       "block_item": true,
       "block_of": "cake_sponge_tea"
+    },
+    {
+      "id": "cake_sponge_tea_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
     },
     {
       "id": "cake_sponge_tea_slices",
@@ -3815,6 +3895,22 @@
       "block_of": "mousse_lemon"
     },
     {
+      "id": "mousse_lemon_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "muffin",
       "type": "item",
       "registered": true,
@@ -4691,7 +4787,7 @@
       "block_of": "tiramisu"
     },
     {
-      "id": "tiramisu_raw",
+      "id": "tiramisu_slice",
       "type": "item",
       "registered": true,
       "model": true,
@@ -4701,9 +4797,7 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [
-        "recipe"
-      ],
+      "sources": [],
       "block_item": false
     },
     {
@@ -5490,11 +5584,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "cake_sponge_carrot_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
       "id": "cake_sponge_chocolate_base",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
@@ -5555,11 +5644,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "cake_sponge_lemon_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
       "id": "cake_sponge_model",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
@@ -5595,11 +5679,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "cake_sponge_pumpkin_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
       "id": "cake_sponge_redvelvet_base",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
@@ -5616,11 +5695,6 @@
     },
     {
       "id": "cake_sponge_redvelvet_plate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_redvelvet_raw",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
     },
@@ -5646,11 +5720,6 @@
     },
     {
       "id": "cake_sponge_tea_plate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_tea_raw",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
     },
@@ -6220,11 +6289,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "mousse_lemon_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
       "id": "muffin_berry_raw",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
@@ -6351,6 +6415,11 @@
     },
     {
       "id": "tiramisu_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "tiramisu_raw",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
     },

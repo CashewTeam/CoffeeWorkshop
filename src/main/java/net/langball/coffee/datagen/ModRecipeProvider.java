@@ -538,90 +538,17 @@ public class ModRecipeProvider extends RecipeProvider {
         // ===================================================================
         // CAKE SPONGE RECIPES
         // ===================================================================
-        // Simplified direct recipes (original used batter intermediates)
-
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE.get(), Items.EGG)
-                .requires(ModItems.MIXING_BOWL.get())
-                .requires(Items.EGG)
-                .requires(Items.MILK_BUCKET)
-                .requires(ModItems.FLOUR.get())
-                .requires(Items.SUGAR)
-                .save(writer, modLoc("cake_sponge"));
-
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_CHOCOLATE.get(), Items.EGG)
-                .requires(ModItems.MIXING_BOWL.get())
-                .requires(Items.EGG)
-                .requires(Items.MILK_BUCKET)
-                .requires(ModItems.FLOUR.get())
-                .requires(Items.SUGAR)
-                .requires(ModItems.COCOA_POWDER.get())
-                .save(writer, modLoc("cake_sponge_chocolate"));
-
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_COFFEE.get(), Items.EGG)
-                .requires(ModItems.MIXING_BOWL.get())
-                .requires(Items.EGG)
-                .requires(Items.MILK_BUCKET)
-                .requires(ModItems.FLOUR.get())
-                .requires(Items.SUGAR)
-                .requires(ModItems.COFFEE_POWDER.get())
-                .save(writer, modLoc("cake_sponge_coffee"));
-
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_PUMPKIN.get(), Items.EGG)
-                .requires(ModItems.MIXING_BOWL.get())
-                .requires(Items.EGG)
-                .requires(Items.MILK_BUCKET)
-                .requires(ModItems.FLOUR.get())
-                .requires(Items.SUGAR)
-                .requires(Items.PUMPKIN)
-                .save(writer, modLoc("cake_sponge_pumpkin"));
-
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_CARROT.get(), Items.EGG)
-                .requires(ModItems.MIXING_BOWL.get())
-                .requires(Items.EGG)
-                .requires(Items.MILK_BUCKET)
-                .requires(ModItems.FLOUR.get())
-                .requires(Items.SUGAR)
-                .requires(Items.CARROT)
-                .save(writer, modLoc("cake_sponge_carrot"));
-
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_REDVELVET.get(), Items.EGG)
-                .requires(ModItems.MIXING_BOWL.get())
-                .requires(Items.EGG)
-                .requires(Items.MILK_BUCKET)
-                .requires(ModItems.FLOUR.get())
-                .requires(Items.SUGAR)
-                .requires(Items.RED_DYE)
-                .save(writer, modLoc("cake_sponge_redvelvet"));
-
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_LEMON.get(), Items.EGG)
-                .requires(ModItems.MIXING_BOWL.get())
-                .requires(Items.EGG)
-                .requires(Items.MILK_BUCKET)
-                .requires(ModItems.FLOUR.get())
-                .requires(Items.SUGAR)
-                .requires(Items.YELLOW_DYE)
-                .save(writer, modLoc("cake_sponge_lemon"));
-
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_TEA.get(), Items.EGG)
-                .requires(ModItems.MIXING_BOWL.get())
-                .requires(Items.EGG)
-                .requires(Items.MILK_BUCKET)
-                .requires(ModItems.FLOUR.get())
-                .requires(Items.SUGAR)
-                .requires(Items.GREEN_DYE)
-                .save(writer, modLoc("cake_sponge_tea"));
-
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_BERRY.get(), Items.EGG)
-                .requires(ModItems.MIXING_BOWL.get())
-                .requires(Items.EGG)
-                .requires(Items.MILK_BUCKET)
-                .requires(ModItems.FLOUR.get())
-                .requires(Items.SUGAR)
-                .requires(Items.SWEET_BERRIES)
-                .save(writer, modLoc("cake_sponge_berry"));
+        // SPONGE CAKE PRODUCTION CHAIN (Raw → Oven only — no direct workbench shortcut)
+        //
+        // Sponge cakes are now exclusively produced via the Oven machine:
+        //   Workbench → cake_sponge_raw → Oven → cake_sponge
+        //
+        // Raw intermediate recipes are in the "Cake intermediates" section below.
+        // Oven baking recipes are in ModMachineRecipeProvider.
+        // ===================================================================
 
         // ===================================================================
-        // FINISHED CAKE RECIPES
+        // FINISHED CAKE RECIPES (assembly from sponge + extras)
         // ===================================================================
 
         // Vanilla Cake (replaces vanilla recipe)
@@ -699,41 +626,11 @@ public class ModRecipeProvider extends RecipeProvider {
         // ===================================================================
         // MOUSSE & TIRAMISU RECIPES
         // ===================================================================
-        // Simplified: originally used icecream machine; now direct crafting
+        // Mousse production: Workbench → mousse_raw → Icecream Machine → mousse
+        // (Raw intermediate recipes in "Cake intermediates" section;
+        //  machine recipes in ModMachineRecipeProvider.)
 
-        shapeless(RecipeCategory.FOOD, ModBlocks.MOUSSE_BERRY.get(), ModItems.CAKE_MODEL.get())
-                .requires(Items.MILK_BUCKET)
-                .requires(Items.EGG)
-                .requires(ModItems.GELATIN.get())
-                .requires(ModItems.CAKE_MODEL.get())
-                .requires(Items.SWEET_BERRIES)
-                .save(writer, modLoc("mousse_berry"));
-
-        shapeless(RecipeCategory.FOOD, ModBlocks.MOUSSE_CHOCOLATE.get(), ModItems.CAKE_MODEL.get())
-                .requires(Items.MILK_BUCKET)
-                .requires(Items.EGG)
-                .requires(ModItems.GELATIN.get())
-                .requires(ModItems.CAKE_MODEL.get())
-                .requires(ModItems.COCOA_POWDER.get())
-                .save(writer, modLoc("mousse_chocolate"));
-
-        shapeless(RecipeCategory.FOOD, ModBlocks.MOUSSE_LEMON.get(), ModItems.CAKE_MODEL.get())
-                .requires(Items.MILK_BUCKET)
-                .requires(Items.EGG)
-                .requires(ModItems.GELATIN.get())
-                .requires(ModItems.CAKE_MODEL.get())
-                .requires(Items.YELLOW_DYE)
-                .save(writer, modLoc("mousse_lemon"));
-
-        shapeless(RecipeCategory.FOOD, ModBlocks.MOUSSE_COFFEE.get(), ModItems.CAKE_MODEL.get())
-                .requires(Items.MILK_BUCKET)
-                .requires(Items.EGG)
-                .requires(ModItems.GELATIN.get())
-                .requires(ModItems.CAKE_MODEL.get())
-                .requires(ModItems.COFFEE_POWDER.get())
-                .save(writer, modLoc("mousse_coffee"));
-
-        // Tiramisu
+        // Tiramisu (assembly from pre-made components)
         shapeless(RecipeCategory.FOOD, ModBlocks.TIRAMISU.get(), ModBlocks.CAKE_SPONGE.get())
                 .requires(ModItems.CAKE_MODEL_SQUARE.get())
                 .requires(ModBlocks.CAKE_SPONGE.get())
@@ -881,13 +778,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.SUGAR)
                 .save(writer, modLoc("cake_sponge_raw"));
 
-        // Phase 5.4: Raw intermediates (flavored sponge batters)
+        // Phase 5.4: Raw intermediates (flavored sponge batters — all require sugar)
         shapeless(RecipeCategory.FOOD, ModItems.CAKE_CHEESE_RAW.get(), ModItems.MIXING_BOWL.get())
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(ModItems.FLOUR.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(ModItems.CHEESE.get())
                 .requires(Items.EGG)
+                .requires(Items.SUGAR)
                 .save(writer, modLoc("cake_cheese_raw"));
         shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_BERRY_RAW.get(), ModItems.MIXING_BOWL.get())
                 .requires(ModItems.MIXING_BOWL.get())
@@ -895,6 +793,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.SWEET_BERRIES)
                 .requires(Items.EGG)
+                .requires(Items.SUGAR)
                 .save(writer, modLoc("cake_sponge_berry_raw"));
         shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_CHOCOLATE_RAW.get(), ModItems.MIXING_BOWL.get())
                 .requires(ModItems.MIXING_BOWL.get())
@@ -902,6 +801,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.MILK_BUCKET)
                 .requires(ModItems.COCOA_POWDER.get())
                 .requires(Items.EGG)
+                .requires(Items.SUGAR)
                 .save(writer, modLoc("cake_sponge_chocolate_raw"));
         shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_COFFEE_RAW.get(), ModItems.MIXING_BOWL.get())
                 .requires(ModItems.MIXING_BOWL.get())
@@ -909,12 +809,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.MILK_BUCKET)
                 .requires(ModItems.COFFEE_POWDER.get())
                 .requires(Items.EGG)
+                .requires(Items.SUGAR)
                 .save(writer, modLoc("cake_sponge_coffee_raw"));
+
+        // Mousse raw intermediates (require egg + sugar — matches original mousse composition)
         shapeless(RecipeCategory.FOOD, ModItems.MOUSSE_BERRY_RAW.get(), ModItems.MIXING_BOWL.get())
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(ModItems.GELATIN.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.SWEET_BERRIES)
+                .requires(Items.EGG)
                 .requires(Items.SUGAR)
                 .save(writer, modLoc("mousse_berry_raw"));
         shapeless(RecipeCategory.FOOD, ModItems.MOUSSE_CHOCOLATE_RAW.get(), ModItems.MIXING_BOWL.get())
@@ -922,6 +826,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.GELATIN.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(ModItems.COCOA_POWDER.get())
+                .requires(Items.EGG)
                 .requires(Items.SUGAR)
                 .save(writer, modLoc("mousse_chocolate_raw"));
         shapeless(RecipeCategory.FOOD, ModItems.MOUSSE_COFFEE_RAW.get(), ModItems.MIXING_BOWL.get())
@@ -929,15 +834,62 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.GELATIN.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(ModItems.COFFEE_POWDER.get())
-                .requires(Items.SUGAR)
-                .save(writer, modLoc("mousse_coffee_raw"));
-        shapeless(RecipeCategory.FOOD, ModItems.TIRAMISU_RAW.get(), ModItems.MIXING_BOWL.get())
-                .requires(ModItems.MIXING_BOWL.get())
-                .requires(ModItems.COFFEE_POWDER.get())
-                .requires(Items.MILK_BUCKET)
                 .requires(Items.EGG)
                 .requires(Items.SUGAR)
-                .save(writer, modLoc("tiramisu_raw"));
+                .save(writer, modLoc("mousse_coffee_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.MOUSSE_LEMON_RAW.get(), ModItems.MIXING_BOWL.get())
+                .requires(ModItems.MIXING_BOWL.get())
+                .requires(ModItems.GELATIN.get())
+                .requires(Items.MILK_BUCKET)
+                .requires(Items.YELLOW_DYE)
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("mousse_lemon_raw"));
+
+        // Additional flavored sponge raws (pumpkin, carrot, redvelvet, lemon, tea)
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_PUMPKIN_RAW.get(), ModItems.MIXING_BOWL.get())
+                .requires(ModItems.MIXING_BOWL.get())
+                .requires(ModItems.FLOUR.get())
+                .requires(Items.MILK_BUCKET)
+                .requires(Items.PUMPKIN)
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("cake_sponge_pumpkin_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_CARROT_RAW.get(), ModItems.MIXING_BOWL.get())
+                .requires(ModItems.MIXING_BOWL.get())
+                .requires(ModItems.FLOUR.get())
+                .requires(Items.MILK_BUCKET)
+                .requires(Items.CARROT)
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("cake_sponge_carrot_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_REDVELVET_RAW.get(), ModItems.MIXING_BOWL.get())
+                .requires(ModItems.MIXING_BOWL.get())
+                .requires(ModItems.FLOUR.get())
+                .requires(Items.MILK_BUCKET)
+                .requires(Items.RED_DYE)
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("cake_sponge_redvelvet_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_LEMON_RAW.get(), ModItems.MIXING_BOWL.get())
+                .requires(ModItems.MIXING_BOWL.get())
+                .requires(ModItems.FLOUR.get())
+                .requires(Items.MILK_BUCKET)
+                .requires(Items.YELLOW_DYE)
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("cake_sponge_lemon_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_TEA_RAW.get(), ModItems.MIXING_BOWL.get())
+                .requires(ModItems.MIXING_BOWL.get())
+                .requires(ModItems.FLOUR.get())
+                .requires(Items.MILK_BUCKET)
+                .requires(Items.GREEN_DYE)
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("cake_sponge_tea_raw"));
+
+        // Tiramisu is assembled from pre-made components (sponge + cheese + espresso + cocoa),
+        // NOT produced from raw batter.  No tiramisu_raw shortcut.
 
         // Phase 5.4: cake_carrot (flour + carrot + milk + egg + sugar)
         shapeless(RecipeCategory.FOOD, ModItems.CAKE_CARROT.get(), Items.CARROT)

@@ -558,6 +558,7 @@ def build_report():
         "cake_sponge_carrot_slices", "cake_sponge_chocolate_slices", "cake_sponge_coffee_slices",
         "cake_sponge_lemon_slices", "cake_sponge_pumpkin_slices", "cake_sponge_redvelvet_slices",
         "cake_sponge_tea_slices", "cake_sponge_slice",
+        "tiramisu_slice",
     }
     all_sources = recipe_outputs | loot_items | traded_items | worldgen_items | interact_items
     # Special items that are tools/molds (no "source" needed but should be craftable)
