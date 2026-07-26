@@ -259,19 +259,31 @@ def get_recipe_type(recipe):
 # ── Ambiguity detection ───────────────────────────────────────────────
 
 def build_signature(recipe):
-    """Build a canonical signature string for coffee brewing recipes."""
-    keys = ("base", "modifier", "additive", "container")
-    parts = []
-    for key in keys:
-        obj = recipe.get(key)
-        if obj and "ingredient" in obj:
-            ing = obj["ingredient"]
-            item = ing.get("item", ing.get("tag", "empty"))
-            count = obj.get("count", 1)
-            parts.append(f"{item}x{count}")
-        else:
-            parts.append("none")
-    return "|".join(parts)
+    """Build a canonical signature string for machine recipes with single ingredient.
+    Returns None for recipes without detectable ingredient (vanilla crafting, etc.)."""
+    t = recipe.get("type", "")
+    # Only check machine recipes with single ingredient
+    if t.startswith("coffeework:") and t not in ("coffeework:drink_transform", "coffeework:cooling"):
+        ing = recipe.get("ingredient")
+        if ing and isinstance(ing, dict):
+            item = ing.get("item", ing.get("tag", "?"))
+            count = ing.get("count", 1)
+            return f"{t}|{item}"
+    # Coffee brewing recipes (multi-input)
+    if t == "coffeework:coffee_brewing":
+        keys = ("base", "modifier", "additive", "container")
+        parts = [t]
+        for key in keys:
+            obj = recipe.get(key)
+            if obj and "ingredient" in obj:
+                ing2 = obj["ingredient"]
+                item = ing2.get("item", ing2.get("tag", "empty"))
+                count = obj.get("count", 1)
+                parts.append(f"{item}x{count}")
+            else:
+                parts.append("none")
+        return "|".join(parts)
+    return None
 
 # ── Reachability BFS ──────────────────────────────────────────────────
 
@@ -352,9 +364,9 @@ def analyze(all_recipes, reachable):
             if mtype in t:
                 machine_types[mtype] += 1
 
-        # Track signatures for ambiguity detection (coffee brewing only)
-        if "coffee_brewing" in t:
-            sig = build_signature(r)
+        # Track signatures for ambiguity detection (machine recipes only)
+        sig = build_signature(r)
+        if sig is not None:
             signatures[sig].append((result, r["_file"]))
 
         if result and result not in reachable:

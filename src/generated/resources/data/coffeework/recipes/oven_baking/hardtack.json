@@ -3,7 +3,7 @@
   "cookingtime": 200,
   "experience": 0.15,
   "ingredient": {
-    "item": "coffeework:dough_bread"
+    "item": "coffeework:dough"
   },
   "result": {
     "item": "coffeework:hardtack"

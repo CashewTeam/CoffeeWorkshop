@@ -804,10 +804,11 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('I', Items.IRON_INGOT)
                 .save(writer, modLoc("pot"));
 
-        // Marshmallow (sugar + gelatin)
-        shapeless(RecipeCategory.FOOD, ModItems.MARSHMALLOW.get(), 4, ModItems.GELATIN.get())
+        // Marshmallow (sugar + gelatin + pot)
+        shapeless(RecipeCategory.FOOD, ModItems.MARSHMALLOW.get(), 4, ModItems.POT.get())
                 .requires(Items.SUGAR)
                 .requires(ModItems.GELATIN.get())
+                .requires(ModItems.POT.get())
                 .save(writer, modLoc("marshmallow"));
 
         // Roasted Marshmallow — via campfire cooking
@@ -837,9 +838,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.MILK_FORM.get())
                 .save(writer, modLoc("cookie_oreo"));
 
-        // Custard (mixing bowl + milk + egg + sugar)
-        shapeless(RecipeCategory.FOOD, ModItems.CUSTARD.get(), ModItems.MIXING_BOWL.get())
-                .requires(ModItems.MIXING_BOWL.get())
+        // Custard (pot + milk + egg + sugar)
+        shapeless(RecipeCategory.FOOD, ModItems.CUSTARD.get(), ModItems.POT.get())
+                .requires(ModItems.POT.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.EGG)
                 .requires(Items.SUGAR)
@@ -868,19 +869,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.CHOCOLATE_BAR.get())
                 .save(writer, modLoc("smore"));
 
-        // Note: Caramel is produced via Oven (machine recipe in ModMachineRecipeProvider).
-        // Workbench shortcut using Pot (alternative to Oven):
-        shapeless(RecipeCategory.FOOD, ModItems.CARAMEL.get(), 2, ModItems.POT.get())
-                .requires(Items.SUGAR)
-                .requires(ModItems.POT.get())
-                .save(writer, modLoc("caramel_from_pot"));
-
-        // Marshmallow with Pot (alternative to standard recipe)
-        shapeless(RecipeCategory.FOOD, ModItems.MARSHMALLOW.get(), 4, ModItems.POT.get())
-                .requires(Items.SUGAR)
-                .requires(ModItems.GELATIN.get())
-                .requires(ModItems.POT.get())
-                .save(writer, modLoc("marshmallow_from_pot"));
+        // Note: Caramel is produced via Oven (machine recipe in ModMachineRecipeProvider)
 
         // ===================================================================
         // COOLING RECIPES (hot drink + ice_slag → iced drink)

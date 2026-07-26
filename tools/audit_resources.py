@@ -290,6 +290,24 @@ def _format_md(summary: dict) -> str:
         out.append("- PASS: zero obsolete vanilla references.")
 
     out.append("")
+    out.append("## 5. Mod-owned texture references in model JSONs")
+    out.append("")
+    modtex = summary.get("mod_textures", {})
+    out.append(f"- Model files scanned: {modtex.get('files_scanned', 0)}")
+    out.append(f"- Texture references resolved: {modtex.get('resolved', 0)}")
+    out.append(f"- Parent refs (not checked as textures): {len(modtex.get('parent_refs', []))}")
+    bad = modtex.get("bad_textures", [])
+    if bad:
+        out.append("")
+        out.append("FAIL: Missing mod-owned texture references:")
+        for path, v in sorted(bad, key=lambda x: x[1])[:30]:
+            out.append(f"- `{path}`: `{v}`")
+        if len(bad) > 30:
+            out.append(f"- ... and {len(bad) - 30} more")
+    else:
+        out.append("- PASS: all mod-owned texture references resolve.")
+
+    out.append("")
     out.append("---")
     out.append("")
     return "\n".join(out)

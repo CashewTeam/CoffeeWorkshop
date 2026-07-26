@@ -985,6 +985,14 @@ def main() -> int:
         print(f"FAIL: Baseline asset count is {total_baseline}, expected 639.")
         print("The baseline file docs/legacy_asset_baseline.json may be corrupted.")
         return 2
+    if len(baseline_assets) != 639:
+        print(f"FAIL: Baseline list length is {len(baseline_assets)}, expected 639.")
+        return 2
+    typed_keys = [(a.get("type", ""), a.get("id", "")) for a in baseline_assets]
+    if len(set(typed_keys)) != len(typed_keys):
+        dupes = [k for k in typed_keys if typed_keys.count(k) > 1]
+        print(f"FAIL: Baseline has duplicate (type, id) entries: {set(dupes)}")
+        return 2
 
     # Collect data
     registry_ids = {e["id"] for e in registry if e.get("registered")}
