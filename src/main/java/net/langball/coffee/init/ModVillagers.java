@@ -144,13 +144,13 @@ public class ModVillagers {
                 new ItemsForEmeralds(ModItems.ESPRESSO.get(), 3, 1, 12, 2),
                 new ItemsForEmeralds(ModItems.COFFEE_LATTE.get(), 2, 1, 12, 2),
                 new ItemsForEmeralds(ModItems.COFFEE_CAPPUCCINO.get(), 3, 1, 12, 2),
-                new ItemsForEmeralds(ModItems.COFFEE_BEAN.get(), 4, 2, 16, 1),
+                new ItemsForEmeralds(ModItems.COFFEE_BEAN.get(), 8, 2, 16, 1),
                 new ItemsForEmeralds(ModItems.COFFEE_POWDER.get(), 6, 4, 16, 1),
                 new ItemsForEmeralds(ModItems.COCOA_POWDER.get(), 8, 4, 16, 1)
         });
         baristaTrades.put(2, new VillagerTrades.ItemListing[]{
-                new EmeraldsForItems(ModItems.COFFEE_POWDER.get(), 4, 16, 12, 5),
-                new EmeraldsForItems(ModItems.COCOA_POWDER.get(), 4, 16, 12, 5),
+                new EmeraldsForItems(ModItems.COFFEE_POWDER.get(), 4, 4, 12, 5),
+                new EmeraldsForItems(ModItems.COCOA_POWDER.get(), 4, 6, 12, 5),
                 new ItemsForEmeralds(ModItems.COFFEE_MACCHIATO.get(), 3, 1, 12, 5),
                 new ItemsForEmeralds(ModItems.COFFEE_MOCHACCINO.get(), 3, 1, 12, 5),
                 new ItemsForEmeralds(ModItems.COFFEE_GREEN_TEA.get(), 2, 1, 12, 5),
@@ -164,7 +164,7 @@ public class ModVillagers {
                 new ItemsForEmeralds(ModItems.COFFEE_COLDBREW.get(), 3, 1, 8, 10),
                 new ItemsForEmeralds(ModItems.COCOA.get(), 2, 1, 8, 10),
                 new ItemsForEmeralds(ModItems.SPICES.get(), 4, 16, 12, 10),
-                new EmeraldsForItems(ModItems.COCOA_POWDER.get(), 2, 8, 12, 10)
+                new EmeraldsForItems(ModItems.COCOA_POWDER.get(), 2, 4, 12, 10)
         });
         VillagerTrades.TRADES.put(ModVillagers.COFFEE_BARISTA.get(), baristaTrades);
 
@@ -172,7 +172,7 @@ public class ModVillagers {
         Int2ObjectMap<VillagerTrades.ItemListing[]> materialsTrades = new Int2ObjectOpenHashMap<>();
         materialsTrades.put(1, new VillagerTrades.ItemListing[]{
                 new ItemsForEmeralds(ModItems.COFFEE_INSTANT_STICK.get(), 2, 3, 12, 2),
-                new EmeraldsForItems(ModItems.COFFEE_BEAN.get(), 1, 4, 16, 1)
+                new EmeraldsForItems(ModItems.COFFEE_BEAN.get(), 1, 2, 16, 1)
         });
         materialsTrades.put(2, new VillagerTrades.ItemListing[]{
                 new EmeraldsForItems(ModItems.COFFEE_INSTANT_BOX.get(), 5, 1, 8, 5),

@@ -134,6 +134,15 @@ public class ModCreativeTabs {
                         output.accept(ModItems.VANILLA.get());
                         output.accept(ModItems.BAG.get());
                         output.accept(ModItems.SYRUP_EMPTY.get());
+                        output.accept(ModItems.SYRUP_CARAMEL.get());
+                        output.accept(ModItems.SYRUP_CHOCOLATE.get());
+                        output.accept(ModItems.SYRUP_FRUIT.get());
+                        output.accept(ModItems.SYRUP_MINT.get());
+                        output.accept(ModItems.SYRUP_VANILLA.get());
+                        output.accept(ModItems.SYRUP_SAKURA.get());
+                        output.accept(ModItems.TEA_LEAF.get());
+                        output.accept(ModItems.BLACK_TEA_LEAF.get());
+                        output.accept(ModItems.COLDBREW_BOTTLE.get());
 
                         // Empty cups
                         output.accept(ModItems.CUP.get());
