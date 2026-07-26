@@ -245,6 +245,7 @@
   "itemGroup.coffee_workshop": "コーヒーワークショップ",
   "jei.coffeework.category.coffee_machine": "コーヒー抽出",
   "jei.coffeework.category.cooling": "冷却",
+  "jei.coffeework.category.drink_transform": "ドリンク変換",
   "jei.coffeework.category.grinder": "粉砕",
   "jei.coffeework.category.icecream_machine": "アイスクリーム製造",
   "jei.coffeework.category.oven": "焼成",

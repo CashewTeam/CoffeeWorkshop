@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """
-Coffee Workshop — Legacy Asset Runtime Coverage Audit
+Coffee Workshop — Legacy Asset Runtime Coverage Audit (v2)
 
 Reads the current content manifest, then recursively resolves which orphan
 (legacy) assets are already in use by registered game content:
-  - Blockstate → Block Model → Parent chain → Texture
+  - Blockstate → Block Model → Parent chain (only for registered blocks)
   - Item Model → Parent chain → Texture (actively used by registered items)
   - Recipe intermediates (items appearing in recipe JSONs)
   - Machine state variants (_on/_off) mapped to LIT blockstate
+
+Each asset is tracked with a typed key: (asset_type, asset_id) — a block model
+named "coffee" is NOT matched by a registered item "coffee".
 
 Classifies each orphan asset into the new status system:
   ACTIVE_RUNTIME_ASSET   — used by an existing blockstate / renderer / entity
@@ -28,6 +31,7 @@ Output:
 """
 
 import json
+import re
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -64,14 +68,50 @@ STATUS_DECOR = "TO_PORT_DECOR"
 STATUS_MERGED = "MERGED_RUNTIME_VARIANT"
 STATUS_UNASSIGNED = "UNASSIGNED"
 
+
 # ── Content family grouping ────────────────────────────────────────────
+#
+# Patterns are ordered from most specific to least specific so that
+# "cookie_icecream" matches before "icecream", and "coffee_pot_" matches
+# before "coffee_".
 
 FAMILY_PATTERNS = [
-    # (pattern, family_name, target_phase)
+    # Specific multi-word patterns first
+    ("cookie_icecream", "icecream_cookie", "6.0"),
+    ("coffee_pot_", "traditional_brew", "9.0"),
+    ("coffee_coldbrew", "coffee_drinks", "5.2"),
+    ("coffee_americano", "coffee_drinks", "5.2"),
+    ("coffee_latte", "coffee_drinks", "5.2"),
+    ("coffee_cappuccino", "coffee_drinks", "5.2"),
+    ("coffee_macchiato", "coffee_drinks", "5.2"),
+    ("coffee_mochaccino", "coffee_drinks", "5.2"),
+    ("coffee_green_tea", "coffee_drinks", "5.2"),
+    ("coffee_black_tea", "coffee_drinks", "5.2"),
+    ("coffee_milk_tea", "coffee_drinks", "5.2"),
+    ("coffee_mandarin", "coffee_drinks", "5.2"),
+    ("coffee_instant", "coffee_drinks", "5.2"),
+    ("coffee_bean", "coffee_drinks", "5.2"),
+    ("coffee_powder", "coffee_drinks", "5.2"),
+    ("coffee_seed", "coffee_drinks", "5.2"),
+    ("coffee_ice", "coffee_drinks", "5.2"),
+    ("coffeemachine", "coffee_drinks", "5.2"),
+    # Generic coffee prefix (catch-all, after specifics)
     ("coffee_", "coffee_drinks", "5.2"),
-    ("espresso", "coffee_drinks", "5.2"),
+    ("coffee", "coffee_drinks", "5.2"),
     ("cocoa", "coffee_drinks", "5.2"),
     ("coldbrew", "coffee_drinks", "5.2"),
+    ("espresso", "coffee_drinks", "5.2"),
+    # Ice cream (specific patterns before generic)
+    ("icecream_mix", "icecream", "5.2"),
+    ("icecream_vanilla", "icecream", "5.2"),
+    ("icecream_apple", "icecream", "5.2"),
+    ("icecream_berry", "icecream", "5.2"),
+    ("icecream_chocolate", "icecream", "5.2"),
+    ("icecream_coffee", "icecream", "5.2"),
+    ("icecream_lemon", "icecream", "5.2"),
+    ("icecream_melon", "icecream", "5.2"),
+    ("icecream_machine", "icecream", "5.2"),
+    ("icecreammachine", "icecream", "5.2"),
     ("icecream_", "icecream", "5.2"),
     ("cream_milk", "icecream_cream", "6.0"),
     ("cream_apple", "icecream_cream", "6.0"),
@@ -80,9 +120,18 @@ FAMILY_PATTERNS = [
     ("cream_coffee", "icecream_cream", "6.0"),
     ("cream_lemon", "icecream_cream", "6.0"),
     ("cream_melon", "icecream_cream", "6.0"),
-    ("cookie_icecream", "icecream_cookie", "6.0"),
+    # Sandwiches
     ("sandwich_", "sandwich", "5.2"),
+    # Cake system (most specific patterns first)
     ("cake_slices", "cake_system", "5.4"),
+    ("cake_sponge_berry", "cake_system", "5.4"),
+    ("cake_sponge_carrot", "cake_system", "5.4"),
+    ("cake_sponge_chocolate", "cake_system", "5.4"),
+    ("cake_sponge_coffee", "cake_system", "5.4"),
+    ("cake_sponge_lemon", "cake_system", "5.4"),
+    ("cake_sponge_pumpkin", "cake_system", "5.4"),
+    ("cake_sponge_redvelvet", "cake_system", "5.4"),
+    ("cake_sponge_tea", "cake_system", "5.4"),
     ("cake_sponge", "cake_system", "5.4"),
     ("cake_cheese", "cake_system", "5.4"),
     ("cake_coffee", "cake_system", "5.4"),
@@ -95,81 +144,97 @@ FAMILY_PATTERNS = [
     ("cake_pumpkin", "cake_system", "5.4"),
     ("cake_redvelvet", "cake_system", "5.4"),
     ("cake_schwarzwald", "cake_system", "5.4"),
+    ("cake_model", "cake_system", "5.4"),
     ("cake_roll", "cake_roll", "5.4"),
     ("tiramisu", "cake_system", "5.4"),
     ("mousse_", "cake_mousse", "5.4"),
+    # Bakery and confectionery
     ("brownie", "bakery", "5.3"),
+    ("caramel_apple", "confectionery", "5.3"),
     ("caramel", "confectionery", "5.3"),
     ("custard", "confectionery", "5.3"),
     ("milk_form", "confectionery", "5.3"),
     ("hardtack", "confectionery", "5.3"),
     ("cookie_black", "confectionery", "5.3"),
     ("cookie_oreo", "confectionery", "5.3"),
+    ("marshmallow_chocolate", "confectionery", "5.3"),
+    ("marshmallow_roast", "confectionery", "5.3"),
     ("marshmallow", "confectionery", "5.3"),
     ("smore", "confectionery", "5.3"),
+    # Jiggy cakes, mooncakes, souffles, muffins, pies
     ("jiggy_cake", "cake_jiggy", "7.1"),
     ("mooncake", "pastry", "7.1"),
     ("souffle", "pastry", "7.1"),
     ("muffin_", "pastry", "7.1"),
+    ("muffin", "pastry", "7.1"),
     ("pie_", "pie", "7.0"),
     ("croissant", "pastry", "7.0"),
     ("ginger_bread", "pastry", "7.0"),
     ("puff", "pastry", "7.0"),
     ("mille_feuille", "pastry", "7.0"),
+    # Machines / decor
     ("soda_machine", "soda_machine", "9.1"),
     ("moka_", "traditional_brew", "9.0"),
     ("turkey_", "traditional_brew", "9.0"),
-    ("coffee_pot_", "traditional_brew", "9.0"),
     ("phonograph", "decor_phonograph", "9.2"),
     ("bar_stone", "decor_bar", "9.2"),
     ("bar_wooden", "decor_bar", "9.2"),
-    ("records_", "records", "5.2"),
+    # Clay oven (legacy machine)
+    ("clay_oven", "machines", "5.1"),
+    # Grinder, roller, oven (machine states)
+    ("grinder_", "machines", "5.1"),
+    ("roller_", "machines", "5.1"),
+    ("oven_", "machines", "5.1"),
+    # Crops
+    ("vanilla_stage", "crops", "5.1"),
+    ("blueberry_stage", "crops", "5.1"),
+    ("crop_coffee", "crops", "5.1"),
+    # Bags
+    ("double_bag_", "bags", "5.1"),
     ("bag_coffee_raw", "bags", "5.1"),
     ("bag_coffee_powder", "bags", "5.1"),
     ("bag_cocoa", "bags", "5.1"),
     ("bag_cocoa_powder", "bags", "5.1"),
     ("bag_flour", "bags", "5.1"),
     ("bag_sugar", "bags", "5.1"),
-    ("double_bag_", "bags", "5.1"),
     ("bag_coffee", "bags", "5.1"),
+    ("bag_cloth", "bags", "5.1"),
+    ("bag", "bags", "5.1"),
+    # Syrups, dough, plates, records
     ("syrup_", "syrups", "5.2"),
     ("plate_dough", "dough_system", "5.3"),
     ("plate_iron", "materials", "5.1"),
+    ("records_", "records", "5.2"),
+    ("record_", "records", "5.2"),
+    # Doughs
+    ("dough_", "dough_system", "5.3"),
+    # Misc items with known owners
+    ("d_bar", "materials", "5.1"),
+    ("dirty_pastry_bun", "materials", "5.1"),
+    ("pot", "traditional_brew", "9.0"),
+    # Generic materials
+    ("plate", "materials", "5.1"),
+    ("iron_bowl", "materials", "5.1"),
+    ("field_ration", "materials", "5.1"),
+    ("ice_slag", "materials", "5.1"),
 ]
 
-# ── Known blockstate → block mappings ──────────────────────────────────
 
-# These orphan assets are blockstate variants already wired to registered blocks.
-# Format: orphan_id → (runtime_owner, runtime_role)
+# ── Known blockstate → block mappings (old ID → registered owner) ──────
+
 BLOCKSTATE_WIRED = {
-    # Grinder lit states
     "grinder_on": ("grinder", "blockstate:lit=true"),
     "grinder_off": ("grinder", "blockstate:lit=false"),
-    # Oven lit states
     "oven_on": ("oven", "blockstate:lit=true"),
     "oven_off": ("oven", "blockstate:lit=false"),
-    # Roller lit states
     "roller_on": ("roller", "blockstate:lit=true"),
     "roller_off": ("roller", "blockstate:lit=false"),
-    # Icecream Machine lit states
     "icecream_machine_on": ("icecream_machine", "blockstate:lit=true"),
     "icecream_machine_off": ("icecream_machine", "blockstate:lit=false"),
-    # Coffee Machine lit (merge old ids)
     "coffeemachine_on": ("coffee_machine", "blockstate:lit=true"),
     "coffeemachine_off": ("coffee_machine", "blockstate:lit=false"),
     "coffee_machine_on": ("coffee_machine", "blockstate:lit=true"),
     "coffee_machine_off": ("coffee_machine", "blockstate:lit=false"),
-    # Cold brew pot ferm stages
-    "coldbrew_pot_0": ("coldbrew_pot", "blockstate:ferm=0"),
-    "coldbrew_pot_1": ("coldbrew_pot", "blockstate:ferm=1"),
-    "coldbrew_pot_2": ("coldbrew_pot", "blockstate:ferm=2"),
-    "coldbrew_pot_3": ("coldbrew_pot", "blockstate:ferm=3"),
-    "coldbrew_pot_4": ("coldbrew_pot", "blockstate:ferm=4"),
-    "coldbrew_pot_5": ("coldbrew_pot", "blockstate:ferm=5"),
-    "coldbrew_pot_6": ("coldbrew_pot", "blockstate:ferm=6"),
-    "coldbrew_pot_7": ("coldbrew_pot", "blockstate:ferm=7"),
-    "coldbrew_pot_8": ("coldbrew_pot", "blockstate:ferm=8"),
-    # Clay oven (old name merged to oven)
     "clay_oven": ("oven", "blockstate:lit=false"),
     "clay_oven_on": ("oven", "blockstate:lit=true"),
 }
@@ -186,48 +251,67 @@ def _load_manifest() -> dict:
     return _read_json(MANIFEST_PATH) or {"orphan_assets": [], "registry": [], "stats": {}}
 
 
-def _resolve_model_chain(model_name: str, model_dir: Path) -> set:
-    """Recursively resolve a model JSON to collect all referenced model IDs."""
-    seen = set()
-    stack = [model_name]
+def _resolve_model_chain(model_name: str, model_dir: Path) -> dict:
+    """Recursively resolve a model JSON.
+    Returns {"models": set(), "textures": set()} — never mixed.
+    """
+    seen_models = set()
+    seen_textures = set()
+    stack = [(model_name, "model")]
     while stack:
-        name = stack.pop()
-        if name in seen:
+        name, kind = stack.pop()
+        if kind == "model" and name in seen_models:
             continue
-        seen.add(name)
-        path = model_dir / f"{name}.json"
-        data = _read_json(path)
-        if not data:
+        if kind in ("texture",) and name in seen_textures:
             continue
-        # Follow parent
-        parent = data.get("parent", "")
-        if parent.startswith(f"{NAMESPACE}:block/"):
-            pname = parent[len(f"{NAMESPACE}:block/"):]
-            if pname not in seen:
-                stack.append(pname)
-        elif parent.startswith(f"{NAMESPACE}:item/"):
-            pname = parent[len(f"{NAMESPACE}:item/"):]
-            if pname not in seen:
-                stack.append(pname)
-        # Collect texture references
-        textures = data.get("textures", {})
-        for tex_ref in textures.values():
-            if isinstance(tex_ref, str) and tex_ref.startswith(f"{NAMESPACE}:block/"):
-                ref_name = tex_ref[len(f"{NAMESPACE}:block/"):]
-                if ref_name not in seen:
-                    stack.append(ref_name)
-            elif isinstance(tex_ref, str) and tex_ref.startswith(f"{NAMESPACE}:item/"):
-                ref_name = tex_ref[len(f"{NAMESPACE}:item/"):]
-                if ref_name not in seen:
-                    stack.append(ref_name)
-    return seen
+        if kind == "model":
+            seen_models.add(name)
+            path = model_dir / f"{name}.json"
+            data = _read_json(path)
+            if not data:
+                continue
+            parent = data.get("parent", "")
+            if parent.startswith(f"{NAMESPACE}:block/"):
+                pname = parent[len(f"{NAMESPACE}:block/"):]
+                stack.append((pname, "model"))
+            elif parent.startswith(f"{NAMESPACE}:item/"):
+                pname = parent[len(f"{NAMESPACE}:item/"):]
+                stack.append((pname, "model"))
+            textures = data.get("textures", {})
+            for tex_ref in textures.values():
+                if isinstance(tex_ref, str) and tex_ref.startswith(f"{NAMESPACE}:"):
+                    tail = tex_ref[len(f"{NAMESPACE}") + 1:]
+                    if tail.startswith("block/"):
+                        ref_name = tail[len("block/"):]
+                        # Texture reference to a block model file — follow it
+                        stack.append((ref_name, "model"))
+                    elif tail.startswith("item/"):
+                        ref_name = tail[len("item/"):]
+                        texture_path = TEXTURES_ITEM / f"{ref_name}.png"
+                        if texture_path.exists():
+                            seen_textures.add(ref_name)
+                        # Also try as a model parent
+                        stack.append((ref_name, "model"))
+        elif kind == "texture":
+            seen_textures.add(name)
+    return {"models": seen_models, "textures": seen_textures}
 
 
-def _collect_active_blockstate_refs() -> dict:
-    """Return {asset_id: (runtime_owner, runtime_role)} for all blockstate-referenced assets."""
+def _collect_active_blockstate_refs(registry: list) -> dict:
+    """Return {asset_id: (runtime_owner, runtime_role)} for blockstate-referenced assets.
+    Only scans blockstates for REGISTERED blocks — unregistered blockstates
+    are NOT counted as active.
+    """
+    registered_block_ids = {
+        e["id"] for e in registry
+        if e.get("registered") and e.get("type") == "block"
+    }
     active = {}
     for bs_path in sorted(BLOCKSTATES_DIR.glob("*.json")):
         bs_name = bs_path.stem
+        # P0 fix: only scan blockstates for registered blocks
+        if bs_name not in registered_block_ids:
+            continue
         data = _read_json(bs_path)
         if not data:
             continue
@@ -238,41 +322,47 @@ def _collect_active_blockstate_refs() -> dict:
                 model_ref = model_entry.get("model", "")
                 if model_ref.startswith(f"{NAMESPACE}:block/"):
                     model_id = model_ref[len(f"{NAMESPACE}:block/"):]
-                    # Mark this block model as active
                     active[model_id] = (bs_name, f"blockstate:variants={variant_key}")
-                    # Recursively collect all referenced models
                     chain = _resolve_model_chain(model_id, BLOCK_MODELS_DIR)
-                    for ref in chain:
+                    for ref in chain.get("models", set()):
                         if ref != model_id and ref not in active:
                             active[ref] = (bs_name, f"blockstate:parent_of_{model_id}")
+                    # Also track textures
+                    for tex in chain.get("textures", set()):
+                        if tex not in active:
+                            active[tex] = (bs_name, f"blockstate:texture_of_{model_id}")
     return active
 
 
-def _collect_registered_item_models(registry: list) -> set:
-    """Return set of item model names that are directly used by registered items."""
-    used = set()
+def _collect_registered_item_models(registry: list) -> dict:
+    """Return dict of (type, asset_id) → True for asset IDs actively used
+    by registered items.  Uses typed keys: ("item_model", id) and ("block_model", id).
+    """
+    used = {}
     for entry in registry:
         eid = entry["id"]
-        if entry.get("registered") and entry.get("type") in ("item",):
-            # Check if the item model exists
+        if not entry.get("registered"):
+            continue
+        etype = entry.get("type", "")
+        if etype == "item":
             if (ITEM_MODELS_DIR / f"{eid}.json").exists():
-                used.add(eid)
-            # Also check if a block item references a block model
+                used[("item_model", eid)] = True
             if entry.get("block_item") and entry.get("block_of"):
                 bid = entry["block_of"]
                 if (BLOCK_MODELS_DIR / f"{bid}.json").exists():
-                    used.add(bid)
+                    used[("block_model", bid)] = True
+        elif etype == "block":
+            if (BLOCKSTATES_DIR / f"{eid}.json").exists():
+                used[("blockstate", eid)] = True
+            if (BLOCK_MODELS_DIR / f"{eid}.json").exists():
+                used[("block_model", eid)] = True
     return used
 
 
 def _collect_recipe_intermediates() -> dict:
     """Find items that appear as recipe outputs. Returns {item_id: recipe_count}."""
     intermediates = defaultdict(int)
-    recipe_dirs = [
-        GEN_DATA_ROOT / "recipes",
-        DATA_ROOT / "recipes",
-    ]
-    # Also check subdirectories for typed recipes
+    recipe_dirs = [GEN_DATA_ROOT / "recipes", DATA_ROOT / "recipes"]
     for rd in recipe_dirs:
         if not rd.exists():
             continue
@@ -291,7 +381,9 @@ def _collect_recipe_intermediates() -> dict:
 
 
 def _determine_family(asset_id: str) -> tuple:
-    """Return (family_name, target_phase) for an asset."""
+    """Return (family_name, target_phase) for an asset.
+    Patterns are ordered most-specific-first to prevent misclassification.
+    """
     for pattern, family, phase in FAMILY_PATTERNS:
         if pattern in asset_id:
             return (family, phase)
@@ -299,13 +391,14 @@ def _determine_family(asset_id: str) -> tuple:
 
 
 def _classify_orphan(orphan: dict, registry_ids: set,
-                     active_blockstate: dict, active_item_models: set,
+                     active_blockstate: dict, active_typed: dict,
                      recipe_outputs: dict) -> dict:
     """Classify a single orphan asset into the new status system."""
     asset_id = orphan["id"]
     asset_type = orphan["type"]
     old_class = orphan.get("classification", "UNKNOWN")
     family, phase = _determine_family(asset_id)
+    typed_key = (asset_type, asset_id)
 
     result = {
         "asset_id": asset_id,
@@ -321,11 +414,18 @@ def _classify_orphan(orphan: dict, registry_ids: set,
         "notes": "",
     }
 
-    # ── Rule 1: Already registered ──
-    if asset_id in registry_ids:
+    # ── Rule 1: Already registered (typed check) ──
+    # Only mark active if this specific asset TYPE matches a registered item/block.
+    # A block_model "coffee" is NOT matched by a registered item "coffee".
+    if asset_type == "item_model" and asset_id in registry_ids:
         result["status"] = STATUS_ACTIVE
         result["runtime_owner"] = f"coffeework:{asset_id}"
-        result["runtime_role"] = "registered_item_or_block"
+        result["runtime_role"] = "registered_item_model"
+        return result
+    if asset_type == "block_model" and asset_id in registry_ids:
+        result["status"] = STATUS_ACTIVE
+        result["runtime_owner"] = f"coffeework:{asset_id}"
+        result["runtime_role"] = "registered_block_model"
         return result
 
     # ── Rule 2: Wired to existing blockstate ──
@@ -337,7 +437,7 @@ def _classify_orphan(orphan: dict, registry_ids: set,
         result["notes"] = "Old ID merged into modern blockstate variant"
         return result
 
-    # ── Rule 3: Used by active blockstate chain ──
+    # ── Rule 3: Used by active blockstate chain (typed, only registered blocks) ──
     if asset_id in active_blockstate:
         owner, role = active_blockstate[asset_id]
         result["status"] = STATUS_ACTIVE
@@ -345,16 +445,17 @@ def _classify_orphan(orphan: dict, registry_ids: set,
         result["runtime_role"] = role
         return result
 
-    # ── Rule 4: Used by registered item model ──
-    if asset_id in active_item_models:
+    # ── Rule 4: Used by registered item model (typed check) ──
+    if typed_key in active_typed:
         result["status"] = STATUS_ACTIVE
         result["runtime_owner"] = f"coffeework:{asset_id}"
-        result["runtime_role"] = "registered_item_model"
+        result["runtime_role"] = "registered_model_or_texture"
         return result
 
     # ── Rule 5: Appears as recipe output → standalone item ──
     if asset_id in recipe_outputs:
         result["status"] = STATUS_STANDALONE
+        result["runtime_role"] = "recipe_output"
         result["survival_chain"] = f"recipe ({recipe_outputs[asset_id]} recipe(s))"
         return result
 
@@ -369,67 +470,55 @@ def _classify_orphan(orphan: dict, registry_ids: set,
             result["runtime_role"] = f"blockstate:lit={'true' if asset_id.endswith('_on') else 'false'}"
             return result
 
-    # Cake slice models (_slice1..6, _uneaten)
+    # Cake slice models
     if any(asset_id.endswith(s) for s in [f"_slice{i}" for i in range(1, 7)] + ["_uneaten"]):
-        # Extract cake name: e.g., cake_coffee_slice1 → cake_coffee
-        import re
         m = re.match(r"^(.+?)_(slice[1-6]|uneaten)$", asset_id)
         if m:
             cake_name = m.group(1)
             result["status"] = STATUS_STATE_VARIANT
             result["runtime_owner"] = f"coffeework:{cake_name}"
-            result["runtime_role"] = f"blockstate:bites"
+            result["runtime_role"] = "blockstate:bites"
             result["notes"] = "Cake slice model — wire to BITES property"
             return result
 
-    # Raw/intermediate/model/base items
+    # Raw intermediates
     if asset_id.endswith("_raw"):
         base = asset_id[:-4]
-        if base in registry_ids or base in recipe_outputs:
-            result["status"] = STATUS_INTERMEDIATE
-            result["runtime_owner"] = f"coffeework:{base}" if base in registry_ids else None
-            result["runtime_role"] = "intermediate:raw"
-            result["survival_chain"] = f"raw material for {base}"
-            return result
+        owner = f"coffeework:{base}" if base in registry_ids else None
         result["status"] = STATUS_INTERMEDIATE
+        result["runtime_owner"] = owner
         result["runtime_role"] = "intermediate:raw"
+        result["survival_chain"] = f"raw material for {base}"
         return result
 
+    # Mold items
     if asset_id.endswith("_model"):
         base = asset_id[:-6]
-        if base in registry_ids:
-            result["status"] = STATUS_INTERMEDIATE
-            result["runtime_owner"] = f"coffeework:{base}"
-            result["runtime_role"] = "intermediate:mold_form"
-            result["survival_chain"] = f"mold form for {base}"
-            return result
+        owner = f"coffeework:{base}" if base in registry_ids else None
         result["status"] = STATUS_INTERMEDIATE
+        result["runtime_owner"] = owner
         result["runtime_role"] = "intermediate:mold_form"
+        result["survival_chain"] = f"mold form for {base}"
         return result
 
+    # Base layers
     if asset_id.endswith("_base"):
         base = asset_id[:-5]
-        if base in registry_ids:
-            result["status"] = STATUS_INTERMEDIATE
-            result["runtime_owner"] = f"coffeework:{base}"
-            result["runtime_role"] = "intermediate:base_layer"
-            result["survival_chain"] = f"base layer for {base}"
-            return result
+        owner = f"coffeework:{base}" if base in registry_ids else None
         result["status"] = STATUS_INTERMEDIATE
+        result["runtime_owner"] = owner
         result["runtime_role"] = "intermediate:base_layer"
+        result["survival_chain"] = f"base layer for {base}"
         return result
 
     # Plate models → display system
     if asset_id.endswith("_plate"):
         drink_id = asset_id[:-6]
-        if drink_id in registry_ids:
-            result["status"] = STATUS_DISPLAY_VARIANT
-            result["runtime_owner"] = f"coffeework:{drink_id}"
-            result["runtime_role"] = "drink_display:plate_model"
-            result["notes"] = "Plate model — wire to DrinkDisplayBlock system"
-            return result
+        owner = f"coffeework:{drink_id}" if drink_id in registry_ids else None
         result["status"] = STATUS_DISPLAY_VARIANT
+        result["runtime_owner"] = owner
         result["runtime_role"] = "drink_display:plate_model"
+        result["notes"] = "Plate model — wire to DrinkDisplayBlock system"
         return result
 
     # Cake roll models
@@ -439,10 +528,9 @@ def _classify_orphan(orphan: dict, registry_ids: set,
         return result
 
     # Cake slices item
-    if asset_id.endswith("_slices") and not asset_id.endswith("_slice1") and not asset_id.endswith("_slice2") and not asset_id.endswith("_slice3") and not asset_id.endswith("_slice4") and not asset_id.endswith("_slice5") and not asset_id.endswith("_slice6"):
+    if asset_id.endswith("_slices") and not any(asset_id.endswith(f"_slice{i}") for i in range(1, 7)):
         base = asset_id[:-7]
         result["status"] = STATUS_STANDALONE
-        result["runtime_owner"] = None
         result["runtime_role"] = "slice_item"
         result["survival_chain"] = f"interact with {base} cake block"
         return result
@@ -454,9 +542,9 @@ def _classify_orphan(orphan: dict, registry_ids: set,
         result["runtime_role"] = "blockstate:ferm"
         return result
 
-    # Machine-related (soda, moka, turkey, coffee pot, phonograph, bar)
-    for machine_pattern in ["soda_machine", "moka_", "turkey_", "coffee_pot_"]:
-        if asset_id.startswith(machine_pattern):
+    # Machine-related
+    for machine_prefix in ["soda_machine", "moka_", "turkey_", "coffee_pot_"]:
+        if asset_id.startswith(machine_prefix):
             result["status"] = STATUS_MACHINE
             result["runtime_role"] = "machine_component"
             return result
@@ -469,18 +557,23 @@ def _classify_orphan(orphan: dict, registry_ids: set,
 
     # Phonograph
     if "phonograph" in asset_id:
-        result["status"] = STATUS_TO_PORT_MACHINE if asset_type == "blockstate" else STATUS_DECOR
+        result["status"] = STATUS_MACHINE if asset_type == "blockstate" else STATUS_DECOR
         result["runtime_role"] = "phonograph"
         return result
 
-    # Syrups
-    if asset_id.startswith("syrup_") and asset_id not in registry_ids:
-        if asset_id in ("syrup_brown", "syrup_full"):
-            result["status"] = STATUS_ACTIVE
-            result["runtime_owner"] = "coffeework:syrup_fruit"
-            result["runtime_role"] = "deprecated_variant"
-            result["notes"] = "Old variant — superseded by modern syrups"
-            return result
+    # Syrups — old naming variants
+    if asset_id == "syrup_brown":
+        result["status"] = STATUS_MERGED
+        result["runtime_owner"] = "coffeework:syrup_caramel"
+        result["runtime_role"] = "old_naming_variant"
+        result["notes"] = "Renamed to syrup_caramel"
+        return result
+    if asset_id == "syrup_full":
+        result["status"] = STATUS_MERGED
+        result["runtime_owner"] = "coffeework:syrup_vanilla"
+        result["runtime_role"] = "old_naming_variant"
+        result["notes"] = "Old universal syrup, superseded by specific flavors"
+        return result
 
     # ── Rule 6: Old naming variants merged into modern IDs ──
     old_name_merged = {
@@ -515,7 +608,7 @@ def _classify_orphan(orphan: dict, registry_ids: set,
         result["notes"] = "Old bowl+batter system, needs redesign into modern mold system"
         return result
 
-    # Known removed items that should be PORT_STANDALONE
+    # Known PORT_NOW items → standalone
     port_now_set = {
         "coffee_instant_cup", "coffee_instant_cup_unopen",
         "icecream_apple", "icecream_berry", "icecream_chocolate",
@@ -525,8 +618,11 @@ def _classify_orphan(orphan: dict, registry_ids: set,
     }
     if asset_id in port_now_set:
         result["status"] = STATUS_STANDALONE
+        result["runtime_role"] = "standalone_item"
+        result["survival_chain"] = "phase_5_2"
         return result
 
+    # Old PORT_LATER / REMOVED items → standalone
     port_later_standalone = {
         "cream_apple", "cream_berry", "cream_chocolate", "cream_coffee",
         "cream_lemon", "cream_melon", "cream_milk",
@@ -543,19 +639,23 @@ def _classify_orphan(orphan: dict, registry_ids: set,
     }
     if asset_id in port_later_standalone:
         result["status"] = STATUS_STANDALONE
+        result["runtime_role"] = "standalone_item"
+        result["survival_chain"] = f"phase_{family}" if family != "unclassified" else "later_phase"
         return result
 
     # Muffin finished items
     if asset_id.startswith("muffin_") and not asset_id.endswith("_raw"):
         result["status"] = STATUS_STANDALONE
+        result["runtime_role"] = "standalone_item"
         return result
 
     # Pie items
     if asset_id.startswith("pie_") and not asset_id.endswith("_raw"):
         result["status"] = STATUS_STANDALONE
+        result["runtime_role"] = "standalone_item"
         return result
 
-    # Cake finished items  
+    # Cake finished items
     if (asset_id.startswith("cake_") and asset_id not in registry_ids
             and not asset_id.endswith("_raw") and not asset_id.endswith("_base")
             and not asset_id.endswith("_model") and not asset_id.endswith("_plate")
@@ -563,62 +663,61 @@ def _classify_orphan(orphan: dict, registry_ids: set,
             and not asset_id.endswith("_uneaten") and not asset_id.endswith("_slices")
             and not asset_id.endswith("_roll")):
         result["status"] = STATUS_STANDALONE
+        result["runtime_role"] = "standalone_item"
         return result
 
     # Jiggy cake items
     if "jiggy" in asset_id:
         if asset_id.endswith("_raw") or asset_id.endswith("_model"):
             result["status"] = STATUS_INTERMEDIATE
+            result["runtime_role"] = "intermediate:jiggy_raw_or_model"
         else:
             result["status"] = STATUS_STANDALONE
+            result["runtime_role"] = "standalone_item"
         return result
 
     # Mooncake items
     if "mooncake" in asset_id:
         if asset_id.endswith("_raw"):
             result["status"] = STATUS_INTERMEDIATE
+            result["runtime_role"] = "intermediate:mooncake_raw"
         elif asset_id == "mooncake_model":
             result["status"] = STATUS_ACTIVE
             result["runtime_owner"] = "coffeework:mooncake_model"
             result["runtime_role"] = "registered_item"
         else:
             result["status"] = STATUS_STANDALONE
+            result["runtime_role"] = "standalone_item"
         return result
 
-    # Dessert items (old naming, now merged)
-    dessert_standalone = {
-        "chocolate_chip", "chocolate_bar",
-        "field_ration",
-        "ginger_house",
-    }
-    if asset_id in dessert_standalone:
-        result["status"] = STATUS_STANDALONE
-        return result
-
-    # Default: based on old classification
+    # Default: fallback based on old classification
     if old_class == "PORT_NOW":
         result["status"] = STATUS_STANDALONE
+        result["runtime_role"] = "standalone_item"
     elif old_class == "PORT_LATER":
         result["status"] = STATUS_STANDALONE
+        result["runtime_role"] = "standalone_item"
     elif old_class == "REMOVED":
         result["status"] = STATUS_STANDALONE
+        result["runtime_role"] = "standalone_item"
     elif old_class == "REDESIGN":
         result["status"] = STATUS_STANDALONE
+        result["runtime_role"] = "redesign_item"
     elif old_class == "MERGED":
         result["status"] = STATUS_MERGED
-    elif old_class == "ASSET_ARCHIVE":
-        # Last resort — leave as UNASSIGNED for manual review
-        pass
+        result["runtime_role"] = "merged_variant"
 
     return result
 
 
 def _build_summary(classified: list) -> dict:
-    """Build summary statistics."""
+    """Build summary statistics with new quality metrics."""
     total = len(classified)
     by_status = defaultdict(int)
     by_family = defaultdict(lambda: {"total": 0, "by_status": defaultdict(int)})
     by_type = defaultdict(int)
+    missing_target_owner = 0
+    tbd_phase = 0
 
     for entry in classified:
         by_status[entry["status"]] += 1
@@ -626,6 +725,13 @@ def _build_summary(classified: list) -> dict:
         fam = by_family[entry["content_family"]]
         fam["total"] += 1
         fam["by_status"][entry["status"]] += 1
+
+        # Quality gate: non-ACTIVE entries must have a target role
+        if entry["status"] not in (STATUS_ACTIVE, STATUS_MERGED):
+            if entry.get("runtime_role") is None and entry.get("runtime_owner") is None:
+                missing_target_owner += 1
+        if entry.get("target_phase") == "TBD":
+            tbd_phase += 1
 
     return {
         "total_legacy_assets": total,
@@ -642,16 +748,30 @@ def _build_summary(classified: list) -> dict:
         "to_port_machine": by_status.get(STATUS_MACHINE, 0),
         "to_port_decor": by_status.get(STATUS_DECOR, 0),
         "unassigned": by_status.get(STATUS_UNASSIGNED, 0),
+        "missing_target_owner": missing_target_owner,
+        "tbd_phase": tbd_phase,
     }
 
 
 def _format_md(summary: dict, classified: list) -> str:
     """Generate human-readable Markdown report."""
     out = []
-    out.append("# Coffee Workshop — Legacy Asset Runtime Coverage")
+    out.append("# Coffee Workshop — Legacy Asset Runtime Coverage (v2)")
     out.append("")
     out.append("> Auto-generated by `tools/audit_legacy_runtime_coverage.py`")
     out.append("")
+
+    # Quality gates
+    out.append("## Quality Gates")
+    out.append("")
+    out.append(f"| Metric | Count | Target |")
+    out.append(f"|---|---|---|")
+    out.append(f"| UNASSIGNED status | {summary['unassigned']} | 0 |")
+    out.append(f"| Missing target owner | {summary['missing_target_owner']} | 0 |")
+    out.append(f"| TBD phase | {summary['tbd_phase']} | 0 |")
+    out.append("")
+
+    # Summary
     out.append("## Summary")
     out.append("")
     out.append(f"| Metric | Count |")
@@ -682,6 +802,21 @@ def _format_md(summary: dict, classified: list) -> str:
                    f"{bs.get(STATUS_MACHINE, 0)} | {bs.get(STATUS_DECOR, 0)} | "
                    f"{bs.get(STATUS_UNASSIGNED, 0)} |")
     out.append("")
+
+    # Missing target owner
+    missing = [e for e in classified
+               if e["status"] not in (STATUS_ACTIVE, STATUS_MERGED)
+               and e.get("runtime_role") is None and e.get("runtime_owner") is None]
+    if missing:
+        out.append("## Missing Target Owner")
+        out.append("")
+        out.append("These non-active entries have no `runtime_owner` or `runtime_role`.")
+        out.append("")
+        out.append("| Asset ID | Type | Status | Family |")
+        out.append("|---|---|---|---|")
+        for e in sorted(missing, key=lambda x: x["asset_id"]):
+            out.append(f"| `{e['asset_id']}` | {e['asset_type']} | {e['status']} | {e['content_family']} |")
+        out.append("")
 
     # Unassigned detail
     unassigned = [e for e in classified if e["status"] == STATUS_UNASSIGNED]
@@ -720,20 +855,21 @@ def main() -> int:
 
     # Collect data
     registry_ids = {e["id"] for e in registry if e.get("registered")}
-    active_blockstate = _collect_active_blockstate_refs()
-    active_item_models = _collect_registered_item_models(registry)
+    active_blockstate = _collect_active_blockstate_refs(registry)
+    active_typed = _collect_registered_item_models(registry)
     recipe_outputs = _collect_recipe_intermediates()
 
     print(f"Registry entries: {len(registry_ids)}")
-    print(f"Active blockstate refs: {len(active_blockstate)}")
-    print(f"Active item models: {len(active_item_models)}")
+    print(f"Registered blocks: {len({e['id'] for e in registry if e.get('type') == 'block' and e.get('registered')})}")
+    print(f"Active blockstate refs (registered blocks only): {len(active_blockstate)}")
+    print(f"Active typed assets: {len(active_typed)}")
     print(f"Recipe outputs: {len(recipe_outputs)}")
 
     # Classify each orphan
     classified = []
     for orphan in orphans:
         entry = _classify_orphan(orphan, registry_ids, active_blockstate,
-                                 active_item_models, recipe_outputs)
+                                 active_typed, recipe_outputs)
         classified.append(entry)
 
     # Build summary
@@ -749,9 +885,9 @@ def main() -> int:
     # Write legacy content matrix JSON
     matrix_json = {
         "summary": summary,
-        "version": "1.0",
+        "version": "2.0",
         "status_system": {
-            "ACTIVE_RUNTIME_ASSET": "Already used by blockstate, renderer, or registered item",
+            "ACTIVE_RUNTIME_ASSET": "Already used by blockstate, renderer, or registered item (typed check)",
             "TO_PORT_STANDALONE": "Needs registration as independent Item or Block",
             "TO_PORT_INTERMEDIATE": "Needs to become a crafting intermediate (raw/model/base)",
             "TO_WIRE_STATE_VARIANT": "Needs to attach to existing block states",
@@ -760,6 +896,11 @@ def main() -> int:
             "TO_PORT_DECOR": "Needs decor block registration",
             "MERGED_RUNTIME_VARIANT": "Old ID merged into modern state, capability preserved",
             "UNASSIGNED": "Not yet determined (target: 0)",
+        },
+        "quality_gates": {
+            "UNASSIGNED_STATUS": summary["unassigned"],
+            "MISSING_TARGET_OWNER": summary["missing_target_owner"],
+            "TBD_PHASE": summary["tbd_phase"],
         },
         "assets": classified,
     }
@@ -775,18 +916,29 @@ def main() -> int:
     print(f"Wrote {LEGACY_MATRIX_MD}")
 
     # Summary
-    print(f"\n=== Legacy Coverage Summary ===")
+    print(f"\n=== Legacy Coverage Summary v2 ===")
     print(f"Total: {summary['total_legacy_assets']}")
     print(f"Active + Merged (already covered): {summary['active_runtime'] + summary['merged']}")
-    print(f"To port (standalone + intermediate + state + display + machine + decor): "
-          f"{summary['to_port_standalone'] + summary['to_port_intermediate'] + summary['to_wire_state'] + summary['to_wire_display'] + summary['to_port_machine'] + summary['to_port_decor']}")
+    print(f"To port: {summary['to_port_standalone'] + summary['to_port_intermediate'] + summary['to_wire_state'] + summary['to_wire_display'] + summary['to_port_machine'] + summary['to_port_decor']}")
     print(f"UNASSIGNED: {summary['unassigned']}")
+    print(f"Missing target owner: {summary['missing_target_owner']}")
+    print(f"TBD phase: {summary['tbd_phase']}")
 
+    exit_code = 0
     if summary['unassigned'] > 0:
-        print("\nWARNING: UNASSIGNED assets remain — manual review needed.")
-        return 2
+        print("\nFAIL: UNASSIGNED assets remain.")
+        exit_code = 2
+    if summary['missing_target_owner'] > 0:
+        print(f"FAIL: {summary['missing_target_owner']} assets missing target owner.")
+        exit_code = 2
+    if summary['tbd_phase'] > 0:
+        print(f"FAIL: {summary['tbd_phase']} assets with TBD phase.")
+        exit_code = 2
 
-    return 0
+    if exit_code == 0:
+        print("\nPASS: all quality gates met.")
+
+    return exit_code
 
 
 if __name__ == "__main__":

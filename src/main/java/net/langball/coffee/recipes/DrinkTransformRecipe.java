@@ -6,6 +6,7 @@ import net.langball.coffee.init.ModItems;
 import net.langball.coffee.item.DrinkCoffee;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -24,7 +25,11 @@ import javax.annotation.Nullable;
  * <p>Used by the workbench to transform a drink into a flavored variant
  * (e.g. Nitro Americano + Fruit Syrup → Nitro Fruit Americano).
  * Preserves {@code remaining_cups} from the input drink, clamped to the
- * target drink's {@code max_cups}.
+ * target drink's configured {@code maxCups}.
+ *
+ * <p>Only explicitly allowed NBT keys are copied from source to result
+ * (currently: {@code remaining_cups}).  The target max_cups and variant
+ * identity always come from the result item, never from the source NBT.
  *
  * <h3>JSON format</h3>
  * <pre>{@code
@@ -81,15 +86,32 @@ public class DrinkTransformRecipe extends CustomRecipe {
             if (!s.isEmpty() && s.getItem() == source) inputDrink = s;
         }
         ItemStack output = new ItemStack(result);
-        // Copy remaining_cups from input, clamp to target max_cups
-        if (inputDrink != null && inputDrink.hasTag()) {
-            output.setTag(inputDrink.getTag().copy());
-            int sourceCups = DrinkCoffee.getRemainingCups(inputDrink);
-            int sourceMax = DrinkCoffee.getMaxCups(inputDrink);
-            int targetMax = DrinkCoffee.getMaxCups(output);
-            int clamped = Math.min(sourceCups, targetMax);
-            if (sourceCups != clamped) {
-                output.getOrCreateTag().putInt("remaining_cups", clamped);
+
+        if (inputDrink != null && source instanceof DrinkCoffee srcDrink
+                && result instanceof DrinkCoffee tgtDrink) {
+            // Read source cups from source item's runtime NBT.
+            int sourceCups = inputDrink.hasTag()
+                    ? DrinkCoffee.getRemainingCups(inputDrink)
+                    : srcDrink.getConfiguredMaxCups();
+
+            // Target max cups from the RESULT item's configuration, NOT from
+            // copied NBT.  This prevents a 4-cup source writing max_cups=4
+            // into a 3-cup target.
+            int targetMax = tgtDrink.getConfiguredMaxCups();
+            int remaining = Math.min(sourceCups, targetMax);
+
+            // Only copy explicitly allowed NBT keys — do NOT blindly copy the
+            // entire source compound tag, which could leak variant fields,
+            // internal state, or stale max_cups into the result.
+            CompoundTag tag = new CompoundTag();
+            tag.putInt("remaining_cups", remaining);
+            tag.putInt("max_cups", targetMax);
+            output.setTag(tag);
+        } else {
+            // No source input (should not happen if matches() passed) or
+            // source/result not DrinkCoffee — initialise fresh.
+            if (result instanceof DrinkCoffee drink) {
+                drink.initializeFreshStack(output);
             }
         }
         return output;
@@ -145,10 +167,13 @@ public class DrinkTransformRecipe extends CustomRecipe {
             if (!(res instanceof DrinkCoffee))
                 throw new JsonSyntaxException("DrinkTransform recipe '" + id + "' result is not DrinkCoffee: " + resultId);
 
-            // Remainder check: additive must have a crafting remainder (syrup → syrup_empty)
-            ItemStack addStack = new ItemStack(add);
-            if (addStack.getCraftingRemainingItem().isEmpty() && addStack.getItem().hasCraftingRemainingItem()) {
-                // fine — the item will handle remainder through vanilla system
+            // Additive MUST have a crafting remainder (e.g. syrup → syrup_empty).
+            // This ensures the transform is not a free conversion and the
+            // additive container is properly returned.
+            if (!add.hasCraftingRemainingItem()) {
+                throw new JsonSyntaxException(
+                        "DrinkTransform recipe '" + id + "' additive has no crafting remainder: " + additiveId
+                        + ".  Additives must return a container (e.g. syrup → syrup_empty).");
             }
 
             return new DrinkTransformRecipe(id, src, add, res);

@@ -4,6 +4,7 @@ import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.init.ModRecipeTypes;
 import net.langball.coffee.recipes.CoffeeBrewingRecipe;
 import net.langball.coffee.recipes.CoolingRecipe;
+import net.langball.coffee.recipes.DrinkTransformRecipe;
 import net.langball.coffee.recipes.MachineRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -35,6 +36,9 @@ public final class JEIRecipeTypes {
     public static final mezz.jei.api.recipe.RecipeType<CoolingRecipe> COOLING =
             mezz.jei.api.recipe.RecipeType.create(CoffeeWork.MODID, "cooling", CoolingRecipe.class);
 
+    public static final mezz.jei.api.recipe.RecipeType<DrinkTransformRecipe> DRINK_TRANSFORM =
+            mezz.jei.api.recipe.RecipeType.create(CoffeeWork.MODID, "drink_transform", DrinkTransformRecipe.class);
+
     /** Fetch CoolingRecipes from the client-side RecipeManager.
      *  CoolingRecipe extends CustomRecipe and lives under {@link net.minecraft.world.item.crafting.RecipeType#CRAFTING}.
      *  We cannot query by a custom RecipeType because that would require
@@ -48,6 +52,21 @@ public final class JEIRecipeTypes {
         for (var recipe : rm.getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.CRAFTING)) {
             if (recipe instanceof CoolingRecipe cr) {
                 result.add(cr);
+            }
+        }
+        return result;
+    }
+
+    /** Fetch DrinkTransformRecipes from the client-side RecipeManager.
+     *  DrinkTransformRecipe extends CustomRecipe and lives under CRAFTING. */
+    public static List<DrinkTransformRecipe> getDrinkTransformRecipes() {
+        ClientLevel level = Minecraft.getInstance().level;
+        if (level == null) return List.of();
+        RecipeManager rm = level.getRecipeManager();
+        List<DrinkTransformRecipe> result = new ArrayList<>();
+        for (var recipe : rm.getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.CRAFTING)) {
+            if (recipe instanceof DrinkTransformRecipe dtr) {
+                result.add(dtr);
             }
         }
         return result;

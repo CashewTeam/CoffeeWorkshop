@@ -181,6 +181,16 @@ def extract_ingredients(recipe):
         items.add("coffeework:ice_slag")
         return items
 
+    # Drink Transform recipes: source + additive → result (NBT-preserving)
+    if t == "coffeework:drink_transform":
+        src = recipe.get("source", "")
+        add = recipe.get("additive", "")
+        if src:
+            items.add(src)
+        if add:
+            items.add(add)
+        return items
+
     # Single Ingredient (MachineRecipe)
     ing = recipe.get("ingredient")
     if ing:
@@ -221,11 +231,16 @@ def _add_ingredient_items(items, ing_obj):
 
 
 def extract_result(recipe):
-    """Extract output item ID from a recipe JSON.  Supports cooling recipes
-    that store the output under the "iced" key."""
+    """Extract output item ID from a recipe JSON.  Supports cooling and drink_transform
+    recipes that may use non-standard output keys."""
+    t = recipe.get("type", "")
     # Cooling recipes: output is under "iced" (input is under "hot")
-    if recipe.get("type") == "coffeework:cooling":
+    if t == "coffeework:cooling":
         return recipe.get("iced", "")
+    # Drink Transform recipes: plain string "result"
+    if t == "coffeework:drink_transform":
+        r = recipe.get("result", "")
+        return r if isinstance(r, str) else ""
     result = recipe.get("result")
     if result:
         if isinstance(result, str):
@@ -426,6 +441,8 @@ def main():
         ("coffeework:coffee_coldbrew_latte_mint", "coffeework:coffee_coldbrew_latte_mint_ice", "cooling"),
         ("coffeework:coffee_coldbrew_latte_vanilla", "coffeework:coffee_coldbrew_latte_vanilla_ice", "cooling"),
         ("coffeework:coffee_mandarin_drink", "coffeework:coffee_mandarin_drink_ice", "cooling"),
+        # Drink Transform recipes (workbench, NBT-preserving)
+        ("coffeework:coffee_americano_nitro_ice", "coffeework:coffee_americano_nitro_fruit_ice", "drink_transform"),
     ]   
     lines.append("## P0 Critical Chain\n")
     lines.append("| Input | Output | Method | Status |")

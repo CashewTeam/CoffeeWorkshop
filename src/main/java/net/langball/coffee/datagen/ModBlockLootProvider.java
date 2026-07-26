@@ -41,12 +41,14 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         // No Silk Touch / no Shears: mature (age=3) drops 1-3 coffee_bean_raw + 0-1 seeds;
         // immature drops 0-1 coffee_seeds.
         // The regular pools carry inverse conditions so they do NOT stack with tool drops.
+        // Silk Touch + Shears combination (enchanted shears): only one block drops.
         add(ModBlocks.COFFEE_TREE.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .when(HAS_SILK_TOUCH)
                         .add(LootItem.lootTableItem(ModBlocks.COFFEE_TREE.get())))
                 .withPool(LootPool.lootPool()
                         .when(HAS_SHEARS)
+                        .when(HAS_SILK_TOUCH.invert())
                         .add(LootItem.lootTableItem(ModBlocks.COFFEE_TREE.get())))
                 .withPool(LootPool.lootPool()
                         .when(HAS_SILK_TOUCH.invert())

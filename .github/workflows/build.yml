@@ -113,6 +113,13 @@ jobs:
       - name: Legacy runtime coverage audit
         run: python tools/audit_legacy_runtime_coverage.py
 
+      - name: Verify legacy matrix is current
+        run: |
+          git diff --exit-code -- docs/LEGACY_CONTENT_MATRIX.md docs/legacy_content_matrix.json || {
+            echo "::error::Legacy content matrix is out of date. Run: python tools/audit_legacy_runtime_coverage.py"
+            exit 1
+          }
+
       - name: Verify manifest is current
         run: |
           python tools/build_content_manifest.py

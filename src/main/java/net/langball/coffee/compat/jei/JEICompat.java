@@ -50,7 +50,12 @@ public class JEICompat implements mezz.jei.api.IModPlugin {
                         JEIRecipeTypes.COOLING,
                         Component.translatable("jei.coffeework.category.cooling"),
                         guiHelper,
-                        new ItemStack(net.langball.coffee.init.ModItems.ICE_SLAG.get()))
+                        new ItemStack(net.langball.coffee.init.ModItems.ICE_SLAG.get())),
+                new DrinkTransformRecipeCategory(
+                        JEIRecipeTypes.DRINK_TRANSFORM,
+                        Component.translatable("jei.coffeework.category.drink_transform"),
+                        guiHelper,
+                        new ItemStack(net.langball.coffee.init.ModItems.SYRUP_FRUIT.get()))
         );
     }
 
@@ -73,6 +78,9 @@ public class JEICompat implements mezz.jei.api.IModPlugin {
 
         registration.addRecipes(JEIRecipeTypes.COOLING,
                 JEIRecipeTypes.getCoolingRecipes());
+
+        registration.addRecipes(JEIRecipeTypes.DRINK_TRANSFORM,
+                JEIRecipeTypes.getDrinkTransformRecipes());
     }
 
     @Override
@@ -84,5 +92,7 @@ public class JEICompat implements mezz.jei.api.IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.OVEN.get()), JEIRecipeTypes.OVEN_BAKING);
         registration.addRecipeCatalyst(new ItemStack(net.langball.coffee.init.ModItems.ICE_SLAG.get()),
                 JEIRecipeTypes.COOLING);
+        registration.addRecipeCatalyst(new ItemStack(net.langball.coffee.init.ModItems.SYRUP_FRUIT.get()),
+                JEIRecipeTypes.DRINK_TRANSFORM);
     }
 }
