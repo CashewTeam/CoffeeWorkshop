@@ -302,8 +302,9 @@ public class MachineGameTests {
     public static void coffeemachine_brewsLatte(GameTestHelper helper) {
         BlockPos pos = MACHINE_POS;
         helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        // Exact 1 coffee_powder so latte (requires 1) is uniquely matched vs macchiato (requires 2)
         MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE,
-                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get(), 64));
+                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get(), 1));
         MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_MODIFIER,
                 new ItemStack(Items.MILK_BUCKET, 1));
         MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_CONTAINER,
@@ -480,8 +481,9 @@ public class MachineGameTests {
     public static void coldbrew_brewsFromBottle(GameTestHelper helper) {
         BlockPos pos = MACHINE_POS;
         helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
-        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE,
-                new ItemStack(net.langball.coffee.init.ModItems.COLDBREW_BOTTLE.get(), 64));
+        // Use exactly 1 coldbrew_bottle so remainder (glass_bottle) fits back
+        MachineTestHelper.setItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE,
+                new ItemStack(net.langball.coffee.init.ModItems.COLDBREW_BOTTLE.get(), 1));
         MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_CONTAINER,
                 new ItemStack(net.langball.coffee.init.ModItems.CUP_GLASS.get(), 16));
 
@@ -489,10 +491,10 @@ public class MachineGameTests {
             ItemStack out = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_OUTPUT);
             helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COFFEE_COLDBREW.get()),
                     "Coffee Machine should brew coldbrew, got: " + out);
-            // Bottle remainder: glass_bottle returned to base slot
+            // Base slot must contain the glass_bottle remainder
             ItemStack base = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE);
-            helper.assertTrue(base.is(Items.GLASS_BOTTLE) || base.getCount() == 63,
-                    "Base slot should contain returned glass bottle or remaining coldbrew bottles");
+            helper.assertTrue(base.is(Items.GLASS_BOTTLE) && base.getCount() == 1,
+                    "Base slot should contain returned glass bottle, got: " + base);
             helper.succeed();
         });
     }
@@ -533,7 +535,7 @@ public class MachineGameTests {
         MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_MODIFIER,
                 new ItemStack(Items.MILK_BUCKET, 1));
         MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_ADDITIVE,
-                new ItemStack(net.langball.coffee.init.ModItems.SYRUP_CARAMEL.get(), 16));
+                new ItemStack(net.langball.coffee.init.ModItems.SYRUP_CARAMEL.get(), 1));
         MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_CONTAINER,
                 new ItemStack(net.langball.coffee.init.ModItems.CUP.get(), 16));
 
@@ -541,9 +543,10 @@ public class MachineGameTests {
             ItemStack out = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_OUTPUT);
             helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COFFEE_LATTE_CARAMEL.get()),
                     "Coffee Machine should brew caramel latte, got: " + out);
+            // Syrup consumed → syrup_empty returned to additive slot
             ItemStack additive = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_ADDITIVE);
-            helper.assertTrue(additive.getCount() == 15,
-                    "Caramel syrup should decrease by 1 (16→15), got: " + additive.getCount());
+            helper.assertTrue(additive.is(net.langball.coffee.init.ModItems.SYRUP_EMPTY.get()),
+                    "Additive slot should contain syrup_empty remainder, got: " + additive);
             helper.succeed();
         });
     }
@@ -577,7 +580,7 @@ public class MachineGameTests {
         BlockPos pos = MACHINE_POS;
         helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
         MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE,
-                new ItemStack(net.langball.coffee.init.ModItems.COLDBREW_BOTTLE.get(), 64));
+                new ItemStack(net.langball.coffee.init.ModItems.COLDBREW_BOTTLE.get(), 1));
         MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_MODIFIER,
                 new ItemStack(Items.MILK_BUCKET, 1));
         MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_CONTAINER,
@@ -587,6 +590,146 @@ public class MachineGameTests {
             ItemStack out = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_OUTPUT);
             helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COFFEE_COLDBREW_LATTE.get()),
                     "Coffee Machine should brew coldbrew latte, got: " + out);
+            // Base slot: glass bottle remainder
+            ItemStack base = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE);
+            helper.assertTrue(base.is(Items.GLASS_BOTTLE),
+                    "Base slot should contain returned glass bottle, got: " + base);
+            helper.succeed();
+        });
+    }
+
+    // ─── Phase 4 P0: Missing drink tests ─────────────────────────────
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void macchiato_brews(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE,
+                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_MODIFIER,
+                new ItemStack(Items.MILK_BUCKET, 1));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_CONTAINER,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP.get(), 16));
+        helper.runAfterDelay(160, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_OUTPUT);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COFFEE_MACCHIATO.get()),
+                    "Coffee Machine should brew macchiato, got: " + out);
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void cocoaStrong_brews(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE,
+                new ItemStack(net.langball.coffee.init.ModItems.COCOA_POWDER.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_MODIFIER,
+                new ItemStack(Items.MILK_BUCKET, 1));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_ADDITIVE,
+                new ItemStack(net.langball.coffee.init.ModItems.CHOCOLATE_CHIP.get(), 16));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_CONTAINER,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP.get(), 16));
+        helper.runAfterDelay(180, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_OUTPUT);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COCOA_STRONG.get()),
+                    "Coffee Machine should brew cocoa strong, got: " + out);
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void blackTea_usesGlassCup(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE,
+                new ItemStack(net.langball.coffee.init.ModItems.BLACK_TEA_LEAF.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_MODIFIER,
+                new ItemStack(Items.WATER_BUCKET, 1));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_CONTAINER,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP_GLASS.get(), 16));
+        helper.runAfterDelay(120, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_OUTPUT);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COFFEE_BLACK_TEA.get()),
+                    "Coffee Machine should brew black tea, got: " + out);
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void milkTea_brews(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE,
+                new ItemStack(net.langball.coffee.init.ModItems.BLACK_TEA_LEAF.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_MODIFIER,
+                new ItemStack(Items.MILK_BUCKET, 1));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_ADDITIVE,
+                new ItemStack(Items.SUGAR, 64));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_CONTAINER,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP_GLASS.get(), 16));
+        helper.runAfterDelay(140, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_OUTPUT);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COFFEE_MILK_TEA.get()),
+                    "Coffee Machine should brew milk tea, got: " + out);
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void mandarinDrink_brews(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE,
+                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_MODIFIER,
+                new ItemStack(Items.MILK_BUCKET, 1));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_ADDITIVE,
+                new ItemStack(net.langball.coffee.init.ModItems.TEA_LEAF.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_CONTAINER,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP_GLASS.get(), 16));
+        helper.runAfterDelay(160, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_OUTPUT);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COFFEE_MANDARIN_DRINK.get()),
+                    "Coffee Machine should brew mandarin drink, got: " + out);
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void icedLatte_consumesIceSlag(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE,
+                new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get(), 64));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_MODIFIER,
+                new ItemStack(Items.MILK_BUCKET, 1));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_ADDITIVE,
+                new ItemStack(net.langball.coffee.init.ModItems.ICE_SLAG.get(), 10));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_CONTAINER,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP_GLASS.get(), 16));
+        helper.runAfterDelay(160, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_OUTPUT);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COFFEE_LATTE_ICE.get()),
+                    "Coffee Machine should brew iced latte, got: " + out);
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void icedColdbrew_consumesIceSlag(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        MachineTestHelper.setItem(helper, pos, CoffeeMachineBlockEntity.SLOT_BASE,
+                new ItemStack(net.langball.coffee.init.ModItems.COLDBREW_BOTTLE.get(), 1));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_ADDITIVE,
+                new ItemStack(net.langball.coffee.init.ModItems.ICE_SLAG.get(), 10));
+        MachineTestHelper.insertItem(helper, pos, CoffeeMachineBlockEntity.SLOT_CONTAINER,
+                new ItemStack(net.langball.coffee.init.ModItems.CUP_GLASS.get(), 16));
+        helper.runAfterDelay(200, () -> {
+            ItemStack out = MachineTestHelper.getItem(helper, pos, CoffeeMachineBlockEntity.SLOT_OUTPUT);
+            helper.assertTrue(out.is(net.langball.coffee.init.ModItems.COFFEE_COLDBREW_ICE.get()),
+                    "Coffee Machine should brew iced coldbrew, got: " + out);
             helper.succeed();
         });
     }

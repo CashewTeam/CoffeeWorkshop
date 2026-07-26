@@ -136,6 +136,25 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     /** Slot indices that accept input from the top/bottom/etc. */
     protected abstract int[] getInputSlots();
 
+    /**
+     * Slot indices accessible from the top face.  Defaults to
+     * {@link #getInputSlots()}.  Override in machines that need
+     * different routing (e.g. Coffee Machine: top = base only).
+     */
+    protected int[] getTopInputSlots() {
+        return getInputSlots();
+    }
+
+    /**
+     * Slot indices accessible from horizontal faces.  Defaults to
+     * {@link #getInputSlots()}.  Override in machines that need
+     * different routing (e.g. Coffee Machine: sides = modifier,
+     * additive, container; not base).
+     */
+    protected int[] getHorizontalInputSlots() {
+        return getInputSlots();
+    }
+
     /** Slot indices that accept fuel from the sides.  Empty array
      *  for machines without a fuel slot (e.g. Coffee Machine). */
     protected abstract int[] getFuelSlots();
@@ -197,15 +216,17 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
                 return lazyHandler.cast();
             }
             return switch (side) {
-                case UP -> inputHandler.cast();
+                case UP -> LazyOptional.of(() ->
+                        new net.langball.coffee.capability.InsertOnlyItemHandler(itemHandler, getTopInputSlots())).cast();
                 case DOWN -> outputHandler.cast();
                 default -> { // horizontal
                     int[] fuelSlots = getFuelSlots();
                     if (fuelSlots.length > 0) {
                         yield fuelHandler.cast();
                     }
-                    // Coffee Machine: no fuel → horizontal also goes to input
-                    yield inputHandler.cast();
+                    // Expose horizontal-specific input slots
+                    yield LazyOptional.of(() ->
+                            new net.langball.coffee.capability.InsertOnlyItemHandler(itemHandler, getHorizontalInputSlots())).cast();
                 }
             };
         }

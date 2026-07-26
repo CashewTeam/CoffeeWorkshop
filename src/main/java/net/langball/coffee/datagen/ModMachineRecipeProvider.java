@@ -439,15 +439,10 @@ public final class ModMachineRecipeProvider {
                 .experience(0.2F).cookingTime(120)
                 .save(writer, id("coffee_brewing/iced_milk_tea"));
 
-        // Iced Mandarin Drink: coffee_powder + milk_bucket + ice_slag + cup_glass
-        // (ice_slag differentiator; hot version uses tea_leaf)
-        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_MANDARIN_DRINK_ICE.get()))
-                .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 1)
-                .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
-                .additive(Ingredient.of(ModItems.ICE_SLAG.get()), 1)
-                .container(Ingredient.of(ModItems.CUP_GLASS.get()), 1)
-                .experience(0.25F).cookingTime(140)
-                .save(writer, id("coffee_brewing/iced_mandarin_drink"));
+        // Iced Mandarin Drink: SKIPPED — same signature as Iced Latte
+        // (coffee_powder + milk_bucket + ice_slag + cup_glass).  Both would produce
+        // the same input signature.  Item remains creative-only until a second
+        // additive slot is available.
 
         // Iced Cocoa: 2×cocoa_powder + milk_bucket + ice_slag + cup_glass
         CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COCOA_ICE.get()))
@@ -495,15 +490,11 @@ public final class ModMachineRecipeProvider {
                 .experience(0.3F).cookingTime(140)
                 .save(writer, id("coffee_brewing/americano_nitro_ice"));
 
-        // Nitro Fruit Ice: coffee_powder + water_bucket + soda + cup_glass
-        // (No fruit syrup — only 1 additive slot; uses soda as the nitro component)
-        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_AMERICANO_NITRO_FRUIT_ICE.get()))
-                .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 1)
-                .modifier(Ingredient.of(Items.WATER_BUCKET), 1)
-                .additive(Ingredient.of(ModItems.SODA.get()), 1)
-                .container(Ingredient.of(ModItems.CUP_GLASS.get()), 1)
-                .experience(0.35F).cookingTime(140)
-                .save(writer, id("coffee_brewing/americano_nitro_fruit_ice"));
+        // NOTE: americano_nitro_fruit_ice is SKIPPED because it would share the signed
+        // (coffee_powder + water_bucket + soda + cup_glass) with americano_nitro_ice
+        // without actually consuming fruit syrup (only 1 additive slot available).
+        // The item remains registered but creative-only until a second additive slot
+        // is added in a future schema version.
 
         // ═══════════════════════════════════════════════════════════════════
         // Phase 4 P1: Coldbrew extensions

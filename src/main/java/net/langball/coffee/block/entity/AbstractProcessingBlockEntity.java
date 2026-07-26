@@ -62,11 +62,29 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
             activeRecipeId = null;
         }
 
-        // 2. Full scan via RecipeManager
-        var found = rm.getRecipeFor((RecipeType) getRecipeType(), container, level);
-        if (found.isPresent() && found.get() instanceof ProcessingRecipe pr) {
-            activeRecipeId = pr.getId();
-            return pr;
+        // 2. Full scan: find the BEST match (prefers recipe with highest total
+        //    consumed count to disambiguate e.g. Latte (1 powder) vs Macchiato (2 powder)
+        //    when both match the same input).
+        var allRecipes = rm.getAllRecipesFor((RecipeType) getRecipeType());
+        ProcessingRecipe best = null;
+        int bestTotal = -1;
+
+        for (var recipe : allRecipes) {
+            if (recipe instanceof ProcessingRecipe pr && pr.matches(container, level)) {
+                int total = 0;
+                for (int s : pr.getConsumedSlots()) {
+                    total += pr.getRequiredCount(s);
+                }
+                if (total > bestTotal) {
+                    bestTotal = total;
+                    best = pr;
+                }
+            }
+        }
+
+        if (best != null) {
+            activeRecipeId = best.getId();
+            return best;
         }
         activeRecipeId = null;
         return null;
@@ -90,22 +108,24 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
      * Atomically consumes inputs and produces the result using a
      * {@link net.langball.coffee.recipes.ConsumptionPlan}.
      *
-     * <h3>Process</h3>
-     * <ol>
-     *   <li>Assemble the result ItemStack.</li>
-     *   <li>Verify the output slot can accept the result.</li>
-     *   <li>Build a {@code ConsumptionPlan}: for every consumed slot,
-     *       check that enough items exist and that any remainder can
-     *       be placed back (or dropped safely).</li>
-     *   <li>If any check fails, abort — nothing is consumed.</li>
-     *   <li>Apply all entries atomically.</li>
-     *   <li>Place the result and record completion.</li>
-     * </ol>
+     * <h3>Guarantees</h3>
+     * <ul>
+     *   <li>All consumed slots are verified to have enough items.</li>
+     *   <li>Every remainder has a legal destination: the same slot after
+     *       it has been emptied by consumption.  If the slot still holds
+     *       items after consumption, processing is <b>halted</b> and
+     *       nothing is consumed (remainders are never dropped to the
+     *       world under normal operation).</li>
+     *   <li>Output capacity is checked before any slot mutation.</li>
+     *   <li>If any check fails, no slot is modified.</li>
+     * </ul>
      *
-     * <p>No longer uses {@code instanceof CoffeeBrewingRecipe} —
-     * remainder is obtained through the unified
-     * {@link net.langball.coffee.recipes.ProcessingRecipe#getRemainder(int)}
-     * interface method.
+     * <p>Rema​inder sources (checked in order):
+     * <ol>
+     *   <li>{@link ProcessingRecipe#getRemainder(int)} — for recipe-specific logic</li>
+     *   <li>If that returns empty, the consumed item's
+     *       {@link net.minecraft.world.item.ItemStack#getCraftingRemainingItem()}</li>
+     * </ol>
      */
     protected ProcessingRecipe processRecipe(ProcessingRecipe recipe) {
         if (level == null) return recipe;
@@ -122,53 +142,58 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
             return recipe; // output blocked — consume nothing
         }
 
-        // 3. Build consumption plan — pre-check every slot
+        // 3. Build & verify consumption plan
         int[] consumedSlots = recipe.getConsumedSlots();
         java.util.List<net.langball.coffee.recipes.ConsumptionEntry> entries =
                 new java.util.ArrayList<>(consumedSlots.length);
+        boolean canProcess = true;
 
         for (int slot : consumedSlots) {
             int required = recipe.getRequiredCount(slot);
             ItemStack current = itemHandler.getStackInSlot(slot);
 
-            // Safety: underflow check
             if (current.getCount() < required) {
-                return recipe; // not enough items — abort
+                canProcess = false;
+                break; // not enough items — abort
             }
 
-            // Get remainder via the unified interface
+            // Get remainder: recipe-specific first, then item's own crafting remainder
             ItemStack remainder = recipe.getRemainder(slot);
+            if (remainder.isEmpty()) {
+                // Simulate consuming one item to get its crafting remainder
+                ItemStack one = current.copyWithCount(1);
+                remainder = one.getCraftingRemainingItem();
+            }
 
-            // If remainder exists and there are more items in the stack than
-            // we're consuming, the remainder needs to either replace the empty
-            // slot or be dropped.  We pre-verify that the slot can hold it.
-            if (!remainder.isEmpty() && current.getCount() == required) {
-                // After consumption, the slot will be empty — remainder replaces it.
-                // No capacity check needed (slot becomes the remainder).
+            int remainingAfter = current.getCount() - required;
+
+            // Remainder legality: a remainder can ONLY be placed back if the
+            // slot is fully vacated (count drops to 0).  If there are still
+            // items left, the remainder has no home → halt processing.
+            if (!remainder.isEmpty() && remainingAfter > 0) {
+                canProcess = false;
+                break;
             }
 
             entries.add(new net.langball.coffee.recipes.ConsumptionEntry(slot, required, remainder));
         }
 
-        // 4. Apply atomically
+        if (!canProcess) {
+            return recipe; // remainder placement impossible — consume nothing
+        }
+
+        // 4. Apply atomically — every remainder is guaranteed to have room
         for (var entry : entries) {
             ItemStack stack = itemHandler.getStackInSlot(entry.slot());
             stack.shrink(entry.count());
 
             if (!entry.remainder().isEmpty()) {
-                if (stack.isEmpty()) {
-                    // Slot vacated — place remainder directly
-                    itemHandler.setStackInSlot(entry.slot(), entry.remainder().copy());
-                } else {
-                    // Items remain in slot — remainder falls to the world
-                    net.minecraft.world.Containers.dropItemStack(level,
-                            worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
-                            entry.remainder().copy());
-                }
+                // By pre-check: stack must be empty here (remainingAfter == 0)
+                itemHandler.setStackInSlot(entry.slot(), entry.remainder().copy());
             }
         }
 
-        // 5. Place result
+        // 5. Place result and record completion
         insertResult(getOutputSlot(), result);
         recordRecipeCompletion(recipe);
         return recipe;

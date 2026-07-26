@@ -59,9 +59,10 @@ public interface ProcessingRecipe {
      * Returns the remainder ItemStack left behind after consuming from
      * {@code slot}, or {@link ItemStack#EMPTY} if none.
      *
-     * <p>The default implementation derives the remainder from the
-     * consumed stack via {@link ItemStack#getCraftingRemainingItem()}.
-     * Override for recipes that need custom per-slot remainder logic.
+     * <p>The default implementation returns the crafting remaining item
+     * for the stack in the given slot (e.g. glass_bottle from
+     * coldbrew_bottle, bucket from milk_bucket, syrup_empty from
+     * syrup).  Override for recipes that need custom per-slot logic.
      */
     default ItemStack getRemainder(int slot) {
         return ItemStack.EMPTY;

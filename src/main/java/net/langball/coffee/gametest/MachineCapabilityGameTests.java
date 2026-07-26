@@ -115,12 +115,32 @@ public class MachineCapabilityGameTests {
         helper.setBlock(POS, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
         IItemHandler handler = requireHandler(helper, POS, Direction.NORTH);
 
-        // CoffeeMachine has no fuel slot — horizontal should accept input
-        var cb = net.langball.coffee.init.ModItems.COFFEE_BEAN;
-        ItemStack inserted = handler.insertItem(0,
-                new ItemStack(cb != null ? cb.get() : Items.APPLE, 1), false);
+        // CoffeeMachine has no fuel slot — horizontal exposes modifier/additive/container slots
+        // Slot 1 (modifier) should accept water_bucket
+        ItemStack inserted = handler.insertItem(1,
+                new ItemStack(Items.WATER_BUCKET, 1), false);
         helper.assertTrue(inserted.isEmpty(),
-                "CoffeeMachine SIDE should accept input (no fuel slot)");
+                "CoffeeMachine SIDE should accept water_bucket into modifier slot");
+
+        // Slot 0 (base) should NOT be accessible from horizontal
+        ItemStack rejected = handler.insertItem(0,
+                new ItemStack(Items.WHEAT, 1), false);
+        helper.assertTrue(!rejected.isEmpty(),
+                "CoffeeMachine SIDE should reject insertion into base slot");
+
+        // Slot 2 (additive) should accept cocoa_powder
+        var cocoa = net.langball.coffee.init.ModItems.COCOA_POWDER;
+        ItemStack insertedAdd = handler.insertItem(2,
+                new ItemStack(cocoa.get(), 1), false);
+        helper.assertTrue(insertedAdd.isEmpty(),
+                "CoffeeMachine SIDE should accept cocoa_powder into additive slot");
+
+        // Slot 3 (container) should accept cup
+        var cup = net.langball.coffee.init.ModItems.CUP;
+        ItemStack insertedCont = handler.insertItem(3,
+                new ItemStack(cup.get(), 1), false);
+        helper.assertTrue(insertedCont.isEmpty(),
+                "CoffeeMachine SIDE should accept cup into container slot");
 
         helper.succeed();
     }

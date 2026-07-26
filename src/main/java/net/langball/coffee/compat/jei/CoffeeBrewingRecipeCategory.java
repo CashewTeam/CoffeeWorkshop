@@ -13,6 +13,7 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.recipes.CoffeeBrewingRecipe;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,9 +24,8 @@ import net.minecraft.world.item.ItemStack;
 /**
  * JEI recipe category for the Coffee Machine — v2 5-slot layout.
  *
- * <pre>
- * [Base]  [Modifier?]  [Additive?]  [Container]  →  [Output]
- * </pre>
+ * <p>Shows ingredient counts as text labels on input slots and
+ * cup count on the output.
  */
 public class CoffeeBrewingRecipeCategory extends AbstractRecipeCategory<CoffeeBrewingRecipe> {
 
@@ -46,27 +46,39 @@ public class CoffeeBrewingRecipeCategory extends AbstractRecipeCategory<CoffeeBr
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, CoffeeBrewingRecipe recipe, IFocusGroup focuses) {
-        // Slot 0: base — top left
+        // Slot 0: base with count
+        var baseStack = new ItemStack(
+                recipe.base().ingredient().getItems()[0].getItem(),
+                recipe.base().count());
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 1)
-                .addIngredients(recipe.base().ingredient());
+                .addItemStack(baseStack);
 
-        // Slot 1: modifier — second column, top, or empty
+        // Slot 1: modifier (optional)
         if (recipe.modifier() != null) {
+            var modStack = new ItemStack(
+                    recipe.modifier().ingredient().getItems()[0].getItem(),
+                    recipe.modifier().count());
             builder.addSlot(RecipeIngredientRole.INPUT, 19, 1)
-                    .addIngredients(recipe.modifier().ingredient());
+                    .addItemStack(modStack);
         }
 
-        // Slot 2: additive — third column, top, or empty
+        // Slot 2: additive (optional)
         if (recipe.additive() != null) {
+            var addStack = new ItemStack(
+                    recipe.additive().ingredient().getItems()[0].getItem(),
+                    recipe.additive().count());
             builder.addSlot(RecipeIngredientRole.INPUT, 37, 1)
-                    .addIngredients(recipe.additive().ingredient());
+                    .addItemStack(addStack);
         }
 
-        // Slot 3: container — fourth column, top
+        // Slot 3: container with count
+        var contStack = new ItemStack(
+                recipe.container().ingredient().getItems()[0].getItem(),
+                recipe.container().count());
         builder.addSlot(RecipeIngredientRole.INPUT, 55, 1)
-                .addIngredients(recipe.container().ingredient());
+                .addItemStack(contStack);
 
-        // Slot 4: output — right side, centered vertically
+        // Slot 4: output
         ItemStack result = recipe.getResultItem(Minecraft.getInstance().level != null
                 ? Minecraft.getInstance().level.registryAccess() : null);
         builder.addSlot(RecipeIngredientRole.OUTPUT, 124, 1)
@@ -87,7 +99,7 @@ public class CoffeeBrewingRecipeCategory extends AbstractRecipeCategory<CoffeeBr
             graphics.drawString(font, xpText, 1, 44, 0xFF808080, false);
         }
 
-        // Show cup count on the output tooltip area
+        // Show cup count on output
         ItemStack result = recipe.getResultItem(Minecraft.getInstance().level != null
                 ? Minecraft.getInstance().level.registryAccess() : null);
         if (result.getItem() instanceof net.langball.coffee.item.DrinkCoffee) {

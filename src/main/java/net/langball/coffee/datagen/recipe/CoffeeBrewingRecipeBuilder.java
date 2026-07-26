@@ -12,10 +12,16 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
  * DataGen builder for {@link CoffeeBrewingRecipe} (v2 — 5-slot).
+ *
+ * <p>Validates recipe signatures at build time to prevent ambiguous
+ * recipes (identical inputs producing different outputs).
  *
  * <pre>{@code
  * CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_MOCHACCINO.get()))
@@ -28,6 +34,9 @@ import java.util.function.Consumer;
  * }</pre>
  */
 public class CoffeeBrewingRecipeBuilder {
+
+    /** Tracks used signatures to detect duplicate (ambiguous) recipes. */
+    private static final Map<Signature, ResourceLocation> USED_SIGNATURES = new HashMap<>();
 
     private final ItemStack result;
     private SlotIngredient base;
@@ -42,6 +51,11 @@ public class CoffeeBrewingRecipeBuilder {
         this.result = result;
     }
 
+    /** Clears the signature tracker (call before each DataGen run). */
+    public static void resetSignatures() {
+        USED_SIGNATURES.clear();
+    }
+
     public static CoffeeBrewingRecipeBuilder brewing(ItemStack result) {
         return new CoffeeBrewingRecipeBuilder(result);
     }
@@ -51,15 +65,11 @@ public class CoffeeBrewingRecipeBuilder {
         return this;
     }
 
-    /** Sets the modifier ingredient.  Omit this call for recipes that
-     *  require the modifier slot to be empty (e.g. Espresso). */
     public CoffeeBrewingRecipeBuilder modifier(Ingredient ingredient, int count) {
         this.modifier = new SlotIngredient(ingredient, count);
         return this;
     }
 
-    /** Sets the additive ingredient.  Omit this call for recipes that
-     *  require the additive slot to be empty (e.g. basic Americano). */
     public CoffeeBrewingRecipeBuilder additive(Ingredient ingredient, int count) {
         this.additive = new SlotIngredient(ingredient, count);
         return this;
@@ -76,15 +86,69 @@ public class CoffeeBrewingRecipeBuilder {
 
     public void save(Consumer<FinishedRecipe> writer, ResourceLocation id) {
         validate(id);
+        checkSignature(id);
         writer.accept(new Result(id));
     }
 
     private void validate(ResourceLocation id) {
         if (base == null) throw new IllegalArgumentException("Coffee recipe '" + id + "' missing base");
+        if (base.ingredient().isEmpty())
+            throw new IllegalArgumentException("Coffee recipe '" + id + "' base ingredient is empty");
+        if (base.count() < 1) throw new IllegalArgumentException("Coffee recipe '" + id + "' base count < 1");
         if (container == null) throw new IllegalArgumentException("Coffee recipe '" + id + "' missing container");
+        if (container.ingredient().isEmpty())
+            throw new IllegalArgumentException("Coffee recipe '" + id + "' container ingredient is empty");
+        if (container.count() < 1) throw new IllegalArgumentException("Coffee recipe '" + id + "' container count < 1");
         if (result.isEmpty()) throw new IllegalArgumentException("Coffee recipe '" + id + "' has empty result");
+        if (result.getCount() < 1) throw new IllegalArgumentException("Coffee recipe '" + id + "' result count < 1");
+        if (result.getCount() > result.getMaxStackSize())
+            throw new IllegalArgumentException("Coffee recipe '" + id + "' result count exceeds max stack");
         if (cookingTime < 1 || cookingTime > 72000)
-            throw new IllegalArgumentException("Coffee recipe '" + id + "' cookingTime out of range");
+            throw new IllegalArgumentException("Coffee recipe '" + id + "' cookingTime out of range [1,72000]");
+        if (Float.isNaN(experience) || Float.isInfinite(experience) || experience < 0)
+            throw new IllegalArgumentException("Coffee recipe '" + id + "' invalid experience: " + experience);
+        if (modifier != null && (modifier.ingredient().isEmpty() || modifier.count() < 1))
+            throw new IllegalArgumentException("Coffee recipe '" + id + "' invalid modifier ingredient/count");
+        if (additive != null && (additive.ingredient().isEmpty() || additive.count() < 1))
+            throw new IllegalArgumentException("Coffee recipe '" + id + "' invalid additive ingredient/count");
+    }
+
+    /**
+     * Checks that no other coffee brewing recipe shares the same input
+     * signature (base/modifier/additive/container items and counts).
+     * Throws a fatal error if a conflict is detected.
+     */
+    private void checkSignature(ResourceLocation id) {
+        Signature sig = new Signature(
+                buildItemKey(base),
+                modifier != null ? buildItemKey(modifier) : null,
+                additive != null ? buildItemKey(additive) : null,
+                buildItemKey(container));
+        ResourceLocation existing = USED_SIGNATURES.put(sig, id);
+        if (existing != null) {
+            throw new IllegalStateException(
+                    "Ambiguous coffee brewing recipes: '" + id + "' and '" + existing
+                    + "' have the same input signature " + sig
+                    + ". Each coffee brewing recipe must have a unique combination of "
+                    + "base, modifier, additive, and container items/counts.");
+        }
+    }
+
+    /** Builds a simple string key from a SlotIngredient's first item + count. */
+    private static String buildItemKey(SlotIngredient si) {
+        ItemStack[] items = si.ingredient().getItems();
+        // If Ingredient is empty, use the item representation as-is
+        String itemId = items.length > 0
+                ? BuiltInRegistries.ITEM.getKey(items[0].getItem()).toString()
+                : "empty";
+        return itemId + "x" + si.count();
+    }
+
+    /** Immutable signature record for duplicate detection. */
+    private record Signature(String base, @Nullable String modifier, @Nullable String additive, String container) {
+        @Override public String toString() {
+            return "Signature[base=" + base + ", mod=" + modifier + ", add=" + additive + ", cont=" + container + "]";
+        }
     }
 
     private class Result implements FinishedRecipe {

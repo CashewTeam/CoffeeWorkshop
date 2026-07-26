@@ -6,6 +6,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.registries.DeferredRegister;
@@ -191,7 +192,10 @@ public class ModItems {
     public static final RegistryObject<Item> EMPTY_COLDBREW_POT = ITEMS.register("empty_coldbrew_pot",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> COLDBREW_BOTTLE = ITEMS.register("coldbrew_bottle",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties()) {
+                @Override public boolean hasCraftingRemainingItem() { return true; }
+                @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return new ItemStack(Items.GLASS_BOTTLE); }
+            });
 
     // ========================================================================
     // Foods (with FoodProperties)

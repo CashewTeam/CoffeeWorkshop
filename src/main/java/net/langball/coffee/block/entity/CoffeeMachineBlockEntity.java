@@ -74,6 +74,12 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
     protected int[] getInputSlots() { return new int[]{SLOT_BASE, SLOT_MODIFIER, SLOT_ADDITIVE, SLOT_CONTAINER}; }
 
     @Override
+    protected int[] getTopInputSlots() { return new int[]{SLOT_BASE}; }
+
+    @Override
+    protected int[] getHorizontalInputSlots() { return new int[]{SLOT_MODIFIER, SLOT_ADDITIVE, SLOT_CONTAINER}; }
+
+    @Override
     protected int[] getFuelSlots() { return new int[0]; }
 
     @Override
