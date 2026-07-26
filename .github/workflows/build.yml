@@ -154,6 +154,17 @@ jobs:
       - name: Pre-build resource audit
         run: python tools/audit_resources.py
 
+      - name: Content surface audit
+        run: python tools/audit_content_surface.py
+
+      - name: Verify manifest is current
+        run: |
+          python tools/build_content_manifest.py
+          git diff --exit-code -- docs/CONTENT_MANIFEST.md docs/content_manifest.json || {
+            echo "::error::Content manifest is out of date. Run: python tools/build_content_manifest.py"
+            exit 1
+          }
+
       # 只有一次 Gradle 启动。
       #
       # 普通构建：
