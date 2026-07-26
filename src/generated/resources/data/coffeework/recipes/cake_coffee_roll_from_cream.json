@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:cake_roll"
+    },
+    {
+      "item": "coffeework:cream_coffee"
+    }
+  ],
+  "result": {
+    "item": "coffeework:cake_coffee_roll"
+  }
+}

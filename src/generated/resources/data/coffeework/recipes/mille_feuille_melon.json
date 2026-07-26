@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:puff"
+    },
+    {
+      "item": "coffeework:puff"
+    },
+    {
+      "item": "coffeework:cream_melon"
+    }
+  ],
+  "result": {
+    "item": "coffeework:mille_feuille"
+  }
+}

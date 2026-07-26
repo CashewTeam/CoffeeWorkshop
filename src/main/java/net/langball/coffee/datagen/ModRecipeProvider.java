@@ -930,6 +930,38 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.MELON_SLICE)
                 .save(writer, modLoc("cream_melon"));
 
+        // Phase 6: Cream → Cake Roll assembly (cream as filling for plain rolls)
+        // These provide a cream consumption path — cream as a public intermediate.
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_BERRY_ROLL.get(), ModItems.CREAM_BERRY.get())
+                .requires(ModItems.CAKE_ROLL.get())
+                .requires(ModItems.CREAM_BERRY.get())
+                .save(writer, modLoc("cake_berry_roll_from_cream"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_CHOCOLATE_ROLL.get(), ModItems.CREAM_CHOCOLATE.get())
+                .requires(ModItems.CAKE_ROLL.get())
+                .requires(ModItems.CREAM_CHOCOLATE.get())
+                .save(writer, modLoc("cake_chocolate_roll_from_cream"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_COFFEE_ROLL.get(), ModItems.CREAM_COFFEE.get())
+                .requires(ModItems.CAKE_ROLL.get())
+                .requires(ModItems.CREAM_COFFEE.get())
+                .save(writer, modLoc("cake_coffee_roll_from_cream"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_LEMON_ROLL.get(), ModItems.CREAM_LEMON.get())
+                .requires(ModItems.CAKE_ROLL.get())
+                .requires(ModItems.CREAM_LEMON.get())
+                .save(writer, modLoc("cake_lemon_roll_from_cream"));
+
+        // Phase 6: Creams as alternative fillings for puff, mille-feuille
+        // cream_apple and cream_melon enter the chain via mille-feuille variations
+        shapeless(RecipeCategory.FOOD, ModItems.MILLE_FEUILLE.get(), ModItems.CREAM_APPLE.get())
+                .requires(ModItems.PUFF.get())
+                .requires(ModItems.PUFF.get())
+                .requires(ModItems.CREAM_APPLE.get())
+                .save(writer, modLoc("mille_feuille_apple"));
+        shapeless(RecipeCategory.FOOD, ModItems.MILLE_FEUILLE.get(), ModItems.CREAM_MELON.get())
+                .requires(ModItems.PUFF.get())
+                .requires(ModItems.PUFF.get())
+                .requires(ModItems.CREAM_MELON.get())
+                .save(writer, modLoc("mille_feuille_melon"));
+
         // Phase 6: Cookie Ice Creams (cookie + ice cream → cookie ice cream)
         shapeless(RecipeCategory.FOOD, ModItems.COOKIE_ICECREAM_VANILLA.get(), ModItems.ICECREAM_VANILLA.get())
                 .requires(Items.COOKIE)

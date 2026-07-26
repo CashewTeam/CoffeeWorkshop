@@ -130,6 +130,18 @@ public final class ModMachineRecipeProvider {
                 .experience(0.15F).cookingTime(200)
                 .save(writer, id("oven_baking/croissant"));
 
+        // Phase 7: Ginger Bread (dough_ginger → oven)
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.DOUGH_GINGER.get()),
+                new ItemStack(ModItems.GINGER_BREAD.get()))
+                .experience(0.15F).cookingTime(200)
+                .save(writer, id("oven_baking/ginger_bread"));
+
+        // Phase 7: Puff (dough_pastry → oven)
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.DOUGH_PASTRY.get()),
+                new ItemStack(ModItems.PUFF.get()))
+                .experience(0.15F).cookingTime(200)
+                .save(writer, id("oven_baking/puff"));
+
         // Phase 5.4/7: Raw intermediates → finished cakes (production chain)
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.CAKE_CHEESE_RAW.get()),
                 new ItemStack(ModBlocks.CAKE_CHEESE.get()))
