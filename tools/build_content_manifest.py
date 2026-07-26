@@ -186,8 +186,30 @@ def is_drink_plate(name):
 
 # ── Registry parsing ───────────────────────────────────────────────
 
+def _scan_java_files(glob_pattern: str) -> list:
+    """Find all Java files matching a pattern in the init/ directory.
+    Supports both single-file and multi-file layouts.
+    """
+    init_dir = JAVA / "init"
+    if not init_dir.exists():
+        return []
+    matches = list(init_dir.glob(glob_pattern))
+    if not matches:
+        # Fallback: try the old single-file name
+        return []
+    return sorted(matches)
+
+
+def _read_all_java_text(glob_pattern: str) -> str:
+    """Concatenate text from all matching Java files in init/."""
+    files = _scan_java_files(glob_pattern)
+    return "\n".join(f.read_text(encoding="utf-8") for f in files)
+
+
 def parse_registry():
-    """Parse all Java registry files, keeping items and blocks separate to avoid overwrite."""
+    """Parse all Java registry files, keeping items and blocks separate to avoid overwrite.
+    Supports both single-file (ModItems.java) and multi-file (ModCoffeeItems.java, etc.) layouts.
+    """
     items = {}   # registry_id → {type: "item", java_field, block_item, ...}
     blocks = {}  # registry_id → {type: "block", java_field, ...}
     effects = {}
@@ -198,25 +220,37 @@ def parse_registry():
     # Build field_name → registry_id lookup
     field_to_id = {}
     
-    # ModItems.java
-    items_file = JAVA / "init" / "ModItems.java"
-    if items_file.exists():
-        text = items_file.read_text(encoding="utf-8")
-        for m in re.finditer(r'public static final RegistryObject<Item>\s+(\w+)\s*=\s*ITEMS\.register\("([^"]+)"', text):
+    # Scan all Mod*Items*.java files
+    items_text = _read_all_java_text("Mod*Items*.java")
+    if items_text:
+        # Pattern 1: old-style inline declarations
+        for m in re.finditer(r'public static final RegistryObject<Item>\s+(\w+)\s*=\s*ITEMS\.register\("([^"]+)"', items_text):
             field, rid = m.group(1), m.group(2)
             items[rid] = {"type": "item", "java_field": field, "block_item": False}
             field_to_id[field.lower()] = rid
+        # Pattern 2: new-style delegated registrations (ModItems.X = items.register("id", ...))
+        for m in re.finditer(r'ModItems\.(\w+)\s*=\s*items\.register\("([^"]+)"', items_text):
+            field, rid = m.group(1), m.group(2)
+            if rid not in items:  # don't overwrite
+                items[rid] = {"type": "item", "java_field": field, "block_item": False}
+                field_to_id[field.lower()] = rid
     
-    # ModBlocks.java
-    blocks_file = JAVA / "init" / "ModBlocks.java"
+    # Scan all Mod*Blocks*.java files
+    blocks_text = _read_all_java_text("Mod*Blocks*.java")
     block_field_to_id = {}
-    if blocks_file.exists():
-        text = blocks_file.read_text(encoding="utf-8")
-        for m in re.finditer(r'public static final RegistryObject<Block>\s+(\w+)\s*=\s*BLOCKS\.register\("([^"]+)"', text):
+    if blocks_text:
+        for m in re.finditer(r'public static final RegistryObject<Block>\s+(\w+)\s*=\s*BLOCKS\.register\("([^"]+)"', blocks_text):
             field, rid = m.group(1), m.group(2)
             blocks[rid] = {"type": "block", "java_field": field}
             block_field_to_id[field.lower()] = rid
             field_to_id[field.lower()] = rid
+        # New-style delegated: ModBlocks.X = blocks.register("id", ...)
+        for m in re.finditer(r'ModBlocks\.(\w+)\s*=\s*blocks\.register\("([^"]+)"', blocks_text):
+            field, rid = m.group(1), m.group(2)
+            if rid not in blocks:
+                blocks[rid] = {"type": "block", "java_field": field}
+                block_field_to_id[field.lower()] = rid
+                field_to_id[field.lower()] = rid
     
     # Detect BlockItems: items whose registry ID matches a block ID
     for rid in items:
@@ -225,10 +259,11 @@ def parse_registry():
             items[rid]["block_of"] = rid
     
     # Also check BlockItem constructor patterns for ID mismatches (e.g. grinder_off → grinder)
-    # Uses DOTALL to cross lambda lines: ITEMS.register("grinder_off", () -> new BlockItem(ModBlocks.GRINDER.get()
-    if items_file.exists():
+    # Process each file separately so DOTALL regex doesn't cross file boundaries.
+    items_files = _scan_java_files("Mod*Items*.java")
+    for items_file in items_files:
         text = items_file.read_text(encoding="utf-8")
-        for m in re.finditer(r'ITEMS\.register\("([^"]+)".*?new\s+BlockItem\(ModBlocks\.(\w+)\.get\(\)', text, re.DOTALL):
+        for m in re.finditer(r'(?:ITEMS|items)\.register\("([^"]+)".*?new\s+BlockItem\(ModBlocks\.(\w+)\.get\(\)', text, re.DOTALL):
             item_rid, block_field = m.group(1), m.group(2)
             if item_rid in items:
                 block_rid = block_field_to_id.get(block_field.lower(), block_field.lower())
@@ -377,13 +412,15 @@ def scan_creative_tab():
         field = m.group(1).lower()
         items.add(field)
     
-    # Build field → id mapping from ModItems.java
+    # Build field → id mapping from all Mod*Items*.java files
     field_to_id = {}
-    items_file = JAVA / "init" / "ModItems.java"
-    if items_file.exists():
-        text = items_file.read_text(encoding="utf-8")
-        for m in re.finditer(r'public static final RegistryObject<Item>\s+(\w+)\s*=\s*ITEMS\.register\("([^"]+)"', text):
+    items_text = _read_all_java_text("Mod*Items*.java")
+    if items_text:
+        for m in re.finditer(r'public static final RegistryObject<Item>\s+(\w+)\s*=\s*ITEMS\.register\("([^"]+)"', items_text):
             field_to_id[m.group(1).lower()] = m.group(2)
+        for m in re.finditer(r'ModItems\.(\w+)\s*=\s*items\.register\("([^"]+)"', items_text):
+            if m.group(1).lower() not in field_to_id:
+                field_to_id[m.group(1).lower()] = m.group(2)
     
     # Resolve
     resolved = set()
@@ -407,13 +444,15 @@ def scan_trades():
         field = m.group(1).lower()
         items.add(field)
     
-    # Resolve via field_to_id
+    # Resolve via field_to_id from all Mod*Items*.java files
     field_to_id = {}
-    items_file = JAVA / "init" / "ModItems.java"
-    if items_file.exists():
-        text = items_file.read_text(encoding="utf-8")
-        for m in re.finditer(r'public static final RegistryObject<Item>\s+(\w+)\s*=\s*ITEMS\.register\("([^"]+)"', text):
+    items_text = _read_all_java_text("Mod*Items*.java")
+    if items_text:
+        for m in re.finditer(r'public static final RegistryObject<Item>\s+(\w+)\s*=\s*ITEMS\.register\("([^"]+)"', items_text):
             field_to_id[m.group(1).lower()] = m.group(2)
+        for m in re.finditer(r'ModItems\.(\w+)\s*=\s*items\.register\("([^"]+)"', items_text):
+            if m.group(1).lower() not in field_to_id:
+                field_to_id[m.group(1).lower()] = m.group(2)
     
     resolved = set()
     for f in items:

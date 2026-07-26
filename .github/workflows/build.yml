@@ -110,6 +110,9 @@ jobs:
       - name: Content surface audit
         run: python tools/audit_content_surface.py
 
+      - name: Legacy runtime coverage audit
+        run: python tools/audit_legacy_runtime_coverage.py
+
       - name: Verify manifest is current
         run: |
           python tools/build_content_manifest.py

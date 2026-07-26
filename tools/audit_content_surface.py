@@ -48,26 +48,55 @@ REPORT_DIR = ROOT / "build" / "reports"
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
 
+def _read_init_files(glob_pattern: str) -> str:
+    """Concatenate text from all matching Java files in init/."""
+    init_dir = JAVA / "init"
+    if not init_dir.exists():
+        return ""
+    files = sorted(init_dir.glob(glob_pattern))
+    if not files:
+        # Fallback: try single file
+        single = init_dir / glob_pattern.replace("*", "")
+        if single.exists():
+            return single.read_text(encoding="utf-8")
+        return ""
+    return "\n".join(f.read_text(encoding="utf-8") for f in files)
+
+
 def parse_registry_entries():
-    """Parse Java init files to extract all registered IDs."""
+    """Parse Java init files to extract all registered IDs.
+    Supports both single-file and multi-file layouts."""
     entries = []
     
-    # Parse ModItems.java
-    items_file = JAVA / "init" / "ModItems.java"
-    if items_file.exists():
-        text = items_file.read_text(encoding="utf-8")
-        # Match: public static final RegistryObject<Item> NAME = ITEMS.register("id", ...);
+    # Scan all Mod*Items*.java files
+    items_text = _read_init_files("Mod*Items*.java")
+    if items_text:
+        # Old-style: ITEMS.register("id", ...)
         pattern = r'ITEMS\.register\("([^"]+)"'
-        for m in re.finditer(pattern, text):
+        for m in re.finditer(pattern, items_text):
             entries.append({"id": m.group(1), "type": "item", "file": "ModItems.java"})
+        # New-style delegated: ModItems.X = items.register("id", ...)
+        pattern2 = r'items\.register\("([^"]+)"'
+        seen = {e["id"] for e in entries}
+        for m in re.finditer(pattern2, items_text):
+            rid = m.group(1)
+            if rid not in seen:
+                entries.append({"id": rid, "type": "item", "file": "ModItems.java"})
+                seen.add(rid)
     
-    # Parse ModBlocks.java
-    blocks_file = JAVA / "init" / "ModBlocks.java"
-    if blocks_file.exists():
-        text = blocks_file.read_text(encoding="utf-8")
+    # Scan all Mod*Blocks*.java files
+    blocks_text = _read_init_files("Mod*Blocks*.java")
+    if blocks_text:
         pattern = r'BLOCKS\.register\("([^"]+)"'
-        for m in re.finditer(pattern, text):
+        for m in re.finditer(pattern, blocks_text):
             entries.append({"id": m.group(1), "type": "block", "file": "ModBlocks.java"})
+        pattern2 = r'blocks\.register\("([^"]+)"'
+        seen = {e["id"] for e in entries if e["type"] == "block"}
+        for m in re.finditer(pattern2, blocks_text):
+            rid = m.group(1)
+            if rid not in seen:
+                entries.append({"id": rid, "type": "block", "file": "ModBlocks.java"})
+                seen.add(rid)
     
     # Parse ModEffects.java
     effects_file = JAVA / "init" / "ModEffects.java"
@@ -128,14 +157,18 @@ def extract_item_ids_from_tab():
 
 
 def build_field_to_id_map():
-    """Build Java field name → registry ID mapping from ModItems.java."""
+    """Build Java field name → registry ID mapping from all Mod*Items*.java files."""
     field_to_id = {}
-    items_file = JAVA / "init" / "ModItems.java"
-    if items_file.exists():
-        text = items_file.read_text(encoding="utf-8")
+    items_text = _read_init_files("Mod*Items*.java")
+    if items_text:
         pattern = r'public static final RegistryObject<Item>\s+(\w+)\s*=\s*ITEMS\.register\("([^"]+)"'
-        for m in re.finditer(pattern, text):
+        for m in re.finditer(pattern, items_text):
             field_to_id[m.group(1).lower()] = m.group(2)
+        # New-style delegated
+        pattern2 = r'ModItems\.(\w+)\s*=\s*items\.register\("([^"]+)"'
+        for m in re.finditer(pattern2, items_text):
+            if m.group(1).lower() not in field_to_id:
+                field_to_id[m.group(1).lower()] = m.group(2)
     return field_to_id
 
 
