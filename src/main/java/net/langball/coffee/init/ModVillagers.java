@@ -172,7 +172,8 @@ public class ModVillagers {
         Int2ObjectMap<VillagerTrades.ItemListing[]> materialsTrades = new Int2ObjectOpenHashMap<>();
         materialsTrades.put(1, new VillagerTrades.ItemListing[]{
                 new ItemsForEmeralds(ModItems.COFFEE_INSTANT_STICK.get(), 2, 3, 12, 2),
-                new EmeraldsForItems(ModItems.COFFEE_BEAN.get(), 1, 2, 16, 1)
+                new EmeraldsForItems(ModItems.COFFEE_BEAN.get(), 1, 2, 16, 1),
+                new ItemsForEmeralds(ModItems.LEMON.get(), 1, 2, 12, 1)
         });
         materialsTrades.put(2, new VillagerTrades.ItemListing[]{
                 new EmeraldsForItems(ModItems.COFFEE_INSTANT_BOX.get(), 5, 1, 8, 5),

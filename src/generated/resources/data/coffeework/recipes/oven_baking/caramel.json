@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:oven_baking",
+  "cookingtime": 300,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "minecraft:sugar"
+  },
+  "result": {
+    "item": "coffeework:caramel"
+  }
+}

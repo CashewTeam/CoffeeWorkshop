@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:hardtack"
+    },
+    {
+      "item": "coffeework:hardtack"
+    },
+    {
+      "item": "coffeework:marshmallow_roast"
+    },
+    {
+      "item": "coffeework:chocolate_bar"
+    }
+  ],
+  "result": {
+    "item": "coffeework:smore"
+  }
+}

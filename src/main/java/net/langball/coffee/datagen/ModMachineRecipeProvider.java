@@ -110,6 +110,18 @@ public final class ModMachineRecipeProvider {
                 new ItemStack(ModItems.BREAD_ROUND.get()))
                 .experience(0.35F).cookingTime(200)
                 .save(writer, id("oven_baking/plate_dough_to_bread_round"));
+
+        // Phase 5.3: Caramel (sugar → oven)
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(Items.SUGAR),
+                new ItemStack(ModItems.CARAMEL.get()))
+                .experience(0.1F).cookingTime(300)
+                .save(writer, id("oven_baking/caramel"));
+
+        // Phase 5.3: Hardtack (dough_bread → oven)
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.DOUGH_BREAD.get()),
+                new ItemStack(ModItems.HARDTACK.get()))
+                .experience(0.15F).cookingTime(200)
+                .save(writer, id("oven_baking/hardtack"));
     }
 
     private static void buildRollingRecipes(Consumer<FinishedRecipe> writer) {

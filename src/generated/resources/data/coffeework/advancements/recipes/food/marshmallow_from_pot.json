@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "minecraft:oak_leaves"
+              "coffeework:pot"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "coffeework:lemon"
+        "recipe": "coffeework:marshmallow_from_pot"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "coffeework:lemon"
+      "coffeework:marshmallow_from_pot"
     ]
   },
   "sends_telemetry_event": false

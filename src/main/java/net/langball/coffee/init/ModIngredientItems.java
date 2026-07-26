@@ -159,8 +159,21 @@ public class ModIngredientItems {
                 () -> new Item(new Item.Properties()));
         ModItems.BAG = items.register("bag",
                 () -> new Item(new Item.Properties()));
-        // Phase 5.2: Lemon ingredient (survival: oak/birch leaf drop or villager trade)
+        // Phase 5.2: Lemon ingredient (villager trade source)
         ModItems.LEMON = items.register("lemon",
                 () -> new Item(new Item.Properties()));
+
+        // Phase 5.3: Confectionery foundation
+        ModItems.CARAMEL = items.register("caramel",
+                () -> new Item(new Item.Properties()));
+        ModItems.CUSTARD = items.register("custard",
+                () -> new Item(new Item.Properties()));
+        ModItems.MILK_FORM = items.register("milk_form",
+                () -> new Item(new Item.Properties()));
+        ModItems.POT = items.register("pot",
+                () -> new Item(new Item.Properties().stacksTo(16)) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
+                });
     }
 }

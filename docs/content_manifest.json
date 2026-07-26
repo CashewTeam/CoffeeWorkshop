@@ -1,31 +1,31 @@
 {
   "stats": {
-    "registered": 251,
+    "registered": 263,
     "by_type": {
-      "item": 191,
+      "item": 203,
       "block": 49,
       "mob_effect": 3,
       "villager_profession": 3,
       "poi_type": 2,
       "sound_event": 3
     },
-    "orphan_assets": 625,
+    "orphan_assets": 613,
     "orphan_by_classification": {
       "ASSET_ARCHIVE": 521,
       "REDESIGN": 5,
-      "REMOVED": 33,
       "MERGED": 14,
-      "PORT_LATER": 52
+      "PORT_LATER": 52,
+      "REMOVED": 21
     },
     "completeness": {
-      "model_ok": 191,
-      "texture_ok": 191,
-      "lang_en_ok": 191,
-      "lang_zh_ok": 191,
-      "lang_ja_ok": 191,
-      "creative_tab_ok": 191,
-      "has_source": 191,
-      "total_items": 191
+      "model_ok": 203,
+      "texture_ok": 203,
+      "lang_en_ok": 203,
+      "lang_zh_ok": 203,
+      "lang_ja_ok": 203,
+      "creative_tab_ok": 203,
+      "has_source": 203,
+      "total_items": 203
     }
   },
   "registry": [
@@ -672,6 +672,38 @@
       ],
       "block_item": true,
       "block_of": "cake_tea"
+    },
+    {
+      "id": "caramel",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "caramel_apple",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
     },
     {
       "id": "cheese",
@@ -1868,6 +1900,38 @@
       "block_of": "coldbrew_pot"
     },
     {
+      "id": "cookie_black",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cookie_oreo",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "cup",
       "type": "item",
       "registered": true,
@@ -1885,6 +1949,22 @@
     },
     {
       "id": "cup_glass",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "custard",
       "type": "item",
       "registered": true,
       "model": true,
@@ -2289,6 +2369,22 @@
       "block_of": "grinder"
     },
     {
+      "id": "hardtack",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "ice_slag",
       "type": "item",
       "registered": true,
@@ -2468,6 +2564,70 @@
     },
     {
       "id": "lemon",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "marshmallow",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "marshmallow_chocolate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "marshmallow_roast",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "milk_form",
       "type": "item",
       "registered": true,
       "model": true,
@@ -2699,6 +2859,22 @@
       "block_item": false
     },
     {
+      "id": "pot",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "record_blank",
       "type": "item",
       "registered": true,
@@ -2894,6 +3070,22 @@
     },
     {
       "id": "small_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "smore",
       "type": "item",
       "registered": true,
       "model": true,
@@ -4199,16 +4391,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "caramel",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "caramel_apple",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
       "id": "clay_oven",
       "type": "item_model",
       "classification": "MERGED"
@@ -4514,11 +4696,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "cookie_black",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
       "id": "cookie_black_raw",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
@@ -4557,11 +4734,6 @@
       "id": "cookie_icecream_vanilla",
       "type": "item_model",
       "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_oreo",
-      "type": "item_model",
-      "classification": "REMOVED"
     },
     {
       "id": "cream_apple",
@@ -4624,11 +4796,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "custard",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
       "id": "espresso_plate",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
@@ -4657,11 +4824,6 @@
       "id": "grinder_on",
       "type": "item_model",
       "classification": "MERGED"
-    },
-    {
-      "id": "hardtack",
-      "type": "item_model",
-      "classification": "REMOVED"
     },
     {
       "id": "hardtack_raw",
@@ -4867,26 +5029,6 @@
       "id": "jiggy_cake_tea_raw",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "marshmallow",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "marshmallow_chocolate",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "marshmallow_roast",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "milk_form",
-      "type": "item_model",
-      "classification": "REMOVED"
     },
     {
       "id": "mille_feuille",
@@ -5144,11 +5286,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "pot",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
       "id": "puff",
       "type": "item_model",
       "classification": "PORT_LATER"
@@ -5182,11 +5319,6 @@
       "id": "roller_on",
       "type": "item_model",
       "classification": "MERGED"
-    },
-    {
-      "id": "smore",
-      "type": "item_model",
-      "classification": "REMOVED"
     },
     {
       "id": "soda_machine_bottom",

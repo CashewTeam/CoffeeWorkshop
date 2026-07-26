@@ -8,25 +8,25 @@
 | Registry Type | Count |
 |---|---|
 | block | 49 |
-| item | 191 |
+| item | 203 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **251** |
-| **Orphan Assets** | **625** |
+| **Total Registered** | **263** |
+| **Orphan Assets** | **613** |
 
 ## Item Completeness Matrix
 
 | Metric | Count | % |
 |---|---|---|
-| Model | 191/191 | 100% |
-| Texture | 191/191 | 100% |
-| en_us Key Coverage | 191/191 | 100% |
-| zh_cn Key Coverage | 191/191 | 100% |
-| ja_jp Key Coverage | 191/191 | 100% |
-| Creative Tab | 191/191 | 100% |
-| Survival Source | 191/191 | 100% |
+| Model | 203/203 | 100% |
+| Texture | 203/203 | 100% |
+| en_us Key Coverage | 203/203 | 100% |
+| zh_cn Key Coverage | 203/203 | 100% |
+| ja_jp Key Coverage | 203/203 | 100% |
+| Creative Tab | 203/203 | 100% |
+| Survival Source | 203/203 | 100% |
 
 ## Registered Items
 
@@ -70,6 +70,8 @@
 | `cake_sponge_slice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_sponge_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `caramel` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `caramel_apple` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `chocolate_bar` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `chocolate_chip` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -143,8 +145,11 @@
 | `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
 | `coldbrew_bottle` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `coldbrew_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cookie_black` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cookie_oreo` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cup` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cup_glass` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `custard` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `double_bag_cocoa` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `double_bag_cocoa_powder` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `double_bag_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
@@ -168,6 +173,7 @@
 | `gelatin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `ginger_house` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `grinder_off` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
+| `hardtack` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `ice_slag` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `icecream_apple` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `icecream_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -179,7 +185,11 @@
 | `icecream_mix_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `icecream_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `iron_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | trade |
+| `marshmallow` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `marshmallow_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `marshmallow_roast` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `milk_form` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mixing_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -193,6 +203,7 @@
 | `plate_dough_ginger` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `plate_dough_pastry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `plate_iron` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `record_blank` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `record_kusa_noshi_to_ne` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `record_lazy_lady_kaguya` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -206,6 +217,7 @@
 | `sandwich_club_large` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `sandwich_ham_cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `small_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `smore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `soda` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `soda_ore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
 | `spices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
@@ -302,7 +314,7 @@
 | MERGED | 14 |
 | PORT_LATER | 52 |
 | REDESIGN | 5 |
-| REMOVED | 33 |
+| REMOVED | 21 |
 
 ### PORT_LATER (52)
 
@@ -396,35 +408,23 @@ Old naming merged into current registry (e.g. _on/_off → LIT property).
   item_model: syrup_full
 ```
 
-### REMOVED (33)
+### REMOVED (21)
 
 No intention to restore.
 
 ```
-  item_model: caramel
-  item_model: caramel_apple
   block_model: coffee_pot
   block_model: coffee_pot_1
   block_model: coffee_pot_2
   block_model: coffee_pot_3
   block_model: coffee_pot_4
-  item_model: cookie_black
-  item_model: cookie_oreo
-  item_model: custard
   item_texture: d_bar
   item_texture: dirty_pastry_bun
-  item_model: hardtack
-  item_model: marshmallow
-  item_model: marshmallow_chocolate
-  item_model: marshmallow_roast
-  item_model: milk_form
   item_model: moka_bottom
   item_model: moka_pot_heated
   item_model: moka_pot_unheated
   item_model: moka_top
   item_model: phonograph
-  item_model: pot
-  item_model: smore
   item_model: soda_machine_bottom
   block_model: soda_machine_bottom
   blockstate: soda_machine_bottom

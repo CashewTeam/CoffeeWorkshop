@@ -222,6 +222,22 @@ public class ModItems {
     public static RegistryObject<Item> VANILLA;
     public static RegistryObject<Item> BAG;
     public static RegistryObject<Item> LEMON;
+    public static RegistryObject<Item> CARAMEL;
+    public static RegistryObject<Item> CUSTARD;
+    public static RegistryObject<Item> MILK_FORM;
+    public static RegistryObject<Item> POT;
+
+    // ========================================================================
+    // Bakery (Phase 5.3 additions)
+    // ========================================================================
+    public static RegistryObject<Item> CARAMEL_APPLE;
+    public static RegistryObject<Item> HARDTACK;
+    public static RegistryObject<Item> COOKIE_BLACK;
+    public static RegistryObject<Item> COOKIE_OREO;
+    public static RegistryObject<Item> MARSHMALLOW;
+    public static RegistryObject<Item> MARSHMALLOW_ROAST;
+    public static RegistryObject<Item> MARSHMALLOW_CHOCOLATE;
+    public static RegistryObject<Item> SMORE;
     public static RegistryObject<Item> SYRUP_EMPTY;
     public static RegistryObject<Item> SYRUP_CARAMEL;
     public static RegistryObject<Item> SYRUP_CHOCOLATE;

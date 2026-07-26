@@ -52,7 +52,7 @@ INITIAL_ITEMS = {
     "minecraft:beetroot", "minecraft:cooked_porkchop",
     "minecraft:cooked_beef", "minecraft:cooked_chicken",
     "minecraft:apple", "minecraft:melon_slice",
-    "minecraft:gold_ingot", "minecraft:gold_nugget", "minecraft:glistering_melon_slice",
+    "minecraft:gold_ingot", "minecraft:gold_nugget",
     "minecraft:snowball", "minecraft:spruce_sapling",
     "minecraft:oak_sapling", "minecraft:cherry_sapling",
     "minecraft:bread", "minecraft:sand", "minecraft:gravel",
@@ -83,6 +83,7 @@ WORLDGEN_SOURCES = {
     "coffeework:vanilla_seeds": "crafted from vanilla (vanilla crop worldgen)",
     "coffeework:vanilla": "harvest from vanilla crop (worldgen)",
     "coffeework:soda_ore": "worldgen (soda ore block)",
+    "coffeework:lemon": "trade (materials trader)",
 }
 
 # Explicit non-JSON production edges (recipes that the script can't model

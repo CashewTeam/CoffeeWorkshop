@@ -450,12 +450,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('L', Items.OAK_LEAVES)
                 .save(writer, modLoc("tea_leaf"));
 
-        // Lemon (from oak leaves — temporary until dedicated lemon source)
-        shapeless(RecipeCategory.FOOD, ModItems.LEMON.get(), 2, Items.OAK_LEAVES)
-                .requires(Items.OAK_LEAVES)
-                .requires(Items.OAK_LEAVES)
-                .save(writer, modLoc("lemon"));
-
         // Cocoa bean (mod item) from vanilla cocoa beans
         smelting(Items.COCOA_BEANS, ModItems.COCOA_BEAN.get(), 0.1F, "cocoa_bean")
                 .save(writer, modLoc("cocoa_bean"));
@@ -798,6 +792,95 @@ public class ModRecipeProvider extends RecipeProvider {
 
         // NOTE: plate_dough, plate_dough_pastry, plate_dough_ginger crafting
         // fallbacks REMOVED — use Roller machine instead
+
+        // ===================================================================
+        // PHASE 5.3 — CONFECTIONERY FOUNDATION
+        // ===================================================================
+
+        // Pot (crafting vessel)
+        shaped(RecipeCategory.MISC, ModItems.POT.get(), Items.IRON_INGOT)
+                .pattern("I I")
+                .pattern(" I ")
+                .define('I', Items.IRON_INGOT)
+                .save(writer, modLoc("pot"));
+
+        // Marshmallow (sugar + gelatin)
+        shapeless(RecipeCategory.FOOD, ModItems.MARSHMALLOW.get(), 4, ModItems.GELATIN.get())
+                .requires(Items.SUGAR)
+                .requires(ModItems.GELATIN.get())
+                .save(writer, modLoc("marshmallow"));
+
+        // Roasted Marshmallow — via campfire cooking
+        SimpleCookingRecipeBuilder.campfireCooking(
+                        Ingredient.of(ModItems.MARSHMALLOW.get()),
+                        RecipeCategory.FOOD, ModItems.MARSHMALLOW_ROAST.get(),
+                        0.1F, 600)
+                .unlockedBy("has_marshmallow", has(ModItems.MARSHMALLOW.get()))
+                .save(writer, modLoc("marshmallow_roast"));
+
+        // Chocolate Marshmallow
+        shapeless(RecipeCategory.FOOD, ModItems.MARSHMALLOW_CHOCOLATE.get(), ModItems.MARSHMALLOW_ROAST.get())
+                .requires(ModItems.MARSHMALLOW_ROAST.get())
+                .requires(ModItems.CHOCOLATE_BAR.get())
+                .save(writer, modLoc("marshmallow_chocolate"));
+
+        // Black Cookie
+        shapeless(RecipeCategory.FOOD, ModItems.COOKIE_BLACK.get(), Items.COOKIE)
+                .requires(Items.COOKIE)
+                .requires(ModItems.COCOA_POWDER.get())
+                .save(writer, modLoc("cookie_black"));
+
+        // Cream Sandwich Cookie (2 black cookies + milk foam)
+        shapeless(RecipeCategory.FOOD, ModItems.COOKIE_OREO.get(), ModItems.COOKIE_BLACK.get())
+                .requires(ModItems.COOKIE_BLACK.get())
+                .requires(ModItems.COOKIE_BLACK.get())
+                .requires(ModItems.MILK_FORM.get())
+                .save(writer, modLoc("cookie_oreo"));
+
+        // Custard (mixing bowl + milk + egg + sugar)
+        shapeless(RecipeCategory.FOOD, ModItems.CUSTARD.get(), ModItems.MIXING_BOWL.get())
+                .requires(ModItems.MIXING_BOWL.get())
+                .requires(Items.MILK_BUCKET)
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("custard"));
+
+        // Milk Foam (mixing bowl + milk + sugar)
+        shapeless(RecipeCategory.FOOD, ModItems.MILK_FORM.get(), ModItems.MIXING_BOWL.get())
+                .requires(ModItems.MIXING_BOWL.get())
+                .requires(Items.MILK_BUCKET)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("milk_form"));
+
+        // Caramel Apple
+        shapeless(RecipeCategory.FOOD, ModItems.CARAMEL_APPLE.get(), ModItems.CARAMEL.get())
+                .requires(Items.APPLE)
+                .requires(ModItems.CARAMEL.get())
+                .save(writer, modLoc("caramel_apple"));
+
+        // Hardtack is produced via Oven machine (see ModMachineRecipeProvider)
+
+        // S'more (hardtack + roasted marshmallow + chocolate)
+        shapeless(RecipeCategory.FOOD, ModItems.SMORE.get(), ModItems.HARDTACK.get())
+                .requires(ModItems.HARDTACK.get())
+                .requires(ModItems.HARDTACK.get())
+                .requires(ModItems.MARSHMALLOW_ROAST.get())
+                .requires(ModItems.CHOCOLATE_BAR.get())
+                .save(writer, modLoc("smore"));
+
+        // Note: Caramel is produced via Oven (machine recipe in ModMachineRecipeProvider).
+        // Workbench shortcut using Pot (alternative to Oven):
+        shapeless(RecipeCategory.FOOD, ModItems.CARAMEL.get(), 2, ModItems.POT.get())
+                .requires(Items.SUGAR)
+                .requires(ModItems.POT.get())
+                .save(writer, modLoc("caramel_from_pot"));
+
+        // Marshmallow with Pot (alternative to standard recipe)
+        shapeless(RecipeCategory.FOOD, ModItems.MARSHMALLOW.get(), 4, ModItems.POT.get())
+                .requires(Items.SUGAR)
+                .requires(ModItems.GELATIN.get())
+                .requires(ModItems.POT.get())
+                .save(writer, modLoc("marshmallow_from_pot"));
 
         // ===================================================================
         // COOLING RECIPES (hot drink + ice_slag → iced drink)

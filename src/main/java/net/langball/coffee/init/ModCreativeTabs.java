@@ -75,6 +75,14 @@ public class ModCreativeTabs {
                         output.accept(ModItems.CHOCOLATE_CHIP.get());
                         output.accept(ModItems.BROWNIE.get());
                         output.accept(ModItems.FIELD_RATION.get());
+                        output.accept(ModItems.CARAMEL_APPLE.get());
+                        output.accept(ModItems.HARDTACK.get());
+                        output.accept(ModItems.COOKIE_BLACK.get());
+                        output.accept(ModItems.COOKIE_OREO.get());
+                        output.accept(ModItems.MARSHMALLOW.get());
+                        output.accept(ModItems.MARSHMALLOW_ROAST.get());
+                        output.accept(ModItems.MARSHMALLOW_CHOCOLATE.get());
+                        output.accept(ModItems.SMORE.get());
 
                         // Bags
                         output.accept(ModItems.BAG_COFFEE.get());
@@ -143,6 +151,10 @@ public class ModCreativeTabs {
                         output.accept(ModItems.TEA_LEAF.get());
                         output.accept(ModItems.BLACK_TEA_LEAF.get());
                         output.accept(ModItems.LEMON.get());
+                        output.accept(ModItems.CARAMEL.get());
+                        output.accept(ModItems.CUSTARD.get());
+                        output.accept(ModItems.MILK_FORM.get());
+                        output.accept(ModItems.POT.get());
                         output.accept(ModItems.COLDBREW_BOTTLE.get());
 
                         // Empty cups

@@ -63,6 +63,24 @@ public class ModBakeryItems {
         ModItems.SANDWICH_HAM_CHEESE = items.register("sandwich_ham_cheese",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.9F).build())));
 
+        // Phase 5.3: Confectionery & bakery foundation
+        ModItems.CARAMEL_APPLE = items.register("caramel_apple",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.5F).build())));
+        ModItems.HARDTACK = items.register("hardtack",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.6F).build())));
+        ModItems.COOKIE_BLACK = items.register("cookie_black",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).fast().build())));
+        ModItems.COOKIE_OREO = items.register("cookie_oreo",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.MARSHMALLOW = items.register("marshmallow",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).fast().build())));
+        ModItems.MARSHMALLOW_ROAST = items.register("marshmallow_roast",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).build())));
+        ModItems.MARSHMALLOW_CHOCOLATE = items.register("marshmallow_chocolate",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.SMORE = items.register("smore",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.6F).build())));
+
         // ── Ice creams ──
         ModItems.ICECREAM_MIX_VANILLA = items.register("icecream_mix_vanilla",
                 () -> new Item(new Item.Properties().stacksTo(16)));

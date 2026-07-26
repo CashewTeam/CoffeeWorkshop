@@ -3,14 +3,14 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "minecraft:oak_leaves"
+      "item": "minecraft:sugar"
     },
     {
-      "item": "minecraft:oak_leaves"
+      "item": "coffeework:pot"
     }
   ],
   "result": {
     "count": 2,
-    "item": "coffeework:lemon"
+    "item": "coffeework:caramel"
   }
 }

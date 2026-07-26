@@ -948,6 +948,26 @@ def _load_baseline() -> dict:
     return _read_json(BASELINE_PATH) or {"baseline_assets": [], "total_baseline_assets": 0}
 
 
+def _get_typed_registry_keys(registry: list) -> set:
+    """Build set of (type, id) for all registered items and blocks.
+    Used for typed matching against baseline assets."""
+    keys = set()
+    for e in registry:
+        if not e.get("registered"):
+            continue
+        eid = e["id"]
+        etype = e.get("type", "")
+        if etype == "item":
+            keys.add(("item_model", eid))
+            keys.add(("item_texture", eid))
+            if e.get("block_item") and e.get("block_of"):
+                keys.add(("block_model", e["block_of"]))
+        elif etype == "block":
+            keys.add(("block_model", eid))
+            keys.add(("blockstate", eid))
+    return keys
+
+
 def main() -> int:
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -960,16 +980,26 @@ def main() -> int:
     baseline_assets = baseline.get("baseline_assets", [])
     total_baseline = baseline.get("total_baseline_assets", len(baseline_assets))
 
+    # Baseline integrity gate
+    if total_baseline != 639:
+        print(f"FAIL: Baseline asset count is {total_baseline}, expected 639.")
+        print("The baseline file docs/legacy_asset_baseline.json may be corrupted.")
+        return 2
+
     # Collect data
     registry_ids = {e["id"] for e in registry if e.get("registered")}
     registered_item_ids = {e["id"] for e in registry if e.get("registered") and e.get("type") == "item"}
     registered_block_ids = {e["id"] for e in registry if e.get("registered") and e.get("type") == "block"}
+    typed_registry_keys = _get_typed_registry_keys(registry)
     active_blockstate = _collect_active_blockstate_refs(registry)
     active_typed = _collect_registered_item_models(registry)
     recipe_outputs = _collect_recipe_intermediates()
 
-    # Count how many baseline assets are now registered
-    baseline_registered = sum(1 for a in baseline_assets if a["id"] in registry_ids)
+    # Count restored: baseline assets whose (type, id) is now registered
+    baseline_registered = sum(
+        1 for a in baseline_assets
+        if (a["type"], a["id"]) in typed_registry_keys
+    )
 
     print(f"Baseline assets: {total_baseline}")
     print(f"Baseline assets now registered: {baseline_registered}")

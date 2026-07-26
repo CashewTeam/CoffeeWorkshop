@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "coffeework:gelatin"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "coffeework:marshmallow"
+  }
+}
