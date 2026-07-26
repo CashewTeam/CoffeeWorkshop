@@ -106,6 +106,9 @@ public class BlockCoffeeTree extends Block implements BonemealableBlock {
         return super.use(state, level, pos, player, hand, hit);
     }
 
+    // Silk Touch and Shears: handled by the loot table (see ModBlockLootProvider).
+    // getCloneItemStack provides the item shown in creative pick-block.
+
     @Override
     public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
         return state.getValue(AGE) < 3;

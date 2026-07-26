@@ -26,7 +26,7 @@
 | zh_cn Key Coverage | 176/176 | 100% |
 | ja_jp Key Coverage | 176/176 | 100% |
 | Creative Tab | 176/176 | 100% |
-| Survival Source | 175/176 | 99% |
+| Survival Source | 176/176 | 100% |
 
 ## Registered Items
 
@@ -84,7 +84,7 @@
 | `coffee_americano_fruit` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `coffee_americano_fruit_ice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `coffee_americano_ice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `coffee_americano_nitro_fruit_ice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `coffee_americano_nitro_fruit_ice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `coffee_americano_nitro_ice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `coffee_bean` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `coffee_bean_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
@@ -138,7 +138,7 @@
 | `coffee_mochaccino_ice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `coffee_powder` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `coffee_seeds` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot |
-| `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | worldgen |
+| `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
 | `coldbrew_bottle` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `coldbrew_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cup` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -239,7 +239,7 @@
 | `cake_sponge_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `coffee_machine` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `coldbrew_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `double_bag_cocoa` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `double_bag_cocoa_powder` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |

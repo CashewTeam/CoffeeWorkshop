@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:coffee_americano_nitro_ice"
+    },
+    {
+      "item": "coffeework:syrup_fruit"
+    }
+  ],
+  "result": {
+    "item": "coffeework:coffee_americano_nitro_fruit_ice"
+  }
+}

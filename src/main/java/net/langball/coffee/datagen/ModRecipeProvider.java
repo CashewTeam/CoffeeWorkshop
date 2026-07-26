@@ -717,6 +717,17 @@ public class ModRecipeProvider extends RecipeProvider {
         // ===================================================================
 
         // ===================================================================
+        // COOLING RECIPES (hot drink + ice_slag → iced drink)
+
+        // Nitro Fruit Americano: nitro_ice + fruit_syrup → nitro_fruit_ice
+        // (matches the 1.12.2 shapeless recipe pattern)
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_AMERICANO_NITRO_FRUIT_ICE.get(),
+                ModItems.COFFEE_AMERICANO_NITRO_ICE.get())
+                .requires(ModItems.COFFEE_AMERICANO_NITRO_ICE.get())
+                .requires(ModItems.SYRUP_FRUIT.get())
+                .save(writer, modLoc("coffee_americano_nitro_fruit_ice"));
+
+        // ===================================================================
         // COOLING RECIPES (custom CoolingRecipe serializer, NBT-preserving)
         // Hot drink + ice_slag → iced drink with cups NBT copied.
         // ===================================================================
@@ -730,9 +741,9 @@ public class ModRecipeProvider extends RecipeProvider {
 
     private void registerCoolingRecipes(Consumer<FinishedRecipe> writer) {
         // hot_drink → iced_drink mappings.
-        // NOTE: americano_nitro_fruit_ice is NOT generated here because the
-        // hot variant (americano_nitro_ice) lacks fruit syrup — adding ice alone
-        // does not produce a fruit-flavored drink.  That item remains creative-only.
+        // NOTE: americano_nitro_fruit_ice is crafted via shapeless recipe:
+        // coffee_americano_nitro_ice + syrup_fruit → coffee_americano_nitro_fruit_ice
+        // (matches the 1.12.2 workbench recipe pattern)
         var mappings = new Object[][]{
                 {ModItems.COFFEE_COLDBREW_FRUIT, ModItems.COFFEE_COLDBREW_FRUIT_ICE},
                 {ModItems.COFFEE_COLDBREW_LATTE_CARAMEL, ModItems.COFFEE_COLDBREW_LATTE_CARAMEL_ICE},

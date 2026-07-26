@@ -25,7 +25,7 @@
       "lang_zh_ok": 176,
       "lang_ja_ok": 176,
       "creative_tab_ok": 176,
-      "has_source": 175,
+      "has_source": 176,
       "total_items": 176
     }
   },
@@ -914,7 +914,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "recipe"
+      ],
       "block_item": false
     },
     {
@@ -1795,6 +1797,7 @@
       "lang_ja": true,
       "creative_tab": true,
       "sources": [
+        "loot",
         "worldgen"
       ],
       "block_item": true,
@@ -3242,7 +3245,7 @@
       "lang_en": true,
       "lang_zh": true,
       "lang_ja": true,
-      "loot_table": false
+      "loot_table": true
     },
     {
       "id": "coldbrew_pot",

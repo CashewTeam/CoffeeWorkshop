@@ -37,9 +37,16 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.OVEN.get());
 
         // === Plants ===
-        // Coffee tree: mature (age=3) drops 1-3 coffee_bean_raw + 0-1 coffee_seeds;
+        // Coffee tree: Silk Touch or Shears → block itself;
+        // mature (age=3) drops 1-3 coffee_bean_raw + 0-1 coffee_seeds;
         // immature drops 0-1 coffee_seeds
         add(ModBlocks.COFFEE_TREE.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .when(HAS_SILK_TOUCH)
+                        .add(LootItem.lootTableItem(ModBlocks.COFFEE_TREE.get())))
+                .withPool(LootPool.lootPool()
+                        .when(HAS_SHEARS)
+                        .add(LootItem.lootTableItem(ModBlocks.COFFEE_TREE.get())))
                 .withPool(LootPool.lootPool()
                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.COFFEE_TREE.get())
                                 .setProperties(StatePropertiesPredicate.Builder.properties()
