@@ -391,6 +391,17 @@ public class ModItems {
     public static RegistryObject<Item> TEA_LEAF;
     public static RegistryObject<Item> BLACK_TEA_LEAF;
     public static RegistryObject<Item> IRON_BOWL;
+    public static RegistryObject<Item> IRON_BOWL_BATTER;
+    public static RegistryObject<Item> IRON_BOWL_EGG;
+    public static RegistryObject<Item> IRON_BOWL_CHEESE;
+    public static RegistryObject<Item> IRON_BOWL_BATTER_BERRY;
+    public static RegistryObject<Item> IRON_BOWL_BATTER_CARROT;
+    public static RegistryObject<Item> IRON_BOWL_BATTER_CHOCOLATE;
+    public static RegistryObject<Item> IRON_BOWL_BATTER_COFFEE;
+    public static RegistryObject<Item> IRON_BOWL_BATTER_LEMON;
+    public static RegistryObject<Item> IRON_BOWL_BATTER_PUMPKIN;
+    public static RegistryObject<Item> IRON_BOWL_BATTER_RED;
+    public static RegistryObject<Item> IRON_BOWL_BATTER_TEA;
     public static RegistryObject<Item> CAKE_MODEL;
     public static RegistryObject<Item> CAKE_MODEL_SQUARE;
     public static RegistryObject<Item> CAKE_MODEL_PLATE;
@@ -412,6 +423,7 @@ public class ModItems {
     static {
         ModEquipmentItems.registerAll(ITEMS);
         ModIngredientItems.registerAll(ITEMS);
+        ModIronBowlBatterItems.registerAll(ITEMS);
         ModBakeryItems.registerAll(ITEMS);
         ModCoffeeItems.registerAll(ITEMS);
     }

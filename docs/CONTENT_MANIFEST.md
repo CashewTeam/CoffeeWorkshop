@@ -8,25 +8,25 @@
 | Registry Type | Count |
 |---|---|
 | block | 50 |
-| item | 315 |
+| item | 326 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **376** |
-| **Orphan Assets** | **502** |
+| **Total Registered** | **387** |
+| **Orphan Assets** | **491** |
 
 ## Item Completeness Matrix
 
 | Metric | Count | % |
 |---|---|---|
-| Model | 315/315 | 100% |
-| Texture | 315/315 | 100% |
-| en_us Key Coverage | 315/315 | 100% |
-| zh_cn Key Coverage | 315/315 | 100% |
-| ja_jp Key Coverage | 315/315 | 100% |
-| Creative Tab | 315/315 | 100% |
-| Survival Source | 315/315 | 100% |
+| Model | 326/326 | 100% |
+| Texture | 326/326 | 100% |
+| en_us Key Coverage | 326/326 | 100% |
+| zh_cn Key Coverage | 326/326 | 100% |
+| ja_jp Key Coverage | 326/326 | 100% |
+| Creative Tab | 326/326 | 100% |
+| Survival Source | 326/326 | 100% |
 
 ## Registered Items
 
@@ -242,6 +242,17 @@
 | `icecream_mix_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `icecream_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `iron_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `iron_bowl_batter` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `iron_bowl_batter_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `iron_bowl_batter_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `iron_bowl_batter_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `iron_bowl_batter_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `iron_bowl_batter_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `iron_bowl_batter_pumpkin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `iron_bowl_batter_red` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `iron_bowl_batter_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `iron_bowl_cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `iron_bowl_egg` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -423,7 +434,7 @@
 
 | Classification | Count |
 |---|---|
-| ASSET_ARCHIVE | 463 |
+| ASSET_ARCHIVE | 452 |
 | MERGED | 14 |
 | REDESIGN | 4 |
 | REMOVED | 21 |
@@ -488,7 +499,7 @@ No intention to restore.
   item_model: turkey_coffee_pot_unheated
 ```
 
-### ASSET_ARCHIVE (463)
+### ASSET_ARCHIVE (452)
 
 Companion assets (raw/model/slice variants) — archive to reference/legacy-assets/.
 
@@ -870,17 +881,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   item_model: field_ration_d
   item_model: ginger_bread_man_raw
   item_model: hardtack_raw
-  item_model: iron_bowl_batter
-  item_model: iron_bowl_batter_berry
-  item_model: iron_bowl_batter_carrot
-  item_model: iron_bowl_batter_chocolate
-  item_model: iron_bowl_batter_coffee
-  item_model: iron_bowl_batter_lemon
-  item_model: iron_bowl_batter_pumpkin
-  item_model: iron_bowl_batter_red
-  item_model: iron_bowl_batter_tea
-  item_model: iron_bowl_cheese
-  item_model: iron_bowl_egg
   item_model: jiggy_cake_berry_model
   item_model: jiggy_cake_berry_raw
   item_model: jiggy_cake_carrot_model

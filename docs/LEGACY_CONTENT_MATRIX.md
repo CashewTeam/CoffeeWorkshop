@@ -16,13 +16,13 @@
 | Metric | Count |
 |---|---|
 | **Fixed baseline assets** | **639** |
-| Restored (now registered) | +137 |
+| Restored (now registered) | +148 |
 | Total legacy assets (tracked) | 639 |
-| **ACTIVE_RUNTIME_ASSET** (already in use) | 317 |
-| **MERGED_RUNTIME_VARIANT** (old ID merged) | 28 |
-| **→ Runtime covered** | **345/639** |
+| **ACTIVE_RUNTIME_ASSET** (already in use) | 328 |
+| **MERGED_RUNTIME_VARIANT** (old ID merged) | 26 |
+| **→ Runtime covered** | **354/639** |
 | TO_PORT_STANDALONE (needs registration) | 5 |
-| TO_PORT_INTERMEDIATE (raw/model/base) | 76 |
+| TO_PORT_INTERMEDIATE (raw/model/base) | 67 |
 | TO_WIRE_STATE_VARIANT (block states) | 0 |
 | TO_WIRE_DISPLAY_VARIANT (display system) | 191 |
 | TO_PORT_MACHINE (machine devices) | 17 |
@@ -42,7 +42,7 @@
 | cake_mousse | 36 | 32 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 |
 | cake_roll | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | cake_system | 216 | 176 | 0 | 1 | 39 | 0 | 0 | 0 | 0 | 0 |
-| coffee_drinks | 189 | 9 | 5 | 1 | 1 | 0 | 173 | 0 | 0 | 0 |
+| coffee_drinks | 189 | 10 | 5 | 1 | 0 | 0 | 173 | 0 | 0 | 0 |
 | confectionery | 27 | 11 | 0 | 0 | 2 | 0 | 14 | 0 | 0 | 0 |
 | crops | 13 | 12 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | decor_bar | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
@@ -51,7 +51,7 @@
 | icecream_cookie | 7 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | icecream_cream | 13 | 13 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | machines | 10 | 0 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| materials | 16 | 0 | 5 | 2 | 9 | 0 | 0 | 0 | 0 | 0 |
+| materials | 16 | 10 | 3 | 2 | 1 | 0 | 0 | 0 | 0 | 0 |
 | pastry | 33 | 32 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
 | pie | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | records | 3 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -60,7 +60,7 @@
 | syrups | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | traditional_brew | 14 | 1 | 0 | 0 | 0 | 0 | 2 | 11 | 0 | 0 |
 
-## ACTIVE_RUNTIME_ASSET (317 assets)
+## ACTIVE_RUNTIME_ASSET (328 assets)
 
 These are already wired to existing blockstates, recipes, or registered items.
 
@@ -274,6 +274,17 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `icecream_coffee` | coffeework:icecream_coffee | registered_item_model |
 | `icecream_lemon` | coffeework:icecream_lemon | registered_item_model |
 | `icecream_melon` | coffeework:icecream_melon | registered_item_model |
+| `iron_bowl_batter` | coffeework:iron_bowl_batter | registered_item_model |
+| `iron_bowl_batter_berry` | coffeework:iron_bowl_batter_berry | registered_item_model |
+| `iron_bowl_batter_carrot` | coffeework:iron_bowl_batter_carrot | registered_item_model |
+| `iron_bowl_batter_chocolate` | coffeework:iron_bowl_batter_chocolate | registered_item_model |
+| `iron_bowl_batter_coffee` | coffeework:iron_bowl_batter_coffee | registered_item_model |
+| `iron_bowl_batter_lemon` | coffeework:iron_bowl_batter_lemon | registered_item_model |
+| `iron_bowl_batter_pumpkin` | coffeework:iron_bowl_batter_pumpkin | registered_item_model |
+| `iron_bowl_batter_red` | coffeework:iron_bowl_batter_red | registered_item_model |
+| `iron_bowl_batter_tea` | coffeework:iron_bowl_batter_tea | registered_item_model |
+| `iron_bowl_cheese` | coffeework:iron_bowl_cheese | registered_item_model |
+| `iron_bowl_egg` | coffeework:iron_bowl_egg | registered_item_model |
 | `jiggy_cake` | coffeework:jiggy_cake | registered_item_model |
 | `jiggy_cake_berry` | coffeework:jiggy_cake_berry | registered_item_model |
 | `jiggy_cake_carrot` | coffeework:jiggy_cake_carrot | registered_item_model |

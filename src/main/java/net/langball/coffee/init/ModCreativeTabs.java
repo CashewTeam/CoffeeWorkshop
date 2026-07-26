@@ -263,6 +263,17 @@ public class ModCreativeTabs {
 
                         // Tools
                         output.accept(ModItems.IRON_BOWL.get());
+                        output.accept(ModItems.IRON_BOWL_BATTER.get());
+                        output.accept(ModItems.IRON_BOWL_EGG.get());
+                        output.accept(ModItems.IRON_BOWL_CHEESE.get());
+                        output.accept(ModItems.IRON_BOWL_BATTER_BERRY.get());
+                        output.accept(ModItems.IRON_BOWL_BATTER_CARROT.get());
+                        output.accept(ModItems.IRON_BOWL_BATTER_CHOCOLATE.get());
+                        output.accept(ModItems.IRON_BOWL_BATTER_COFFEE.get());
+                        output.accept(ModItems.IRON_BOWL_BATTER_LEMON.get());
+                        output.accept(ModItems.IRON_BOWL_BATTER_PUMPKIN.get());
+                        output.accept(ModItems.IRON_BOWL_BATTER_RED.get());
+                        output.accept(ModItems.IRON_BOWL_BATTER_TEA.get());
                         output.accept(ModItems.CAKE_MODEL.get());
                         output.accept(ModItems.CAKE_MODEL_SQUARE.get());
                         output.accept(ModItems.CAKE_MODEL_PLATE.get());

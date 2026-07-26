@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:iron_bowl"
+    },
+    {
+      "item": "coffeework:cheese"
+    },
+    {
+      "item": "coffeework:cheese"
+    },
+    {
+      "item": "coffeework:cream_milk"
+    }
+  ],
+  "result": {
+    "item": "coffeework:iron_bowl_cheese"
+  }
+}

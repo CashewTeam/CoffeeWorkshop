@@ -79,6 +79,67 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('W', ModItems.PLATE_IRON.get())
                 .save(writer, modLoc("iron_bowl"));
 
+        // Iron Bowl Batters (1.12.2 metadata-based batter system)
+        // Base generic batter: iron_bowl + 3 egg + milk + 2 flour + sugar → iron_bowl_batter
+        shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_BATTER.get(), ModItems.IRON_BOWL.get())
+                .requires(ModItems.IRON_BOWL.get())
+                .requires(Items.EGG)
+                .requires(Items.EGG)
+                .requires(Items.EGG)
+                .requires(Items.MILK_BUCKET)
+                .requires(ModItems.FLOUR.get())
+                .requires(ModItems.FLOUR.get())
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("iron_bowl_batter"));
+        // Egg batter: iron_bowl + 3 egg → iron_bowl_egg
+        shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_EGG.get(), ModItems.IRON_BOWL.get())
+                .requires(ModItems.IRON_BOWL.get())
+                .requires(Items.EGG)
+                .requires(Items.EGG)
+                .requires(Items.EGG)
+                .save(writer, modLoc("iron_bowl_egg"));
+        // Cheese batter: iron_bowl + 2 cheese + cream_milk → iron_bowl_cheese
+        shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_CHEESE.get(), ModItems.IRON_BOWL.get())
+                .requires(ModItems.IRON_BOWL.get())
+                .requires(ModItems.CHEESE.get())
+                .requires(ModItems.CHEESE.get())
+                .requires(ModItems.CREAM_MILK.get())
+                .save(writer, modLoc("iron_bowl_cheese"));
+
+        // Flavor batter: base batter + flavor → flavored batter (iron_bowl returned)
+        shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_BATTER_BERRY.get(), ModItems.IRON_BOWL_BATTER.get())
+                .requires(ModItems.IRON_BOWL_BATTER.get())
+                .requires(Items.SWEET_BERRIES)
+                .save(writer, modLoc("iron_bowl_batter_berry"));
+        shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_BATTER_CARROT.get(), ModItems.IRON_BOWL_BATTER.get())
+                .requires(ModItems.IRON_BOWL_BATTER.get())
+                .requires(Items.CARROT)
+                .save(writer, modLoc("iron_bowl_batter_carrot"));
+        shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_BATTER_CHOCOLATE.get(), ModItems.IRON_BOWL_BATTER.get())
+                .requires(ModItems.IRON_BOWL_BATTER.get())
+                .requires(ModItems.COCOA_POWDER.get())
+                .save(writer, modLoc("iron_bowl_batter_chocolate"));
+        shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_BATTER_COFFEE.get(), ModItems.IRON_BOWL_BATTER.get())
+                .requires(ModItems.IRON_BOWL_BATTER.get())
+                .requires(ModItems.COFFEE_POWDER.get())
+                .save(writer, modLoc("iron_bowl_batter_coffee"));
+        shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_BATTER_LEMON.get(), ModItems.IRON_BOWL_BATTER.get())
+                .requires(ModItems.IRON_BOWL_BATTER.get())
+                .requires(ModItems.LEMON.get())
+                .save(writer, modLoc("iron_bowl_batter_lemon"));
+        shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_BATTER_PUMPKIN.get(), ModItems.IRON_BOWL_BATTER.get())
+                .requires(ModItems.IRON_BOWL_BATTER.get())
+                .requires(Items.PUMPKIN)
+                .save(writer, modLoc("iron_bowl_batter_pumpkin"));
+        shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_BATTER_RED.get(), ModItems.IRON_BOWL_BATTER.get())
+                .requires(ModItems.IRON_BOWL_BATTER.get())
+                .requires(Items.BEETROOT)
+                .save(writer, modLoc("iron_bowl_batter_red"));
+        shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_BATTER_TEA.get(), ModItems.IRON_BOWL_BATTER.get())
+                .requires(ModItems.IRON_BOWL_BATTER.get())
+                .requires(ModItems.TEA_LEAF.get())
+                .save(writer, modLoc("iron_bowl_batter_tea"));
+
         shaped(RecipeCategory.MISC, ModItems.MOONCAKE_MODEL.get(), Items.IRON_INGOT)
                 .pattern("IWI")
                 .define('I', Items.IRON_INGOT)
