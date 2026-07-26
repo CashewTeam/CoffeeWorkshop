@@ -1,30 +1,30 @@
 {
   "stats": {
-    "registered": 373,
+    "registered": 376,
     "by_type": {
-      "item": 312,
+      "item": 315,
       "block": 50,
       "mob_effect": 3,
       "villager_profession": 3,
       "poi_type": 2,
       "sound_event": 3
     },
-    "orphan_assets": 505,
+    "orphan_assets": 502,
     "orphan_by_classification": {
-      "ASSET_ARCHIVE": 466,
+      "ASSET_ARCHIVE": 463,
       "MERGED": 14,
       "REMOVED": 21,
       "REDESIGN": 4
     },
     "completeness": {
-      "model_ok": 312,
-      "texture_ok": 312,
-      "lang_en_ok": 312,
-      "lang_zh_ok": 312,
-      "lang_ja_ok": 312,
-      "creative_tab_ok": 312,
-      "has_source": 312,
-      "total_items": 312
+      "model_ok": 315,
+      "texture_ok": 315,
+      "lang_en_ok": 315,
+      "lang_zh_ok": 315,
+      "lang_ja_ok": 315,
+      "creative_tab_ok": 315,
+      "has_source": 315,
+      "total_items": 315
     }
   },
   "registry": [
@@ -2780,6 +2780,38 @@
       "block_item": false
     },
     {
+      "id": "croissant_chocolate_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "croissant_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "cup",
       "type": "item",
       "registered": true,
@@ -4539,6 +4571,22 @@
       "block_item": false
     },
     {
+      "id": "puff_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "record_blank",
       "type": "item",
       "registered": true,
@@ -6276,16 +6324,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "croissant_chocolate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "croissant_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
       "id": "crop_coffee",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
@@ -6527,11 +6565,6 @@
     },
     {
       "id": "plate_pastry_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "puff_raw",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
     },

@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "coffeework:croissant_chocolate"
+        "recipe": "coffeework:croissant_raw"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "coffeework:croissant_chocolate"
+      "coffeework:croissant_raw"
     ]
   },
   "sends_telemetry_event": false

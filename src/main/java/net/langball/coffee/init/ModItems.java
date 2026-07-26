@@ -170,6 +170,12 @@ public class ModItems {
     public static RegistryObject<Item> PUFF;
     public static RegistryObject<Item> MILLE_FEUILLE;
 
+    // Phase 7: Pastry raw intermediates (croissant, puff)
+    // Match 1.12.2 registerRaw2CookedRecipes pattern
+    public static RegistryObject<Item> CROISSANT_RAW;
+    public static RegistryObject<Item> CROISSANT_CHOCOLATE_RAW;
+    public static RegistryObject<Item> PUFF_RAW;
+
     // Phase 7: Jiggy Cakes
     public static RegistryObject<Item> JIGGY_CAKE;
     public static RegistryObject<Item> JIGGY_CAKE_BERRY;

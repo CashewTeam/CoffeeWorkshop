@@ -6,10 +6,20 @@
       "item": "coffeework:dough_pastry"
     },
     {
+      "item": "minecraft:egg"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "coffeework:butter"
+    },
+    {
       "item": "coffeework:cocoa_powder"
     }
   ],
   "result": {
-    "item": "coffeework:croissant_chocolate"
+    "count": 2,
+    "item": "coffeework:croissant_chocolate_raw"
   }
 }

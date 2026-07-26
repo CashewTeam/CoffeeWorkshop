@@ -3,9 +3,9 @@
   "cookingtime": 200,
   "experience": 0.15,
   "ingredient": {
-    "item": "coffeework:dough_pastry"
+    "item": "coffeework:croissant_chocolate_raw"
   },
   "result": {
-    "item": "coffeework:croissant"
+    "item": "coffeework:croissant_chocolate"
   }
 }

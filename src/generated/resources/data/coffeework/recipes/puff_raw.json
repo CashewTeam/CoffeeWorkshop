@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:dough_pastry"
+    },
+    {
+      "item": "minecraft:egg"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "coffeework:butter"
+    },
+    {
+      "item": "coffeework:cream_milk"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "item": "coffeework:puff_raw"
+  }
+}

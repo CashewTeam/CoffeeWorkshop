@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "coffeework:puff"
+        "recipe": "coffeework:puff_raw"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "coffeework:puff"
+      "coffeework:puff_raw"
     ]
   },
   "sends_telemetry_event": false

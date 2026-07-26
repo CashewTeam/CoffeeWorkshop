@@ -281,6 +281,14 @@ public class ModBakeryItems {
         ModItems.MILLE_FEUILLE = items.register("mille_feuille",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationMod(0.6F).build())));
 
+        // Phase 7: Pastry raw intermediates (croissant, puff) — 1.12.2 registerRaw2CookedRecipes
+        ModItems.CROISSANT_RAW = items.register("croissant_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.CROISSANT_CHOCOLATE_RAW = items.register("croissant_chocolate_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.PUFF_RAW = items.register("puff_raw",
+                () -> new Item(new Item.Properties()));
+
         // Phase 7: Jiggy Cakes (9 finished)
         ModItems.JIGGY_CAKE = items.register("jiggy_cake",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));

@@ -225,6 +225,9 @@ public class ModCreativeTabs {
                         output.accept(ModItems.GINGER_BREAD_MAN.get());
                         output.accept(ModItems.PUFF.get());
                         output.accept(ModItems.MILLE_FEUILLE.get());
+                        output.accept(ModItems.CROISSANT_RAW.get());
+                        output.accept(ModItems.CROISSANT_CHOCOLATE_RAW.get());
+                        output.accept(ModItems.PUFF_RAW.get());
 
                         // Phase 7: Jiggy Cakes
                         output.accept(ModItems.JIGGY_CAKE.get());

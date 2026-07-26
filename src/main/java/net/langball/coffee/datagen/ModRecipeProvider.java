@@ -1083,11 +1083,32 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.TEA_LEAF.get())
                 .save(writer, modLoc("muffin_tea_raw"));
 
-        // Phase 7: Pastries (fill remaining 5)
-        shapeless(RecipeCategory.FOOD, ModItems.CROISSANT_CHOCOLATE.get(), ModItems.DOUGH_PASTRY.get())
+        // Phase 7: Pastries
+        // Croissant raw (1.12.2: egg+sugar+butter+dough → 2× croissant_raw → oven → croissant)
+        shapeless(RecipeCategory.FOOD, ModItems.CROISSANT_RAW.get(), 2, ModItems.DOUGH_PASTRY.get())
                 .requires(ModItems.DOUGH_PASTRY.get())
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .requires(ModItems.BUTTER.get())
+                .save(writer, modLoc("croissant_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.CROISSANT_CHOCOLATE_RAW.get(), 2, ModItems.DOUGH_PASTRY.get())
+                .requires(ModItems.DOUGH_PASTRY.get())
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .requires(ModItems.BUTTER.get())
                 .requires(ModItems.COCOA_POWDER.get())
-                .save(writer, modLoc("croissant_chocolate"));
+                .save(writer, modLoc("croissant_chocolate_raw"));
+
+        // Puff raw (1.12.2: iron_bowl_batter + pastry_dough + sugar + butter + cream → 8× puff_raw → oven → puff)
+        shapeless(RecipeCategory.FOOD, ModItems.PUFF_RAW.get(), 8, ModItems.DOUGH_PASTRY.get())
+                .requires(ModItems.DOUGH_PASTRY.get())
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .requires(ModItems.BUTTER.get())
+                .requires(ModItems.CREAM_MILK.get())
+                .save(writer, modLoc("puff_raw"));
+
+        // Ginger breads (1.12.2 uses registerRaw2CookedRecipes; raw intermediates deferred to Phase 7 full restore)
         shapeless(RecipeCategory.FOOD, ModItems.GINGER_BREAD.get(), ModItems.DOUGH_GINGER.get())
                 .requires(ModItems.DOUGH_GINGER.get())
                 .save(writer, modLoc("ginger_bread"));
@@ -1095,10 +1116,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.DOUGH_GINGER.get())
                 .requires(Items.SUGAR)
                 .save(writer, modLoc("ginger_bread_man"));
-        shapeless(RecipeCategory.FOOD, ModItems.PUFF.get(), ModItems.DOUGH_PASTRY.get())
-                .requires(ModItems.DOUGH_PASTRY.get())
-                .requires(ModItems.CUSTARD.get())
-                .save(writer, modLoc("puff"));
+
+        // Mille-feuille (assembly, no baking)
         shapeless(RecipeCategory.FOOD, ModItems.MILLE_FEUILLE.get(), ModItems.PUFF.get())
                 .requires(ModItems.PUFF.get())
                 .requires(ModItems.PUFF.get())

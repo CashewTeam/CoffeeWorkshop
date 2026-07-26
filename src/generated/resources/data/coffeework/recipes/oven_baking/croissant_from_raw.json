@@ -3,9 +3,9 @@
   "cookingtime": 200,
   "experience": 0.15,
   "ingredient": {
-    "item": "coffeework:dough_ginger"
+    "item": "coffeework:croissant_raw"
   },
   "result": {
-    "item": "coffeework:ginger_bread"
+    "item": "coffeework:croissant"
   }
 }

@@ -8,25 +8,25 @@
 | Registry Type | Count |
 |---|---|
 | block | 50 |
-| item | 312 |
+| item | 315 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **373** |
-| **Orphan Assets** | **505** |
+| **Total Registered** | **376** |
+| **Orphan Assets** | **502** |
 
 ## Item Completeness Matrix
 
 | Metric | Count | % |
 |---|---|---|
-| Model | 312/312 | 100% |
-| Texture | 312/312 | 100% |
-| en_us Key Coverage | 312/312 | 100% |
-| zh_cn Key Coverage | 312/312 | 100% |
-| ja_jp Key Coverage | 312/312 | 100% |
-| Creative Tab | 312/312 | 100% |
-| Survival Source | 312/312 | 100% |
+| Model | 315/315 | 100% |
+| Texture | 315/315 | 100% |
+| en_us Key Coverage | 315/315 | 100% |
+| zh_cn Key Coverage | 315/315 | 100% |
+| ja_jp Key Coverage | 315/315 | 100% |
+| Creative Tab | 315/315 | 100% |
+| Survival Source | 315/315 | 100% |
 
 ## Registered Items
 
@@ -200,6 +200,8 @@
 | `cream_milk` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `croissant` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `croissant_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `croissant_chocolate_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `croissant_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cup` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cup_glass` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `custard` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -308,6 +310,7 @@
 | `plate_iron` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `puff` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `puff_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `record_blank` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `record_kusa_noshi_to_ne` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `record_lazy_lady_kaguya` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -420,7 +423,7 @@
 
 | Classification | Count |
 |---|---|
-| ASSET_ARCHIVE | 466 |
+| ASSET_ARCHIVE | 463 |
 | MERGED | 14 |
 | REDESIGN | 4 |
 | REMOVED | 21 |
@@ -485,7 +488,7 @@ No intention to restore.
   item_model: turkey_coffee_pot_unheated
 ```
 
-### ASSET_ARCHIVE (466)
+### ASSET_ARCHIVE (463)
 
 Companion assets (raw/model/slice variants) — archive to reference/legacy-assets/.
 
@@ -859,8 +862,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   item_model: coldbrew_pot_finished
   block_model: coldbrew_pot_finished
   item_model: cookie_black_raw
-  item_model: croissant_chocolate_raw
-  item_model: croissant_raw
   item_model: crop_coffee
   block_model: empty_coldbrew_pot
   item_model: espresso_plate
@@ -933,7 +934,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   item_model: plate_ginger
   item_model: plate_pastry
   item_model: plate_pastry_raw
-  item_model: puff_raw
   item_model: records_kusa_noshi_to_ne
   item_model: records_lazy_lady_kaguya
   item_model: records_the_grimoire_of_marisa
