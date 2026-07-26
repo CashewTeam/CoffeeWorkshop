@@ -98,6 +98,12 @@ public final class ModMachineRecipeProvider {
                 new ItemStack(Items.COOKIE))
                 .experience(0.35F).cookingTime(200)
                 .save(writer, id("oven_baking/cookie"));
+
+        // Phase 4: Dough intermediate closures
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.PLATE_DOUGH.get()),
+                new ItemStack(ModItems.BREAD_ROUND.get()))
+                .experience(0.35F).cookingTime(200)
+                .save(writer, id("oven_baking/plate_dough_to_bread_round"));
     }
 
     private static void buildRollingRecipes(Consumer<FinishedRecipe> writer) {
@@ -131,7 +137,9 @@ public final class ModMachineRecipeProvider {
     }
 
     private static void buildCoffeeRecipes(Consumer<FinishedRecipe> writer) {
-        // Espresso: 2 coffee_powder + 1 cup (no modifier)
+        // ── Phase 3 base recipes (v2 compatible) ─────────────────────────
+
+        // Espresso: 2 coffee_powder + 1 cup (no modifier, no additive)
         CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.ESPRESSO.get()))
                 .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 2)
                 .container(Ingredient.of(ModItems.CUP.get()), 1)
@@ -153,6 +161,124 @@ public final class ModMachineRecipeProvider {
                 .container(Ingredient.of(ModItems.CUP.get()), 1)
                 .experience(0.25F).cookingTime(120)
                 .save(writer, id("coffee_brewing/latte"));
+
+        // ── Phase 4: Coffee & Cocoa drinks ──────────────────────────────
+
+        // Cappuccino: coffee_powder + milk_bucket + sugar + cup
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_CAPPUCCINO.get()))
+                .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 1)
+                .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
+                .additive(Ingredient.of(Items.SUGAR), 1)
+                .container(Ingredient.of(ModItems.CUP.get()), 1)
+                .experience(0.3F).cookingTime(140)
+                .save(writer, id("coffee_brewing/cappuccino"));
+
+        // Macchiato: 2×coffee_powder + milk_bucket + cup
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_MACCHIATO.get()))
+                .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 2)
+                .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
+                .container(Ingredient.of(ModItems.CUP.get()), 1)
+                .experience(0.3F).cookingTime(140)
+                .save(writer, id("coffee_brewing/macchiato"));
+
+        // Mochaccino: coffee_powder + milk_bucket + cocoa_powder + cup
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_MOCHACCINO.get()))
+                .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 1)
+                .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
+                .additive(Ingredient.of(ModItems.COCOA_POWDER.get()), 1)
+                .container(Ingredient.of(ModItems.CUP.get()), 1)
+                .experience(0.3F).cookingTime(140)
+                .save(writer, id("coffee_brewing/mochaccino"));
+
+        // Cocoa: 2×cocoa_powder + milk_bucket + cup
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COCOA.get()))
+                .base(Ingredient.of(ModItems.COCOA_POWDER.get()), 2)
+                .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
+                .container(Ingredient.of(ModItems.CUP.get()), 1)
+                .experience(0.25F).cookingTime(120)
+                .save(writer, id("coffee_brewing/cocoa"));
+
+        // Cocoa Strong: 2×cocoa_powder + milk_bucket + chocolate_chip + cup
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COCOA_STRONG.get()))
+                .base(Ingredient.of(ModItems.COCOA_POWDER.get()), 2)
+                .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
+                .additive(Ingredient.of(ModItems.CHOCOLATE_CHIP.get()), 1)
+                .container(Ingredient.of(ModItems.CUP.get()), 1)
+                .experience(0.35F).cookingTime(160)
+                .save(writer, id("coffee_brewing/cocoa_strong"));
+
+        // ── Phase 4: Tea drinks ──────────────────────────────────────────
+
+        // Green Tea: tea_leaf + water_bucket + cup_glass
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_GREEN_TEA.get()))
+                .base(Ingredient.of(ModItems.TEA_LEAF.get()), 1)
+                .modifier(Ingredient.of(Items.WATER_BUCKET), 1)
+                .container(Ingredient.of(ModItems.CUP_GLASS.get()), 1)
+                .experience(0.15F).cookingTime(100)
+                .save(writer, id("coffee_brewing/green_tea"));
+
+        // Black Tea: black_tea_leaf + water_bucket + cup_glass
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_BLACK_TEA.get()))
+                .base(Ingredient.of(ModItems.BLACK_TEA_LEAF.get()), 1)
+                .modifier(Ingredient.of(Items.WATER_BUCKET), 1)
+                .container(Ingredient.of(ModItems.CUP_GLASS.get()), 1)
+                .experience(0.2F).cookingTime(100)
+                .save(writer, id("coffee_brewing/black_tea"));
+
+        // Milk Tea: black_tea_leaf + milk_bucket + sugar + cup_glass
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_MILK_TEA.get()))
+                .base(Ingredient.of(ModItems.BLACK_TEA_LEAF.get()), 1)
+                .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
+                .additive(Ingredient.of(Items.SUGAR), 1)
+                .container(Ingredient.of(ModItems.CUP_GLASS.get()), 1)
+                .experience(0.25F).cookingTime(120)
+                .save(writer, id("coffee_brewing/milk_tea"));
+
+        // Mandarin Drink: coffee_powder + milk_bucket + tea_leaf + cup_glass
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_MANDARIN_DRINK.get()))
+                .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 1)
+                .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
+                .additive(Ingredient.of(ModItems.TEA_LEAF.get()), 1)
+                .container(Ingredient.of(ModItems.CUP_GLASS.get()), 1)
+                .experience(0.3F).cookingTime(140)
+                .save(writer, id("coffee_brewing/mandarin_drink"));
+
+        // ── Phase 4: Cold Brew ───────────────────────────────────────────
+
+        // Coldbrew: coldbrew_bottle + cup_glass
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_COLDBREW.get()))
+                .base(Ingredient.of(ModItems.COLDBREW_BOTTLE.get()), 1)
+                .container(Ingredient.of(ModItems.CUP_GLASS.get()), 1)
+                .experience(0.3F).cookingTime(160)
+                .save(writer, id("coffee_brewing/coldbrew"));
+
+        // ── Phase 4: Iced drinks ─────────────────────────────────────────
+
+        // Iced Americano: coffee_powder + water_bucket + ice_slag + cup_glass
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_AMERICANO_ICE.get()))
+                .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 1)
+                .modifier(Ingredient.of(Items.WATER_BUCKET), 1)
+                .additive(Ingredient.of(ModItems.ICE_SLAG.get()), 1)
+                .container(Ingredient.of(ModItems.CUP_GLASS.get()), 1)
+                .experience(0.25F).cookingTime(140)
+                .save(writer, id("coffee_brewing/iced_americano"));
+
+        // Iced Latte: coffee_powder + milk_bucket + ice_slag + cup_glass
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_LATTE_ICE.get()))
+                .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 1)
+                .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
+                .additive(Ingredient.of(ModItems.ICE_SLAG.get()), 1)
+                .container(Ingredient.of(ModItems.CUP_GLASS.get()), 1)
+                .experience(0.25F).cookingTime(140)
+                .save(writer, id("coffee_brewing/iced_latte"));
+
+        // Iced Coldbrew: coldbrew_bottle + ice_slag + cup_glass
+        CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_COLDBREW_ICE.get()))
+                .base(Ingredient.of(ModItems.COLDBREW_BOTTLE.get()), 1)
+                .additive(Ingredient.of(ModItems.ICE_SLAG.get()), 1)
+                .container(Ingredient.of(ModItems.CUP_GLASS.get()), 1)
+                .experience(0.3F).cookingTime(180)
+                .save(writer, id("coffee_brewing/iced_coldbrew"));
     }
 
     private static ResourceLocation id(String path) {

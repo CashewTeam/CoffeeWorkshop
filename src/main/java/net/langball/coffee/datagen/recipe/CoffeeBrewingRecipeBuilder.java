@@ -15,15 +15,16 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 
 /**
- * DataGen builder for {@link CoffeeBrewingRecipe}.
+ * DataGen builder for {@link CoffeeBrewingRecipe} (v2 — 5-slot).
  *
  * <pre>{@code
- * CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_AMERICANO.get()))
+ * CoffeeBrewingRecipeBuilder.brewing(new ItemStack(ModItems.COFFEE_MOCHACCINO.get()))
  *     .base(Ingredient.of(ModItems.COFFEE_POWDER.get()), 1)
- *     .modifier(Ingredient.of(Items.WATER_BUCKET), 1)
+ *     .modifier(Ingredient.of(Items.MILK_BUCKET), 1)
+ *     .additive(Ingredient.of(ModItems.COCOA_POWDER.get()), 1)
  *     .container(Ingredient.of(ModItems.CUP.get()), 1)
- *     .experience(0.2F).cookingTime(120)
- *     .save(writer, CoffeeWork.id("coffee_brewing/americano"));
+ *     .experience(0.3F).cookingTime(140)
+ *     .save(writer, CoffeeWork.id("coffee_brewing/mochaccino"));
  * }</pre>
  */
 public class CoffeeBrewingRecipeBuilder {
@@ -31,6 +32,7 @@ public class CoffeeBrewingRecipeBuilder {
     private final ItemStack result;
     private SlotIngredient base;
     @Nullable private SlotIngredient modifier;
+    @Nullable private SlotIngredient additive;
     private SlotIngredient container;
     private float experience = 0F;
     private int cookingTime = 200;
@@ -53,6 +55,13 @@ public class CoffeeBrewingRecipeBuilder {
      *  require the modifier slot to be empty (e.g. Espresso). */
     public CoffeeBrewingRecipeBuilder modifier(Ingredient ingredient, int count) {
         this.modifier = new SlotIngredient(ingredient, count);
+        return this;
+    }
+
+    /** Sets the additive ingredient.  Omit this call for recipes that
+     *  require the additive slot to be empty (e.g. basic Americano). */
+    public CoffeeBrewingRecipeBuilder additive(Ingredient ingredient, int count) {
+        this.additive = new SlotIngredient(ingredient, count);
         return this;
     }
 
@@ -96,6 +105,13 @@ public class CoffeeBrewingRecipeBuilder {
                 modObj.add("ingredient", modifier.ingredient().toJson());
                 modObj.addProperty("count", modifier.count());
                 json.add("modifier", modObj);
+            }
+
+            if (additive != null) {
+                JsonObject addObj = new JsonObject();
+                addObj.add("ingredient", additive.ingredient().toJson());
+                addObj.addProperty("count", additive.count());
+                json.add("additive", addObj);
             }
 
             JsonObject contObj = new JsonObject();

@@ -503,6 +503,8 @@
   "entity.minecraft.villager.coffeework.coffee_barista": "咖啡师",
   "entity.minecraft.villager.coffeework.coffee_materials_trader": "咖啡材料商",
   "entity.minecraft.villager.coffeework.baker": "烘焙师",
+  "item.coffeework.tea_leaf": "茶叶",
+  "item.coffeework.black_tea_leaf": "红茶叶",
   "item.coffeework.record_kusa_noshi_to_ne.desc": "草の詩",
   "item.coffeework.record_lazy_lady_kaguya.desc": "怠惰的辉夜",
   "item.coffeework.record_the_grimoire_of_marisa.desc": "魔理沙的魔法书"

@@ -322,3 +322,81 @@ remain creative-only until their recipe schema is designed.
   - Rarity config: `coffee_tree_rarity=2` → 2/8 = 25% chance per placement
 - Vanilla crop worldgen (`vanilla_crop`) similarly configured.
 - First coffee seed is obtainable in new survival worlds without commands.
+
+## 2026-07-25 — Phase 4 Schema v2 and P0 drink recovery
+
+### Coffee Brewing Schema v2 (5-slot)
+
+- Coffee Machine upgraded from 4 slots to 5 slots:
+  - Slot 0: Base (coffee_powder, cocoa_powder, coldbrew_bottle, tea_leaf)
+  - Slot 1: Modifier (water_bucket, milk_bucket, or empty)
+  - Slot 2: Additive (cocoa_powder, sugar, chocolate_chip, ice_slag, or empty)
+  - Slot 3: Container (cup, cup_glass)
+  - Slot 4: Output
+- `CoffeeBrewingRecipe` now carries an optional `additive` SlotIngredient field.
+- NBT migration path: v0(2-slot) → v1(4-slot) → v2(5-slot).  Migration runs
+  sequentially so a save from v0 is upgraded to v2 in one load.
+- Old 4-slot saves (v1): slot 2(container) → slot 3, slot 3(output) → slot 4.
+  New additive slot 2 starts empty.
+
+### Atomic Consumption Plan
+
+- `AbstractProcessingBlockEntity.processRecipe()` rewritten to build a
+  `ConsumptionPlan` (pre-check all slots + remainder placement) before
+  applying any mutations.  If any check fails, nothing is consumed.
+- `ProcessingRecipe.getRemainder(int slot)` added as a default interface method.
+  No more `instanceof CoffeeBrewingRecipe` casts in the processing engine.
+- Remainder handling: buckets return empty buckets, bottles return glass bottles.
+  Remainders are placed back into the vacated slot when possible.
+
+### P0 drink recipe recovery (15 recipes)
+
+All Phase 3 deferred drinks now have machine recipes:
+
+| Drink | Base | Modifier | Additive | Container | Cups |
+|-------|------|----------|----------|-----------|------|
+| Espresso | coffee_powder×2 | — | — | cup | 2 |
+| Americano | coffee_powder | water_bucket | — | cup | 4 |
+| Latte | coffee_powder | milk_bucket | — | cup | 4 |
+| Cappuccino | coffee_powder | milk_bucket | sugar | cup | 3 |
+| Macchiato | coffee_powder×2 | milk_bucket | — | cup | 3 |
+| Mochaccino | coffee_powder | milk_bucket | cocoa_powder | cup | 3 |
+| Cocoa | cocoa_powder×2 | milk_bucket | — | cup | 3 |
+| Cocoa Strong | cocoa_powder×2 | milk_bucket | chocolate_chip | cup | 2 |
+| Green Tea | tea_leaf | water_bucket | — | cup_glass | 3 |
+| Black Tea | black_tea_leaf | water_bucket | — | cup_glass | 3 |
+| Milk Tea | black_tea_leaf | milk_bucket | sugar | cup_glass | 3 |
+| Mandarin Drink | coffee_powder | milk_bucket | tea_leaf | cup_glass | 3 |
+| Coldbrew | coldbrew_bottle | — | — | cup_glass | 3 |
+| Iced Americano | coffee_powder | water_bucket | ice_slag | cup_glass | 4 |
+| Iced Latte | coffee_powder | milk_bucket | ice_slag | cup_glass | 4 |
+| Iced Coldbrew | coldbrew_bottle | — | ice_slag | cup_glass | 3 |
+
+### Recipe ambiguity resolution
+
+- Cappuccino uses `sugar` as additive to distinguish from Latte
+  (which has no additive).  Without this, both would match the
+  same input combination (coffee_powder + milk_bucket + cup).
+- Macchiato uses 2×coffee_powder to distinguish from Latte (1×).
+- All other drink recipes have unique input signatures.
+
+### Tea leaf items
+
+- `tea_leaf`: crafted from 4×oak_leaves (2×2 shaped).  Represents
+  generic green tea material.
+- `black_tea_leaf`: obtained by smelting `tea_leaf`.
+- No world-gen tea bush; leaves crafting is accessible early-game.
+
+### Dough intermediate closures
+
+- `plate_dough` → Oven → bread_round (200 ticks).  Closes the
+  dough→roller→plate_dough→oven chain.
+- `plate_dough_pastry` → used in pie_cream workbench recipe (existing).
+- `plate_dough_ginger` → 2×2 workbench → ginger_house block.
+  More efficient than the 3×3 dough_ginger recipe.
+
+### P1 deferred items
+
+Flavored latte variants (caramel, chocolate, fruit, mint, vanilla, sakura),
+their iced versions, iced tea/cocoa variants, coldbrew extensions, and
+flavored syrup system remain creative-only pending Phase 4 P1.

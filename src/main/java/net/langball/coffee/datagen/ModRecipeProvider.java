@@ -185,6 +185,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('W', ModItems.DOUGH_GINGER.get())
                 .save(writer, modLoc("ginger_house"));
 
+        // Ginger house from plate_dough_ginger (2×2, more efficient)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.GINGER_HOUSE.get())
+                .pattern("WW")
+                .pattern("WW")
+                .define('W', ModItems.PLATE_DOUGH_GINGER.get())
+                .unlockedBy("has_item", has(ModItems.PLATE_DOUGH_GINGER.get()))
+                .save(writer, modLoc("ginger_house_from_plate"));
+
         // --- Drinks storage ---
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.COFFEE_INSTANT_BOX.get())
                 .pattern("WWW")
@@ -330,6 +338,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern(" G ")
                 .define('G', Items.GLASS_PANE)
                 .save(writer, modLoc("cup_glass"));
+
+        // Tea leaves
+        shaped(RecipeCategory.MISC, ModItems.TEA_LEAF.get(), 4, Items.OAK_LEAVES)
+                .pattern("LL")
+                .define('L', Items.OAK_LEAVES)
+                .save(writer, modLoc("tea_leaf"));
+
+        // Black tea leaf (smelt green tea leaf)
+        smelting(ModItems.TEA_LEAF.get(), ModItems.BLACK_TEA_LEAF.get(), 0.1F, "black_tea_leaf")
+                .save(writer, modLoc("black_tea_leaf"));
 
         // Cold Brew Pot (filled)
         shapeless(RecipeCategory.MISC, ModBlocks.COLD_BREW_POT.get(), ModItems.EMPTY_COLDBREW_POT.get())

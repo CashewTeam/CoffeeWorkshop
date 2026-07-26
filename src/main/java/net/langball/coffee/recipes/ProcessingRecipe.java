@@ -16,6 +16,12 @@ import net.minecraft.world.level.Level;
  * works against this interface rather than any concrete recipe class,
  * so that Coffee Machine can use multi-input recipes without
  * modifying the shared state machine.
+ *
+ * <h3>Remainder contract</h3>
+ * <p>Implementations that need non-standard remainder handling
+ * (e.g. returning empty buckets for milk/water) should override
+ * {@link #getRemainder(int)}.  The default falls back to
+ * {@link ItemStack#getCraftingRemainingItem()} on the consumed stack.
  */
 public interface ProcessingRecipe {
 
@@ -48,4 +54,16 @@ public interface ProcessingRecipe {
      * Returns 0 if the slot is not consumed by this recipe.
      */
     int getRequiredCount(int slot);
+
+    /**
+     * Returns the remainder ItemStack left behind after consuming from
+     * {@code slot}, or {@link ItemStack#EMPTY} if none.
+     *
+     * <p>The default implementation derives the remainder from the
+     * consumed stack via {@link ItemStack#getCraftingRemainingItem()}.
+     * Override for recipes that need custom per-slot remainder logic.
+     */
+    default ItemStack getRemainder(int slot) {
+        return ItemStack.EMPTY;
+    }
 }

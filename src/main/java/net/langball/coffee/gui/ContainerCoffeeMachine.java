@@ -6,7 +6,6 @@ import net.langball.coffee.gui.slot.SlotMachineResult;
 import net.langball.coffee.init.ModBlocks;
 import net.langball.coffee.init.ModMenuTypes;
 import net.langball.coffee.init.ModRecipeTypes;
-import net.langball.coffee.recipes.CoffeeBrewingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
@@ -19,32 +18,43 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import java.util.Set;
 
+/**
+ * Coffee Machine container — v2 5-slot layout.
+ *
+ * <pre>
+ * [Base]        [Additive]
+ * [Modifier]    [Container]
+ *            →  [Output]
+ * </pre>
+ */
 public class ContainerCoffeeMachine extends AbstractMachineMenu {
 
     /** Client-side constructor. */
     public ContainerCoffeeMachine(int id, Inventory inv, BlockPos pos) {
         this(id, inv,
-                getItemHandlerAt(inv, pos, 4),
+                getItemHandlerAt(inv, pos, 5),
                 new SimpleContainerData(4),
                 getMachineAt(inv, pos));
     }
 
     /** Server-side constructor. */
     public ContainerCoffeeMachine(int id, Inventory inv, IItemHandler handler, ContainerData data, MachineBlockEntity be) {
-        super(ModMenuTypes.COFFEE_MACHINE.get(), id, inv, handler, data, be, 4);
+        super(ModMenuTypes.COFFEE_MACHINE.get(), id, inv, handler, data, be, 5);
     }
 
     @Override
     protected void addMachineSlots() {
-        // Slot layout for 4-slot Coffee Machine:
-        // 0: coffee powder (36, 26)
-        // 1: water/milk modifier (56, 44)
-        // 2: cup (76, 26)
-        // 3: output (116, 35)
-        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_BASE, 36, 26));
-        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_MODIFIER, 56, 44));
-        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_CUP, 76, 26));
-        this.addSlot(new SlotMachineResult(itemHandler, CoffeeMachineBlockEntity.SLOT_OUTPUT, 116, 35,
+        // 5-slot layout:
+        // 0: Base (30, 20)
+        // 1: Modifier (50, 44)
+        // 2: Additive (70, 20)
+        // 3: Container (90, 44)
+        // 4: Output (130, 32)
+        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_BASE, 30, 20));
+        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_MODIFIER, 50, 44));
+        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_ADDITIVE, 70, 20));
+        this.addSlot(new SlotItemHandler(itemHandler, CoffeeMachineBlockEntity.SLOT_CONTAINER, 90, 44));
+        this.addSlot(new SlotMachineResult(itemHandler, CoffeeMachineBlockEntity.SLOT_OUTPUT, 130, 32,
                 blockEntity, level));
     }
 

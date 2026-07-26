@@ -15,17 +15,18 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Multi-input recipe for the Coffee Machine.
  *
- * <h3>Slot layout</h3>
+ * <h3>Slot layout (v2 — 5 slots)</h3>
  * <table>
- *   <tr><th>Slot</th><th>Purpose</th></tr>
- *   <tr><td>0</td><td>Base ingredient (coffee powder)</td></tr>
- *   <tr><td>1</td><td>Modifier (water bucket, milk bucket, or empty)</td></tr>
- *   <tr><td>2</td><td>Container (cup)</td></tr>
- *   <tr><td>3</td><td>Output</td></tr>
+ *   <tr><th>Slot</th><th>Role</th><th>Example</th></tr>
+ *   <tr><td>0</td><td>Base</td><td>coffee_powder, cocoa_powder, coldbrew_bottle</td></tr>
+ *   <tr><td>1</td><td>Modifier</td><td>water_bucket, milk_bucket (or empty)</td></tr>
+ *   <tr><td>2</td><td>Additive</td><td>cocoa_powder, ice_slag, syrup (or empty)</td></tr>
+ *   <tr><td>3</td><td>Container</td><td>cup, cup_glass</td></tr>
+ *   <tr><td>4</td><td>Output</td><td>DrinkCoffee result</td></tr>
  * </table>
  *
- * <p>When {@code modifier} is {@code null} the modifier slot MUST be
- * empty (used for Espresso which takes only coffee powder + cup).
+ * <p>When {@code modifier} is {@code null} the modifier slot MUST be empty.
+ * When {@code additive} is {@code null} the additive slot MUST be empty.
  *
  * <p>Implements both {@link Recipe} (for RecipeManager lookup) and
  * {@link ProcessingRecipe} (for the shared processing engine).
@@ -35,11 +36,20 @@ public record CoffeeBrewingRecipe(
         String group,
         SlotIngredient base,
         @Nullable SlotIngredient modifier,
+        @Nullable SlotIngredient additive,
         SlotIngredient container,
         ItemStack result,
         float experience,
         int cookingTime
 ) implements Recipe<SimpleContainer>, ProcessingRecipe {
+
+    /** Pre-v2 constructor for backward compatibility (no additive). */
+    public CoffeeBrewingRecipe(ResourceLocation id, String group,
+                               SlotIngredient base, @Nullable SlotIngredient modifier,
+                               SlotIngredient container, ItemStack result,
+                               float experience, int cookingTime) {
+        this(id, group, base, modifier, null, container, result, experience, cookingTime);
+    }
 
     @Override
     public boolean matches(@NotNull SimpleContainer inv, @NotNull Level level) {
@@ -55,14 +65,24 @@ public record CoffeeBrewingRecipe(
                 return false;
             }
         } else {
-            // Modifier slot must be empty
             if (!inv.getItem(1).isEmpty()) {
                 return false;
             }
         }
-        // Slot 2: container (cup) must match
-        if (!container.ingredient().test(inv.getItem(2))
-                || inv.getItem(2).getCount() < container.count()) {
+        // Slot 2: additive check
+        if (additive != null) {
+            if (!additive.ingredient().test(inv.getItem(2))
+                    || inv.getItem(2).getCount() < additive.count()) {
+                return false;
+            }
+        } else {
+            if (!inv.getItem(2).isEmpty()) {
+                return false;
+            }
+        }
+        // Slot 3: container must match
+        if (!container.ingredient().test(inv.getItem(3))
+                || inv.getItem(3).getCount() < container.count()) {
             return false;
         }
         return true;
@@ -114,10 +134,18 @@ public record CoffeeBrewingRecipe(
 
     @Override
     public int[] getConsumedSlots() {
-        if (modifier != null) {
-            return new int[]{0, 1, 2};
-        }
-        return new int[]{0, 2};
+        // Build list dynamically based on which optional slots are present
+        int count = 1; // base always consumed
+        if (modifier != null) count++;
+        if (additive != null) count++;
+        count++; // container always consumed
+        int[] slots = new int[count];
+        int idx = 0;
+        slots[idx++] = 0; // base
+        if (modifier != null) slots[idx++] = 1;
+        if (additive != null) slots[idx++] = 2;
+        slots[idx] = 3; // container
+        return slots;
     }
 
     @Override
@@ -125,21 +153,21 @@ public record CoffeeBrewingRecipe(
         return switch (slot) {
             case 0 -> base.count();
             case 1 -> modifier != null ? modifier.count() : 0;
-            case 2 -> container.count();
+            case 2 -> additive != null ? additive.count() : 0;
+            case 3 -> container.count();
             default -> 0;
         };
     }
 
-    /**
-     * Returns the remainder ItemStack for the given slot after
-     * consumption, or {@link ItemStack#EMPTY} if none.
-     *
-     * <p>For example, water_bucket → bucket, milk_bucket → bucket.
-     */
+    @Override
+    @NotNull
     public ItemStack getRemainder(int slot) {
         if (slot == 1 && modifier != null) {
-            // Simulate consuming one modifier item to discover its remainder
             ItemStack one = new ItemStack(modifier.ingredient().getItems()[0].getItem());
+            return one.getCraftingRemainingItem();
+        }
+        if (slot == 2 && additive != null) {
+            ItemStack one = new ItemStack(additive.ingredient().getItems()[0].getItem());
             return one.getCraftingRemainingItem();
         }
         return ItemStack.EMPTY;

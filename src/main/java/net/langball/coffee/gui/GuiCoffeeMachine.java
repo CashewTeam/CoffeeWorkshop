@@ -24,20 +24,20 @@ public class GuiCoffeeMachine extends AbstractContainerScreen<ContainerCoffeeMac
         int j = this.topPos;
         guiGraphics.blit(TEXTURE, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
-        // Burn time indicator (flame) — machine may have internal heat
+        // Burn time indicator (flame) — positioned near the arrow
         int burnTime = menu.data.get(2);
         int currentBurnTime = menu.data.get(3);
         if (burnTime > 0) {
             int k = currentBurnTime != 0 ? burnTime * 13 / currentBurnTime : 0;
-            guiGraphics.blit(TEXTURE, i + 56, j + 36 + 12 - k, 176, 12 - k, 14, k + 1);
+            guiGraphics.blit(TEXTURE, i + 72, j + 36 + 12 - k, 176, 12 - k, 14, k + 1);
         }
 
-        // Cook progress arrow
+        // Cook progress arrow — between container and output
         int cookTime = menu.data.get(0);
         int totalCookTime = menu.data.get(1);
         if (totalCookTime > 0) {
             int l = cookTime * 24 / totalCookTime;
-            guiGraphics.blit(TEXTURE, i + 79, j + 34, 176, 14, l + 1, 16);
+            guiGraphics.blit(TEXTURE, i + 106, j + 33, 176, 14, l + 1, 16);
         }
     }
 

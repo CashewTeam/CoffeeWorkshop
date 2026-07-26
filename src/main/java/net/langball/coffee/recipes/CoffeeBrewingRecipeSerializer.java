@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * JSON serializer for {@link CoffeeBrewingRecipe}.
+ * JSON serializer for {@link CoffeeBrewingRecipe} (v2 — 5-slot).
  *
  * <h3>JSON format</h3>
  * <pre>{@code
@@ -21,15 +21,16 @@ import org.jetbrains.annotations.Nullable;
  *   "type": "coffeework:coffee_brewing",
  *   "base": { "ingredient": {"item": "coffeework:coffee_powder"}, "count": 1 },
  *   "modifier": { "ingredient": {"item": "minecraft:water_bucket"}, "count": 1 },
+ *   "additive": { "ingredient": {"item": "coffeework:cocoa_powder"}, "count": 1 },
  *   "container": { "ingredient": {"item": "coffeework:cup"}, "count": 1 },
- *   "result": { "item": "coffeework:coffee_americano", "count": 1 },
- *   "experience": 0.2,
- *   "cookingtime": 120
+ *   "result": { "item": "coffeework:coffee_mochaccino", "count": 1 },
+ *   "experience": 0.3,
+ *   "cookingtime": 140
  * }
  * }</pre>
  *
- * <p>When {@code "modifier"} is absent, the modifier slot MUST be
- * empty (e.g. Espresso).
+ * <p>Both {@code "modifier"} and {@code "additive"} are optional.
+ * When absent, the corresponding slot MUST be empty.
  */
 public final class CoffeeBrewingRecipeSerializer implements RecipeSerializer<CoffeeBrewingRecipe> {
 
@@ -48,6 +49,12 @@ public final class CoffeeBrewingRecipeSerializer implements RecipeSerializer<Cof
             modifier = parseSlotIngredient(GsonHelper.getAsJsonObject(json, "modifier"));
         }
 
+        // Additive (optional — absent means "must be empty")
+        SlotIngredient additive = null;
+        if (json.has("additive") && !json.get("additive").isJsonNull()) {
+            additive = parseSlotIngredient(GsonHelper.getAsJsonObject(json, "additive"));
+        }
+
         // Container (required)
         if (!json.has("container")) throw new JsonParseException("Coffee recipe '" + id + "' missing 'container'");
         SlotIngredient container = parseSlotIngredient(GsonHelper.getAsJsonObject(json, "container"));
@@ -62,7 +69,7 @@ public final class CoffeeBrewingRecipeSerializer implements RecipeSerializer<Cof
         // Shared validation
         MachineRecipeSerializer.validateRecipeData(id, base.ingredient(), result, experience, cookingTime);
 
-        return new CoffeeBrewingRecipe(id, group, base, modifier, container, result, experience, cookingTime);
+        return new CoffeeBrewingRecipe(id, group, base, modifier, additive, container, result, experience, cookingTime);
     }
 
     private static SlotIngredient parseSlotIngredient(JsonObject json) {
@@ -77,6 +84,8 @@ public final class CoffeeBrewingRecipeSerializer implements RecipeSerializer<Cof
         SlotIngredient base = readSlotIngredient(buf);
         boolean hasModifier = buf.readBoolean();
         SlotIngredient modifier = hasModifier ? readSlotIngredient(buf) : null;
+        boolean hasAdditive = buf.readBoolean();
+        SlotIngredient additive = hasAdditive ? readSlotIngredient(buf) : null;
         SlotIngredient container = readSlotIngredient(buf);
         ItemStack result = buf.readItem();
         float experience = buf.readFloat();
@@ -84,7 +93,7 @@ public final class CoffeeBrewingRecipeSerializer implements RecipeSerializer<Cof
 
         MachineRecipeSerializer.validateRecipeData(id, base.ingredient(), result, experience, cookingTime);
 
-        return new CoffeeBrewingRecipe(id, group, base, modifier, container, result, experience, cookingTime);
+        return new CoffeeBrewingRecipe(id, group, base, modifier, additive, container, result, experience, cookingTime);
     }
 
     @Override
@@ -93,6 +102,8 @@ public final class CoffeeBrewingRecipeSerializer implements RecipeSerializer<Cof
         writeSlotIngredient(buf, recipe.base());
         buf.writeBoolean(recipe.modifier() != null);
         if (recipe.modifier() != null) writeSlotIngredient(buf, recipe.modifier());
+        buf.writeBoolean(recipe.additive() != null);
+        if (recipe.additive() != null) writeSlotIngredient(buf, recipe.additive());
         writeSlotIngredient(buf, recipe.container());
         buf.writeItem(recipe.result());
         buf.writeFloat(recipe.experience());

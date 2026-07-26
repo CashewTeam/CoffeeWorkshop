@@ -739,6 +739,12 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SYRUP_EMPTY = ITEMS.register("syrup_empty",
             () -> new Item(new Item.Properties().stacksTo(16)));
+
+    // Tea leaves
+    public static final RegistryObject<Item> TEA_LEAF = ITEMS.register("tea_leaf",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> BLACK_TEA_LEAF = ITEMS.register("black_tea_leaf",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> IRON_BOWL = ITEMS.register("iron_bowl",
             () -> new Item(new Item.Properties().stacksTo(16)) {
                 @Override public boolean hasCraftingRemainingItem() { return true; }

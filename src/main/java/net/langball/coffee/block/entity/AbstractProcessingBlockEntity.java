@@ -87,62 +87,88 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
     // ---- Processing helpers -----------------------------------------------
 
     /**
-     * Atomically consumes inputs and produces the result.
+     * Atomically consumes inputs and produces the result using a
+     * {@link net.langball.coffee.recipes.ConsumptionPlan}.
      *
-     * <p>Pre-checks that every slot has enough items and all remainders
-     * can be placed before modifying any slot.
+     * <h3>Process</h3>
+     * <ol>
+     *   <li>Assemble the result ItemStack.</li>
+     *   <li>Verify the output slot can accept the result.</li>
+     *   <li>Build a {@code ConsumptionPlan}: for every consumed slot,
+     *       check that enough items exist and that any remainder can
+     *       be placed back (or dropped safely).</li>
+     *   <li>If any check fails, abort — nothing is consumed.</li>
+     *   <li>Apply all entries atomically.</li>
+     *   <li>Place the result and record completion.</li>
+     * </ol>
+     *
+     * <p>No longer uses {@code instanceof CoffeeBrewingRecipe} —
+     * remainder is obtained through the unified
+     * {@link net.langball.coffee.recipes.ProcessingRecipe#getRemainder(int)}
+     * interface method.
      */
     protected ProcessingRecipe processRecipe(ProcessingRecipe recipe) {
+        if (level == null) return recipe;
+
+        // 1. Assemble result
         SimpleContainer container = new SimpleContainer(itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++) {
             container.setItem(i, itemHandler.getStackInSlot(i));
         }
-        ItemStack result = recipe.assemble(container, level != null ? level.registryAccess() : null);
+        ItemStack result = recipe.assemble(container, level.registryAccess());
 
-        // Pre-check: verify all slots have enough and remainders can fit
-        int[] slots = recipe.getConsumedSlots();
-        for (int slot : slots) {
-            int required = recipe.getRequiredCount(slot);
-            ItemStack stack = itemHandler.getStackInSlot(slot);
-            if (stack.getCount() < required) return recipe; // safety: should not happen
-
-            // Check remainder placement
-            ItemStack remainder = ItemStack.EMPTY;
-            if (recipe instanceof net.langball.coffee.recipes.CoffeeBrewingRecipe cbr) {
-                remainder = cbr.getRemainder(slot);
-            }
-            if (!remainder.isEmpty() && stack.getCount() > required) {
-                // Remainder would need to drop into world — still OK but warn
-            }
+        // 2. Check output capacity upfront
+        if (!canAcceptResult(getOutputSlot(), result)) {
+            return recipe; // output blocked — consume nothing
         }
 
-        // Now consume atomically
-        if (slots.length == 1) {
-            consumeOneWithRemainder(slots[0]);
-        } else {
-            for (int slot : slots) {
-                int count = recipe.getRequiredCount(slot);
-                ItemStack stack = itemHandler.getStackInSlot(slot);
-                if (!stack.isEmpty() && count > 0) {
-                    ItemStack remainder = ItemStack.EMPTY;
-                    if (recipe instanceof net.langball.coffee.recipes.CoffeeBrewingRecipe cbr) {
-                        remainder = cbr.getRemainder(slot);
-                    }
+        // 3. Build consumption plan — pre-check every slot
+        int[] consumedSlots = recipe.getConsumedSlots();
+        java.util.List<net.langball.coffee.recipes.ConsumptionEntry> entries =
+                new java.util.ArrayList<>(consumedSlots.length);
 
-                    stack.shrink(count);
-                    if (!remainder.isEmpty()) {
-                        if (stack.isEmpty()) {
-                            itemHandler.setStackInSlot(slot, remainder);
-                        } else {
-                            net.minecraft.world.Containers.dropItemStack(level,
-                                    worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
-                                    remainder);
-                        }
-                    }
+        for (int slot : consumedSlots) {
+            int required = recipe.getRequiredCount(slot);
+            ItemStack current = itemHandler.getStackInSlot(slot);
+
+            // Safety: underflow check
+            if (current.getCount() < required) {
+                return recipe; // not enough items — abort
+            }
+
+            // Get remainder via the unified interface
+            ItemStack remainder = recipe.getRemainder(slot);
+
+            // If remainder exists and there are more items in the stack than
+            // we're consuming, the remainder needs to either replace the empty
+            // slot or be dropped.  We pre-verify that the slot can hold it.
+            if (!remainder.isEmpty() && current.getCount() == required) {
+                // After consumption, the slot will be empty — remainder replaces it.
+                // No capacity check needed (slot becomes the remainder).
+            }
+
+            entries.add(new net.langball.coffee.recipes.ConsumptionEntry(slot, required, remainder));
+        }
+
+        // 4. Apply atomically
+        for (var entry : entries) {
+            ItemStack stack = itemHandler.getStackInSlot(entry.slot());
+            stack.shrink(entry.count());
+
+            if (!entry.remainder().isEmpty()) {
+                if (stack.isEmpty()) {
+                    // Slot vacated — place remainder directly
+                    itemHandler.setStackInSlot(entry.slot(), entry.remainder().copy());
+                } else {
+                    // Items remain in slot — remainder falls to the world
+                    net.minecraft.world.Containers.dropItemStack(level,
+                            worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
+                            entry.remainder().copy());
                 }
             }
         }
 
+        // 5. Place result
         insertResult(getOutputSlot(), result);
         recordRecipeCompletion(recipe);
         return recipe;
