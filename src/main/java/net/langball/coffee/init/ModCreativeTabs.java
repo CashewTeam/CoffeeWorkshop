@@ -166,6 +166,22 @@ public class ModCreativeTabs {
                         output.accept(ModItems.CAKE_SPONGE_REDVELVET_SLICES.get());
                         output.accept(ModItems.CAKE_SPONGE_TEA_SLICES.get());
 
+                        // Phase 6: Creams & Cookie Ice Creams
+                        output.accept(ModItems.CREAM_MILK.get());
+                        output.accept(ModItems.CREAM_APPLE.get());
+                        output.accept(ModItems.CREAM_BERRY.get());
+                        output.accept(ModItems.CREAM_CHOCOLATE.get());
+                        output.accept(ModItems.CREAM_COFFEE.get());
+                        output.accept(ModItems.CREAM_LEMON.get());
+                        output.accept(ModItems.CREAM_MELON.get());
+                        output.accept(ModItems.COOKIE_ICECREAM_VANILLA.get());
+                        output.accept(ModItems.COOKIE_ICECREAM_APPLE.get());
+                        output.accept(ModItems.COOKIE_ICECREAM_BERRY.get());
+                        output.accept(ModItems.COOKIE_ICECREAM_CHOCOLATE.get());
+                        output.accept(ModItems.COOKIE_ICECREAM_COFFEE.get());
+                        output.accept(ModItems.COOKIE_ICECREAM_LEMON.get());
+                        output.accept(ModItems.COOKIE_ICECREAM_MELON.get());
+
                         // Decor
                         output.accept(ModItems.PLATE.get());
                         output.accept(ModItems.XMAS_TREE.get());

@@ -117,6 +117,24 @@ public class ModItems {
     public static RegistryObject<Item> MOUSSE_CHOCOLATE_RAW;
     public static RegistryObject<Item> MOUSSE_COFFEE_RAW;
 
+    // Phase 6: Creams
+    public static RegistryObject<Item> CREAM_MILK;
+    public static RegistryObject<Item> CREAM_APPLE;
+    public static RegistryObject<Item> CREAM_BERRY;
+    public static RegistryObject<Item> CREAM_CHOCOLATE;
+    public static RegistryObject<Item> CREAM_COFFEE;
+    public static RegistryObject<Item> CREAM_LEMON;
+    public static RegistryObject<Item> CREAM_MELON;
+
+    // Phase 6: Cookie Ice Creams
+    public static RegistryObject<Item> COOKIE_ICECREAM_VANILLA;
+    public static RegistryObject<Item> COOKIE_ICECREAM_APPLE;
+    public static RegistryObject<Item> COOKIE_ICECREAM_BERRY;
+    public static RegistryObject<Item> COOKIE_ICECREAM_CHOCOLATE;
+    public static RegistryObject<Item> COOKIE_ICECREAM_COFFEE;
+    public static RegistryObject<Item> COOKIE_ICECREAM_LEMON;
+    public static RegistryObject<Item> COOKIE_ICECREAM_MELON;
+
     // ========================================================================
     // Seeds — ModEquipmentItems
     // ========================================================================

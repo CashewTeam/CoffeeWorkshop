@@ -16,12 +16,12 @@
 | Metric | Count |
 |---|---|
 | **Fixed baseline assets** | **639** |
-| Restored (now registered) | +62 |
+| Restored (now registered) | +76 |
 | Total legacy assets (tracked) | 639 |
-| **ACTIVE_RUNTIME_ASSET** (already in use) | 242 |
+| **ACTIVE_RUNTIME_ASSET** (already in use) | 256 |
 | **MERGED_RUNTIME_VARIANT** (old ID merged) | 28 |
-| **→ Runtime covered** | **270/639** |
-| TO_PORT_STANDALONE (needs registration) | 57 |
+| **→ Runtime covered** | **284/639** |
+| TO_PORT_STANDALONE (needs registration) | 43 |
 | TO_PORT_INTERMEDIATE (raw/model/base) | 99 |
 | TO_WIRE_STATE_VARIANT (block states) | 0 |
 | TO_WIRE_DISPLAY_VARIANT (display system) | 191 |
@@ -48,8 +48,8 @@
 | decor_bar | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
 | decor_phonograph | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 | icecream | 4 | 0 | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 0 |
-| icecream_cookie | 7 | 0 | 0 | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
-| icecream_cream | 13 | 6 | 0 | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
+| icecream_cookie | 7 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| icecream_cream | 13 | 13 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | machines | 10 | 0 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | materials | 16 | 0 | 5 | 2 | 9 | 0 | 0 | 0 | 0 | 0 |
 | pastry | 33 | 0 | 0 | 18 | 15 | 0 | 0 | 0 | 0 | 0 |
@@ -60,7 +60,7 @@
 | syrups | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | traditional_brew | 14 | 1 | 0 | 0 | 0 | 0 | 2 | 11 | 0 | 0 |
 
-## ACTIVE_RUNTIME_ASSET (242 assets)
+## ACTIVE_RUNTIME_ASSET (256 assets)
 
 These are already wired to existing blockstates, recipes, or registered items.
 
@@ -239,7 +239,21 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `coldbrew_pot_finished` | coffeework:coldbrew_pot | blockstate:variants=ferm=7 |
 | `coldbrew_pot_finished` | coffeework:coldbrew_pot | blockstate:variants=ferm=7 |
 | `cookie_black` | coffeework:cookie_black | registered_item_model |
+| `cookie_icecream_apple` | coffeework:cookie_icecream_apple | registered_item_model |
+| `cookie_icecream_berry` | coffeework:cookie_icecream_berry | registered_item_model |
+| `cookie_icecream_chocolate` | coffeework:cookie_icecream_chocolate | registered_item_model |
+| `cookie_icecream_coffee` | coffeework:cookie_icecream_coffee | registered_item_model |
+| `cookie_icecream_lemon` | coffeework:cookie_icecream_lemon | registered_item_model |
+| `cookie_icecream_melon` | coffeework:cookie_icecream_melon | registered_item_model |
+| `cookie_icecream_vanilla` | coffeework:cookie_icecream_vanilla | registered_item_model |
 | `cookie_oreo` | coffeework:cookie_oreo | registered_item_model |
+| `cream_apple` | coffeework:cream_apple | registered_item_model |
+| `cream_berry` | coffeework:cream_berry | registered_item_model |
+| `cream_chocolate` | coffeework:cream_chocolate | registered_item_model |
+| `cream_coffee` | coffeework:cream_coffee | registered_item_model |
+| `cream_lemon` | coffeework:cream_lemon | registered_item_model |
+| `cream_melon` | coffeework:cream_melon | registered_item_model |
+| `cream_milk` | coffeework:cream_milk | registered_item_model |
 | `custard` | coffeework:custard | registered_item_model |
 | `empty_coldbrew_pot` | coffeework:coldbrew_pot | blockstate:variants=ferm=8 |
 | `hardtack` | coffeework:hardtack | registered_item_model |

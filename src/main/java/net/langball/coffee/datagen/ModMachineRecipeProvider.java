@@ -183,6 +183,12 @@ public final class ModMachineRecipeProvider {
                 new ItemStack(ModItems.CAKE_TEA_ROLL.get()))
                 .experience(0.15F).cookingTime(200)
                 .save(writer, id("rolling/cake_tea_roll"));
+
+        // Phase 6: Cream milk base (milk → icecream machine → cream)
+        MachineRecipeBuilder.icecreamMaking(Ingredient.of(Items.MILK_BUCKET),
+                new ItemStack(ModItems.CREAM_MILK.get()))
+                .experience(0.1F).cookingTime(400)
+                .save(writer, id("icecream_making/cream_milk"));
     }
 
     private static void buildIcecreamRecipes(Consumer<FinishedRecipe> writer) {

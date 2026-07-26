@@ -1,31 +1,31 @@
 {
   "stats": {
-    "registered": 300,
+    "registered": 314,
     "by_type": {
-      "item": 239,
+      "item": 253,
       "block": 50,
       "mob_effect": 3,
       "villager_profession": 3,
       "poi_type": 2,
       "sound_event": 3
     },
-    "orphan_assets": 577,
+    "orphan_assets": 563,
     "orphan_by_classification": {
       "ASSET_ARCHIVE": 486,
       "MERGED": 14,
-      "PORT_LATER": 52,
+      "PORT_LATER": 38,
       "REMOVED": 21,
       "REDESIGN": 4
     },
     "completeness": {
-      "model_ok": 239,
-      "texture_ok": 239,
-      "lang_en_ok": 239,
-      "lang_zh_ok": 239,
-      "lang_ja_ok": 239,
-      "creative_tab_ok": 239,
-      "has_source": 213,
-      "total_items": 239
+      "model_ok": 253,
+      "texture_ok": 253,
+      "lang_en_ok": 253,
+      "lang_zh_ok": 253,
+      "lang_ja_ok": 253,
+      "creative_tab_ok": 253,
+      "has_source": 227,
+      "total_items": 253
     }
   },
   "registry": [
@@ -2385,7 +2385,231 @@
       "block_item": false
     },
     {
+      "id": "cookie_icecream_apple",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cookie_icecream_berry",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cookie_icecream_chocolate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cookie_icecream_coffee",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cookie_icecream_lemon",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cookie_icecream_melon",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cookie_icecream_vanilla",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "cookie_oreo",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cream_apple",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cream_berry",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cream_chocolate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cream_coffee",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cream_lemon",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cream_melon",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cream_milk",
       "type": "item",
       "registered": true,
       "model": true,
@@ -5080,76 +5304,6 @@
       "id": "cookie_black_raw",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cookie_icecream_apple",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_icecream_berry",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_icecream_chocolate",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_icecream_coffee",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_icecream_lemon",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_icecream_melon",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_icecream_vanilla",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_apple",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_berry",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_chocolate",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_coffee",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_lemon",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_melon",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_milk",
-      "type": "item_model",
-      "classification": "PORT_LATER"
     },
     {
       "id": "croissant",

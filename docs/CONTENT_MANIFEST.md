@@ -8,25 +8,25 @@
 | Registry Type | Count |
 |---|---|
 | block | 50 |
-| item | 239 |
+| item | 253 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **300** |
-| **Orphan Assets** | **577** |
+| **Total Registered** | **314** |
+| **Orphan Assets** | **563** |
 
 ## Item Completeness Matrix
 
 | Metric | Count | % |
 |---|---|---|
-| Model | 239/239 | 100% |
-| Texture | 239/239 | 100% |
-| en_us Key Coverage | 239/239 | 100% |
-| zh_cn Key Coverage | 239/239 | 100% |
-| ja_jp Key Coverage | 239/239 | 100% |
-| Creative Tab | 239/239 | 100% |
-| Survival Source | 213/239 | 89% |
+| Model | 253/253 | 100% |
+| Texture | 253/253 | 100% |
+| en_us Key Coverage | 253/253 | 100% |
+| zh_cn Key Coverage | 253/253 | 100% |
+| ja_jp Key Coverage | 253/253 | 100% |
+| Creative Tab | 253/253 | 100% |
+| Survival Source | 227/253 | 89% |
 
 ## Registered Items
 
@@ -178,7 +178,21 @@
 | `coldbrew_bottle` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `coldbrew_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cookie_black` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cookie_icecream_apple` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cookie_icecream_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cookie_icecream_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cookie_icecream_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cookie_icecream_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cookie_icecream_melon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cookie_icecream_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cookie_oreo` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cream_apple` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cream_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cream_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cream_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cream_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cream_melon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cream_milk` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cup` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cup_glass` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `custard` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -349,29 +363,15 @@
 |---|---|
 | ASSET_ARCHIVE | 486 |
 | MERGED | 14 |
-| PORT_LATER | 52 |
+| PORT_LATER | 38 |
 | REDESIGN | 4 |
 | REMOVED | 21 |
 
-### PORT_LATER (52)
+### PORT_LATER (38)
 
 Requires longer production chains — restore in a later content phase.
 
 ```
-  item_model: cookie_icecream_apple
-  item_model: cookie_icecream_berry
-  item_model: cookie_icecream_chocolate
-  item_model: cookie_icecream_coffee
-  item_model: cookie_icecream_lemon
-  item_model: cookie_icecream_melon
-  item_model: cookie_icecream_vanilla
-  item_model: cream_apple
-  item_model: cream_berry
-  item_model: cream_chocolate
-  item_model: cream_coffee
-  item_model: cream_lemon
-  item_model: cream_melon
-  item_model: cream_milk
   item_model: croissant
   item_model: croissant_chocolate
   item_model: ginger_bread

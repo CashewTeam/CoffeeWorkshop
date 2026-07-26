@@ -881,6 +881,65 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.SUGAR)
                 .save(writer, modLoc("cake_sponge_raw"));
 
+        // Phase 6: Creams (milk + sugar + flavor → cream — via Icecream Machine)
+        // (Machine recipes in ModMachineRecipeProvider)
+
+        // Phase 6: Flavored creams (cream_milk + flavor → flavored cream)
+        shapeless(RecipeCategory.FOOD, ModItems.CREAM_APPLE.get(), ModItems.CREAM_MILK.get())
+                .requires(ModItems.CREAM_MILK.get())
+                .requires(Items.APPLE)
+                .save(writer, modLoc("cream_apple"));
+        shapeless(RecipeCategory.FOOD, ModItems.CREAM_BERRY.get(), ModItems.CREAM_MILK.get())
+                .requires(ModItems.CREAM_MILK.get())
+                .requires(Items.SWEET_BERRIES)
+                .save(writer, modLoc("cream_berry"));
+        shapeless(RecipeCategory.FOOD, ModItems.CREAM_CHOCOLATE.get(), ModItems.CREAM_MILK.get())
+                .requires(ModItems.CREAM_MILK.get())
+                .requires(ModItems.COCOA_POWDER.get())
+                .save(writer, modLoc("cream_chocolate"));
+        shapeless(RecipeCategory.FOOD, ModItems.CREAM_COFFEE.get(), ModItems.CREAM_MILK.get())
+                .requires(ModItems.CREAM_MILK.get())
+                .requires(ModItems.COFFEE_POWDER.get())
+                .save(writer, modLoc("cream_coffee"));
+        shapeless(RecipeCategory.FOOD, ModItems.CREAM_LEMON.get(), ModItems.CREAM_MILK.get())
+                .requires(ModItems.CREAM_MILK.get())
+                .requires(ModItems.LEMON.get())
+                .save(writer, modLoc("cream_lemon"));
+        shapeless(RecipeCategory.FOOD, ModItems.CREAM_MELON.get(), ModItems.CREAM_MILK.get())
+                .requires(ModItems.CREAM_MILK.get())
+                .requires(Items.MELON_SLICE)
+                .save(writer, modLoc("cream_melon"));
+
+        // Phase 6: Cookie Ice Creams (cookie + ice cream → cookie ice cream)
+        shapeless(RecipeCategory.FOOD, ModItems.COOKIE_ICECREAM_VANILLA.get(), ModItems.ICECREAM_VANILLA.get())
+                .requires(Items.COOKIE)
+                .requires(ModItems.ICECREAM_VANILLA.get())
+                .save(writer, modLoc("cookie_icecream_vanilla"));
+        shapeless(RecipeCategory.FOOD, ModItems.COOKIE_ICECREAM_APPLE.get(), ModItems.ICECREAM_APPLE.get())
+                .requires(Items.COOKIE)
+                .requires(ModItems.ICECREAM_APPLE.get())
+                .save(writer, modLoc("cookie_icecream_apple"));
+        shapeless(RecipeCategory.FOOD, ModItems.COOKIE_ICECREAM_BERRY.get(), ModItems.ICECREAM_BERRY.get())
+                .requires(Items.COOKIE)
+                .requires(ModItems.ICECREAM_BERRY.get())
+                .save(writer, modLoc("cookie_icecream_berry"));
+        shapeless(RecipeCategory.FOOD, ModItems.COOKIE_ICECREAM_CHOCOLATE.get(), ModItems.ICECREAM_CHOCOLATE.get())
+                .requires(Items.COOKIE)
+                .requires(ModItems.ICECREAM_CHOCOLATE.get())
+                .save(writer, modLoc("cookie_icecream_chocolate"));
+        shapeless(RecipeCategory.FOOD, ModItems.COOKIE_ICECREAM_COFFEE.get(), ModItems.ICECREAM_COFFEE.get())
+                .requires(Items.COOKIE)
+                .requires(ModItems.ICECREAM_COFFEE.get())
+                .save(writer, modLoc("cookie_icecream_coffee"));
+        shapeless(RecipeCategory.FOOD, ModItems.COOKIE_ICECREAM_LEMON.get(), ModItems.ICECREAM_LEMON.get())
+                .requires(Items.COOKIE)
+                .requires(ModItems.ICECREAM_LEMON.get())
+                .save(writer, modLoc("cookie_icecream_lemon"));
+        shapeless(RecipeCategory.FOOD, ModItems.COOKIE_ICECREAM_MELON.get(), ModItems.ICECREAM_MELON.get())
+                .requires(Items.COOKIE)
+                .requires(ModItems.ICECREAM_MELON.get())
+                .save(writer, modLoc("cookie_icecream_melon"));
+
         // ===================================================================
         // COOLING RECIPES (hot drink + ice_slag → iced drink)
         // These handle iced variants that cannot be expressed in the Coffee
