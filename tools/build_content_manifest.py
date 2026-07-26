@@ -187,64 +187,78 @@ def is_drink_plate(name):
 # ── Registry parsing ───────────────────────────────────────────────
 
 def parse_registry():
-    """Parse all Java registry files and return entries with their Java field name."""
-    entries = {}  # registry_id → {type, java_field, ...}
+    """Parse all Java registry files, keeping items and blocks separate to avoid overwrite."""
+    items = {}   # registry_id → {type: "item", java_field, block_item, ...}
+    blocks = {}  # registry_id → {type: "block", java_field, ...}
+    effects = {}
+    professions = {}
+    poi_types = {}
+    sounds = {}
     
-    # ModItems.java — extract field name → registry id mapping
+    # Build field_name → registry_id lookup
+    field_to_id = {}
+    
+    # ModItems.java
     items_file = JAVA / "init" / "ModItems.java"
     if items_file.exists():
         text = items_file.read_text(encoding="utf-8")
         for m in re.finditer(r'public static final RegistryObject<Item>\s+(\w+)\s*=\s*ITEMS\.register\("([^"]+)"', text):
             field, rid = m.group(1), m.group(2)
-            entries[rid] = {"type": "item", "java_field": field, "block_item": False}
+            items[rid] = {"type": "item", "java_field": field, "block_item": False}
+            field_to_id[field.lower()] = rid
     
-    # ModBlocks.java — extract field name → registry id mapping
+    # ModBlocks.java
     blocks_file = JAVA / "init" / "ModBlocks.java"
+    block_field_to_id = {}
     if blocks_file.exists():
         text = blocks_file.read_text(encoding="utf-8")
         for m in re.finditer(r'public static final RegistryObject<Block>\s+(\w+)\s*=\s*BLOCKS\.register\("([^"]+)"', text):
             field, rid = m.group(1), m.group(2)
-            entries[rid] = {"type": "block", "java_field": field}
+            blocks[rid] = {"type": "block", "java_field": field}
+            block_field_to_id[field.lower()] = rid
+            field_to_id[field.lower()] = rid
     
-    # Tag block items
-    for rid, entry in entries.items():
-        if entry["type"] == "item":
-            if rid in entries and entries[rid]["type"] == "block":
-                entry["block_item"] = True
+    # Detect BlockItems: items whose registry ID matches a block ID
+    for rid in items:
+        if rid in blocks:
+            items[rid]["block_item"] = True
+            items[rid]["block_of"] = rid
     
-    # Find block item associations by looking at BlockItem constructors
+    # Also check BlockItem constructor patterns for ID mismatches (e.g. grinder_off → grinder)
     if items_file.exists():
         text = items_file.read_text(encoding="utf-8")
-        for m in re.finditer(r'public static final RegistryObject<Item>\s+(\w+)\s*=\s*ITEMS\.register\("([^"]+)"[^)]*ModBlocks\.(\w+)', text):
-            field, rid, block_field = m.group(1), m.group(2), m.group(3)
-            if rid in entries:
-                entries[rid]["block_item"] = True
-                entries[rid]["block_field"] = block_field
+        # Pattern: ITEMS.register("grinder_off", ... ModBlocks.GRINDER ...)
+        for m in re.finditer(r'ITEMS\.register\("([^"]+)"[^)]*ModBlocks\.(\w+)', text):
+            item_rid, block_field = m.group(1), m.group(2)
+            if item_rid in items:
+                block_rid = block_field_to_id.get(block_field.lower(), block_field.lower())
+                items[item_rid]["block_item"] = True
+                items[item_rid]["block_of"] = block_rid
     
     # ModEffects.java
     effects_file = JAVA / "init" / "ModEffects.java"
     if effects_file.exists():
         text = effects_file.read_text(encoding="utf-8")
         for m in re.finditer(r'EFFECTS\.register\("([^"]+)"', text):
-            entries[m.group(1)] = {"type": "mob_effect", "java_field": ""}
+            effects[m.group(1)] = {"type": "mob_effect", "java_field": ""}
     
     # ModVillagers.java
     villager_file = JAVA / "init" / "ModVillagers.java"
     if villager_file.exists():
         text = villager_file.read_text(encoding="utf-8")
         for m in re.finditer(r'PROFESSIONS\.register\("([^"]+)"', text):
-            entries[m.group(1)] = {"type": "villager_profession", "java_field": ""}
+            professions[m.group(1)] = {"type": "villager_profession", "java_field": ""}
         for m in re.finditer(r'POI_TYPES\.register\("([^"]+)"', text):
-            entries[m.group(1)] = {"type": "poi_type", "java_field": ""}
+            poi_types[m.group(1)] = {"type": "poi_type", "java_field": ""}
     
     # ModSounds.java
     sounds_file = JAVA / "init" / "ModSounds.java"
     if sounds_file.exists():
         text = sounds_file.read_text(encoding="utf-8")
         for m in re.finditer(r'SOUNDS\.register\("([^"]+)"', text):
-            entries[m.group(1)] = {"type": "sound_event", "java_field": ""}
+            sounds[m.group(1)] = {"type": "sound_event", "java_field": ""}
     
-    return entries
+    return items, blocks, effects, professions, poi_types, sounds, field_to_id
 
 
 # ── Resource scanning ──────────────────────────────────────────────
@@ -272,19 +286,32 @@ def scan_lang():
 
 
 def scan_recipes(data_dirs):
-    """Returns dict: recipe_id → {type, result_id, ...}"""
+    """Returns dict: recipe_id → {type, result_id, ...}. Parses all recipe formats."""
     recipes = {}
     for d in data_dirs:
         if not d.exists():
             continue
         for rf in d.rglob("*.json"):
+            # Only JSONs in a "recipes" directory (not advancements, loot_tables, etc.)
+            parts = set(rf.parts)
+            if "recipes" not in parts and not any(p == "recipes" for p in rf.parents if p != rf):
+                continue
+            # Skip if parent has "advancements" (advancement JSONs have same name as recipes)
+            if "advancements" in parts or any("advancements" in str(p) for p in rf.parents):
+                continue
             try:
                 with open(rf, "r", encoding="utf-8") as f:
                     data = json.load(f)
             except (json.JSONDecodeError, Exception):
                 continue
             rid = rf.stem
-            rtype = data.get("type", "minecraft:crafting_shaped")
+            rtype = data.get("type", "")
+            
+            # Only process files that look like actual recipes (have a type field)
+            if not rtype:
+                continue
+            
+            # Standard "result" field (crafting, machine recipes)
             result = data.get("result", {})
             if isinstance(result, dict):
                 item = result.get("item", "")
@@ -292,10 +319,16 @@ def scan_recipes(data_dirs):
                 item = result
             else:
                 item = ""
-            if ":" in item:
+            
+            # Cooling recipes use "iced" field for output
+            if not item:
+                item = data.get("iced", "")
+            
+            if item and ":" in item:
                 _, iname = item.split(":", 1)
             else:
                 iname = ""
+            
             recipes[rid] = {"type": rtype, "result": iname, "path": str(rf.relative_to(ROOT))}
     return recipes
 
@@ -501,9 +534,11 @@ def build_manifest():
     print("Coffee Workshop — Content Manifest Generator")
     print("=" * 60)
     
-    # Parse registries
-    registry = parse_registry()
-    print(f"Registry entries: {len(registry)}")
+    # Parse registries (separate types, no overwrite)
+    items, blocks, effects, professions, poi_types, sounds, field_to_id = parse_registry()
+    print(f"Registry entries: {len(items)} items, {len(blocks)} blocks, "
+          f"{len(effects)} effects, {len(professions)} professions, "
+          f"{len(poi_types)} POIs, {len(sounds)} sounds")
     
     # Scan resources
     item_models = scan_json_dir(MODELS_ITEM)
@@ -529,110 +564,129 @@ def build_manifest():
         if r["result"]:
             recipe_outputs.add(r["result"])
     
-    # Build manifest entries for registered content
-    manifest = []
-    orphan_assets = []
+    # Actual sounds.json parsing (not fake)
+    sounds_json = {}
+    sounds_json_path = RES / "sounds.json"
+    if sounds_json_path.exists():
+        with open(sounds_json_path, "r", encoding="utf-8") as f:
+            sounds_json = json.load(f)
     
     en_lang = langs.get("en_us.json", {})
     zh_lang = langs.get("zh_cn.json", {})
     ja_lang = langs.get("ja_jp.json", {})
     
-    for rid, info in sorted(registry.items()):
-        entry = {
-            "id": rid,
-            "type": info["type"],
-            "registered": True,
-        }
-        
-        if info["type"] == "item":
-            # Model
-            entry["model"] = rid in item_models
-            # Texture
-            entry["texture_ok"] = rid not in tex_missing
-            entry["texture_issues"] = tex_missing.get(rid, [])
-            # Lang
-            key = f"item.coffeework.{rid}"
-            entry["lang_en"] = key in en_lang
-            entry["lang_zh"] = key in zh_lang
-            entry["lang_ja"] = key in ja_lang
-            entry["lang_en_placeholder"] = (key in en_lang and en_lang.get(key) == rid)
-            # Creative tab
-            entry["creative_tab"] = rid in creative_items
-            # Sources
-            sources = []
-            if rid in recipe_outputs:
-                sources.append("recipe")
-            if rid in loot_items:
-                sources.append("loot")
-            if rid in trade_items:
-                sources.append("trade")
-            entry["sources"] = sources
-            
-        elif info["type"] == "block":
-            # Blockstate
-            entry["blockstate"] = rid in blockstates
-            # Block model (any model containing this block name)
-            has_block_model = any(rid in m or m.startswith(f"{rid}_") for m in block_models)
-            entry["block_model"] = has_block_model
-            # Lang
-            key = f"block.coffeework.{rid}"
-            entry["lang_en"] = key in en_lang
-            entry["lang_zh"] = key in zh_lang
-            entry["lang_ja"] = key in ja_lang
-            # Loot table
-            entry["loot_table"] = rid in loot_items
-            
-        elif info["type"] == "mob_effect":
-            entry["icon"] = rid in effect_textures
-            key = f"effect.coffeework.{rid}"
-            entry["lang_en"] = key in en_lang
-            entry["lang_zh"] = key in zh_lang
-            entry["lang_ja"] = key in ja_lang
-            
-        elif info["type"] == "villager_profession":
-            entry["texture"] = rid in villager_textures
-            key = f"entity.minecraft.villager.coffeework.{rid}"
-            entry["lang_en"] = key in en_lang
-            entry["lang_zh"] = key in zh_lang
-            entry["lang_ja"] = key in ja_lang
-            
-        elif info["type"] == "sound_event":
-            # Check sounds.json
-            entry["in_sounds_json"] = True  # assume since registered
-            entry["ogg_exists"] = (ROOT / "src" / "main" / "resources" / "assets" / "coffeework" / "sounds" / f"{rid.replace('.', '/')}.ogg").exists()
-        
+    # Build manifest entries
+    manifest = []
+    registered_item_ids = set()
+    registered_block_ids = set()
+    
+    # Items
+    for rid, info in sorted(items.items()):
+        registered_item_ids.add(rid)
+        entry = {"id": rid, "type": "item", "registered": True}
+        entry["model"] = rid in item_models
+        entry["texture_ok"] = rid not in tex_missing
+        entry["texture_issues"] = tex_missing.get(rid, [])
+        key = f"item.coffeework.{rid}"
+        entry["lang_en"] = key in en_lang
+        entry["lang_zh"] = key in zh_lang
+        entry["lang_ja"] = key in ja_lang
+        entry["creative_tab"] = rid in creative_items
+        sources = []
+        if rid in recipe_outputs: sources.append("recipe")
+        if rid in loot_items: sources.append("loot")
+        if rid in trade_items: sources.append("trade")
+        entry["sources"] = sources
+        entry["block_item"] = info.get("block_item", False)
+        if info.get("block_of"):
+            entry["block_of"] = info["block_of"]
+        manifest.append(entry)
+    
+    # Blocks
+    for rid, info in sorted(blocks.items()):
+        registered_block_ids.add(rid)
+        entry = {"id": rid, "type": "block", "registered": True}
+        entry["blockstate"] = rid in blockstates
+        has_bm = any(rid in m or m.startswith(f"{rid}_") for m in block_models)
+        entry["block_model"] = has_bm
+        key = f"block.coffeework.{rid}"
+        entry["lang_en"] = key in en_lang
+        entry["lang_zh"] = key in zh_lang
+        entry["lang_ja"] = key in ja_lang
+        entry["loot_table"] = rid in loot_items
+        manifest.append(entry)
+    
+    # Effects
+    for rid, info in sorted(effects.items()):
+        entry = {"id": rid, "type": "mob_effect", "registered": True}
+        entry["icon"] = rid in effect_textures
+        key = f"effect.coffeework.{rid}"
+        entry["lang_en"] = key in en_lang
+        entry["lang_zh"] = key in zh_lang
+        entry["lang_ja"] = key in ja_lang
+        manifest.append(entry)
+    
+    # Professions
+    for rid, info in sorted(professions.items()):
+        entry = {"id": rid, "type": "villager_profession", "registered": True}
+        entry["texture"] = rid in villager_textures
+        key = f"entity.minecraft.villager.coffeework.{rid}"
+        entry["lang_en"] = key in en_lang
+        entry["lang_zh"] = key in zh_lang
+        entry["lang_ja"] = key in ja_lang
+        manifest.append(entry)
+    
+    # POIs
+    for rid, info in sorted(poi_types.items()):
+        manifest.append({"id": rid, "type": "poi_type", "registered": True})
+    
+    # Sounds
+    for rid, info in sorted(sounds.items()):
+        entry = {"id": rid, "type": "sound_event", "registered": True}
+        # Actually check sounds.json
+        entry["in_sounds_json"] = rid in sounds_json
+        if entry["in_sounds_json"]:
+            snd_data = sounds_json[rid]
+            snd_file = snd_data.get("sounds", [None])[0]
+            if isinstance(snd_file, dict):
+                snd_file = snd_file.get("name", "")
+            if snd_file and isinstance(snd_file, str) and ":" in snd_file:
+                ns, path = snd_file.split(":", 1)
+                ogg_path = RES / "sounds" / f"{path}.ogg"
+                entry["ogg_exists"] = ogg_path.exists()
+                entry["ogg_size"] = ogg_path.stat().st_size if ogg_path.exists() else 0
+            else:
+                entry["ogg_exists"] = False
+        else:
+            entry["ogg_exists"] = False
         manifest.append(entry)
     
     # Classify orphan assets
-    registered_blocks = {e["id"] for e in manifest if e["type"] == "block"}
-    orphan_item_models = item_models - {e["id"] for e in manifest if e["type"] == "item"}
-    orphan_block_models = block_models - registered_blocks
-    for bm in sorted(orphan_block_models):
-        classification = classify_orphan(bm, "block_model", registered_blocks)
-        orphan_assets.append({"id": bm, "type": "block_model", "classification": classification})
+    orphan_assets = []
     
+    orphan_item_models = item_models - registered_item_ids
     for im in sorted(orphan_item_models):
-        classification = classify_orphan(im, "item_model", registered_blocks)
-        orphan_assets.append({"id": im, "type": "item_model", "classification": classification})
+        c = classify_orphan(im, "item_model", registered_block_ids)
+        orphan_assets.append({"id": im, "type": "item_model", "classification": c})
     
-    # Orphan blockstates
-    orphan_blockstates = blockstates - registered_blocks
+    orphan_block_models = block_models - registered_block_ids
+    for bm in sorted(orphan_block_models):
+        c = classify_orphan(bm, "block_model", registered_block_ids)
+        orphan_assets.append({"id": bm, "type": "block_model", "classification": c})
+    
+    orphan_blockstates = blockstates - registered_block_ids
     for bs in sorted(orphan_blockstates):
-        classification = classify_orphan(bs, "blockstate", registered_blocks)
-        orphan_assets.append({"id": bs, "type": "blockstate", "classification": classification})
+        c = classify_orphan(bs, "blockstate", registered_block_ids)
+        orphan_assets.append({"id": bs, "type": "blockstate", "classification": c})
     
-    # Orphan textures (not referenced by any registered item model)
-    all_registered_texture_refs = set()
-    for e in manifest:
-        if e.get("type") == "item" and e.get("model"):
-            all_registered_texture_refs.add(e["id"])
-    orphan_item_textures = item_textures - all_registered_texture_refs
-    # Filter: many textures are shared (e.g. coffee_bean_light is used by coffee_bean model)
+    # Orphan textures
+    all_reg_tex = registered_item_ids | registered_block_ids
+    orphan_item_textures = item_textures - all_reg_tex
     for ot in sorted(orphan_item_textures):
         if ot not in item_models and ot not in block_models:
-            classification = classify_orphan(ot, "texture", registered_blocks)
-            if classification != "UNCLASSIFIED":
-                orphan_assets.append({"id": ot, "type": "item_texture", "classification": classification})
+            c = classify_orphan(ot, "texture", registered_block_ids)
+            if c != "UNCLASSIFIED":
+                orphan_assets.append({"id": ot, "type": "item_texture", "classification": c})
     
     # Counts
     stats = {
@@ -641,16 +695,16 @@ def build_manifest():
         "orphan_assets": len(orphan_assets),
         "orphan_by_classification": defaultdict(int),
         "completeness": {
-            "model_ok": 0, "texture_ok": 0, "lang_en_ok": 0, "lang_zh_ok": 0, "lang_ja_ok": 0,
+            "model_ok": 0, "texture_ok": 0,
+            "lang_en_ok": 0, "lang_zh_ok": 0, "lang_ja_ok": 0,
             "creative_tab_ok": 0, "has_source": 0,
-            "total_items": 0
+            "total_items": len(items),
         }
     }
     
     for e in manifest:
         stats["by_type"][e["type"]] += 1
         if e["type"] == "item":
-            stats["completeness"]["total_items"] += 1
             if e.get("model"): stats["completeness"]["model_ok"] += 1
             if e.get("texture_ok", True): stats["completeness"]["texture_ok"] += 1
             if e.get("lang_en"): stats["completeness"]["lang_en_ok"] += 1
@@ -662,7 +716,6 @@ def build_manifest():
     for oa in orphan_assets:
         stats["orphan_by_classification"][oa["classification"]] += 1
     
-    # Build output
     output = {
         "stats": {k: dict(v) if isinstance(v, defaultdict) else v for k, v in stats.items()},
         "registry": manifest,
@@ -673,34 +726,26 @@ def build_manifest():
     json_path = ROOT / "docs" / "content_manifest.json"
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
-    print(f"\nJSON manifest: {json_path}")
     
     # Write Markdown
     md = build_markdown_report(output)
     md_path = ROOT / "docs" / "CONTENT_MANIFEST.md"
     md_path.write_text(md, encoding="utf-8")
-    print(f"MD manifest: {md_path}")
     
     # Print summary
     comp = stats["completeness"]
     ti = comp["total_items"]
-    if ti > 0:
-        print(f"\nItem Completeness:")
-        print(f"  Model:  {comp['model_ok']}/{ti} ({comp['model_ok']*100//ti}%)")
-        print(f"  Texture:{comp['texture_ok']}/{ti} ({comp['texture_ok']*100//ti}%)")
-        print(f"  en_us:  {comp['lang_en_ok']}/{ti} ({comp['lang_en_ok']*100//ti}%)")
-        print(f"  zh_cn:  {comp['lang_zh_ok']}/{ti} ({comp['lang_zh_ok']*100//ti}%)")
-        print(f"  ja_jp:  {comp['lang_ja_ok']}/{ti} ({comp['lang_ja_ok']*100//ti}%)")
-        print(f"  Tab:    {comp['creative_tab_ok']}/{ti} ({comp['creative_tab_ok']*100//ti}%)")
-        print(f"  Source: {comp['has_source']}/{ti} ({comp['has_source']*100//ti}%)")
+    print(f"\nItem Completeness ({ti} items):")
+    for label, key in [("Model", "model_ok"), ("Texture", "texture_ok"),
+                        ("en_us", "lang_en_ok"), ("zh_cn", "lang_zh_ok"),
+                        ("ja_jp", "lang_ja_ok"), ("Creative Tab", "creative_tab_ok"),
+                        ("Source", "has_source")]:
+        val = comp.get(key, 0)
+        print(f"  {label}: {val}/{ti} ({val*100//ti}%)" if ti > 0 else f"  {label}: {val}/0")
     
     print(f"\nOrphan Assets: {stats['orphan_assets']}")
     for cls, count in sorted(stats["orphan_by_classification"].items()):
         print(f"  {cls}: {count}")
-    
-    unconverted = stats["orphan_by_classification"].get("UNCLASSIFIED", 0)
-    if unconverted > 0:
-        print(f"\n⚠ {unconverted} unclassified orphan assets — review needed")
     
     return 0
 

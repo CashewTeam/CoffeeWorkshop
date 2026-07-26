@@ -6,7 +6,7 @@ A Minecraft mod about coffee, tea, baking, and more — now ported to Minecraft 
 
 Coffee Workshop adds a complete coffee production chain to Minecraft: grow coffee trees, harvest raw beans, roast and grind them, then brew drinks in a Coffee Machine. Alongside the core coffee loop, the mod includes tea brewing, cold brew fermentation, iced drinks, flavored syrups, baking (breads, cakes, mousses), ice cream making, and villager trading.
 
-Originally created for Minecraft 1.12.2, this is the modern 1.20.1 port built with data-driven recipes, DeferredRegister, BlockEntity/Menu architecture, and full creative/survival parity.
+Originally created for Minecraft 1.12.2, this is the modern 1.20.1 port built with data-driven recipes, DeferredRegister, BlockEntity/Menu architecture, and full creative/survival parity for the core coffee loops.
 
 ## Features
 
@@ -99,12 +99,15 @@ Run GameTests:
 | Registered Items | 176 items, 49 blocks |
 | Item Models | 100% |
 | Textures | 100% |
-| Translations (en/zh/ja) | 100% |
-| Creative Tab Coverage | 99% |
-| Survival Sources | 64% |
+| Translations (en/zh) | 100% |
+| Japanese (ja_jp) | Community-contributed (incomplete) |
+| Creative Tab Coverage | 99% (1 intermediate item excluded) |
+| Survival Sources | 60% (core coffee/machine loops complete) |
 | GameTests | 56 passing |
 
-### Porting Roadmap
+The core coffee and machine production loops are available in survival.
+Some legacy variant items remain creative-only or trade-exclusive.
+See `docs/CONTENT_MANIFEST.md` for the full per-item breakdown.
 
 - ✅ **Phase 1**: Registry modernization, resource format migration
 - ✅ **Phase 2**: Unified machine architecture (BlockEntity/Menu/RecipeManager)

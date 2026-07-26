@@ -1,32 +1,32 @@
 {
   "stats": {
-    "registered": 190,
+    "registered": 236,
     "by_type": {
-      "item": 130,
+      "item": 176,
       "block": 49,
       "mob_effect": 3,
       "villager_profession": 3,
       "poi_type": 2,
       "sound_event": 3
     },
-    "orphan_assets": 689,
+    "orphan_assets": 639,
     "orphan_by_classification": {
-      "ASSET_ARCHIVE": 569,
+      "ASSET_ARCHIVE": 521,
       "REDESIGN": 5,
-      "MERGED": 16,
       "REMOVED": 33,
+      "MERGED": 14,
       "PORT_NOW": 14,
       "PORT_LATER": 52
     },
     "completeness": {
-      "model_ok": 130,
-      "texture_ok": 130,
-      "lang_en_ok": 130,
-      "lang_zh_ok": 130,
-      "lang_ja_ok": 130,
-      "creative_tab_ok": 129,
-      "has_source": 84,
-      "total_items": 130
+      "model_ok": 176,
+      "texture_ok": 176,
+      "lang_en_ok": 176,
+      "lang_zh_ok": 176,
+      "lang_ja_ok": 176,
+      "creative_tab_ok": 176,
+      "has_source": 173,
+      "total_items": 176
     }
   },
   "registry": [
@@ -40,9 +40,11 @@
       "lang_en": true,
       "lang_zh": true,
       "lang_ja": true,
-      "lang_en_placeholder": false,
       "creative_tab": true,
-      "sources": []
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
     },
     {
       "id": "bag_cloth",
@@ -54,9 +56,2889 @@
       "lang_en": true,
       "lang_zh": true,
       "lang_ja": true,
-      "lang_en_placeholder": false,
       "creative_tab": true,
-      "sources": []
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "bag_cocoa",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "bag_cocoa"
+    },
+    {
+      "id": "bag_cocoa_powder",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "bag_cocoa_powder"
+    },
+    {
+      "id": "bag_coffee",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "bag_coffee"
+    },
+    {
+      "id": "bag_coffee_powder",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "bag_coffee_powder"
+    },
+    {
+      "id": "bag_coffee_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "bag_coffee_raw"
+    },
+    {
+      "id": "bag_flour",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "bag_flour"
+    },
+    {
+      "id": "bag_sugar",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "bag_sugar"
+    },
+    {
+      "id": "bagel",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "baguette",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "black_tea_leaf",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "blueberry",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "blueberry_bush",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "blueberry_bush"
+    },
+    {
+      "id": "bread_round",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "brownie",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "butter",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cake_berry",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_berry"
+    },
+    {
+      "id": "cake_cheese",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_cheese"
+    },
+    {
+      "id": "cake_coffee",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_coffee"
+    },
+    {
+      "id": "cake_harvest",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_harvest"
+    },
+    {
+      "id": "cake_lemon",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_lemon"
+    },
+    {
+      "id": "cake_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cake_model_plate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cake_model_square",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cake_redvelvet",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_redvelvet"
+    },
+    {
+      "id": "cake_schwarzwald",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_schwarzwald"
+    },
+    {
+      "id": "cake_sponge",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_sponge"
+    },
+    {
+      "id": "cake_sponge_berry",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_sponge_berry"
+    },
+    {
+      "id": "cake_sponge_carrot",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_sponge_carrot"
+    },
+    {
+      "id": "cake_sponge_chocolate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_sponge_chocolate"
+    },
+    {
+      "id": "cake_sponge_coffee",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_sponge_coffee"
+    },
+    {
+      "id": "cake_sponge_lemon",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_sponge_lemon"
+    },
+    {
+      "id": "cake_sponge_pumpkin",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_sponge_pumpkin"
+    },
+    {
+      "id": "cake_sponge_redvelvet",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_sponge_redvelvet"
+    },
+    {
+      "id": "cake_sponge_slice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cake_sponge_tea",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_sponge_tea"
+    },
+    {
+      "id": "cake_tea",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "cake_tea"
+    },
+    {
+      "id": "cheese",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "chocolate_bar",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "chocolate_chip",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cocoa",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cocoa_batter",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cocoa_bean",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cocoa_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cocoa_powder",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cocoa_strong",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cocoa_strong_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_americano",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_americano_fruit",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_americano_fruit_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_americano_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_americano_nitro_fruit_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [],
+      "block_item": false
+    },
+    {
+      "id": "coffee_americano_nitro_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_bean",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_bean_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_black_tea",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_black_tea_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_cappuccino",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_cappuccino_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_fruit",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_fruit_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_latte",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_latte_caramel",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_latte_caramel_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_latte_chocolate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_latte_chocolate_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_latte_fruit",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_latte_fruit_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_latte_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_latte_mint",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_latte_mint_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_latte_vanilla",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_coldbrew_latte_vanilla_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_green_tea",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_green_tea_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_instant",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_instant_box",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_instant_stick",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_caramel",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_caramel_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_chocolate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_chocolate_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_fruit",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_fruit_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_mint",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_mint_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_sakura",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_sakura_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_vanilla",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_latte_vanilla_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_macchiato",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_macchiato_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_machine",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "coffee_machine"
+    },
+    {
+      "id": "coffee_mandarin_drink",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_mandarin_drink_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_milk_tea",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_milk_tea_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_mochaccino",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_mochaccino_ice",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_powder",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_seeds",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "loot"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "coffee_tree",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [],
+      "block_item": true,
+      "block_of": "coffee_tree"
+    },
+    {
+      "id": "coldbrew_bottle",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [],
+      "block_item": false
+    },
+    {
+      "id": "coldbrew_pot",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "coldbrew_pot"
+    },
+    {
+      "id": "cup",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "cup_glass",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "double_bag_cocoa",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "double_bag_cocoa"
+    },
+    {
+      "id": "double_bag_cocoa_powder",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "double_bag_cocoa_powder"
+    },
+    {
+      "id": "double_bag_coffee",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "double_bag_coffee"
+    },
+    {
+      "id": "double_bag_coffee_powder",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "double_bag_coffee_powder"
+    },
+    {
+      "id": "double_bag_coffee_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "double_bag_coffee_raw"
+    },
+    {
+      "id": "double_bag_flour",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "double_bag_flour"
+    },
+    {
+      "id": "double_bag_sugar",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "double_bag_sugar"
+    },
+    {
+      "id": "dough",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "dough_bagel",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "dough_baguette",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "dough_bread",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "dough_bread_round",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "dough_cookie",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "dough_ginger",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "dough_pastry",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "dough_toast",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "empty_coldbrew_pot",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "espresso",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "field_ration",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "flour",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "gelatin",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "ginger_house",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "ginger_house"
+    },
+    {
+      "id": "grinder_off",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "ice_slag",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "icecream_machine",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "icecream_machine"
+    },
+    {
+      "id": "icecream_mix_vanilla",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "icecream_vanilla",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "iron_bowl",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "mixing_bowl",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "mooncake_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "mousse_berry",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "mousse_berry"
+    },
+    {
+      "id": "mousse_chocolate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "mousse_chocolate"
+    },
+    {
+      "id": "mousse_coffee",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "mousse_coffee"
+    },
+    {
+      "id": "mousse_lemon",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "mousse_lemon"
+    },
+    {
+      "id": "oven_off",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "pie_cream",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "plate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "plate"
+    },
+    {
+      "id": "plate_dough",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "plate_dough_ginger",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "plate_dough_pastry",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "plate_iron",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "record_blank",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "record_kusa_noshi_to_ne",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "record_lazy_lady_kaguya",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "record_the_grimoire_of_marisa",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "roller",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "roller"
+    },
+    {
+      "id": "sandwich_blt",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "small_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "soda",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "soda_ore",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "soda_ore"
+    },
+    {
+      "id": "spices",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "syrup_caramel",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "syrup_chocolate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "syrup_empty",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "trade"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "syrup_fruit",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "syrup_mint",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "syrup_sakura",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "syrup_vanilla",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "tea_leaf",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "tiramisu",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": true,
+      "block_of": "tiramisu"
+    },
+    {
+      "id": "toast",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "vanilla",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "loot"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "vanilla_seeds",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "xmas_tree",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "xmas_tree"
+    },
+    {
+      "id": "yeast",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
     },
     {
       "id": "bag_cocoa",
@@ -136,68 +3018,6 @@
       "loot_table": true
     },
     {
-      "id": "bagel",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "baguette",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "black_tea_leaf",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "blueberry",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
       "id": "blueberry_bush",
       "type": "block",
       "registered": true,
@@ -207,61 +3027,6 @@
       "lang_zh": true,
       "lang_ja": true,
       "loot_table": true
-    },
-    {
-      "id": "bread_round",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "brownie",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
-      "id": "butter",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "caffeine",
-      "type": "mob_effect",
-      "registered": true,
-      "icon": true,
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true
     },
     {
       "id": "cake_berry",
@@ -317,54 +3082,6 @@
       "lang_zh": true,
       "lang_ja": true,
       "loot_table": false
-    },
-    {
-      "id": "cake_model",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
-      "id": "cake_model_plate",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
-      "id": "cake_model_square",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
     },
     {
       "id": "cake_redvelvet",
@@ -477,22 +3194,6 @@
       "loot_table": false
     },
     {
-      "id": "cake_sponge_slice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
       "id": "cake_sponge_tea",
       "type": "block",
       "registered": true,
@@ -515,955 +3216,6 @@
       "loot_table": false
     },
     {
-      "id": "cheese",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
-      "id": "chocolate_bar",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "chocolate_chip",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "cocoa",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "cocoa_batter",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "cocoa_bean",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
-      "id": "cocoa_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "cocoa_powder",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "cocoa_strong",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "cocoa_strong_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_americano",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_americano_fruit",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_americano_fruit_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_americano_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_americano_nitro_fruit_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "coffee_americano_nitro_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_barista",
-      "type": "villager_profession",
-      "registered": true,
-      "texture": false,
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true
-    },
-    {
-      "id": "coffee_bean",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_bean_raw",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "loot"
-      ]
-    },
-    {
-      "id": "coffee_black_tea",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_black_tea_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_cappuccino",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_cappuccino_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_coldbrew",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_coldbrew_fruit",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_coldbrew_fruit_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "coffee_coldbrew_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_coldbrew_latte",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_coldbrew_latte_caramel",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_coldbrew_latte_caramel_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "coffee_coldbrew_latte_chocolate",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_coldbrew_latte_chocolate_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "coffee_coldbrew_latte_fruit",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_coldbrew_latte_fruit_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "coffee_coldbrew_latte_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_coldbrew_latte_mint",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_coldbrew_latte_mint_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "coffee_coldbrew_latte_vanilla",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_coldbrew_latte_vanilla_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "coffee_green_tea",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_green_tea_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_instant",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_instant_box",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_instant_stick",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_latte",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_latte_caramel",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_latte_caramel_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_latte_chocolate",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_latte_chocolate_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_latte_fruit",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_latte_fruit_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_latte_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_latte_mint",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_latte_mint_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_latte_sakura",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_latte_sakura_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_latte_vanilla",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_latte_vanilla_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_macchiato",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_macchiato_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
       "id": "coffee_machine",
       "type": "block",
       "registered": true,
@@ -1473,149 +3225,6 @@
       "lang_zh": true,
       "lang_ja": true,
       "loot_table": true
-    },
-    {
-      "id": "coffee_mandarin_drink",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_mandarin_drink_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "coffee_materials_trader",
-      "type": "villager_profession",
-      "registered": true,
-      "texture": false,
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true
-    },
-    {
-      "id": "coffee_milk_tea",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_milk_tea_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_mochaccino",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_mochaccino_ice",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "coffee_poi",
-      "type": "poi_type",
-      "registered": true
-    },
-    {
-      "id": "coffee_powder",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "coffee_seeds",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "loot"
-      ]
     },
     {
       "id": "coffee_tree",
@@ -1629,20 +3238,6 @@
       "loot_table": false
     },
     {
-      "id": "coldbrew_bottle",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
       "id": "coldbrew_pot",
       "type": "block",
       "registered": true,
@@ -1652,34 +3247,6 @@
       "lang_zh": true,
       "lang_ja": true,
       "loot_table": false
-    },
-    {
-      "id": "cup",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "cup_glass",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
     },
     {
       "id": "double_bag_cocoa",
@@ -1759,219 +3326,6 @@
       "loot_table": true
     },
     {
-      "id": "dough",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
-      "id": "dough_bagel",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "dough_baguette",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "dough_bread",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "dough_bread_round",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "dough_cookie",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "dough_ginger",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "dough_pastry",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "dough_toast",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "empty_coldbrew_pot",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "espresso",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "field_ration",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "flour",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "trade"
-      ]
-    },
-    {
-      "id": "food_trader",
-      "type": "villager_profession",
-      "registered": true,
-      "texture": false,
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true
-    },
-    {
-      "id": "gelatin",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
       "id": "ginger_house",
       "type": "block",
       "registered": true,
@@ -1981,15 +3335,6 @@
       "lang_zh": true,
       "lang_ja": true,
       "loot_table": true
-    },
-    {
-      "id": "golden_heart",
-      "type": "mob_effect",
-      "registered": true,
-      "icon": true,
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true
     },
     {
       "id": "grinder",
@@ -2003,38 +3348,6 @@
       "loot_table": false
     },
     {
-      "id": "grinder_off",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "loot"
-      ]
-    },
-    {
-      "id": "ice_slag",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
       "id": "icecream_machine",
       "type": "block",
       "registered": true,
@@ -2044,78 +3357,6 @@
       "lang_zh": true,
       "lang_ja": true,
       "loot_table": true
-    },
-    {
-      "id": "icecream_mix_vanilla",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": false,
-      "sources": []
-    },
-    {
-      "id": "icecream_vanilla",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "iron_bowl",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "mixing_bowl",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "mooncake_model",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
     },
     {
       "id": "mousse_berry",
@@ -2173,41 +3414,6 @@
       "loot_table": false
     },
     {
-      "id": "oven_off",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "loot"
-      ]
-    },
-    {
-      "id": "oven_poi",
-      "type": "poi_type",
-      "registered": true
-    },
-    {
-      "id": "pie_cream",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
       "id": "plate",
       "type": "block",
       "registered": true,
@@ -2217,156 +3423,6 @@
       "lang_zh": true,
       "lang_ja": true,
       "loot_table": true
-    },
-    {
-      "id": "plate_dough",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "plate_dough_ginger",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "plate_dough_pastry",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "plate_iron",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "record_blank",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "record_kusa_noshi_to_ne",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "record_lazy_lady_kaguya",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "record_the_grimoire_of_marisa",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "records.kusa_noshi_to_ne",
-      "type": "sound_event",
-      "registered": true,
-      "in_sounds_json": true,
-      "ogg_exists": true
-    },
-    {
-      "id": "records.lazy_lady_kaguya",
-      "type": "sound_event",
-      "registered": true,
-      "in_sounds_json": true,
-      "ogg_exists": true
-    },
-    {
-      "id": "records.the_grimoire_of_marisa",
-      "type": "sound_event",
-      "registered": true,
-      "in_sounds_json": true,
-      "ogg_exists": true
-    },
-    {
-      "id": "relax",
-      "type": "mob_effect",
-      "registered": true,
-      "icon": true,
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true
     },
     {
       "id": "roller",
@@ -2380,51 +3436,6 @@
       "loot_table": true
     },
     {
-      "id": "sandwich_blt",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "small_model",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "soda",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe",
-        "loot"
-      ]
-    },
-    {
       "id": "soda_ore",
       "type": "block",
       "registered": true,
@@ -2434,136 +3445,6 @@
       "lang_zh": true,
       "lang_ja": true,
       "loot_table": true
-    },
-    {
-      "id": "spices",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
-      "id": "syrup_caramel",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "syrup_chocolate",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "syrup_empty",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "trade"
-      ]
-    },
-    {
-      "id": "syrup_fruit",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "syrup_mint",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "syrup_sakura",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "syrup_vanilla",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
-    },
-    {
-      "id": "tea_leaf",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
     },
     {
       "id": "tiramisu",
@@ -2577,38 +3458,6 @@
       "loot_table": false
     },
     {
-      "id": "toast",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "recipe"
-      ]
-    },
-    {
-      "id": "vanilla",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "loot"
-      ]
-    },
-    {
       "id": "vanilla_crop",
       "type": "block",
       "registered": true,
@@ -2618,22 +3467,6 @@
       "lang_zh": true,
       "lang_ja": true,
       "loot_table": false
-    },
-    {
-      "id": "vanilla_seeds",
-      "type": "item",
-      "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
-      "lang_en": true,
-      "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": [
-        "loot"
-      ]
     },
     {
       "id": "xmas_tree",
@@ -2647,21 +3480,1600 @@
       "loot_table": true
     },
     {
-      "id": "yeast",
-      "type": "item",
+      "id": "caffeine",
+      "type": "mob_effect",
       "registered": true,
-      "model": true,
-      "texture_ok": true,
-      "texture_issues": [],
+      "icon": true,
       "lang_en": true,
       "lang_zh": true,
-      "lang_ja": true,
-      "lang_en_placeholder": false,
-      "creative_tab": true,
-      "sources": []
+      "lang_ja": true
+    },
+    {
+      "id": "golden_heart",
+      "type": "mob_effect",
+      "registered": true,
+      "icon": true,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true
+    },
+    {
+      "id": "relax",
+      "type": "mob_effect",
+      "registered": true,
+      "icon": true,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true
+    },
+    {
+      "id": "coffee_barista",
+      "type": "villager_profession",
+      "registered": true,
+      "texture": true,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true
+    },
+    {
+      "id": "coffee_materials_trader",
+      "type": "villager_profession",
+      "registered": true,
+      "texture": true,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true
+    },
+    {
+      "id": "food_trader",
+      "type": "villager_profession",
+      "registered": true,
+      "texture": true,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true
+    },
+    {
+      "id": "coffee_poi",
+      "type": "poi_type",
+      "registered": true
+    },
+    {
+      "id": "oven_poi",
+      "type": "poi_type",
+      "registered": true
+    },
+    {
+      "id": "records.kusa_noshi_to_ne",
+      "type": "sound_event",
+      "registered": true,
+      "in_sounds_json": true,
+      "ogg_exists": true,
+      "ogg_size": 1359294
+    },
+    {
+      "id": "records.lazy_lady_kaguya",
+      "type": "sound_event",
+      "registered": true,
+      "in_sounds_json": true,
+      "ogg_exists": true,
+      "ogg_size": 751923
+    },
+    {
+      "id": "records.the_grimoire_of_marisa",
+      "type": "sound_event",
+      "registered": true,
+      "in_sounds_json": true,
+      "ogg_exists": true,
+      "ogg_size": 2208484
     }
   ],
   "orphan_assets": [
+    {
+      "id": "brownie_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "brownie_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_berry_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_berry_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_carrot_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_cheese_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_chocolate_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_coffee_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_coffee_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_harvest_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_lemon_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_lemon_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_pumpkin_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_redvelvet_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_redvelvet_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_schwarzwald_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_slices",
+      "type": "item_model",
+      "classification": "REDESIGN"
+    },
+    {
+      "id": "cake_sponge_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_berry_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_carrot_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_chocolate_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_coffee_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_lemon_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_pumpkin_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_redvelvet_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_base",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_plate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_plate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_sponge_tea_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_tea_roll",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cake_tea_slices",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "caramel",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "caramel_apple",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "clay_oven",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "clay_oven_on",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "coffee",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_fruit_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_fruit_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_nitro_fruit_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_nitro_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_americano_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_bean_light",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_black_tea_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_black_tea_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_cappuccino_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_cappuccino_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_fruit_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_fruit_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_caramel_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_caramel_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_chocolate_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_chocolate_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_fruit_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_fruit_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_mint_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_mint_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_vanilla_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_latte_vanilla_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_coldbrew_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_green_tea_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_green_tea_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_ice",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_instant_cup",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "coffee_instant_cup_unopen",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "coffee_instant_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_caramel_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_caramel_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_chocolate_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_chocolate_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_fruit_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_fruit_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_mint_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_mint_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_vanilla_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_latte_vanilla_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_macchiato_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_macchiato_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mandarin_drink_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mandarin_drink_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_milk_tea_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_milk_tea_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mochaccino_ice_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_mochaccino_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_powder_light",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffee_seed",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "coffeemachine_off",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "coffeemachine_on",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "coldbrew_pot_finished",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cookie_black",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "cookie_black_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "cookie_icecream_apple",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_icecream_berry",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_icecream_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_icecream_coffee",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_icecream_lemon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_icecream_melon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_icecream_vanilla",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cookie_oreo",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "cream_apple",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cream_berry",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cream_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cream_coffee",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cream_lemon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cream_melon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "cream_milk",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "croissant",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "croissant_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "croissant_chocolate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "croissant_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "crop_coffee",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "custard",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "espresso_plate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "field_ration_d",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "ginger_bread",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "ginger_bread_man",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "ginger_bread_man_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "grinder_on",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "hardtack",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "hardtack_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "icecream_apple",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "icecream_berry",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "icecream_chocolate",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "icecream_coffee",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "icecream_lemon",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "icecream_melon",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "icecreammachine_off",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "icecreammachine_on",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "iron_bowl_batter",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_berry",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_carrot",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_chocolate",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_coffee",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_lemon",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_pumpkin",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_red",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_batter_tea",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_cheese",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "iron_bowl_egg",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_berry",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_berry_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_berry_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_carrot",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_carrot_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_carrot_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_chocolate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_chocolate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_coffee",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_coffee_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_coffee_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_lemon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_lemon_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_lemon_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_pumpkin",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_pumpkin_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_pumpkin_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_redvelvet",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_redvelvet_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_redvelvet_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_tea",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "jiggy_cake_tea_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "jiggy_cake_tea_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "marshmallow",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "marshmallow_chocolate",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "marshmallow_roast",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "milk_form",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "mille_feuille",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "moka_bottom",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "moka_pot_heated",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "moka_pot_unheated",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "moka_top",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "mooncake",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "mooncake_egg",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "mooncake_egg_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mooncake_fruit",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "mooncake_fruit_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mooncake_ham",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "mooncake_ham_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mooncake_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_berry_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_berry_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_chocolate_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_chocolate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_coffee_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_coffee_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_lemon_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "mousse_lemon_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_berry",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_berry_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_carrot",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_carrot_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_chocolate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_coffee",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_coffee_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_lemon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_lemon_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_pumpkin",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_pumpkin_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_redvelvet",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_redvelvet_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "muffin_tea",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "muffin_tea_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "phonograph",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "pie_apple",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_berry",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_caramel",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_coffee",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_lemon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_melon",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "pie_tea",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "plate_ginger",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "plate_pastry",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "plate_pastry_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "pot",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "puff",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "puff_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "records_kusa_noshi_to_ne",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "records_lazy_lady_kaguya",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "records_the_grimoire_of_marisa",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "roller_off",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "roller_on",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "sandwich_bacon_egg",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "sandwich_beef_cheese",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "sandwich_blt_large",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "sandwich_club",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "sandwich_club_large",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "sandwich_ham_cheese",
+      "type": "item_model",
+      "classification": "PORT_NOW"
+    },
+    {
+      "id": "smore",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "soda_machine_bottom",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "soda_machine_top",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "souffle",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "souffle_chocolate",
+      "type": "item_model",
+      "classification": "PORT_LATER"
+    },
+    {
+      "id": "souffle_chocolate_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "souffle_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "syrup_brown",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "syrup_full",
+      "type": "item_model",
+      "classification": "MERGED"
+    },
+    {
+      "id": "tiramisu_model",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "tiramisu_raw",
+      "type": "item_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "turkey_coffee_pot",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "turkey_coffee_pot_heated",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "turkey_coffee_pot_unheated",
+      "type": "item_model",
+      "classification": "REMOVED"
+    },
     {
       "id": "bag",
       "type": "block_model",
@@ -3633,11 +6045,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "coffee_machine_on",
-      "type": "block_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
       "id": "coffee_mandarin_drink_ice_plate",
       "type": "block_model",
       "classification": "ASSET_ARCHIVE"
@@ -3756,16 +6163,6 @@
       "id": "grinder_off",
       "type": "block_model",
       "classification": "MERGED"
-    },
-    {
-      "id": "grinder_on",
-      "type": "block_model",
-      "classification": "MERGED"
-    },
-    {
-      "id": "icecream_machine_on",
-      "type": "block_model",
-      "classification": "ASSET_ARCHIVE"
     },
     {
       "id": "mousse_berry_slice1",
@@ -3908,11 +6305,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "roller_on",
-      "type": "block_model",
-      "classification": "MERGED"
-    },
-    {
       "id": "soda_machine_bottom",
       "type": "block_model",
       "classification": "REMOVED"
@@ -4000,1741 +6392,6 @@
     {
       "id": "vanilla_stage_7",
       "type": "block_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "bag_cocoa",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "bag_cocoa_powder",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "bag_coffee",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "bag_coffee_powder",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "bag_coffee_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "bag_flour",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "bag_sugar",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "blueberry_bush",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "brownie_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "brownie_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_berry",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_berry_roll",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_berry_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_carrot_roll",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_cheese",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_cheese_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_cheese_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_cheese_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_chocolate_roll",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_coffee",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_coffee_roll",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_coffee_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_harvest",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_harvest_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_lemon",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_lemon_roll",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_lemon_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_pumpkin_roll",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_redvelvet",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_redvelvet_roll",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_redvelvet_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_roll",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_schwarzwald",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_schwarzwald_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_slices",
-      "type": "item_model",
-      "classification": "REDESIGN"
-    },
-    {
-      "id": "cake_sponge",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_base",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_berry",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_berry_base",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_berry_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_berry_plate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_berry_plate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_berry_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_berry_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_carrot",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_carrot_base",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_carrot_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_carrot_plate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_carrot_plate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_carrot_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_carrot_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_chocolate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_chocolate_base",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_chocolate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_chocolate_plate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_chocolate_plate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_chocolate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_chocolate_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_coffee",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_coffee_base",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_coffee_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_coffee_plate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_coffee_plate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_coffee_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_coffee_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_lemon",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_lemon_base",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_lemon_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_lemon_plate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_lemon_plate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_lemon_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_lemon_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_plate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_plate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_pumpkin",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_pumpkin_base",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_pumpkin_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_pumpkin_plate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_pumpkin_plate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_pumpkin_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_pumpkin_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_redvelvet",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_redvelvet_base",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_redvelvet_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_redvelvet_plate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_redvelvet_plate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_redvelvet_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_redvelvet_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_tea",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_tea_base",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_tea_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_tea_plate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_tea_plate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_tea_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_sponge_tea_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_tea",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_tea_roll",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cake_tea_slices",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "caramel",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "caramel_apple",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "clay_oven",
-      "type": "item_model",
-      "classification": "MERGED"
-    },
-    {
-      "id": "clay_oven_on",
-      "type": "item_model",
-      "classification": "MERGED"
-    },
-    {
-      "id": "coffee",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_americano_fruit_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_americano_fruit_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_americano_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_americano_nitro_fruit_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_americano_nitro_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_americano_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_bean_light",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_black_tea_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_black_tea_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_cappuccino_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_cappuccino_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_fruit_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_fruit_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_latte_caramel_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_latte_caramel_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_latte_chocolate_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_latte_chocolate_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_latte_fruit_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_latte_fruit_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_latte_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_latte_mint_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_latte_mint_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_latte_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_latte_vanilla_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_latte_vanilla_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_coldbrew_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_green_tea_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_green_tea_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_ice",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_instant_cup",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "coffee_instant_cup_unopen",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "coffee_instant_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_latte_caramel_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_latte_caramel_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_latte_chocolate_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_latte_chocolate_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_latte_fruit_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_latte_fruit_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_latte_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_latte_mint_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_latte_mint_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_latte_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_latte_vanilla_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_latte_vanilla_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_macchiato_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_macchiato_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_machine",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_mandarin_drink_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_mandarin_drink_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_milk_tea_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_milk_tea_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_mochaccino_ice_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_mochaccino_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_powder_light",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_seed",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffee_tree",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coffeemachine_off",
-      "type": "item_model",
-      "classification": "MERGED"
-    },
-    {
-      "id": "coffeemachine_on",
-      "type": "item_model",
-      "classification": "MERGED"
-    },
-    {
-      "id": "coldbrew_pot",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "coldbrew_pot_finished",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cookie_black",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "cookie_black_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "cookie_icecream_apple",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_icecream_berry",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_icecream_chocolate",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_icecream_coffee",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_icecream_lemon",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_icecream_melon",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_icecream_vanilla",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cookie_oreo",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "cream_apple",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_berry",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_chocolate",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_coffee",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_lemon",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_melon",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "cream_milk",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "croissant",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "croissant_chocolate",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "croissant_chocolate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "croissant_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "crop_coffee",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "custard",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "double_bag_cocoa",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "double_bag_cocoa_powder",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "double_bag_coffee",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "double_bag_coffee_powder",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "double_bag_coffee_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "double_bag_flour",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "double_bag_sugar",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "espresso_plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "field_ration_d",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "ginger_bread",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "ginger_bread_man",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "ginger_bread_man_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "ginger_house",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "grinder_on",
-      "type": "item_model",
-      "classification": "MERGED"
-    },
-    {
-      "id": "hardtack",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "hardtack_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "icecream_apple",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "icecream_berry",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "icecream_chocolate",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "icecream_coffee",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "icecream_lemon",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "icecream_machine",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "icecream_melon",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "icecreammachine_off",
-      "type": "item_model",
-      "classification": "MERGED"
-    },
-    {
-      "id": "icecreammachine_on",
-      "type": "item_model",
-      "classification": "MERGED"
-    },
-    {
-      "id": "iron_bowl_batter",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "iron_bowl_batter_berry",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "iron_bowl_batter_carrot",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "iron_bowl_batter_chocolate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "iron_bowl_batter_coffee",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "iron_bowl_batter_lemon",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "iron_bowl_batter_pumpkin",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "iron_bowl_batter_red",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "iron_bowl_batter_tea",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "iron_bowl_cheese",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "iron_bowl_egg",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "jiggy_cake_berry",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "jiggy_cake_berry_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_berry_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_carrot",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "jiggy_cake_carrot_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_carrot_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_chocolate",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "jiggy_cake_chocolate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_chocolate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_coffee",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "jiggy_cake_coffee_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_coffee_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_lemon",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "jiggy_cake_lemon_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_lemon_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_pumpkin",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "jiggy_cake_pumpkin_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_pumpkin_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_redvelvet",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "jiggy_cake_redvelvet_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_redvelvet_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_tea",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "jiggy_cake_tea_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_tea_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "marshmallow",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "marshmallow_chocolate",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "marshmallow_roast",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "milk_form",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "mille_feuille",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "moka_bottom",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "moka_pot_heated",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "moka_pot_unheated",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "moka_top",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "mooncake",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "mooncake_egg",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "mooncake_egg_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mooncake_fruit",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "mooncake_fruit_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mooncake_ham",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "mooncake_ham_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mooncake_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mousse_berry",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mousse_berry_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mousse_berry_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mousse_chocolate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mousse_chocolate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mousse_chocolate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mousse_coffee",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mousse_coffee_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mousse_coffee_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mousse_lemon",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mousse_lemon_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mousse_lemon_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "muffin_berry",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "muffin_berry_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_carrot",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "muffin_carrot_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_chocolate",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "muffin_chocolate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_coffee",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "muffin_coffee_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_lemon",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "muffin_lemon_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_pumpkin",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "muffin_pumpkin_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_redvelvet",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "muffin_redvelvet_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_tea",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "muffin_tea_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "phonograph",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "pie_apple",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "pie_berry",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "pie_caramel",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "pie_chocolate",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "pie_coffee",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "pie_lemon",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "pie_melon",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "pie_tea",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "plate",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "plate_ginger",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "plate_pastry",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "plate_pastry_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "pot",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "puff",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "puff_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "records_kusa_noshi_to_ne",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "records_lazy_lady_kaguya",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "records_the_grimoire_of_marisa",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "roller",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "roller_off",
-      "type": "item_model",
-      "classification": "MERGED"
-    },
-    {
-      "id": "roller_on",
-      "type": "item_model",
-      "classification": "MERGED"
-    },
-    {
-      "id": "sandwich_bacon_egg",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "sandwich_beef_cheese",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "sandwich_blt_large",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "sandwich_club",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "sandwich_club_large",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "sandwich_ham_cheese",
-      "type": "item_model",
-      "classification": "PORT_NOW"
-    },
-    {
-      "id": "smore",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "soda_machine_bottom",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "soda_machine_top",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "soda_ore",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "souffle",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "souffle_chocolate",
-      "type": "item_model",
-      "classification": "PORT_LATER"
-    },
-    {
-      "id": "souffle_chocolate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "souffle_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "syrup_brown",
-      "type": "item_model",
-      "classification": "MERGED"
-    },
-    {
-      "id": "syrup_full",
-      "type": "item_model",
-      "classification": "MERGED"
-    },
-    {
-      "id": "tiramisu",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "tiramisu_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "tiramisu_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "turkey_coffee_pot",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "turkey_coffee_pot_heated",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "turkey_coffee_pot_unheated",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "xmas_tree",
-      "type": "item_model",
       "classification": "ASSET_ARCHIVE"
     },
     {

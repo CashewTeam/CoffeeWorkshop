@@ -153,6 +153,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.PIE_CREAM.get());
                         output.accept(ModItems.SANDWICH_BLT.get());
                         output.accept(ModItems.ICECREAM_VANILLA.get());
+                        output.accept(ModItems.ICECREAM_MIX_VANILLA.get());
 
                         // Drinks
                         output.accept(ModItems.COFFEE_INSTANT_STICK.get());
