@@ -64,5 +64,9 @@ public class ModCakeBlocks {
                 () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
         ModBlocks.MOUSSE_COFFEE = blocks.register("mousse_coffee",
                 () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
+
+        // Phase 5.4: cake_carrot (legacy blockstate already exists)
+        ModBlocks.CAKE_CARROT = blocks.register("cake_carrot",
+                () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_ORANGE).strength(0.5F).sound(SoundType.WOOL)));
     }
 }

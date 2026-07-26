@@ -7,26 +7,26 @@
 
 | Registry Type | Count |
 |---|---|
-| block | 49 |
-| item | 203 |
+| block | 50 |
+| item | 239 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **263** |
-| **Orphan Assets** | **613** |
+| **Total Registered** | **300** |
+| **Orphan Assets** | **577** |
 
 ## Item Completeness Matrix
 
 | Metric | Count | % |
 |---|---|---|
-| Model | 203/203 | 100% |
-| Texture | 203/203 | 100% |
-| en_us Key Coverage | 203/203 | 100% |
-| zh_cn Key Coverage | 203/203 | 100% |
-| ja_jp Key Coverage | 203/203 | 100% |
-| Creative Tab | 203/203 | 100% |
-| Survival Source | 203/203 | 100% |
+| Model | 239/239 | 100% |
+| Texture | 239/239 | 100% |
+| en_us Key Coverage | 239/239 | 100% |
+| zh_cn Key Coverage | 239/239 | 100% |
+| ja_jp Key Coverage | 239/239 | 100% |
+| Creative Tab | 239/239 | 100% |
+| Survival Source | 213/239 | 89% |
 
 ## Registered Items
 
@@ -50,26 +50,58 @@
 | `brownie` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `butter` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_berry_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_berry_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_carrot_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_cheese_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_cheese_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_chocolate_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_coffee_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_coffee_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_harvest` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_harvest_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_lemon_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_lemon_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `cake_model_plate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `cake_model_square` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
+| `cake_pumpkin_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_redvelvet_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_redvelvet_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_schwarzwald` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_schwarzwald_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_sponge` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_sponge_berry_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_berry_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_sponge_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_sponge_carrot_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_sponge_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_sponge_chocolate_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_chocolate_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_sponge_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_sponge_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_coffee_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_sponge_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_sponge_lemon_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_sponge_pumpkin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_sponge_pumpkin_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_sponge_redvelvet_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_sponge_slice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_sponge_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_sponge_tea_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_tea_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `cake_tea_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `caramel` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `caramel_apple` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
@@ -193,8 +225,11 @@
 | `mixing_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `mousse_berry_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `mousse_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `mousse_chocolate_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `mousse_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `mousse_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `mousse_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `oven_off` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `pie_cream` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -230,6 +265,7 @@
 | `syrup_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `tea_leaf` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `tiramisu` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `tiramisu_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `toast` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot |
 | `vanilla_seeds` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
@@ -249,6 +285,7 @@
 | `bag_sugar` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `blueberry_bush` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `cake_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_harvest` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
@@ -310,10 +347,10 @@
 
 | Classification | Count |
 |---|---|
-| ASSET_ARCHIVE | 521 |
+| ASSET_ARCHIVE | 486 |
 | MERGED | 14 |
 | PORT_LATER | 52 |
-| REDESIGN | 5 |
+| REDESIGN | 4 |
 | REMOVED | 21 |
 
 ### PORT_LATER (52)
@@ -375,7 +412,7 @@ Requires longer production chains — restore in a later content phase.
   item_model: souffle_chocolate
 ```
 
-### REDESIGN (5)
+### REDESIGN (4)
 
 Needs a different architectural approach (e.g. generic display block for placed drinks).
 
@@ -384,7 +421,6 @@ Needs a different architectural approach (e.g. generic display block for placed 
   block_model: bar_stone_normal
   block_model: bar_wooden_inner
   block_model: bar_wooden_normal
-  item_model: cake_slices
 ```
 
 ### MERGED (14)
@@ -436,7 +472,7 @@ No intention to restore.
   item_model: turkey_coffee_pot_unheated
 ```
 
-### ASSET_ARCHIVE (521)
+### ASSET_ARCHIVE (486)
 
 Companion assets (raw/model/slice variants) — archive to reference/legacy-assets/.
 
@@ -448,17 +484,13 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: blueberry_stage3
   item_model: brownie_model
   item_model: brownie_raw
-  item_model: cake_berry_roll
   block_model: cake_berry_slice1
   block_model: cake_berry_slice2
   block_model: cake_berry_slice3
   block_model: cake_berry_slice4
   block_model: cake_berry_slice5
   block_model: cake_berry_slice6
-  item_model: cake_berry_slices
   block_model: cake_berry_uneaten
-  blockstate: cake_carrot
-  item_model: cake_carrot_roll
   block_model: cake_carrot_slice1
   block_model: cake_carrot_slice2
   block_model: cake_carrot_slice3
@@ -467,24 +499,19 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: cake_carrot_slice6
   block_model: cake_carrot_uneaten
   item_model: cake_cheese_model
-  item_model: cake_cheese_raw
   block_model: cake_cheese_slice1
   block_model: cake_cheese_slice2
   block_model: cake_cheese_slice3
   block_model: cake_cheese_slice4
   block_model: cake_cheese_slice5
   block_model: cake_cheese_slice6
-  item_model: cake_cheese_slices
   block_model: cake_cheese_uneaten
-  item_model: cake_chocolate_roll
-  item_model: cake_coffee_roll
   block_model: cake_coffee_slice1
   block_model: cake_coffee_slice2
   block_model: cake_coffee_slice3
   block_model: cake_coffee_slice4
   block_model: cake_coffee_slice5
   block_model: cake_coffee_slice6
-  item_model: cake_coffee_slices
   block_model: cake_coffee_uneaten
   block_model: cake_harvest_slice1
   block_model: cake_harvest_slice2
@@ -492,49 +519,39 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: cake_harvest_slice4
   block_model: cake_harvest_slice5
   block_model: cake_harvest_slice6
-  item_model: cake_harvest_slices
   block_model: cake_harvest_uneaten
-  item_model: cake_lemon_roll
   block_model: cake_lemon_slice1
   block_model: cake_lemon_slice2
   block_model: cake_lemon_slice3
   block_model: cake_lemon_slice4
   block_model: cake_lemon_slice5
   block_model: cake_lemon_slice6
-  item_model: cake_lemon_slices
   block_model: cake_lemon_uneaten
-  item_model: cake_pumpkin_roll
-  item_model: cake_redvelvet_roll
   block_model: cake_redvelvet_slice1
   block_model: cake_redvelvet_slice2
   block_model: cake_redvelvet_slice3
   block_model: cake_redvelvet_slice4
   block_model: cake_redvelvet_slice5
   block_model: cake_redvelvet_slice6
-  item_model: cake_redvelvet_slices
   block_model: cake_redvelvet_uneaten
-  item_model: cake_roll
   block_model: cake_schwarzwald_slice1
   block_model: cake_schwarzwald_slice2
   block_model: cake_schwarzwald_slice3
   block_model: cake_schwarzwald_slice4
   block_model: cake_schwarzwald_slice5
   block_model: cake_schwarzwald_slice6
-  item_model: cake_schwarzwald_slices
   block_model: cake_schwarzwald_uneaten
   item_model: cake_sponge_base
   item_model: cake_sponge_berry_base
   item_model: cake_sponge_berry_model
   item_model: cake_sponge_berry_plate_model
   item_model: cake_sponge_berry_plate_raw
-  item_model: cake_sponge_berry_raw
   block_model: cake_sponge_berry_slice1
   block_model: cake_sponge_berry_slice2
   block_model: cake_sponge_berry_slice3
   block_model: cake_sponge_berry_slice4
   block_model: cake_sponge_berry_slice5
   block_model: cake_sponge_berry_slice6
-  item_model: cake_sponge_berry_slices
   block_model: cake_sponge_berry_uneaten
   item_model: cake_sponge_carrot_base
   item_model: cake_sponge_carrot_model
@@ -547,33 +564,28 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: cake_sponge_carrot_slice4
   block_model: cake_sponge_carrot_slice5
   block_model: cake_sponge_carrot_slice6
-  item_model: cake_sponge_carrot_slices
   block_model: cake_sponge_carrot_uneaten
   item_model: cake_sponge_chocolate_base
   item_model: cake_sponge_chocolate_model
   item_model: cake_sponge_chocolate_plate_model
   item_model: cake_sponge_chocolate_plate_raw
-  item_model: cake_sponge_chocolate_raw
   block_model: cake_sponge_chocolate_slice1
   block_model: cake_sponge_chocolate_slice2
   block_model: cake_sponge_chocolate_slice3
   block_model: cake_sponge_chocolate_slice4
   block_model: cake_sponge_chocolate_slice5
   block_model: cake_sponge_chocolate_slice6
-  item_model: cake_sponge_chocolate_slices
   block_model: cake_sponge_chocolate_uneaten
   item_model: cake_sponge_coffee_base
   item_model: cake_sponge_coffee_model
   item_model: cake_sponge_coffee_plate_model
   item_model: cake_sponge_coffee_plate_raw
-  item_model: cake_sponge_coffee_raw
   block_model: cake_sponge_coffee_slice1
   block_model: cake_sponge_coffee_slice2
   block_model: cake_sponge_coffee_slice3
   block_model: cake_sponge_coffee_slice4
   block_model: cake_sponge_coffee_slice5
   block_model: cake_sponge_coffee_slice6
-  item_model: cake_sponge_coffee_slices
   block_model: cake_sponge_coffee_uneaten
   item_model: cake_sponge_lemon_base
   item_model: cake_sponge_lemon_model
@@ -586,7 +598,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: cake_sponge_lemon_slice4
   block_model: cake_sponge_lemon_slice5
   block_model: cake_sponge_lemon_slice6
-  item_model: cake_sponge_lemon_slices
   block_model: cake_sponge_lemon_uneaten
   item_model: cake_sponge_model
   item_model: cake_sponge_plate_model
@@ -602,9 +613,7 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: cake_sponge_pumpkin_slice4
   block_model: cake_sponge_pumpkin_slice5
   block_model: cake_sponge_pumpkin_slice6
-  item_model: cake_sponge_pumpkin_slices
   block_model: cake_sponge_pumpkin_uneaten
-  item_model: cake_sponge_raw
   item_model: cake_sponge_redvelvet_base
   item_model: cake_sponge_redvelvet_model
   item_model: cake_sponge_redvelvet_plate_model
@@ -616,7 +625,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: cake_sponge_redvelvet_slice4
   block_model: cake_sponge_redvelvet_slice5
   block_model: cake_sponge_redvelvet_slice6
-  item_model: cake_sponge_redvelvet_slices
   block_model: cake_sponge_redvelvet_uneaten
   block_model: cake_sponge_slice1
   block_model: cake_sponge_slice2
@@ -636,17 +644,14 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: cake_sponge_tea_slice4
   block_model: cake_sponge_tea_slice5
   block_model: cake_sponge_tea_slice6
-  item_model: cake_sponge_tea_slices
   block_model: cake_sponge_tea_uneaten
   block_model: cake_sponge_uneaten
-  item_model: cake_tea_roll
   block_model: cake_tea_slice1
   block_model: cake_tea_slice2
   block_model: cake_tea_slice3
   block_model: cake_tea_slice4
   block_model: cake_tea_slice5
   block_model: cake_tea_slice6
-  item_model: cake_tea_slices
   block_model: cake_tea_uneaten
   block_model: cocoa_gingerbread_plate
   blockstate: cocoa_gingerbread_plate
@@ -890,7 +895,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   item_model: mooncake_ham_raw
   item_model: mooncake_raw
   item_model: mousse_berry_model
-  item_model: mousse_berry_raw
   block_model: mousse_berry_slice1
   block_model: mousse_berry_slice2
   block_model: mousse_berry_slice3
@@ -899,7 +903,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: mousse_berry_slice6
   block_model: mousse_berry_uneaten
   item_model: mousse_chocolate_model
-  item_model: mousse_chocolate_raw
   block_model: mousse_chocolate_slice1
   block_model: mousse_chocolate_slice2
   block_model: mousse_chocolate_slice3
@@ -908,7 +911,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: mousse_chocolate_slice6
   block_model: mousse_chocolate_uneaten
   item_model: mousse_coffee_model
-  item_model: mousse_coffee_raw
   block_model: mousse_coffee_slice1
   block_model: mousse_coffee_slice2
   block_model: mousse_coffee_slice3
@@ -946,7 +948,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: strong_cocoa_plate
   blockstate: strong_cocoa_plate
   item_model: tiramisu_model
-  item_model: tiramisu_raw
   block_model: tiramisu_slice1
   block_model: tiramisu_slice2
   block_model: tiramisu_slice3

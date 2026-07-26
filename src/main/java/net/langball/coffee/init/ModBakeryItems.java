@@ -81,6 +81,86 @@ public class ModBakeryItems {
         ModItems.SMORE = items.register("smore",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.6F).build())));
 
+        // Phase 5.4: Cake rolls (9 variants)
+        ModItems.CAKE_ROLL = items.register("cake_roll",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.CAKE_BERRY_ROLL = items.register("cake_berry_roll",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.CAKE_CARROT_ROLL = items.register("cake_carrot_roll",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.CAKE_CHOCOLATE_ROLL = items.register("cake_chocolate_roll",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.CAKE_COFFEE_ROLL = items.register("cake_coffee_roll",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.CAKE_LEMON_ROLL = items.register("cake_lemon_roll",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.CAKE_PUMPKIN_ROLL = items.register("cake_pumpkin_roll",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.CAKE_REDVELVET_ROLL = items.register("cake_redvelvet_roll",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.CAKE_TEA_ROLL = items.register("cake_tea_roll",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+
+        // Phase 5.4: Cake slices (for cutting from cake blocks)
+        ModItems.CAKE_SLICES = items.register("cake_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_BERRY_SLICES = items.register("cake_berry_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_CHEESE_SLICES = items.register("cake_cheese_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_COFFEE_SLICES = items.register("cake_coffee_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_HARVEST_SLICES = items.register("cake_harvest_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_LEMON_SLICES = items.register("cake_lemon_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_REDVELVET_SLICES = items.register("cake_redvelvet_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_SCHWARZWALD_SLICES = items.register("cake_schwarzwald_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_TEA_SLICES = items.register("cake_tea_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+
+        // Phase 5.4: Sponge slices
+        ModItems.CAKE_SPONGE_BERRY_SLICES = items.register("cake_sponge_berry_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_SPONGE_CARROT_SLICES = items.register("cake_sponge_carrot_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_SPONGE_CHOCOLATE_SLICES = items.register("cake_sponge_chocolate_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_SPONGE_COFFEE_SLICES = items.register("cake_sponge_coffee_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_SPONGE_LEMON_SLICES = items.register("cake_sponge_lemon_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_SPONGE_PUMPKIN_SLICES = items.register("cake_sponge_pumpkin_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_SPONGE_REDVELVET_SLICES = items.register("cake_sponge_redvelvet_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+        ModItems.CAKE_SPONGE_TEA_SLICES = items.register("cake_sponge_tea_slices",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
+
+        // Phase 5.4: Key intermediates (raw/model/base for registered cakes)
+        ModItems.CAKE_SPONGE_RAW = items.register("cake_sponge_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.CAKE_CHEESE_RAW = items.register("cake_cheese_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.TIRAMISU_RAW = items.register("tiramisu_raw",
+                () -> new Item(new Item.Properties()));
+        // Sponge raw variants (for flavored sponges)
+        ModItems.CAKE_SPONGE_BERRY_RAW = items.register("cake_sponge_berry_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.CAKE_SPONGE_CHOCOLATE_RAW = items.register("cake_sponge_chocolate_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.CAKE_SPONGE_COFFEE_RAW = items.register("cake_sponge_coffee_raw",
+                () -> new Item(new Item.Properties()));
+        // Mousse raws
+        ModItems.MOUSSE_BERRY_RAW = items.register("mousse_berry_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MOUSSE_CHOCOLATE_RAW = items.register("mousse_chocolate_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MOUSSE_COFFEE_RAW = items.register("mousse_coffee_raw",
+                () -> new Item(new Item.Properties()));
+
         // ── Ice creams ──
         ModItems.ICECREAM_MIX_VANILLA = items.register("icecream_mix_vanilla",
                 () -> new Item(new Item.Properties().stacksTo(16)));

@@ -16,14 +16,14 @@
 | Metric | Count |
 |---|---|
 | **Fixed baseline assets** | **639** |
-| Restored (now registered) | +26 |
+| Restored (now registered) | +62 |
 | Total legacy assets (tracked) | 639 |
-| **ACTIVE_RUNTIME_ASSET** (already in use) | 199 |
+| **ACTIVE_RUNTIME_ASSET** (already in use) | 242 |
 | **MERGED_RUNTIME_VARIANT** (old ID merged) | 28 |
-| **→ Runtime covered** | **227/639** |
-| TO_PORT_STANDALONE (needs registration) | 75 |
-| TO_PORT_INTERMEDIATE (raw/model/base) | 108 |
-| TO_WIRE_STATE_VARIANT (block states) | 16 |
+| **→ Runtime covered** | **270/639** |
+| TO_PORT_STANDALONE (needs registration) | 57 |
+| TO_PORT_INTERMEDIATE (raw/model/base) | 99 |
+| TO_WIRE_STATE_VARIANT (block states) | 0 |
 | TO_WIRE_DISPLAY_VARIANT (display system) | 191 |
 | TO_PORT_MACHINE (machine devices) | 17 |
 | TO_PORT_DECOR (decor blocks) | 5 |
@@ -39,9 +39,9 @@
 | bags | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | bakery | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 |
 | cake_jiggy | 27 | 0 | 0 | 9 | 18 | 0 | 0 | 0 | 0 | 0 |
-| cake_mousse | 36 | 28 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 |
-| cake_roll | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
-| cake_system | 216 | 126 | 0 | 22 | 53 | 15 | 0 | 0 | 0 | 0 |
+| cake_mousse | 36 | 31 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 |
+| cake_roll | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| cake_system | 216 | 165 | 0 | 4 | 47 | 0 | 0 | 0 | 0 | 0 |
 | coffee_drinks | 189 | 9 | 5 | 1 | 1 | 0 | 173 | 0 | 0 | 0 |
 | confectionery | 27 | 11 | 0 | 0 | 2 | 0 | 14 | 0 | 0 | 0 |
 | crops | 13 | 12 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -60,7 +60,7 @@
 | syrups | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | traditional_brew | 14 | 1 | 0 | 0 | 0 | 0 | 2 | 11 | 0 | 0 |
 
-## ACTIVE_RUNTIME_ASSET (199 assets)
+## ACTIVE_RUNTIME_ASSET (242 assets)
 
 These are already wired to existing blockstates, recipes, or registered items.
 
@@ -70,26 +70,42 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `blueberry_stage1` | coffeework:blueberry_bush | blockstate:variants=age=1 |
 | `blueberry_stage2` | coffeework:blueberry_bush | blockstate:variants=age=2 |
 | `blueberry_stage3` | coffeework:blueberry_bush | blockstate:variants=age=3 |
+| `cake_berry_roll` | coffeework:cake_berry_roll | registered_item_model |
 | `cake_berry_slice1` | coffeework:cake_berry | blockstate:variants=bites=1 |
 | `cake_berry_slice2` | coffeework:cake_berry | blockstate:variants=bites=2 |
 | `cake_berry_slice3` | coffeework:cake_berry | blockstate:variants=bites=3 |
 | `cake_berry_slice4` | coffeework:cake_berry | blockstate:variants=bites=4 |
 | `cake_berry_slice5` | coffeework:cake_berry | blockstate:variants=bites=5 |
 | `cake_berry_slice6` | coffeework:cake_berry | blockstate:variants=bites=6 |
+| `cake_berry_slices` | coffeework:cake_berry_slices | registered_item_model |
 | `cake_berry_uneaten` | coffeework:cake_berry | blockstate:variants=bites=0 |
+| `cake_carrot` | coffeework:cake_carrot | registered_blockstate |
+| `cake_carrot_roll` | coffeework:cake_carrot_roll | registered_item_model |
+| `cake_carrot_slice1` | coffeework:cake_carrot | blockstate:variants=bites=1 |
+| `cake_carrot_slice2` | coffeework:cake_carrot | blockstate:variants=bites=2 |
+| `cake_carrot_slice3` | coffeework:cake_carrot | blockstate:variants=bites=3 |
+| `cake_carrot_slice4` | coffeework:cake_carrot | blockstate:variants=bites=4 |
+| `cake_carrot_slice5` | coffeework:cake_carrot | blockstate:variants=bites=5 |
+| `cake_carrot_slice6` | coffeework:cake_carrot | blockstate:variants=bites=6 |
+| `cake_carrot_uneaten` | coffeework:cake_carrot | blockstate:variants=bites=0 |
+| `cake_cheese_raw` | coffeework:cake_cheese_raw | registered_item_model |
 | `cake_cheese_slice1` | coffeework:cake_cheese | blockstate:variants=bites=1 |
 | `cake_cheese_slice2` | coffeework:cake_cheese | blockstate:variants=bites=2 |
 | `cake_cheese_slice3` | coffeework:cake_cheese | blockstate:variants=bites=3 |
 | `cake_cheese_slice4` | coffeework:cake_cheese | blockstate:variants=bites=4 |
 | `cake_cheese_slice5` | coffeework:cake_cheese | blockstate:variants=bites=5 |
 | `cake_cheese_slice6` | coffeework:cake_cheese | blockstate:variants=bites=6 |
+| `cake_cheese_slices` | coffeework:cake_cheese_slices | registered_item_model |
 | `cake_cheese_uneaten` | coffeework:cake_cheese | blockstate:variants=bites=0 |
+| `cake_chocolate_roll` | coffeework:cake_chocolate_roll | registered_item_model |
+| `cake_coffee_roll` | coffeework:cake_coffee_roll | registered_item_model |
 | `cake_coffee_slice1` | coffeework:cake_coffee | blockstate:variants=bites=1 |
 | `cake_coffee_slice2` | coffeework:cake_coffee | blockstate:variants=bites=2 |
 | `cake_coffee_slice3` | coffeework:cake_coffee | blockstate:variants=bites=3 |
 | `cake_coffee_slice4` | coffeework:cake_coffee | blockstate:variants=bites=4 |
 | `cake_coffee_slice5` | coffeework:cake_coffee | blockstate:variants=bites=5 |
 | `cake_coffee_slice6` | coffeework:cake_coffee | blockstate:variants=bites=6 |
+| `cake_coffee_slices` | coffeework:cake_coffee_slices | registered_item_model |
 | `cake_coffee_uneaten` | coffeework:cake_coffee | blockstate:variants=bites=0 |
 | `cake_harvest_slice1` | coffeework:cake_harvest | blockstate:variants=bites=1 |
 | `cake_harvest_slice2` | coffeework:cake_harvest | blockstate:variants=bites=2 |
@@ -97,34 +113,45 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `cake_harvest_slice4` | coffeework:cake_harvest | blockstate:variants=bites=4 |
 | `cake_harvest_slice5` | coffeework:cake_harvest | blockstate:variants=bites=5 |
 | `cake_harvest_slice6` | coffeework:cake_harvest | blockstate:variants=bites=6 |
+| `cake_harvest_slices` | coffeework:cake_harvest_slices | registered_item_model |
 | `cake_harvest_uneaten` | coffeework:cake_harvest | blockstate:variants=bites=0 |
+| `cake_lemon_roll` | coffeework:cake_lemon_roll | registered_item_model |
 | `cake_lemon_slice1` | coffeework:cake_lemon | blockstate:variants=bites=1 |
 | `cake_lemon_slice2` | coffeework:cake_lemon | blockstate:variants=bites=2 |
 | `cake_lemon_slice3` | coffeework:cake_lemon | blockstate:variants=bites=3 |
 | `cake_lemon_slice4` | coffeework:cake_lemon | blockstate:variants=bites=4 |
 | `cake_lemon_slice5` | coffeework:cake_lemon | blockstate:variants=bites=5 |
 | `cake_lemon_slice6` | coffeework:cake_lemon | blockstate:variants=bites=6 |
+| `cake_lemon_slices` | coffeework:cake_lemon_slices | registered_item_model |
 | `cake_lemon_uneaten` | coffeework:cake_lemon | blockstate:variants=bites=0 |
+| `cake_pumpkin_roll` | coffeework:cake_pumpkin_roll | registered_item_model |
+| `cake_redvelvet_roll` | coffeework:cake_redvelvet_roll | registered_item_model |
 | `cake_redvelvet_slice1` | coffeework:cake_redvelvet | blockstate:variants=bites=1 |
 | `cake_redvelvet_slice2` | coffeework:cake_redvelvet | blockstate:variants=bites=2 |
 | `cake_redvelvet_slice3` | coffeework:cake_redvelvet | blockstate:variants=bites=3 |
 | `cake_redvelvet_slice4` | coffeework:cake_redvelvet | blockstate:variants=bites=4 |
 | `cake_redvelvet_slice5` | coffeework:cake_redvelvet | blockstate:variants=bites=5 |
 | `cake_redvelvet_slice6` | coffeework:cake_redvelvet | blockstate:variants=bites=6 |
+| `cake_redvelvet_slices` | coffeework:cake_redvelvet_slices | registered_item_model |
 | `cake_redvelvet_uneaten` | coffeework:cake_redvelvet | blockstate:variants=bites=0 |
+| `cake_roll` | coffeework:cake_roll | registered_item_model |
 | `cake_schwarzwald_slice1` | coffeework:cake_schwarzwald | blockstate:variants=bites=1 |
 | `cake_schwarzwald_slice2` | coffeework:cake_schwarzwald | blockstate:variants=bites=2 |
 | `cake_schwarzwald_slice3` | coffeework:cake_schwarzwald | blockstate:variants=bites=3 |
 | `cake_schwarzwald_slice4` | coffeework:cake_schwarzwald | blockstate:variants=bites=4 |
 | `cake_schwarzwald_slice5` | coffeework:cake_schwarzwald | blockstate:variants=bites=5 |
 | `cake_schwarzwald_slice6` | coffeework:cake_schwarzwald | blockstate:variants=bites=6 |
+| `cake_schwarzwald_slices` | coffeework:cake_schwarzwald_slices | registered_item_model |
 | `cake_schwarzwald_uneaten` | coffeework:cake_schwarzwald | blockstate:variants=bites=0 |
+| `cake_slices` | coffeework:cake_slices | registered_item_model |
+| `cake_sponge_berry_raw` | coffeework:cake_sponge_berry_raw | registered_item_model |
 | `cake_sponge_berry_slice1` | coffeework:cake_sponge_berry | blockstate:variants=bites=1 |
 | `cake_sponge_berry_slice2` | coffeework:cake_sponge_berry | blockstate:variants=bites=2 |
 | `cake_sponge_berry_slice3` | coffeework:cake_sponge_berry | blockstate:variants=bites=3 |
 | `cake_sponge_berry_slice4` | coffeework:cake_sponge_berry | blockstate:variants=bites=4 |
 | `cake_sponge_berry_slice5` | coffeework:cake_sponge_berry | blockstate:variants=bites=5 |
 | `cake_sponge_berry_slice6` | coffeework:cake_sponge_berry | blockstate:variants=bites=6 |
+| `cake_sponge_berry_slices` | coffeework:cake_sponge_berry_slices | registered_item_model |
 | `cake_sponge_berry_uneaten` | coffeework:cake_sponge_berry | blockstate:variants=bites=0 |
 | `cake_sponge_carrot_slice1` | coffeework:cake_sponge_carrot | blockstate:variants=bites=1 |
 | `cake_sponge_carrot_slice2` | coffeework:cake_sponge_carrot | blockstate:variants=bites=2 |
@@ -132,20 +159,25 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `cake_sponge_carrot_slice4` | coffeework:cake_sponge_carrot | blockstate:variants=bites=4 |
 | `cake_sponge_carrot_slice5` | coffeework:cake_sponge_carrot | blockstate:variants=bites=5 |
 | `cake_sponge_carrot_slice6` | coffeework:cake_sponge_carrot | blockstate:variants=bites=6 |
+| `cake_sponge_carrot_slices` | coffeework:cake_sponge_carrot_slices | registered_item_model |
 | `cake_sponge_carrot_uneaten` | coffeework:cake_sponge_carrot | blockstate:variants=bites=0 |
+| `cake_sponge_chocolate_raw` | coffeework:cake_sponge_chocolate_raw | registered_item_model |
 | `cake_sponge_chocolate_slice1` | coffeework:cake_sponge_chocolate | blockstate:variants=bites=1 |
 | `cake_sponge_chocolate_slice2` | coffeework:cake_sponge_chocolate | blockstate:variants=bites=2 |
 | `cake_sponge_chocolate_slice3` | coffeework:cake_sponge_chocolate | blockstate:variants=bites=3 |
 | `cake_sponge_chocolate_slice4` | coffeework:cake_sponge_chocolate | blockstate:variants=bites=4 |
 | `cake_sponge_chocolate_slice5` | coffeework:cake_sponge_chocolate | blockstate:variants=bites=5 |
 | `cake_sponge_chocolate_slice6` | coffeework:cake_sponge_chocolate | blockstate:variants=bites=6 |
+| `cake_sponge_chocolate_slices` | coffeework:cake_sponge_chocolate_slices | registered_item_model |
 | `cake_sponge_chocolate_uneaten` | coffeework:cake_sponge_chocolate | blockstate:variants=bites=0 |
+| `cake_sponge_coffee_raw` | coffeework:cake_sponge_coffee_raw | registered_item_model |
 | `cake_sponge_coffee_slice1` | coffeework:cake_sponge_coffee | blockstate:variants=bites=1 |
 | `cake_sponge_coffee_slice2` | coffeework:cake_sponge_coffee | blockstate:variants=bites=2 |
 | `cake_sponge_coffee_slice3` | coffeework:cake_sponge_coffee | blockstate:variants=bites=3 |
 | `cake_sponge_coffee_slice4` | coffeework:cake_sponge_coffee | blockstate:variants=bites=4 |
 | `cake_sponge_coffee_slice5` | coffeework:cake_sponge_coffee | blockstate:variants=bites=5 |
 | `cake_sponge_coffee_slice6` | coffeework:cake_sponge_coffee | blockstate:variants=bites=6 |
+| `cake_sponge_coffee_slices` | coffeework:cake_sponge_coffee_slices | registered_item_model |
 | `cake_sponge_coffee_uneaten` | coffeework:cake_sponge_coffee | blockstate:variants=bites=0 |
 | `cake_sponge_lemon_slice1` | coffeework:cake_sponge_lemon | blockstate:variants=bites=1 |
 | `cake_sponge_lemon_slice2` | coffeework:cake_sponge_lemon | blockstate:variants=bites=2 |
@@ -153,6 +185,7 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `cake_sponge_lemon_slice4` | coffeework:cake_sponge_lemon | blockstate:variants=bites=4 |
 | `cake_sponge_lemon_slice5` | coffeework:cake_sponge_lemon | blockstate:variants=bites=5 |
 | `cake_sponge_lemon_slice6` | coffeework:cake_sponge_lemon | blockstate:variants=bites=6 |
+| `cake_sponge_lemon_slices` | coffeework:cake_sponge_lemon_slices | registered_item_model |
 | `cake_sponge_lemon_uneaten` | coffeework:cake_sponge_lemon | blockstate:variants=bites=0 |
 | `cake_sponge_pumpkin_slice1` | coffeework:cake_sponge_pumpkin | blockstate:variants=bites=1 |
 | `cake_sponge_pumpkin_slice2` | coffeework:cake_sponge_pumpkin | blockstate:variants=bites=2 |
@@ -160,13 +193,16 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `cake_sponge_pumpkin_slice4` | coffeework:cake_sponge_pumpkin | blockstate:variants=bites=4 |
 | `cake_sponge_pumpkin_slice5` | coffeework:cake_sponge_pumpkin | blockstate:variants=bites=5 |
 | `cake_sponge_pumpkin_slice6` | coffeework:cake_sponge_pumpkin | blockstate:variants=bites=6 |
+| `cake_sponge_pumpkin_slices` | coffeework:cake_sponge_pumpkin_slices | registered_item_model |
 | `cake_sponge_pumpkin_uneaten` | coffeework:cake_sponge_pumpkin | blockstate:variants=bites=0 |
+| `cake_sponge_raw` | coffeework:cake_sponge_raw | registered_item_model |
 | `cake_sponge_redvelvet_slice1` | coffeework:cake_sponge_redvelvet | blockstate:variants=bites=1 |
 | `cake_sponge_redvelvet_slice2` | coffeework:cake_sponge_redvelvet | blockstate:variants=bites=2 |
 | `cake_sponge_redvelvet_slice3` | coffeework:cake_sponge_redvelvet | blockstate:variants=bites=3 |
 | `cake_sponge_redvelvet_slice4` | coffeework:cake_sponge_redvelvet | blockstate:variants=bites=4 |
 | `cake_sponge_redvelvet_slice5` | coffeework:cake_sponge_redvelvet | blockstate:variants=bites=5 |
 | `cake_sponge_redvelvet_slice6` | coffeework:cake_sponge_redvelvet | blockstate:variants=bites=6 |
+| `cake_sponge_redvelvet_slices` | coffeework:cake_sponge_redvelvet_slices | registered_item_model |
 | `cake_sponge_redvelvet_uneaten` | coffeework:cake_sponge_redvelvet | blockstate:variants=bites=0 |
 | `cake_sponge_slice1` | coffeework:cake_sponge | blockstate:variants=bites=1 |
 | `cake_sponge_slice2` | coffeework:cake_sponge | blockstate:variants=bites=2 |
@@ -180,14 +216,17 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `cake_sponge_tea_slice4` | coffeework:cake_sponge_tea | blockstate:variants=bites=4 |
 | `cake_sponge_tea_slice5` | coffeework:cake_sponge_tea | blockstate:variants=bites=5 |
 | `cake_sponge_tea_slice6` | coffeework:cake_sponge_tea | blockstate:variants=bites=6 |
+| `cake_sponge_tea_slices` | coffeework:cake_sponge_tea_slices | registered_item_model |
 | `cake_sponge_tea_uneaten` | coffeework:cake_sponge_tea | blockstate:variants=bites=0 |
 | `cake_sponge_uneaten` | coffeework:cake_sponge | blockstate:variants=bites=0 |
+| `cake_tea_roll` | coffeework:cake_tea_roll | registered_item_model |
 | `cake_tea_slice1` | coffeework:cake_tea | blockstate:variants=bites=1 |
 | `cake_tea_slice2` | coffeework:cake_tea | blockstate:variants=bites=2 |
 | `cake_tea_slice3` | coffeework:cake_tea | blockstate:variants=bites=3 |
 | `cake_tea_slice4` | coffeework:cake_tea | blockstate:variants=bites=4 |
 | `cake_tea_slice5` | coffeework:cake_tea | blockstate:variants=bites=5 |
 | `cake_tea_slice6` | coffeework:cake_tea | blockstate:variants=bites=6 |
+| `cake_tea_slices` | coffeework:cake_tea_slices | registered_item_model |
 | `cake_tea_uneaten` | coffeework:cake_tea | blockstate:variants=bites=0 |
 | `caramel` | coffeework:caramel | registered_item_model |
 | `caramel_apple` | coffeework:caramel_apple | registered_item_model |
@@ -214,6 +253,7 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `marshmallow_chocolate` | coffeework:marshmallow_chocolate | registered_item_model |
 | `marshmallow_roast` | coffeework:marshmallow_roast | registered_item_model |
 | `milk_form` | coffeework:milk_form | registered_item_model |
+| `mousse_berry_raw` | coffeework:mousse_berry_raw | registered_item_model |
 | `mousse_berry_slice1` | coffeework:mousse_berry | blockstate:variants=bites=1 |
 | `mousse_berry_slice2` | coffeework:mousse_berry | blockstate:variants=bites=2 |
 | `mousse_berry_slice3` | coffeework:mousse_berry | blockstate:variants=bites=3 |
@@ -221,6 +261,7 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `mousse_berry_slice5` | coffeework:mousse_berry | blockstate:variants=bites=5 |
 | `mousse_berry_slice6` | coffeework:mousse_berry | blockstate:variants=bites=6 |
 | `mousse_berry_uneaten` | coffeework:mousse_berry | blockstate:variants=bites=0 |
+| `mousse_chocolate_raw` | coffeework:mousse_chocolate_raw | registered_item_model |
 | `mousse_chocolate_slice1` | coffeework:mousse_chocolate | blockstate:variants=bites=1 |
 | `mousse_chocolate_slice2` | coffeework:mousse_chocolate | blockstate:variants=bites=2 |
 | `mousse_chocolate_slice3` | coffeework:mousse_chocolate | blockstate:variants=bites=3 |
@@ -228,6 +269,7 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `mousse_chocolate_slice5` | coffeework:mousse_chocolate | blockstate:variants=bites=5 |
 | `mousse_chocolate_slice6` | coffeework:mousse_chocolate | blockstate:variants=bites=6 |
 | `mousse_chocolate_uneaten` | coffeework:mousse_chocolate | blockstate:variants=bites=0 |
+| `mousse_coffee_raw` | coffeework:mousse_coffee_raw | registered_item_model |
 | `mousse_coffee_slice1` | coffeework:mousse_coffee | blockstate:variants=bites=1 |
 | `mousse_coffee_slice2` | coffeework:mousse_coffee | blockstate:variants=bites=2 |
 | `mousse_coffee_slice3` | coffeework:mousse_coffee | blockstate:variants=bites=3 |
@@ -250,6 +292,7 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `sandwich_club_large` | coffeework:sandwich_club_large | registered_item_model |
 | `sandwich_ham_cheese` | coffeework:sandwich_ham_cheese | registered_item_model |
 | `smore` | coffeework:smore | registered_item_model |
+| `tiramisu_raw` | coffeework:tiramisu_raw | registered_item_model |
 | `tiramisu_slice1` | coffeework:tiramisu | blockstate:variants=bites=1 |
 | `tiramisu_slice2` | coffeework:tiramisu | blockstate:variants=bites=2 |
 | `tiramisu_slice3` | coffeework:tiramisu | blockstate:variants=bites=3 |

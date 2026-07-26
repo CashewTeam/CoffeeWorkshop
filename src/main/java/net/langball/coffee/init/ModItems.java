@@ -72,6 +72,51 @@ public class ModItems {
     public static RegistryObject<Item> MOUSSE_CHOCOLATE;
     public static RegistryObject<Item> MOUSSE_COFFEE;
 
+    // Phase 5.4
+    // Phase 5.4: Cake block
+    public static RegistryObject<Item> CAKE_CARROT;
+
+    // Phase 5.4: Cake rolls
+    public static RegistryObject<Item> CAKE_ROLL;
+    public static RegistryObject<Item> CAKE_BERRY_ROLL;
+    public static RegistryObject<Item> CAKE_CARROT_ROLL;
+    public static RegistryObject<Item> CAKE_CHOCOLATE_ROLL;
+    public static RegistryObject<Item> CAKE_COFFEE_ROLL;
+    public static RegistryObject<Item> CAKE_LEMON_ROLL;
+    public static RegistryObject<Item> CAKE_PUMPKIN_ROLL;
+    public static RegistryObject<Item> CAKE_REDVELVET_ROLL;
+    public static RegistryObject<Item> CAKE_TEA_ROLL;
+
+    // Phase 5.4: Cake slice items
+    public static RegistryObject<Item> CAKE_SLICES;
+    public static RegistryObject<Item> CAKE_BERRY_SLICES;
+    public static RegistryObject<Item> CAKE_CHEESE_SLICES;
+    public static RegistryObject<Item> CAKE_COFFEE_SLICES;
+    public static RegistryObject<Item> CAKE_HARVEST_SLICES;
+    public static RegistryObject<Item> CAKE_LEMON_SLICES;
+    public static RegistryObject<Item> CAKE_REDVELVET_SLICES;
+    public static RegistryObject<Item> CAKE_SCHWARZWALD_SLICES;
+    public static RegistryObject<Item> CAKE_TEA_SLICES;
+    public static RegistryObject<Item> CAKE_SPONGE_BERRY_SLICES;
+    public static RegistryObject<Item> CAKE_SPONGE_CARROT_SLICES;
+    public static RegistryObject<Item> CAKE_SPONGE_CHOCOLATE_SLICES;
+    public static RegistryObject<Item> CAKE_SPONGE_COFFEE_SLICES;
+    public static RegistryObject<Item> CAKE_SPONGE_LEMON_SLICES;
+    public static RegistryObject<Item> CAKE_SPONGE_PUMPKIN_SLICES;
+    public static RegistryObject<Item> CAKE_SPONGE_REDVELVET_SLICES;
+    public static RegistryObject<Item> CAKE_SPONGE_TEA_SLICES;
+
+    // Phase 5.4: Cake intermediates (raw/model)
+    public static RegistryObject<Item> CAKE_SPONGE_RAW;
+    public static RegistryObject<Item> CAKE_CHEESE_RAW;
+    public static RegistryObject<Item> TIRAMISU_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_BERRY_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_CHOCOLATE_RAW;
+    public static RegistryObject<Item> CAKE_SPONGE_COFFEE_RAW;
+    public static RegistryObject<Item> MOUSSE_BERRY_RAW;
+    public static RegistryObject<Item> MOUSSE_CHOCOLATE_RAW;
+    public static RegistryObject<Item> MOUSSE_COFFEE_RAW;
+
     // ========================================================================
     // Seeds — ModEquipmentItems
     // ========================================================================

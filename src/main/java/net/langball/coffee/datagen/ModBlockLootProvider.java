@@ -130,6 +130,7 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         add(ModBlocks.MOUSSE_LEMON.get(), noDrop());
         add(ModBlocks.MOUSSE_CHOCOLATE.get(), noDrop());
         add(ModBlocks.MOUSSE_COFFEE.get(), noDrop());
+        add(ModBlocks.CAKE_CARROT.get(), noDrop());
     }
 
     @Override

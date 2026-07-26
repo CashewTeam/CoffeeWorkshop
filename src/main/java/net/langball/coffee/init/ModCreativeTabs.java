@@ -123,6 +123,48 @@ public class ModCreativeTabs {
                         output.accept(ModItems.MOUSSE_LEMON.get());
                         output.accept(ModItems.MOUSSE_CHOCOLATE.get());
                         output.accept(ModItems.MOUSSE_COFFEE.get());
+                        output.accept(ModItems.CAKE_CARROT.get());
+
+                        // Phase 5.4: Cake intermediates
+                        output.accept(ModItems.CAKE_SPONGE_RAW.get());
+                        output.accept(ModItems.CAKE_CHEESE_RAW.get());
+                        output.accept(ModItems.TIRAMISU_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_BERRY_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_CHOCOLATE_RAW.get());
+                        output.accept(ModItems.CAKE_SPONGE_COFFEE_RAW.get());
+                        output.accept(ModItems.MOUSSE_BERRY_RAW.get());
+                        output.accept(ModItems.MOUSSE_CHOCOLATE_RAW.get());
+                        output.accept(ModItems.MOUSSE_COFFEE_RAW.get());
+
+                        // Phase 5.4: Cake rolls
+                        output.accept(ModItems.CAKE_ROLL.get());
+                        output.accept(ModItems.CAKE_BERRY_ROLL.get());
+                        output.accept(ModItems.CAKE_CARROT_ROLL.get());
+                        output.accept(ModItems.CAKE_CHOCOLATE_ROLL.get());
+                        output.accept(ModItems.CAKE_COFFEE_ROLL.get());
+                        output.accept(ModItems.CAKE_LEMON_ROLL.get());
+                        output.accept(ModItems.CAKE_PUMPKIN_ROLL.get());
+                        output.accept(ModItems.CAKE_REDVELVET_ROLL.get());
+                        output.accept(ModItems.CAKE_TEA_ROLL.get());
+
+                        // Phase 5.4: Cake slices
+                        output.accept(ModItems.CAKE_SLICES.get());
+                        output.accept(ModItems.CAKE_BERRY_SLICES.get());
+                        output.accept(ModItems.CAKE_CHEESE_SLICES.get());
+                        output.accept(ModItems.CAKE_COFFEE_SLICES.get());
+                        output.accept(ModItems.CAKE_HARVEST_SLICES.get());
+                        output.accept(ModItems.CAKE_LEMON_SLICES.get());
+                        output.accept(ModItems.CAKE_REDVELVET_SLICES.get());
+                        output.accept(ModItems.CAKE_SCHWARZWALD_SLICES.get());
+                        output.accept(ModItems.CAKE_TEA_SLICES.get());
+                        output.accept(ModItems.CAKE_SPONGE_BERRY_SLICES.get());
+                        output.accept(ModItems.CAKE_SPONGE_CARROT_SLICES.get());
+                        output.accept(ModItems.CAKE_SPONGE_CHOCOLATE_SLICES.get());
+                        output.accept(ModItems.CAKE_SPONGE_COFFEE_SLICES.get());
+                        output.accept(ModItems.CAKE_SPONGE_LEMON_SLICES.get());
+                        output.accept(ModItems.CAKE_SPONGE_PUMPKIN_SLICES.get());
+                        output.accept(ModItems.CAKE_SPONGE_REDVELVET_SLICES.get());
+                        output.accept(ModItems.CAKE_SPONGE_TEA_SLICES.get());
 
                         // Decor
                         output.accept(ModItems.PLATE.get());

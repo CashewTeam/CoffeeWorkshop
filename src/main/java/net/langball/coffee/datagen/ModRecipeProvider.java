@@ -871,6 +871,16 @@ public class ModRecipeProvider extends RecipeProvider {
 
         // Note: Caramel is produced via Oven (machine recipe in ModMachineRecipeProvider)
 
+        // Phase 5.4: Cake intermediates
+        // Raw sponge batter (flour + milk + egg + sugar + mixing bowl)
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_RAW.get(), ModItems.MIXING_BOWL.get())
+                .requires(ModItems.MIXING_BOWL.get())
+                .requires(ModItems.FLOUR.get())
+                .requires(Items.MILK_BUCKET)
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("cake_sponge_raw"));
+
         // ===================================================================
         // COOLING RECIPES (hot drink + ice_slag → iced drink)
         // These handle iced variants that cannot be expressed in the Coffee

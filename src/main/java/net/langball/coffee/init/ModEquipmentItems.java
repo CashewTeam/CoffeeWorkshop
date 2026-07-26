@@ -120,6 +120,10 @@ public class ModEquipmentItems {
         ModItems.MOUSSE_COFFEE = items.register("mousse_coffee",
                 () -> new BlockItem(ModBlocks.MOUSSE_COFFEE.get(), new Item.Properties()));
 
+        // Phase 5.4: cake_carrot
+        ModItems.CAKE_CARROT = items.register("cake_carrot",
+                () -> new BlockItem(ModBlocks.CAKE_CARROT.get(), new Item.Properties()));
+
         // ── Seeds ──
         ModItems.COFFEE_SEEDS = items.register("coffee_seeds",
                 () -> new SeedCoffee(ModBlocks.COFFEE_TREE.get(), new Item.Properties()));
