@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Consumer;
@@ -715,66 +716,56 @@ public class ModRecipeProvider extends RecipeProvider {
         // simultaneously (single additive slot limitation).
         // ===================================================================
 
-        // americano_nitro_ice + ice_slag → americano_nitro_fruit_ice
-        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_AMERICANO_NITRO_FRUIT_ICE.get(),
-                ModItems.COFFEE_AMERICANO_NITRO_ICE.get())
-                .requires(ModItems.COFFEE_AMERICANO_NITRO_ICE.get())
-                .requires(ModItems.ICE_SLAG.get())
-                .save(writer, modLoc("cooling/americano_nitro_fruit_ice"));
-
-        // coldbrew_fruit + ice_slag → coldbrew_fruit_ice
-        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_COLDBREW_FRUIT_ICE.get(),
-                ModItems.COFFEE_COLDBREW_FRUIT.get())
-                .requires(ModItems.COFFEE_COLDBREW_FRUIT.get())
-                .requires(ModItems.ICE_SLAG.get())
-                .save(writer, modLoc("cooling/coldbrew_fruit_ice"));
-
-        // coldbrew_latte_caramel + ice_slag → coldbrew_latte_caramel_ice
-        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_COLDBREW_LATTE_CARAMEL_ICE.get(),
-                ModItems.COFFEE_COLDBREW_LATTE_CARAMEL.get())
-                .requires(ModItems.COFFEE_COLDBREW_LATTE_CARAMEL.get())
-                .requires(ModItems.ICE_SLAG.get())
-                .save(writer, modLoc("cooling/coldbrew_latte_caramel_ice"));
-
-        // coldbrew_latte_chocolate + ice_slag → coldbrew_latte_chocolate_ice
-        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_COLDBREW_LATTE_CHOCOLATE_ICE.get(),
-                ModItems.COFFEE_COLDBREW_LATTE_CHOCOLATE.get())
-                .requires(ModItems.COFFEE_COLDBREW_LATTE_CHOCOLATE.get())
-                .requires(ModItems.ICE_SLAG.get())
-                .save(writer, modLoc("cooling/coldbrew_latte_chocolate_ice"));
-
-        // coldbrew_latte_fruit + ice_slag → coldbrew_latte_fruit_ice
-        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_COLDBREW_LATTE_FRUIT_ICE.get(),
-                ModItems.COFFEE_COLDBREW_LATTE_FRUIT.get())
-                .requires(ModItems.COFFEE_COLDBREW_LATTE_FRUIT.get())
-                .requires(ModItems.ICE_SLAG.get())
-                .save(writer, modLoc("cooling/coldbrew_latte_fruit_ice"));
-
-        // coldbrew_latte_mint + ice_slag → coldbrew_latte_mint_ice
-        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_COLDBREW_LATTE_MINT_ICE.get(),
-                ModItems.COFFEE_COLDBREW_LATTE_MINT.get())
-                .requires(ModItems.COFFEE_COLDBREW_LATTE_MINT.get())
-                .requires(ModItems.ICE_SLAG.get())
-                .save(writer, modLoc("cooling/coldbrew_latte_mint_ice"));
-
-        // coldbrew_latte_vanilla + ice_slag → coldbrew_latte_vanilla_ice
-        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_COLDBREW_LATTE_VANILLA_ICE.get(),
-                ModItems.COFFEE_COLDBREW_LATTE_VANILLA.get())
-                .requires(ModItems.COFFEE_COLDBREW_LATTE_VANILLA.get())
-                .requires(ModItems.ICE_SLAG.get())
-                .save(writer, modLoc("cooling/coldbrew_latte_vanilla_ice"));
-
-        // mandarin_drink + ice_slag → mandarin_drink_ice
-        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_MANDARIN_DRINK_ICE.get(),
-                ModItems.COFFEE_MANDARIN_DRINK.get())
-                .requires(ModItems.COFFEE_MANDARIN_DRINK.get())
-                .requires(ModItems.ICE_SLAG.get())
-                .save(writer, modLoc("cooling/mandarin_drink_ice"));
+        // ===================================================================
+        // COOLING RECIPES (custom CoolingRecipe serializer, NBT-preserving)
+        // Hot drink + ice_slag → iced drink with cups NBT copied.
+        // ===================================================================
+        registerCoolingRecipes(writer);
 
         // ===================================================================
         // MACHINE RECIPES (Grinder, Oven, Roller, Icecream Machine)
         // ===================================================================
         ModMachineRecipeProvider.buildRecipes(writer);
+    }
+
+    private void registerCoolingRecipes(Consumer<FinishedRecipe> writer) {
+        var mappings = new Object[][]{
+                {ModItems.COFFEE_AMERICANO_NITRO_ICE, ModItems.COFFEE_AMERICANO_NITRO_FRUIT_ICE},
+                {ModItems.COFFEE_COLDBREW_FRUIT, ModItems.COFFEE_COLDBREW_FRUIT_ICE},
+                {ModItems.COFFEE_COLDBREW_LATTE_CARAMEL, ModItems.COFFEE_COLDBREW_LATTE_CARAMEL_ICE},
+                {ModItems.COFFEE_COLDBREW_LATTE_CHOCOLATE, ModItems.COFFEE_COLDBREW_LATTE_CHOCOLATE_ICE},
+                {ModItems.COFFEE_COLDBREW_LATTE_FRUIT, ModItems.COFFEE_COLDBREW_LATTE_FRUIT_ICE},
+                {ModItems.COFFEE_COLDBREW_LATTE_MINT, ModItems.COFFEE_COLDBREW_LATTE_MINT_ICE},
+                {ModItems.COFFEE_COLDBREW_LATTE_VANILLA, ModItems.COFFEE_COLDBREW_LATTE_VANILLA_ICE},
+                {ModItems.COFFEE_MANDARIN_DRINK, ModItems.COFFEE_MANDARIN_DRINK_ICE},
+        };
+
+        int idx = 0;
+        for (Object[] mapping : mappings) {
+            idx++;
+            var hotItem = ((java.util.function.Supplier<net.minecraft.world.item.Item>) mapping[0]).get();
+            var icedItem = ((java.util.function.Supplier<net.minecraft.world.item.Item>) mapping[1]).get();
+            final int n = idx;
+            final ResourceLocation hotId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(hotItem);
+            final ResourceLocation icedId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(icedItem);
+            writer.accept(new FinishedRecipe() {
+                @Override
+                public void serializeRecipeData(com.google.gson.JsonObject json) {
+                    json.addProperty("hot", hotId.toString());
+                    json.addProperty("iced", icedId.toString());
+                }
+                @Override
+                public ResourceLocation getId() { return modLoc("cooling/" + n); }
+                @Override
+                public RecipeSerializer<?> getType() {
+                    return net.langball.coffee.init.ModRecipeTypes.COOLING_SERIALIZER.get();
+                }
+                @Override @org.jetbrains.annotations.Nullable
+                public ResourceLocation getAdvancementId() { return null; }
+                @Override @org.jetbrains.annotations.Nullable
+                public com.google.gson.JsonObject serializeAdvancement() { return null; }
+            });
+        }
     }
 
     // =======================================================================

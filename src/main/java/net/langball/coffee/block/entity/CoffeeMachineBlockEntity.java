@@ -3,6 +3,7 @@ package net.langball.coffee.block.entity;
 import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.init.ModBlockEntities;
 import net.langball.coffee.init.ModRecipeTypes;
+import net.langball.coffee.recipes.CoffeeBrewingRecipe;
 import net.langball.coffee.recipes.ProcessingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +19,9 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Coffee Machine block entity — brews drinks from coffee powder, liquids,
  * optional additives, and cups.
@@ -31,7 +35,8 @@ import org.jetbrains.annotations.Nullable;
  *   <li>Slot 4 — Output</li>
  * </ul>
  *
- * <p>Self-powered (no fuel slot).
+ * <p>Self-powered (no fuel slot).  Slot role validation is derived from
+ * registered CoffeeBrewingRecipe ingredients.
  */
 public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
 
@@ -54,7 +59,8 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
 
             @Override
             public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-                return slot != SLOT_OUTPUT;
+                if (slot == SLOT_OUTPUT) return false;
+                return CoffeeMachineBlockEntity.this.isValidForRole(slot, stack);
             }
         };
     }
@@ -100,7 +106,74 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
         return canProcess && hasProcessingPower();
     }
 
-    // ---- NBT migration --------------------------------------------------
+    // ── Role validation (derived from registered recipes) ─────────────────
+
+    /**
+     * Cached sets of items that are valid in each role slot.
+     * Rebuilt lazily when recipes change (deterministic via RecipeManager).
+     */
+    private static final class RoleCache {
+        Set<ItemStack> validBase = Set.of();
+        Set<ItemStack> validModifier = Set.of();
+        Set<ItemStack> validAdditive = Set.of();
+        Set<ItemStack> validContainer = Set.of();
+        boolean initialized = false;
+        Set<net.minecraft.resources.ResourceLocation> knownRecipes = new HashSet<>();
+    }
+    private final RoleCache roleCache = new RoleCache();
+
+    /**
+     * Determines whether {@code stack} can be placed into the given role slot.
+     * Derives the validity set from the registered CoffeeBrewingRecipe ingredients.
+     */
+    protected boolean isValidForRole(int slot, ItemStack stack) {
+        if (level == null) return slot != SLOT_OUTPUT;
+        refreshRoleCache();
+        Set<ItemStack> set = switch (slot) {
+            case SLOT_BASE -> roleCache.validBase;
+            case SLOT_MODIFIER -> roleCache.validModifier;
+            case SLOT_ADDITIVE -> roleCache.validAdditive;
+            case SLOT_CONTAINER -> roleCache.validContainer;
+            default -> Set.of();
+        };
+        for (ItemStack allowed : set) {
+            if (ItemStack.isSameItemSameTags(allowed, stack)) return true;
+        }
+        return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void refreshRoleCache() {
+        if (level == null) return;
+        var rm = level.getRecipeManager();
+        var allRecipes = rm.getAllRecipesFor((RecipeType<CoffeeBrewingRecipe>) getRecipeType());
+        java.util.Set<net.minecraft.resources.ResourceLocation> currentIds = new java.util.HashSet<>();
+        for (CoffeeBrewingRecipe r : allRecipes) currentIds.add(r.getId());
+
+        if (roleCache.initialized && roleCache.knownRecipes.equals(currentIds)) return;
+        roleCache.initialized = true;
+        roleCache.knownRecipes = currentIds;
+
+        java.util.Set<ItemStack> base = new java.util.HashSet<>();
+        java.util.Set<ItemStack> mod = new java.util.HashSet<>();
+        java.util.Set<ItemStack> add = new java.util.HashSet<>();
+        java.util.Set<ItemStack> cont = new java.util.HashSet<>();
+
+        for (CoffeeBrewingRecipe r : allRecipes) {
+            for (ItemStack s : r.base().ingredient().getItems()) base.add(s.copyWithCount(1));
+            if (r.modifier() != null)
+                for (ItemStack s : r.modifier().ingredient().getItems()) mod.add(s.copyWithCount(1));
+            if (r.additive() != null)
+                for (ItemStack s : r.additive().ingredient().getItems()) add.add(s.copyWithCount(1));
+            for (ItemStack s : r.container().ingredient().getItems()) cont.add(s.copyWithCount(1));
+        }
+        roleCache.validBase = base;
+        roleCache.validModifier = mod;
+        roleCache.validAdditive = add;
+        roleCache.validContainer = cont;
+    }
+
+    // ── NBT migration ────────────────────────────────────────────────────
 
     @Override
     public void load(CompoundTag tag) {
@@ -111,19 +184,12 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
             CompoundTag items = tag.getCompound("Items");
             int oldSize = items.getList("Items", 10).size();
 
-            if (version == 0) {
-                // v0: old 2-slot → v1: 4-slot (already handled by v1 migration)
-                // Re-run v1 migration first
-                if (oldSize == 2) {
-                    tag = migrateV0toV1(tag);
-                    items = tag.getCompound("Items");
-                    oldSize = items.getList("Items", 10).size();
-                }
+            if (version == 0 && oldSize == 2) {
+                tag = migrateV0toV1(tag);
+                items = tag.getCompound("Items");
+                oldSize = items.getList("Items", 10).size();
             }
 
-            // v1 → v2: 4-slot → 5-slot
-            // Old: slot 0=base, 1=modifier, 2=container, 3=output
-            // New: slot 0=base, 1=modifier, 2=additive(empty), 3=container, 4=output
             if (version <= 1 && oldSize == 4) {
                 tag = migrateV1toV2(tag);
             }
@@ -133,18 +199,15 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
         super.load(tag);
     }
 
-    /** Migrate from v0 (2-slot) to v1 (4-slot) layout. */
     private CompoundTag migrateV0toV1(CompoundTag tag) {
         CompoundTag items = tag.getCompound("Items");
         CompoundTag migrated = new CompoundTag();
         net.minecraft.nbt.ListTag list = new net.minecraft.nbt.ListTag();
 
-        // Copy old slot 0 → new slot 0 (base)
         CompoundTag oldInput = items.getList("Items", 10).getCompound(0).copy();
         oldInput.putByte("Slot", (byte) 0);
         list.add(oldInput);
 
-        // Move old slot 1 → new slot 3 (output)
         CompoundTag oldOutput = items.getList("Items", 10).getCompound(1).copy();
         oldOutput.putByte("Slot", (byte) 3);
         list.add(oldOutput);
@@ -155,7 +218,6 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
         return tag;
     }
 
-    /** Migrate from v1 (4-slot) to v2 (5-slot) layout. */
     private CompoundTag migrateV1toV2(CompoundTag tag) {
         CompoundTag items = tag.getCompound("Items");
         CompoundTag migrated = new CompoundTag();
@@ -165,12 +227,10 @@ public class CoffeeMachineBlockEntity extends AbstractProcessingBlockEntity {
         for (int i = 0; i < oldList.size(); i++) {
             CompoundTag entry = oldList.getCompound(i).copy();
             int oldSlot = entry.getByte("Slot");
-            // Map old → new:
-            // old 0→0 (base), old 1→1 (modifier), old 2→3 (container), old 3→4 (output)
             int newSlot = switch (oldSlot) {
-                case 0 -> 0; // base stays
-                case 1 -> 1; // modifier stays
-                case 2 -> 3; // container shifts +1
+                case 0 -> 0;
+                case 1 -> 1;
+                case 2 -> 3; // container shifts +1 (new additive inserted at 2)
                 case 3 -> 4; // output shifts +1
                 default -> oldSlot;
             };

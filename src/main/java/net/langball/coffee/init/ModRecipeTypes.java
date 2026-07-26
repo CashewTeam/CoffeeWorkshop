@@ -69,6 +69,11 @@ public final class ModRecipeTypes {
     public static final RegistryObject<MachineRecipeSerializer> OVEN_BAKING_SERIALIZER =
             SERIALIZERS.register("oven_baking", () -> new MachineRecipeSerializer(OVEN_BAKING));
 
+    /** Custom serializer for CoolingRecipe — hot drink → iced drink (NBT-preserving). */
+    public static final RegistryObject<net.langball.coffee.recipes.CoolingRecipe.Serializer> COOLING_SERIALIZER =
+            SERIALIZERS.register("cooling",
+                    net.langball.coffee.recipes.CoolingRecipe.Serializer::new);
+
     private ModRecipeTypes() {
     }
 }

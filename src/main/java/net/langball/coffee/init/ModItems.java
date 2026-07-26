@@ -192,7 +192,7 @@ public class ModItems {
     public static final RegistryObject<Item> EMPTY_COLDBREW_POT = ITEMS.register("empty_coldbrew_pot",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> COLDBREW_BOTTLE = ITEMS.register("coldbrew_bottle",
-            () -> new Item(new Item.Properties()) {
+            () -> new Item(new Item.Properties().stacksTo(1)) {
                 @Override public boolean hasCraftingRemainingItem() { return true; }
                 @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return new ItemStack(Items.GLASS_BOTTLE); }
             });
@@ -745,33 +745,36 @@ public class ModItems {
             () -> new Item(new Item.Properties().stacksTo(16)));
 
     // Flavored syrups (all return syrup_empty when used as crafting ingredient)
+    // stacksTo(1) ensures remainder always fits in the vacated slot — the
+    // coffee machine's atomic consumption plan requires remainder placement
+    // without remainder dropping into the world.
     public static final RegistryObject<Item> SYRUP_CARAMEL = ITEMS.register("syrup_caramel",
-            () -> new Item(new Item.Properties().stacksTo(16)) {
+            () -> new Item(new Item.Properties().stacksTo(1)) {
                 @Override public boolean hasCraftingRemainingItem() { return true; }
                 @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return new ItemStack(SYRUP_EMPTY.get()); }
             });
     public static final RegistryObject<Item> SYRUP_CHOCOLATE = ITEMS.register("syrup_chocolate",
-            () -> new Item(new Item.Properties().stacksTo(16)) {
+            () -> new Item(new Item.Properties().stacksTo(1)) {
                 @Override public boolean hasCraftingRemainingItem() { return true; }
                 @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return new ItemStack(SYRUP_EMPTY.get()); }
             });
     public static final RegistryObject<Item> SYRUP_FRUIT = ITEMS.register("syrup_fruit",
-            () -> new Item(new Item.Properties().stacksTo(16)) {
+            () -> new Item(new Item.Properties().stacksTo(1)) {
                 @Override public boolean hasCraftingRemainingItem() { return true; }
                 @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return new ItemStack(SYRUP_EMPTY.get()); }
             });
     public static final RegistryObject<Item> SYRUP_MINT = ITEMS.register("syrup_mint",
-            () -> new Item(new Item.Properties().stacksTo(16)) {
+            () -> new Item(new Item.Properties().stacksTo(1)) {
                 @Override public boolean hasCraftingRemainingItem() { return true; }
                 @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return new ItemStack(SYRUP_EMPTY.get()); }
             });
     public static final RegistryObject<Item> SYRUP_VANILLA = ITEMS.register("syrup_vanilla",
-            () -> new Item(new Item.Properties().stacksTo(16)) {
+            () -> new Item(new Item.Properties().stacksTo(1)) {
                 @Override public boolean hasCraftingRemainingItem() { return true; }
                 @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return new ItemStack(SYRUP_EMPTY.get()); }
             });
     public static final RegistryObject<Item> SYRUP_SAKURA = ITEMS.register("syrup_sakura",
-            () -> new Item(new Item.Properties().stacksTo(16)) {
+            () -> new Item(new Item.Properties().stacksTo(1)) {
                 @Override public boolean hasCraftingRemainingItem() { return true; }
                 @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return new ItemStack(SYRUP_EMPTY.get()); }
             });

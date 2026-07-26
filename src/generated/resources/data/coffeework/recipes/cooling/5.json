@@ -1,0 +1,5 @@
+{
+  "type": "coffeework:cooling",
+  "hot": "coffeework:coffee_coldbrew_latte_fruit",
+  "iced": "coffeework:coffee_coldbrew_latte_fruit_ice"
+}

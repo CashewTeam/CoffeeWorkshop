@@ -69,8 +69,8 @@ WORLDGEN_SOURCES = {
 
 # Machine recipe types and their required machine blocks.
 MACHINE_BLOCKS = {
-    "coffeework:grinding": "coffeework:grinder",
-    "coffeework:oven_baking": "coffeework:oven",
+    "coffeework:grinding": "coffeework:grinder_off",
+    "coffeework:oven_baking": "coffeework:oven_off",
     "coffeework:rolling": "coffeework:roller",
     "coffeework:icecream_making": "coffeework:icecream_machine",
     "coffeework:coffee_brewing": "coffeework:coffee_machine",
@@ -176,11 +176,8 @@ def extract_result(recipe):
     return ""
 
 def get_recipe_type(recipe):
-    """Get the machine recipe type from the type field."""
-    t = recipe.get("type", "")
-    if ":" in t:
-        return t.split(":")[-1] if "/" not in t else t
-    return t
+    """Return the full namespaced recipe type (e.g. 'coffeework:coffee_brewing')."""
+    return recipe.get("type", "")
 
 # ── Ambiguity detection ───────────────────────────────────────────────
 
@@ -320,8 +317,9 @@ def main():
     lines.append("## Machine Recipe Counts\n")
     lines.append("| Recipe Type | Count |")
     lines.append("|------------|-------|")
-    for t in ("grinding", "oven_baking", "rolling", "icecream_making", "coffee_brewing"):
-        lines.append(f"| {t} | {machine_types.get(t, 0)} |")
+    for short in ("grinding", "oven_baking", "rolling", "icecream_making", "coffee_brewing"):
+        full = "coffeework:" + short
+        lines.append(f"| {short} | {machine_types.get(full, 0)} |")
     lines.append("")
 
     # ── P0 Critical Chain ─────────────────────────────────────────────

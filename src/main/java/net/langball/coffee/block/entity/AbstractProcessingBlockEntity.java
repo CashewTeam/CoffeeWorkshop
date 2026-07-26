@@ -52,37 +52,65 @@ public abstract class AbstractProcessingBlockEntity extends MachineBlockEntity {
             container.setItem(i, itemHandler.getStackInSlot(i));
         }
 
-        // 1. Try by stored ID
-        if (activeRecipeId != null) {
-            var byId = rm.byKey(activeRecipeId);
-            if (byId.isPresent() && byId.get() instanceof ProcessingRecipe pr
-                    && pr.getType() == getRecipeType() && pr.matches(container, level)) {
-                return pr;
-            }
-            activeRecipeId = null;
-        }
-
-        // 2. Full scan: find the BEST match (prefers recipe with highest total
-        //    consumed count to disambiguate e.g. Latte (1 powder) vs Macchiato (2 powder)
-        //    when both match the same input).
+        // Find the best matching recipe using a two-tier score:
+        //   1. PRIMARY score (×100): number of slots where available count == required
+        //      (exact match).  This strongly prefers recipes whose quantity
+        //      requirements are exactly satisfied.
+        //   2. TIEBREAKER score (+1): total items to be consumed.  When two
+        //      recipes both have the same number of exact matches, the one
+        //      consuming more items wins (avoids wasteful partial consumption).
+        //
+        // Together these disambiguate e.g. Latte (count=1) vs Macchiato (count=2):
+        //   with 1 coffee powder → Latte wins (1 exact) Macchiato invalid (0 matches)
+        //   with 2+ coffee powder → Macchiato wins (1 exact, higher tiebreaker)
+        //                   OR Latte wins (1 exact, lower tiebreaker)
+        //     - Macchiato gets exact match (=2) → score = 100
+        //     - Latte gets excess match (≥1) → score = 0
         var allRecipes = rm.getAllRecipesFor((RecipeType) getRecipeType());
         ProcessingRecipe best = null;
-        int bestTotal = -1;
+        int bestScore = Integer.MIN_VALUE;
 
         for (var recipe : allRecipes) {
             if (recipe instanceof ProcessingRecipe pr && pr.matches(container, level)) {
+                int exact = 0;
                 int total = 0;
                 for (int s : pr.getConsumedSlots()) {
-                    total += pr.getRequiredCount(s);
+                    int required = pr.getRequiredCount(s);
+                    int available = container.getItem(s).getCount();
+                    if (available == required) exact++;
+                    total += required;
                 }
-                if (total > bestTotal) {
-                    bestTotal = total;
+                int score = exact * 100 + total;
+                if (score > bestScore) {
+                    bestScore = score;
                     best = pr;
                 }
             }
         }
 
+        // Verify cached activeRecipeId is still best; switch if not.
         if (best != null) {
+            if (activeRecipeId != null) {
+                var byId = rm.byKey(activeRecipeId);
+                if (byId.isPresent() && byId.get() instanceof ProcessingRecipe cachedPr
+                        && cachedPr.getType() == getRecipeType() && cachedPr.matches(container, level)) {
+                    // Compute cached's score and compare
+                    int cachedExact = 0;
+                    int cachedTotal = 0;
+                    for (int s : cachedPr.getConsumedSlots()) {
+                        int required = cachedPr.getRequiredCount(s);
+                        int available = container.getItem(s).getCount();
+                        if (available == required) cachedExact++;
+                        cachedTotal += required;
+                    }
+                    int cachedScore = cachedExact * 100 + cachedTotal;
+                    if (cachedScore >= bestScore) {
+                        // Cached is still the best
+                        return cachedPr;
+                    }
+                    // Otherwise, fall through and pick best
+                }
+            }
             activeRecipeId = best.getId();
             return best;
         }
