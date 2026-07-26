@@ -716,6 +716,127 @@ public class MachineGameTests {
         });
     }
 
+    // ─── Shift-click routing tests ─────────────────────────────────────
+    
+    /**
+     * Coffee powder should route to the Base slot (0) and be rejected
+     * from other input slots.
+     */
+    @GameTest(template = "empty")
+    public static void shiftClick_coffeePowder_routesToBase(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        var be = (CoffeeMachineBlockEntity) helper.getBlockEntity(pos);
+        var handler = be.getItemHandler();
+        ItemStack powder = new ItemStack(net.langball.coffee.init.ModItems.COFFEE_POWDER.get());
+
+        // Base slot (0) should accept coffee powder
+        helper.assertTrue(handler.isItemValid(CoffeeMachineBlockEntity.SLOT_BASE, powder),
+                "Base slot should accept coffee powder");
+        // Modifier slot (1) should reject coffee powder
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_MODIFIER, powder),
+                "Modifier slot should reject coffee powder");
+        // Additive slot (2) should reject coffee powder
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_ADDITIVE, powder),
+                "Additive slot should reject coffee powder");
+        // Container slot (3) should reject coffee powder
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_CONTAINER, powder),
+                "Container slot should reject coffee powder");
+        helper.succeed();
+    }
+
+    /**
+     * Milk bucket should route to the Modifier slot (1) and be rejected
+     * from other input slots.
+     */
+    @GameTest(template = "empty")
+    public static void shiftClick_milkBucket_routesToModifier(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        var be = (CoffeeMachineBlockEntity) helper.getBlockEntity(pos);
+        var handler = be.getItemHandler();
+        ItemStack milk = new ItemStack(Items.MILK_BUCKET);
+
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_BASE, milk),
+                "Base slot should reject milk bucket");
+        helper.assertTrue(handler.isItemValid(CoffeeMachineBlockEntity.SLOT_MODIFIER, milk),
+                "Modifier slot should accept milk bucket");
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_ADDITIVE, milk),
+                "Additive slot should reject milk bucket");
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_CONTAINER, milk),
+                "Container slot should reject milk bucket");
+        helper.succeed();
+    }
+
+    /**
+     * Caramel syrup should route to the Additive slot (2) and be rejected
+     * from other input slots.
+     */
+    @GameTest(template = "empty")
+    public static void shiftClick_syrup_routesToAdditive(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        var be = (CoffeeMachineBlockEntity) helper.getBlockEntity(pos);
+        var handler = be.getItemHandler();
+        ItemStack syrup = new ItemStack(net.langball.coffee.init.ModItems.SYRUP_CARAMEL.get());
+
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_BASE, syrup),
+                "Base slot should reject syrup");
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_MODIFIER, syrup),
+                "Modifier slot should reject syrup");
+        helper.assertTrue(handler.isItemValid(CoffeeMachineBlockEntity.SLOT_ADDITIVE, syrup),
+                "Additive slot should accept syrup");
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_CONTAINER, syrup),
+                "Container slot should reject syrup");
+        helper.succeed();
+    }
+
+    /**
+     * Cup should route to the Container slot (3) and be rejected
+     * from other input slots.
+     */
+    @GameTest(template = "empty")
+    public static void shiftClick_cup_routesToContainer(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        var be = (CoffeeMachineBlockEntity) helper.getBlockEntity(pos);
+        var handler = be.getItemHandler();
+        ItemStack cup = new ItemStack(net.langball.coffee.init.ModItems.CUP.get());
+
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_BASE, cup),
+                "Base slot should reject cup");
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_MODIFIER, cup),
+                "Modifier slot should reject cup");
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_ADDITIVE, cup),
+                "Additive slot should reject cup");
+        helper.assertTrue(handler.isItemValid(CoffeeMachineBlockEntity.SLOT_CONTAINER, cup),
+                "Container slot should accept cup");
+        helper.succeed();
+    }
+
+    /**
+     * Cocoa powder serves dual roles (Base in Cocoa recipe, Additive in
+     * Mochaccino).  It should be valid for both Base and Additive slots.
+     */
+    @GameTest(template = "empty")
+    public static void shiftClick_cocoaPowder_multiRole(GameTestHelper helper) {
+        BlockPos pos = MACHINE_POS;
+        helper.setBlock(pos, net.langball.coffee.init.ModBlocks.COFFEE_MACHINE.get());
+        var be = (CoffeeMachineBlockEntity) helper.getBlockEntity(pos);
+        var handler = be.getItemHandler();
+        ItemStack cocoa = new ItemStack(net.langball.coffee.init.ModItems.COCOA_POWDER.get());
+
+        helper.assertTrue(handler.isItemValid(CoffeeMachineBlockEntity.SLOT_BASE, cocoa),
+                "Base slot should accept cocoa powder (Cocoa recipe)");
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_MODIFIER, cocoa),
+                "Modifier slot should reject cocoa powder");
+        helper.assertTrue(handler.isItemValid(CoffeeMachineBlockEntity.SLOT_ADDITIVE, cocoa),
+                "Additive slot should accept cocoa powder (Mochaccino recipe)");
+        helper.assertTrue(!handler.isItemValid(CoffeeMachineBlockEntity.SLOT_CONTAINER, cocoa),
+                "Container slot should reject cocoa powder");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void icedColdbrew_consumesIceSlag(GameTestHelper helper) {
         BlockPos pos = MACHINE_POS;

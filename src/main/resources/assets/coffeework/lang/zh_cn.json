@@ -464,7 +464,7 @@
   "gui.coffeework.coffee_machine.modifier": "液体",
   "gui.coffeework.coffee_machine.additive": "添加物",
   "gui.coffeework.coffee_machine.container": "杯具",
-  "gui.coffeework.coffee_machine.output": "成品",
+
   "gui.grinder.name": "火力研磨",
   "gui.ice_cream_machine.name": "冰冻",
   "jei.coffeework.category.grinder": "火力研磨",

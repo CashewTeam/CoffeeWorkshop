@@ -36,28 +36,32 @@ public class GuiCoffeeMachine extends AbstractContainerScreen<ContainerCoffeeMac
         int guiY = this.topPos;
         guiGraphics.blit(TEXTURE, guiX, guiY, 0, 0, this.imageWidth, this.imageHeight);
 
-        // Flame / running indicator
+        // Flame / running indicator (grows bottom-up, max 14 px)
         int burnTime = menu.data.get(2);
         int currentBurnTime = menu.data.get(3);
-        if (burnTime > 0) {
-            int k = currentBurnTime != 0 ? burnTime * CoffeeMachineGuiLayout.FLAME_HEIGHT / currentBurnTime : 0;
-            guiGraphics.blit(TEXTURE,
-                    guiX + CoffeeMachineGuiLayout.FLAME_X,
-                    guiY + CoffeeMachineGuiLayout.FLAME_Y + CoffeeMachineGuiLayout.FLAME_HEIGHT - k,
-                    176, CoffeeMachineGuiLayout.FLAME_HEIGHT - k,
-                    14, k + 1);
+        if (burnTime > 0 && currentBurnTime > 0) {
+            int k = burnTime * CoffeeMachineGuiLayout.FLAME_HEIGHT / currentBurnTime;
+            if (k > 0) {
+                guiGraphics.blit(TEXTURE,
+                        guiX + CoffeeMachineGuiLayout.FLAME_X,
+                        guiY + CoffeeMachineGuiLayout.FLAME_Y + CoffeeMachineGuiLayout.FLAME_HEIGHT - k,
+                        176, CoffeeMachineGuiLayout.FLAME_HEIGHT - k,
+                        14, k);
+            }
         }
 
-        // Progress arrow
+        // Progress arrow (grows left-to-right, max width = PROGRESS_WIDTH)
         int cookTime = menu.data.get(0);
         int totalCookTime = menu.data.get(1);
         if (totalCookTime > 0) {
             int l = cookTime * CoffeeMachineGuiLayout.PROGRESS_WIDTH / totalCookTime;
-            guiGraphics.blit(TEXTURE,
-                    guiX + CoffeeMachineGuiLayout.PROGRESS_X,
-                    guiY + CoffeeMachineGuiLayout.PROGRESS_Y,
-                    176, CoffeeMachineGuiLayout.FLAME_HEIGHT,
-                    l + 1, CoffeeMachineGuiLayout.PROGRESS_HEIGHT);
+            if (l > 0) {
+                guiGraphics.blit(TEXTURE,
+                        guiX + CoffeeMachineGuiLayout.PROGRESS_X,
+                        guiY + CoffeeMachineGuiLayout.PROGRESS_Y,
+                        176, CoffeeMachineGuiLayout.FLAME_HEIGHT,
+                        l, CoffeeMachineGuiLayout.PROGRESS_HEIGHT);
+            }
         }
     }
 

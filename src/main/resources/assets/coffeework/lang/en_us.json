@@ -247,7 +247,7 @@
   "gui.coffeework.coffee_machine.modifier": "Liquid",
   "gui.coffeework.coffee_machine.additive": "Additive",
   "gui.coffeework.coffee_machine.container": "Cup/Glass",
-  "gui.coffeework.coffee_machine.output": "Output",
+
   "jei.coffeework.category.grinder": "Grinding",
   "jei.coffeework.category.coffee_machine": "Coffee Brewing",
   "jei.coffeework.category.icecream_machine": "Ice Cream Making",

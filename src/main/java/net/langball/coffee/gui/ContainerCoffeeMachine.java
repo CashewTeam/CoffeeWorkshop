@@ -156,14 +156,13 @@ public class ContainerCoffeeMachine extends AbstractMachineMenu {
         for (int slot : prioritySlots) {
             if (!validSlots.contains(slot)) continue;
 
-            // 1. Simulate insertion to verify capacity
+            // 1. Simulate insertion: remainder.isEmpty() means ALL fit (success)
             ItemStack remainder = itemHandler.insertItem(slot, stack, true);
-            if (remainder.isEmpty() && stack.getCount() > 0) continue; // full rejection
-            boolean canInsert = remainder.isEmpty() || remainder.getCount() < stack.getCount();
-            if (!canInsert) continue;
+            int acceptedCount = stack.getCount() - remainder.getCount();
+            if (acceptedCount <= 0) continue; // slot full or incompatible
 
-            // 2. Compute recipe-match score for this slot
-            int score = computeSlotScore(slot, stack);
+            // 2. Compute recipe-match score (pass accepted count for merge simulation)
+            int score = computeSlotScore(slot, stack, acceptedCount);
 
             if (score > bestScore) {
                 bestScore = score;
@@ -174,20 +173,33 @@ public class ContainerCoffeeMachine extends AbstractMachineMenu {
     }
 
     /**
-     * Computes a recipe-match score for placing {@code stack} into {@code slot}.
+     * Computes a recipe-match score for placing {@code stack} into {@code slot},
+     * given that {@code acceptedCount} items would actually be accepted.
      *
      * <p>Score 2 = a complete CoffeeBrewingRecipe would match the hypothetical
-     * machine state.  Score 1 = at least two slots are filled with items that
-     * match the same recipe's roles (partial alignment).  Score 0 = no recipe
-     * alignment detected.
+     * machine state.  Score 1 = at least two non-optional slots are filled with
+     * items that match the same recipe's roles (partial alignment).  Score 0 =
+     * no recipe alignment detected.
      */
-    private int computeSlotScore(int slot, ItemStack stack) {
+    private int computeSlotScore(int slot, ItemStack stack, int acceptedCount) {
         if (level == null) return 0;
 
-        // Build hypothetical container state: current slots + stack in candidate slot
+        // Build hypothetical container: merge acceptedCount into the existing slot
         net.minecraft.world.SimpleContainer hypo = new net.minecraft.world.SimpleContainer(itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++) {
-            hypo.setItem(i, i == slot ? stack.copy() : itemHandler.getStackInSlot(i).copy());
+            if (i == slot) {
+                ItemStack existing = itemHandler.getStackInSlot(i).copy();
+                if (existing.isEmpty()) {
+                    ItemStack merged = stack.copy();
+                    merged.setCount(acceptedCount);
+                    hypo.setItem(i, merged);
+                } else {
+                    existing.grow(acceptedCount);
+                    hypo.setItem(i, existing);
+                }
+            } else {
+                hypo.setItem(i, itemHandler.getStackInSlot(i).copy());
+            }
         }
 
         var allRecipes = level.getRecipeManager()
@@ -200,23 +212,29 @@ public class ContainerCoffeeMachine extends AbstractMachineMenu {
             }
         }
 
-        // Check for partial match (≥2 slots aligned to same recipe)
+        // Check for partial match (≥2 non-optional slots aligned to same recipe).
+        // Empty optional slots (modifier==null, additive==null) do NOT count.
         for (CoffeeBrewingRecipe r : allRecipes) {
             int aligned = 0;
-            // Check each slot against this recipe's role
+            int nonOptionalCount = 2; // base + container are always required
+
             if (r.base().ingredient().test(hypo.getItem(CoffeeMachineBlockEntity.SLOT_BASE)))
                 aligned++;
-            if (r.modifier() != null && r.modifier().ingredient().test(hypo.getItem(CoffeeMachineBlockEntity.SLOT_MODIFIER)))
-                aligned++;
-            else if (r.modifier() == null && hypo.getItem(CoffeeMachineBlockEntity.SLOT_MODIFIER).isEmpty())
-                aligned++;
-            if (r.additive() != null && r.additive().ingredient().test(hypo.getItem(CoffeeMachineBlockEntity.SLOT_ADDITIVE)))
-                aligned++;
-            else if (r.additive() == null && hypo.getItem(CoffeeMachineBlockEntity.SLOT_ADDITIVE).isEmpty())
-                aligned++;
+            if (r.modifier() != null) {
+                nonOptionalCount++;
+                if (r.modifier().ingredient().test(hypo.getItem(CoffeeMachineBlockEntity.SLOT_MODIFIER)))
+                    aligned++;
+            }
+            if (r.additive() != null) {
+                nonOptionalCount++;
+                if (r.additive().ingredient().test(hypo.getItem(CoffeeMachineBlockEntity.SLOT_ADDITIVE)))
+                    aligned++;
+            }
             if (r.container().ingredient().test(hypo.getItem(CoffeeMachineBlockEntity.SLOT_CONTAINER)))
                 aligned++;
-            if (aligned >= 2) return 1;
+            // Require at least 2 aligned slots, but also that aligned >= nonOptionalCount / 2
+            // (i.e. at least half the recipe's required slots are matching)
+            if (aligned >= 2 && aligned * 2 >= nonOptionalCount) return 1;
         }
         return 0;
     }
