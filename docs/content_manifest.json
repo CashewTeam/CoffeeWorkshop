@@ -23,7 +23,7 @@
       "lang_zh_ok": 291,
       "lang_ja_ok": 291,
       "creative_tab_ok": 291,
-      "has_source": 274,
+      "has_source": 291,
       "total_items": 291
     }
   },
@@ -360,7 +360,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -440,7 +442,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -503,7 +507,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -534,7 +540,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -581,7 +589,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -695,7 +705,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -742,7 +754,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -756,7 +770,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -820,7 +836,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -851,7 +869,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -898,7 +918,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -945,7 +967,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -976,7 +1000,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -1007,7 +1033,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -1054,7 +1082,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -1101,7 +1131,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -1148,7 +1180,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {

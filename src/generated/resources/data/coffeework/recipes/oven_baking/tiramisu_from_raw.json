@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:oven_baking",
+  "cookingtime": 300,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "coffeework:tiramisu_raw"
+  },
+  "result": {
+    "item": "coffeework:tiramisu"
+  }
+}

@@ -939,7 +939,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.SUGAR)
                 .save(writer, modLoc("tiramisu_raw"));
 
-        // Phase 5.4: cake_carrot (assemble from sponge_carrot + cream)
+        // Phase 5.4: cake_carrot (flour + carrot + milk + egg + sugar)
         shapeless(RecipeCategory.FOOD, ModItems.CAKE_CARROT.get(), Items.CARROT)
                 .requires(ModItems.FLOUR.get())
                 .requires(Items.CARROT)
@@ -1074,7 +1074,7 @@ public class ModRecipeProvider extends RecipeProvider {
         shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_REDVELVET.get(), ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
                 .requires(ModItems.COCOA_POWDER.get())
-                .requires(Items.SUGAR)
+                .requires(Items.BEETROOT)
                 .save(writer, modLoc("muffin_redvelvet"));
         shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_TEA.get(), ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
@@ -1139,7 +1139,7 @@ public class ModRecipeProvider extends RecipeProvider {
         shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_REDVELVET.get(), ModItems.JIGGY_CAKE.get())
                 .requires(ModItems.JIGGY_CAKE.get())
                 .requires(ModItems.COCOA_POWDER.get())
-                .requires(Items.SUGAR)
+                .requires(Items.BEETROOT)
                 .save(writer, modLoc("jiggy_cake_redvelvet"));
         shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_TEA.get(), ModItems.JIGGY_CAKE.get())
                 .requires(ModItems.JIGGY_CAKE.get())

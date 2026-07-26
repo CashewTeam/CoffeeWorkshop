@@ -632,7 +632,14 @@ def build_manifest():
     # Worldgen items (from features)
     worldgen_items = {"coffee_tree", "blueberry_bush", "soda_ore"}
     # Block interaction items (obtained via right-click / use on blocks)
-    block_interact_items = {"coldbrew_bottle", "cake_sponge_slice"}
+    block_interact_items = {"coldbrew_bottle",
+        "cake_slices", "cake_berry_slices", "cake_cheese_slices", "cake_coffee_slices",
+        "cake_harvest_slices", "cake_lemon_slices", "cake_redvelvet_slices",
+        "cake_schwarzwald_slices", "cake_tea_slices", "cake_sponge_berry_slices",
+        "cake_sponge_carrot_slices", "cake_sponge_chocolate_slices", "cake_sponge_coffee_slices",
+        "cake_sponge_lemon_slices", "cake_sponge_pumpkin_slices", "cake_sponge_redvelvet_slices",
+        "cake_sponge_tea_slices", "cake_sponge_slice",
+    }
     
     # Recipe outputs
     recipe_outputs = set()

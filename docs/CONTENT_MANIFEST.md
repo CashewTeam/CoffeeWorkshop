@@ -26,7 +26,7 @@
 | zh_cn Key Coverage | 291/291 | 100% |
 | ja_jp Key Coverage | 291/291 | 100% |
 | Creative Tab | 291/291 | 100% |
-| Survival Source | 274/291 | 94% |
+| Survival Source | 291/291 | 100% |
 
 ## Registered Items
 
@@ -51,57 +51,57 @@
 | `butter` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_berry_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_berry_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_berry_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_carrot_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_cheese_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_cheese_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_cheese_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_chocolate_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_coffee_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_coffee_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_coffee_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_harvest` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_harvest_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_harvest_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_lemon_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_lemon_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_lemon_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `cake_model_plate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `cake_model_square` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `cake_pumpkin_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_redvelvet_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_redvelvet_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_redvelvet_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_schwarzwald` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_schwarzwald_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `cake_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_schwarzwald_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
+| `cake_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_sponge` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_berry_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_sponge_berry_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_berry_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_sponge_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_sponge_carrot_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_carrot_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_sponge_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_chocolate_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_sponge_chocolate_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_chocolate_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_sponge_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_sponge_coffee_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_coffee_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_sponge_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_sponge_lemon_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_lemon_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_sponge_pumpkin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_sponge_pumpkin_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_pumpkin_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_sponge_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_sponge_redvelvet_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_redvelvet_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_sponge_slice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_sponge_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_sponge_tea_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_sponge_tea_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_tea_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_tea_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `cake_tea_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `caramel` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `caramel_apple` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
