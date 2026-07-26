@@ -7,6 +7,8 @@ on:
     paths:
       - "src/**"
       - "tools/**"
+      - "docs/**"
+      - "README.md"
       - "gradle/**"
       - "gradlew"
       - "gradlew.bat"
@@ -20,6 +22,8 @@ on:
     paths:
       - "src/**"
       - "tools/**"
+      - "docs/**"
+      - "README.md"
       - "gradle/**"
       - "gradlew"
       - "gradlew.bat"
@@ -91,64 +95,13 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x gradlew
 
-      # PR 始终跑完整 DataGen。
-      # Push 只有修改到 DataGen 相关文件时才跑。
+      # DataGen 和内容审计始终运行，确保每次提交都通过完整验证。
       - name: Detect whether DataGen is required
         id: changes
         shell: bash
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          BEFORE_SHA: ${{ github.event.before }}
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          MANUAL_DATAGEN: ${{ inputs.run_datagen }}
         run: |
-          set -euo pipefail
-
-          RUN_DATAGEN=false
-
-          if [[ "$EVENT_NAME" == "pull_request" ]]; then
-            # 合并前始终进行完整的数据生成验收。
-            RUN_DATAGEN=true
-
-          elif [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            # 手动运行时由输入选项决定。
-            RUN_DATAGEN="${MANUAL_DATAGEN:-true}"
-
-          elif [[ "$EVENT_NAME" == "push" ]]; then
-            # 新建分支或历史不完整时，保守地执行 DataGen。
-            if [[ -z "${BEFORE_SHA:-}" ]] || [[ "$BEFORE_SHA" =~ ^0+$ ]]; then
-              RUN_DATAGEN=true
-            else
-              # 一次推送可能包含多个提交，确保 before SHA 可供比较。
-              if ! git cat-file -e "${BEFORE_SHA}^{commit}" 2>/dev/null; then
-                git fetch \
-                  --no-tags \
-                  --depth=1 \
-                  origin "$BEFORE_SHA"
-              fi
-
-              CHANGED_FILES="$(
-                git diff \
-                  --name-only \
-                  "$BEFORE_SHA" \
-                  "$GITHUB_SHA"
-              )"
-
-              echo "Changed files:"
-              echo "$CHANGED_FILES"
-
-              # 这些文件可能改变生成的 Recipe、Loot Table、
-              # Advancement、Tag 或其他 DataGen 输出。
-              if grep -Eq \
-                '^(src/main/java/net/langball/coffee/datagen/|src/main/java/net/langball/coffee/init/|src/main/java/net/langball/coffee/block/BlockCoffeeTree\.java$|src/main/java/net/langball/coffee/block/BlockVanilla\.java$|src/generated/resources/|src/main/resources/data/|build\.gradle$|settings\.gradle$|gradle\.properties$)' \
-                <<< "$CHANGED_FILES"; then
-                RUN_DATAGEN=true
-              fi
-            fi
-          fi
-
-          echo "run_datagen=$RUN_DATAGEN" >> "$GITHUB_OUTPUT"
-          echo "Run DataGen: $RUN_DATAGEN"
+          echo "run_datagen=true" >> "$GITHUB_OUTPUT"
+          echo "Run DataGen: true"
 
       # Python 检查很快，放在 Gradle 前面可以更早拦截资源问题。
       - name: Pre-build resource audit

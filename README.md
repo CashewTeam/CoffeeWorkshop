@@ -99,14 +99,16 @@ Run GameTests:
 | Registered Items | 176 items, 49 blocks |
 | Item Models | 100% |
 | Textures | 100% |
-| Translations (en/zh) | 100% |
-| Japanese (ja_jp) | Community-contributed (incomplete) |
-| Creative Tab Coverage | 99% (1 intermediate item excluded) |
-| Survival Sources | 60% (core coffee/machine loops complete) |
+| en_us Key Coverage | 100% |
+| zh_cn Key Coverage | 100% |
+| ja_jp Key Coverage | 100% (community-contributed) |
+| Creative Tab | 100% |
+| Reachable Sources | 173/176 (98%) — 3 items explained gaps |
 | GameTests | 56 passing |
 
-The core coffee and machine production loops are available in survival.
-Some legacy variant items remain creative-only or trade-exclusive.
+The core coffee and machine production loops are fully reachable in survival.
+Three items lack direct recipe/loot sources: `coffee_tree` (worldgen), `coldbrew_bottle`
+(block interaction), and `coffee_americano_nitro_fruit_ice` (P1 single-slot limitation).
 See `docs/CONTENT_MANIFEST.md` for the full per-item breakdown.
 
 - ✅ **Phase 1**: Registry modernization, resource format migration

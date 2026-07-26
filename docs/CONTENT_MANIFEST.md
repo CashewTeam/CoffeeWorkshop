@@ -22,11 +22,11 @@
 |---|---|---|
 | Model | 176/176 | 100% |
 | Texture | 176/176 | 100% |
-| en_us Translation | 176/176 | 100% |
-| zh_cn Translation | 176/176 | 100% |
-| ja_jp Translation | 176/176 | 100% |
+| en_us Key Coverage | 176/176 | 100% |
+| zh_cn Key Coverage | 176/176 | 100% |
+| ja_jp Key Coverage | 176/176 | 100% |
 | Creative Tab | 176/176 | 100% |
-| Survival Source | 173/176 | 98% |
+| Survival Source | 175/176 | 99% |
 
 ## Registered Items
 
@@ -45,9 +45,9 @@
 | `baguette` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `black_tea_leaf` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `blueberry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | trade |
-| `blueberry_bush` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot |
+| `blueberry_bush` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
 | `bread_round` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `brownie` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
+| `brownie` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `butter` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -67,7 +67,7 @@
 | `cake_sponge_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_pumpkin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `cake_sponge_slice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | trade |
+| `cake_sponge_slice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `cake_sponge_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
@@ -138,8 +138,8 @@
 | `coffee_mochaccino_ice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `coffee_powder` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `coffee_seeds` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot |
-| `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `coldbrew_bottle` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | worldgen |
+| `coldbrew_bottle` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `coldbrew_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cup` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cup_glass` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -192,7 +192,7 @@
 | `sandwich_blt` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `small_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `soda` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
-| `soda_ore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot |
+| `soda_ore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
 | `spices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `syrup_caramel` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `syrup_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -220,7 +220,7 @@
 | `bag_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `bag_flour` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `bag_sugar` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `blueberry_bush` | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| `blueberry_bush` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `cake_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_cheese` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
@@ -239,7 +239,7 @@
 | `cake_sponge_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `coffee_machine` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `coffee_tree` | ✅ | ❌ | ✅ | ✅ | ✅ | — |
+| `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `coldbrew_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `double_bag_cocoa` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `double_bag_cocoa_powder` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -260,7 +260,7 @@
 | `roller` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `soda_ore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `tiramisu` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `vanilla_crop` | ✅ | ❌ | ✅ | ✅ | ✅ | — |
+| `vanilla_crop` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `xmas_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 ## Mob Effects

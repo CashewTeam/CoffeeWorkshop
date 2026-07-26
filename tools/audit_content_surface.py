@@ -109,22 +109,34 @@ def parse_registry_entries():
 
 
 def extract_item_ids_from_tab():
-    """Extract actual item IDs that are in the creative tab."""
+    """Extract actual item IDs that are in the creative tab, using field→registry mapping."""
+    field_to_id = build_field_to_id_map()
+    
     tab_file = JAVA / "init" / "ModCreativeTabs.java"
     item_ids = set()
     if not tab_file.exists():
         return item_ids
     
     text = tab_file.read_text(encoding="utf-8")
-    # Match patterns like: output.accept(ModItems.COFFEE_POWDER.get());
     pattern = r'output\.accept\(ModItems\.(\w+)\.get\(\)\)'
     for m in re.finditer(pattern, text):
         var_name = m.group(1)
-        # Convert JAVA_CONSTANT to snake_case registry id
-        item_id = var_name.lower()
+        item_id = field_to_id.get(var_name.lower(), var_name.lower())
         item_ids.add(item_id)
     
     return item_ids
+
+
+def build_field_to_id_map():
+    """Build Java field name → registry ID mapping from ModItems.java."""
+    field_to_id = {}
+    items_file = JAVA / "init" / "ModItems.java"
+    if items_file.exists():
+        text = items_file.read_text(encoding="utf-8")
+        pattern = r'public static final RegistryObject<Item>\s+(\w+)\s*=\s*ITEMS\.register\("([^"]+)"'
+        for m in re.finditer(pattern, text):
+            field_to_id[m.group(1).lower()] = m.group(2)
+    return field_to_id
 
 
 def scan_models():
@@ -256,18 +268,22 @@ def scan_recipes():
             except (json.JSONDecodeError, Exception):
                 continue
             
+            # Standard "result" field (crafting, smelting, machine recipes)
+            item_id = ""
             result = data.get("result", {})
             if isinstance(result, dict):
                 item_id = result.get("item", "")
-                if item_id and ":" in item_id:
-                    ns, name = item_id.split(":", 1)
-                    if ns == "coffeework":
-                        recipe_outputs.add(name)
             elif isinstance(result, str):
-                if ":" in result:
-                    ns, name = result.split(":", 1)
-                    if ns == "coffeework":
-                        recipe_outputs.add(name)
+                item_id = result
+            
+            # Cooling recipes use "iced" field for output
+            if not item_id:
+                item_id = data.get("iced", "")
+            
+            if item_id and ":" in item_id:
+                ns, name = item_id.split(":", 1)
+                if ns == "coffeework":
+                    recipe_outputs.add(name)
     
     return recipe_outputs
 

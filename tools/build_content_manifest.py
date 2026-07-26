@@ -225,10 +225,10 @@ def parse_registry():
             items[rid]["block_of"] = rid
     
     # Also check BlockItem constructor patterns for ID mismatches (e.g. grinder_off → grinder)
+    # Uses DOTALL to cross lambda lines: ITEMS.register("grinder_off", () -> new BlockItem(ModBlocks.GRINDER.get()
     if items_file.exists():
         text = items_file.read_text(encoding="utf-8")
-        # Pattern: ITEMS.register("grinder_off", ... ModBlocks.GRINDER ...)
-        for m in re.finditer(r'ITEMS\.register\("([^"]+)"[^)]*ModBlocks\.(\w+)', text):
+        for m in re.finditer(r'ITEMS\.register\("([^"]+)".*?new\s+BlockItem\(ModBlocks\.(\w+)\.get\(\)', text, re.DOTALL):
             item_rid, block_field = m.group(1), m.group(2)
             if item_rid in items:
                 block_rid = block_field_to_id.get(block_field.lower(), block_field.lower())
@@ -555,8 +555,45 @@ def build_manifest():
     recipes = scan_recipes(data_dirs)
     loot_items = scan_loot_tables(data_dirs)
     creative_items = scan_creative_tab()
-    trade_items = scan_trades()
     tex_missing = check_model_texture_refs()
+    
+    # Parse blockstate → block model references for accurate model detection
+    blockstate_models = {}  # block_id → set of model names referenced
+    for bid in blocks:
+        bs_path = BLOCKSTATES / f"{bid}.json"
+        if bs_path.exists():
+            try:
+                bs_data = json.loads(bs_path.read_text(encoding="utf-8"))
+                models = set()
+                for variant_val in bs_data.get("variants", {}).values():
+                    entries = variant_val if isinstance(variant_val, list) else [variant_val]
+                    for e in entries:
+                        mdl = e.get("model", "")
+                        if mdl and ":" in mdl:
+                            ns, mp = mdl.split(":", 1)
+                            if ns == "coffeework" and "/" in mp:
+                                models.add(mp.split("/")[-1])
+                blockstate_models[bid] = models
+            except (json.JSONDecodeError, Exception):
+                pass
+    
+    # Scan villager trades with direction (ItemsForEmeralds vs EmeraldsForItems)
+    trade_sells = set()   # villager sells item → player gets it (source)
+    trade_buys = set()    # player gives item → villager buys (not a source)
+    villager_file = JAVA / "init" / "ModVillagers.java"
+    if villager_file.exists():
+        vtext = villager_file.read_text(encoding="utf-8")
+        for m in re.finditer(r'new ItemsForEmeralds\(ModItems\.(\w+)\.get\(\)', vtext):
+            fid = m.group(1).lower()
+            trade_sells.add(field_to_id.get(fid, fid))
+        for m in re.finditer(r'new EmeraldsForItems\(ModItems\.(\w+)\.get\(\)', vtext):
+            fid = m.group(1).lower()
+            trade_buys.add(field_to_id.get(fid, fid))
+    
+    # Worldgen items (from features)
+    worldgen_items = {"coffee_tree", "blueberry_bush", "soda_ore"}
+    # Block interaction items (obtained via right-click / use on blocks)
+    block_interact_items = {"coldbrew_bottle", "cake_sponge_slice"}
     
     # Recipe outputs
     recipe_outputs = set()
@@ -595,7 +632,9 @@ def build_manifest():
         sources = []
         if rid in recipe_outputs: sources.append("recipe")
         if rid in loot_items: sources.append("loot")
-        if rid in trade_items: sources.append("trade")
+        if rid in trade_sells: sources.append("trade")
+        if rid in worldgen_items: sources.append("worldgen")
+        if rid in block_interact_items: sources.append("interact")
         entry["sources"] = sources
         entry["block_item"] = info.get("block_item", False)
         if info.get("block_of"):
@@ -607,8 +646,15 @@ def build_manifest():
         registered_block_ids.add(rid)
         entry = {"id": rid, "type": "block", "registered": True}
         entry["blockstate"] = rid in blockstates
-        has_bm = any(rid in m or m.startswith(f"{rid}_") for m in block_models)
-        entry["block_model"] = has_bm
+        # Use actual blockstate model references instead of name guessing
+        bs_models = blockstate_models.get(rid, set())
+        if bs_models:
+            entry["block_model"] = all(m in block_models for m in bs_models)
+            missing_models = [m for m in bs_models if m not in block_models]
+            if missing_models:
+                entry["block_model_missing"] = missing_models
+        else:
+            entry["block_model"] = False
         key = f"block.coffeework.{rid}"
         entry["lang_en"] = key in en_lang
         entry["lang_zh"] = key in zh_lang
@@ -781,9 +827,9 @@ def build_markdown_report(data):
         for label, key in [
             ("Model", "model_ok"),
             ("Texture", "texture_ok"),
-            ("en_us Translation", "lang_en_ok"),
-            ("zh_cn Translation", "lang_zh_ok"),
-            ("ja_jp Translation", "lang_ja_ok"),
+            ("en_us Key Coverage", "lang_en_ok"),
+            ("zh_cn Key Coverage", "lang_zh_ok"),
+            ("ja_jp Key Coverage", "lang_ja_ok"),
             ("Creative Tab", "creative_tab_ok"),
             ("Survival Source", "has_source"),
         ]:

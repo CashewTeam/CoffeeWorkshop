@@ -25,7 +25,7 @@
       "lang_zh_ok": 176,
       "lang_ja_ok": 176,
       "creative_tab_ok": 176,
-      "has_source": 173,
+      "has_source": 175,
       "total_items": 176
     }
   },
@@ -264,7 +264,8 @@
       "lang_ja": true,
       "creative_tab": true,
       "sources": [
-        "loot"
+        "loot",
+        "worldgen"
       ],
       "block_item": true,
       "block_of": "blueberry_bush"
@@ -297,8 +298,7 @@
       "lang_ja": true,
       "creative_tab": true,
       "sources": [
-        "recipe",
-        "trade"
+        "recipe"
       ],
       "block_item": false
     },
@@ -636,7 +636,7 @@
       "lang_ja": true,
       "creative_tab": true,
       "sources": [
-        "trade"
+        "interact"
       ],
       "block_item": false
     },
@@ -1794,7 +1794,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "worldgen"
+      ],
       "block_item": true,
       "block_of": "coffee_tree"
     },
@@ -1809,7 +1811,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "interact"
+      ],
       "block_item": false
     },
     {
@@ -2247,7 +2251,8 @@
         "recipe",
         "loot"
       ],
-      "block_item": false
+      "block_item": true,
+      "block_of": "grinder"
     },
     {
       "id": "ice_slag",
@@ -2446,7 +2451,8 @@
         "recipe",
         "loot"
       ],
-      "block_item": false
+      "block_item": true,
+      "block_of": "oven"
     },
     {
       "id": "pie_cream",
@@ -2689,7 +2695,8 @@
       "lang_ja": true,
       "creative_tab": true,
       "sources": [
-        "loot"
+        "loot",
+        "worldgen"
       ],
       "block_item": true,
       "block_of": "soda_ore"
@@ -3022,7 +3029,7 @@
       "type": "block",
       "registered": true,
       "blockstate": true,
-      "block_model": false,
+      "block_model": true,
       "lang_en": true,
       "lang_zh": true,
       "lang_ja": true,
@@ -3231,7 +3238,7 @@
       "type": "block",
       "registered": true,
       "blockstate": true,
-      "block_model": false,
+      "block_model": true,
       "lang_en": true,
       "lang_zh": true,
       "lang_ja": true,
@@ -3462,7 +3469,7 @@
       "type": "block",
       "registered": true,
       "blockstate": true,
-      "block_model": false,
+      "block_model": true,
       "lang_en": true,
       "lang_zh": true,
       "lang_ja": true,
