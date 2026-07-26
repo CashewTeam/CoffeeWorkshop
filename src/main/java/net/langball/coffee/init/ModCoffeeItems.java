@@ -31,7 +31,7 @@ public class ModCoffeeItems {
                         new MobEffectInstance[]{}, 3, false));
 
         ModItems.COFFEE_INSTANT_STICK = items.register("coffee_instant_stick",
-                () -> new Item(new Item.Properties().stacksTo(1)));
+                () -> new Item(new Item.Properties().stacksTo(16)));
 
         ModItems.COFFEE_INSTANT_BOX = items.register("coffee_instant_box",
                 () -> new Item(new Item.Properties()));

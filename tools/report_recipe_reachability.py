@@ -52,6 +52,7 @@ INITIAL_ITEMS = {
     "minecraft:beetroot", "minecraft:cooked_porkchop",
     "minecraft:cooked_beef", "minecraft:cooked_chicken",
     "minecraft:apple", "minecraft:melon_slice",
+    "minecraft:gold_ingot", "minecraft:gold_nugget", "minecraft:glistering_melon_slice",
     "minecraft:snowball", "minecraft:spruce_sapling",
     "minecraft:oak_sapling", "minecraft:cherry_sapling",
     "minecraft:bread", "minecraft:sand", "minecraft:gravel",

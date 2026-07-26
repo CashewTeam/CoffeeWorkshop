@@ -236,8 +236,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("WWW")
                 .pattern("WWW")
                 .pattern("WWW")
-                .define('W', ModItems.COFFEE_INSTANT.get())
-                .unlockedBy("has_item", has(ModItems.COFFEE_INSTANT.get()))
+                .define('W', ModItems.COFFEE_INSTANT_STICK.get())
+                .unlockedBy("has_item", has(ModItems.COFFEE_INSTANT_STICK.get()))
                 .save(writer, modLoc("coffee_instant_box"));
 
         // ===================================================================
@@ -406,15 +406,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(writer, modLoc("sandwich_ham_cheese"));
 
         // --- Beverage items ---
-        // Instant coffee: coffee_powder + water + stir_stick (returns bucket)
+        // Instant coffee: instant stick + water (returns bucket)
         shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT.get(), ModItems.COFFEE_INSTANT_STICK.get())
-                .requires(ModItems.COFFEE_POWDER.get())
-                .requires(Items.WATER_BUCKET)
                 .requires(ModItems.COFFEE_INSTANT_STICK.get())
+                .requires(Items.WATER_BUCKET)
                 .save(writer, modLoc("coffee_instant"));
 
-        // Instant coffee from box
-        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT.get(), 9, ModItems.COFFEE_INSTANT_BOX.get())
+        // Instant coffee sticks from box
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT_STICK.get(), 9, ModItems.COFFEE_INSTANT_BOX.get())
                 .requires(ModItems.COFFEE_INSTANT_BOX.get())
                 .save(writer, modLoc("coffee_instant_from_box"));
 
@@ -455,12 +454,11 @@ public class ModRecipeProvider extends RecipeProvider {
         smelting(Items.COCOA_BEANS, ModItems.COCOA_BEAN.get(), 0.1F, "cocoa_bean")
                 .save(writer, modLoc("cocoa_bean"));
 
-        // Coffee instant stir stick from vanilla stick
-        shaped(RecipeCategory.MISC, ModItems.COFFEE_INSTANT_STICK.get(), 4, Items.STICK)
-                .pattern("S")
-                .pattern("P")
-                .define('S', Items.STICK)
-                .define('P', Items.PAPER)
+        // Coffee instant stir stick (instant coffee powder in stick form)
+        shapeless(RecipeCategory.FOOD, ModItems.COFFEE_INSTANT_STICK.get(), 2, Items.PAPER)
+                .requires(Items.PAPER)
+                .requires(ModItems.COFFEE_POWDER.get())
+                .requires(Items.SUGAR)
                 .save(writer, modLoc("coffee_instant_stick"));
 
         // Black tea leaf (smelt green tea leaf)
@@ -766,29 +764,29 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.VANILLA.get())
                 .save(writer, modLoc("icecream_mix_vanilla"));
 
-        // Phase 5.2-B: Flavored ice creams (mix + flavor → ice cream)
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_APPLE.get(), ModItems.ICECREAM_MIX_VANILLA.get())
-                .requires(ModItems.ICECREAM_MIX_VANILLA.get())
+        // Phase 5.2-B: Flavored ice creams (icecream_vanilla + flavor → flavored)
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_APPLE.get(), ModItems.ICECREAM_VANILLA.get())
+                .requires(ModItems.ICECREAM_VANILLA.get())
                 .requires(Items.APPLE)
                 .save(writer, modLoc("icecream_apple"));
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_BERRY.get(), ModItems.ICECREAM_MIX_VANILLA.get())
-                .requires(ModItems.ICECREAM_MIX_VANILLA.get())
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_BERRY.get(), ModItems.ICECREAM_VANILLA.get())
+                .requires(ModItems.ICECREAM_VANILLA.get())
                 .requires(Items.SWEET_BERRIES)
                 .save(writer, modLoc("icecream_berry"));
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_CHOCOLATE.get(), ModItems.ICECREAM_MIX_VANILLA.get())
-                .requires(ModItems.ICECREAM_MIX_VANILLA.get())
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_CHOCOLATE.get(), ModItems.ICECREAM_VANILLA.get())
+                .requires(ModItems.ICECREAM_VANILLA.get())
                 .requires(ModItems.COCOA_POWDER.get())
                 .save(writer, modLoc("icecream_chocolate"));
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_COFFEE.get(), ModItems.ICECREAM_MIX_VANILLA.get())
-                .requires(ModItems.ICECREAM_MIX_VANILLA.get())
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_COFFEE.get(), ModItems.ICECREAM_VANILLA.get())
+                .requires(ModItems.ICECREAM_VANILLA.get())
                 .requires(ModItems.COFFEE_POWDER.get())
                 .save(writer, modLoc("icecream_coffee"));
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_LEMON.get(), ModItems.ICECREAM_MIX_VANILLA.get())
-                .requires(ModItems.ICECREAM_MIX_VANILLA.get())
-                .requires(Items.SUGAR)
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_LEMON.get(), ModItems.ICECREAM_VANILLA.get())
+                .requires(ModItems.ICECREAM_VANILLA.get())
+                .requires(Items.GLISTERING_MELON_SLICE)
                 .save(writer, modLoc("icecream_lemon"));
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_MELON.get(), ModItems.ICECREAM_MIX_VANILLA.get())
-                .requires(ModItems.ICECREAM_MIX_VANILLA.get())
+        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_MELON.get(), ModItems.ICECREAM_VANILLA.get())
+                .requires(ModItems.ICECREAM_VANILLA.get())
                 .requires(Items.MELON_SLICE)
                 .save(writer, modLoc("icecream_melon"));
 

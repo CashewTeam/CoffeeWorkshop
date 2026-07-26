@@ -110,21 +110,19 @@ jobs:
       - name: Content surface audit
         run: python tools/audit_content_surface.py
 
-      - name: Legacy runtime coverage audit
-        run: python tools/audit_legacy_runtime_coverage.py
-
-      - name: Verify legacy matrix is current
-        run: |
-          git diff --exit-code -- docs/LEGACY_CONTENT_MATRIX.md docs/legacy_content_matrix.json || {
-            echo "::error::Legacy content matrix is out of date. Run: python tools/audit_legacy_runtime_coverage.py"
-            exit 1
-          }
-
-      - name: Verify manifest is current
+      - name: Generate and verify content manifest
         run: |
           python tools/build_content_manifest.py
           git diff --exit-code -- docs/CONTENT_MANIFEST.md docs/content_manifest.json || {
             echo "::error::Content manifest is out of date. Run: python tools/build_content_manifest.py"
+            exit 1
+          }
+
+      - name: Generate and verify legacy matrix
+        run: |
+          python tools/audit_legacy_runtime_coverage.py
+          git diff --exit-code -- docs/LEGACY_CONTENT_MATRIX.md docs/legacy_content_matrix.json || {
+            echo "::error::Legacy content matrix is out of date. Run: python tools/audit_legacy_runtime_coverage.py"
             exit 1
           }
 

@@ -15,10 +15,10 @@
 
 | Metric | Count |
 |---|---|
-| Total legacy assets | 639 |
+| Total legacy assets | 625 |
 | **ACTIVE_RUNTIME_ASSET** (already in use) | 173 |
 | **MERGED_RUNTIME_VARIANT** (old ID merged) | 28 |
-| TO_PORT_STANDALONE (needs registration) | 101 |
+| TO_PORT_STANDALONE (needs registration) | 87 |
 | TO_PORT_INTERMEDIATE (raw/model/base) | 108 |
 | TO_WIRE_STATE_VARIANT (block states) | 16 |
 | TO_WIRE_DISPLAY_VARIANT (display system) | 191 |
@@ -39,20 +39,19 @@
 | cake_mousse | 36 | 28 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 |
 | cake_roll | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
 | cake_system | 216 | 126 | 0 | 22 | 53 | 15 | 0 | 0 | 0 | 0 |
-| coffee_drinks | 189 | 7 | 5 | 3 | 1 | 0 | 173 | 0 | 0 | 0 |
+| coffee_drinks | 187 | 7 | 5 | 1 | 1 | 0 | 173 | 0 | 0 | 0 |
 | confectionery | 27 | 0 | 0 | 11 | 2 | 0 | 14 | 0 | 0 | 0 |
 | crops | 13 | 12 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | decor_bar | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
 | decor_phonograph | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 | icecream | 4 | 0 | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 0 |
 | icecream_cookie | 7 | 0 | 0 | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
-| icecream_cream | 13 | 0 | 0 | 13 | 0 | 0 | 0 | 0 | 0 | 0 |
+| icecream_cream | 7 | 0 | 0 | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
 | machines | 10 | 0 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | materials | 16 | 0 | 5 | 2 | 9 | 0 | 0 | 0 | 0 | 0 |
 | pastry | 33 | 0 | 0 | 18 | 15 | 0 | 0 | 0 | 0 | 0 |
 | pie | 8 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | records | 3 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| sandwich | 6 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | soda_machine | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
 | syrups | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | traditional_brew | 14 | 0 | 0 | 1 | 0 | 0 | 2 | 11 | 0 | 0 |

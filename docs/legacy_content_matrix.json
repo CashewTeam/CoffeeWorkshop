@@ -1,10 +1,10 @@
 {
   "summary": {
-    "total_legacy_assets": 639,
+    "total_legacy_assets": 625,
     "by_status": {
       "TO_PORT_INTERMEDIATE": 108,
       "TO_WIRE_STATE_VARIANT": 16,
-      "TO_PORT_STANDALONE": 101,
+      "TO_PORT_STANDALONE": 87,
       "MERGED_RUNTIME_VARIANT": 28,
       "TO_WIRE_DISPLAY_VARIANT": 191,
       "ACTIVE_RUNTIME_ASSET": 173,
@@ -12,7 +12,7 @@
       "TO_PORT_DECOR": 5
     },
     "by_type": {
-      "item_model": 301,
+      "item_model": 287,
       "block_model": 264,
       "blockstate": 72,
       "item_texture": 2
@@ -60,13 +60,13 @@
         }
       },
       "coffee_drinks": {
-        "total": 189,
+        "total": 187,
         "by_status": {
           "MERGED_RUNTIME_VARIANT": 5,
           "TO_WIRE_DISPLAY_VARIANT": 173,
-          "TO_PORT_STANDALONE": 3,
           "ACTIVE_RUNTIME_ASSET": 7,
-          "TO_PORT_INTERMEDIATE": 1
+          "TO_PORT_INTERMEDIATE": 1,
+          "TO_PORT_STANDALONE": 1
         }
       },
       "confectionery": {
@@ -110,9 +110,9 @@
         }
       },
       "icecream_cream": {
-        "total": 13,
+        "total": 7,
         "by_status": {
-          "TO_PORT_STANDALONE": 13
+          "TO_PORT_STANDALONE": 7
         }
       },
       "machines": {
@@ -148,12 +148,6 @@
           "MERGED_RUNTIME_VARIANT": 3
         }
       },
-      "sandwich": {
-        "total": 6,
-        "by_status": {
-          "TO_PORT_STANDALONE": 6
-        }
-      },
       "soda_machine": {
         "total": 6,
         "by_status": {
@@ -177,7 +171,7 @@
     },
     "active_runtime": 173,
     "merged": 28,
-    "to_port_standalone": 101,
+    "to_port_standalone": 87,
     "to_port_intermediate": 108,
     "to_wire_state": 16,
     "to_wire_display": 191,
@@ -1777,34 +1771,6 @@
       "notes": "Plate model — wire to DrinkDisplayBlock system"
     },
     {
-      "asset_id": "coffee_instant_cup",
-      "asset_type": "item_model",
-      "content_family": "coffee_drinks",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:coffee_instant_cup",
-      "target_phase": "5.2",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
-    },
-    {
-      "asset_id": "coffee_instant_cup_unopen",
-      "asset_type": "item_model",
-      "content_family": "coffee_drinks",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:coffee_instant_cup_unopen",
-      "target_phase": "5.2",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
-    },
-    {
       "asset_id": "coffee_instant_plate",
       "asset_type": "item_model",
       "content_family": "coffee_drinks",
@@ -2614,90 +2580,6 @@
       "source": "legacy_1_12",
       "survival_chain": "raw material for hardtack",
       "old_classification": "ASSET_ARCHIVE",
-      "notes": ""
-    },
-    {
-      "asset_id": "icecream_apple",
-      "asset_type": "item_model",
-      "content_family": "icecream_cream",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:icecream_apple",
-      "target_phase": "6.0",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
-    },
-    {
-      "asset_id": "icecream_berry",
-      "asset_type": "item_model",
-      "content_family": "icecream_cream",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:icecream_berry",
-      "target_phase": "6.0",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
-    },
-    {
-      "asset_id": "icecream_chocolate",
-      "asset_type": "item_model",
-      "content_family": "icecream_cream",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:icecream_chocolate",
-      "target_phase": "6.0",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
-    },
-    {
-      "asset_id": "icecream_coffee",
-      "asset_type": "item_model",
-      "content_family": "icecream_cream",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:icecream_coffee",
-      "target_phase": "6.0",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
-    },
-    {
-      "asset_id": "icecream_lemon",
-      "asset_type": "item_model",
-      "content_family": "icecream_cream",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:icecream_lemon",
-      "target_phase": "6.0",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
-    },
-    {
-      "asset_id": "icecream_melon",
-      "asset_type": "item_model",
-      "content_family": "icecream_cream",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:icecream_melon",
-      "target_phase": "6.0",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
       "notes": ""
     },
     {
@@ -4141,90 +4023,6 @@
       "survival_chain": "",
       "old_classification": "MERGED",
       "notes": "Old ID merged into modern blockstate variant"
-    },
-    {
-      "asset_id": "sandwich_bacon_egg",
-      "asset_type": "item_model",
-      "content_family": "sandwich",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:sandwich_bacon_egg",
-      "target_phase": "5.2",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
-    },
-    {
-      "asset_id": "sandwich_beef_cheese",
-      "asset_type": "item_model",
-      "content_family": "sandwich",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:sandwich_beef_cheese",
-      "target_phase": "5.2",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
-    },
-    {
-      "asset_id": "sandwich_blt_large",
-      "asset_type": "item_model",
-      "content_family": "sandwich",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:sandwich_blt_large",
-      "target_phase": "5.2",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
-    },
-    {
-      "asset_id": "sandwich_club",
-      "asset_type": "item_model",
-      "content_family": "sandwich",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:sandwich_club",
-      "target_phase": "5.2",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
-    },
-    {
-      "asset_id": "sandwich_club_large",
-      "asset_type": "item_model",
-      "content_family": "sandwich",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:sandwich_club_large",
-      "target_phase": "5.2",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
-    },
-    {
-      "asset_id": "sandwich_ham_cheese",
-      "asset_type": "item_model",
-      "content_family": "sandwich",
-      "runtime_owner": null,
-      "runtime_role": "recipe_output",
-      "target_owner": "coffeework:sandwich_ham_cheese",
-      "target_phase": "5.2",
-      "status": "TO_PORT_STANDALONE",
-      "source": "legacy_1_12",
-      "survival_chain": "recipe (1 recipe(s))",
-      "old_classification": "PORT_NOW",
-      "notes": ""
     },
     {
       "asset_id": "smore",

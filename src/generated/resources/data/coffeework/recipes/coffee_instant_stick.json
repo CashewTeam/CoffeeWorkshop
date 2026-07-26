@@ -1,21 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "key": {
-    "P": {
+  "ingredients": [
+    {
       "item": "minecraft:paper"
     },
-    "S": {
-      "item": "minecraft:stick"
+    {
+      "item": "coffeework:coffee_powder"
+    },
+    {
+      "item": "minecraft:sugar"
     }
-  },
-  "pattern": [
-    "S",
-    "P"
   ],
   "result": {
-    "count": 4,
+    "count": 2,
     "item": "coffeework:coffee_instant_stick"
-  },
-  "show_notification": true
+  }
 }

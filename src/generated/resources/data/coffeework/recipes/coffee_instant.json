@@ -3,13 +3,10 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "coffeework:coffee_powder"
+      "item": "coffeework:coffee_instant_stick"
     },
     {
       "item": "minecraft:water_bucket"
-    },
-    {
-      "item": "coffeework:coffee_instant_stick"
     }
   ],
   "result": {
