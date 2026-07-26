@@ -8,25 +8,25 @@
 | Registry Type | Count |
 |---|---|
 | block | 50 |
-| item | 253 |
+| item | 291 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **314** |
-| **Orphan Assets** | **563** |
+| **Total Registered** | **352** |
+| **Orphan Assets** | **525** |
 
 ## Item Completeness Matrix
 
 | Metric | Count | % |
 |---|---|---|
-| Model | 253/253 | 100% |
-| Texture | 253/253 | 100% |
-| en_us Key Coverage | 253/253 | 100% |
-| zh_cn Key Coverage | 253/253 | 100% |
-| ja_jp Key Coverage | 253/253 | 100% |
-| Creative Tab | 253/253 | 100% |
-| Survival Source | 227/253 | 89% |
+| Model | 291/291 | 100% |
+| Texture | 291/291 | 100% |
+| en_us Key Coverage | 291/291 | 100% |
+| zh_cn Key Coverage | 291/291 | 100% |
+| ja_jp Key Coverage | 291/291 | 100% |
+| Creative Tab | 291/291 | 100% |
+| Survival Source | 244/291 | 83% |
 
 ## Registered Items
 
@@ -193,6 +193,8 @@
 | `cream_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cream_melon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cream_milk` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `croissant` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `croissant_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cup` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cup_glass` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `custard` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -217,6 +219,8 @@
 | `field_ration` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `flour` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `gelatin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `ginger_bread` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `ginger_bread_man` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `ginger_house` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `grinder_off` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `hardtack` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -231,12 +235,26 @@
 | `icecream_mix_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `icecream_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `iron_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `jiggy_cake_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `jiggy_cake_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `jiggy_cake_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `jiggy_cake_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `jiggy_cake_pumpkin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `jiggy_cake_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `jiggy_cake_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | trade |
 | `marshmallow` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `marshmallow_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `marshmallow_roast` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `milk_form` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `mille_feuille` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `mixing_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `mooncake` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `mooncake_egg` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `mooncake_fruit` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `mooncake_ham` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `mooncake_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_berry_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
@@ -245,14 +263,32 @@
 | `mousse_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `mousse_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `muffin_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `muffin_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `muffin_pumpkin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `muffin_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `muffin_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `oven_off` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
+| `pie_apple` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `pie_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `pie_caramel` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `pie_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `pie_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `pie_cream` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `pie_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `pie_melon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `pie_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `plate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `plate_dough` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `plate_dough_ginger` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `plate_dough_pastry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `plate_iron` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `puff` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `record_blank` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `record_kusa_noshi_to_ne` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `record_lazy_lady_kaguya` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -269,6 +305,8 @@
 | `smore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `soda` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `soda_ore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
+| `souffle` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `souffle_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `spices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `syrup_caramel` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `syrup_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -363,54 +401,8 @@
 |---|---|
 | ASSET_ARCHIVE | 486 |
 | MERGED | 14 |
-| PORT_LATER | 38 |
 | REDESIGN | 4 |
 | REMOVED | 21 |
-
-### PORT_LATER (38)
-
-Requires longer production chains — restore in a later content phase.
-
-```
-  item_model: croissant
-  item_model: croissant_chocolate
-  item_model: ginger_bread
-  item_model: ginger_bread_man
-  item_model: jiggy_cake
-  item_model: jiggy_cake_berry
-  item_model: jiggy_cake_carrot
-  item_model: jiggy_cake_chocolate
-  item_model: jiggy_cake_coffee
-  item_model: jiggy_cake_lemon
-  item_model: jiggy_cake_pumpkin
-  item_model: jiggy_cake_redvelvet
-  item_model: jiggy_cake_tea
-  item_model: mille_feuille
-  item_model: mooncake
-  item_model: mooncake_egg
-  item_model: mooncake_fruit
-  item_model: mooncake_ham
-  item_model: muffin
-  item_model: muffin_berry
-  item_model: muffin_carrot
-  item_model: muffin_chocolate
-  item_model: muffin_coffee
-  item_model: muffin_lemon
-  item_model: muffin_pumpkin
-  item_model: muffin_redvelvet
-  item_model: muffin_tea
-  item_model: pie_apple
-  item_model: pie_berry
-  item_model: pie_caramel
-  item_model: pie_chocolate
-  item_model: pie_coffee
-  item_model: pie_lemon
-  item_model: pie_melon
-  item_model: pie_tea
-  item_model: puff
-  item_model: souffle
-  item_model: souffle_chocolate
-```
 
 ### REDESIGN (4)
 

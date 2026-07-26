@@ -182,6 +182,56 @@ public class ModCreativeTabs {
                         output.accept(ModItems.COOKIE_ICECREAM_LEMON.get());
                         output.accept(ModItems.COOKIE_ICECREAM_MELON.get());
 
+                        // Phase 7: Pies
+                        output.accept(ModItems.PIE_APPLE.get());
+                        output.accept(ModItems.PIE_BERRY.get());
+                        output.accept(ModItems.PIE_CARAMEL.get());
+                        output.accept(ModItems.PIE_CHOCOLATE.get());
+                        output.accept(ModItems.PIE_COFFEE.get());
+                        output.accept(ModItems.PIE_LEMON.get());
+                        output.accept(ModItems.PIE_MELON.get());
+                        output.accept(ModItems.PIE_TEA.get());
+
+                        // Phase 7: Muffins
+                        output.accept(ModItems.MUFFIN.get());
+                        output.accept(ModItems.MUFFIN_BERRY.get());
+                        output.accept(ModItems.MUFFIN_CARROT.get());
+                        output.accept(ModItems.MUFFIN_CHOCOLATE.get());
+                        output.accept(ModItems.MUFFIN_COFFEE.get());
+                        output.accept(ModItems.MUFFIN_LEMON.get());
+                        output.accept(ModItems.MUFFIN_PUMPKIN.get());
+                        output.accept(ModItems.MUFFIN_REDVELVET.get());
+                        output.accept(ModItems.MUFFIN_TEA.get());
+
+                        // Phase 7: Pastries
+                        output.accept(ModItems.CROISSANT.get());
+                        output.accept(ModItems.CROISSANT_CHOCOLATE.get());
+                        output.accept(ModItems.GINGER_BREAD.get());
+                        output.accept(ModItems.GINGER_BREAD_MAN.get());
+                        output.accept(ModItems.PUFF.get());
+                        output.accept(ModItems.MILLE_FEUILLE.get());
+
+                        // Phase 7: Jiggy Cakes
+                        output.accept(ModItems.JIGGY_CAKE.get());
+                        output.accept(ModItems.JIGGY_CAKE_BERRY.get());
+                        output.accept(ModItems.JIGGY_CAKE_CARROT.get());
+                        output.accept(ModItems.JIGGY_CAKE_CHOCOLATE.get());
+                        output.accept(ModItems.JIGGY_CAKE_COFFEE.get());
+                        output.accept(ModItems.JIGGY_CAKE_LEMON.get());
+                        output.accept(ModItems.JIGGY_CAKE_PUMPKIN.get());
+                        output.accept(ModItems.JIGGY_CAKE_REDVELVET.get());
+                        output.accept(ModItems.JIGGY_CAKE_TEA.get());
+
+                        // Phase 7: Mooncakes
+                        output.accept(ModItems.MOONCAKE.get());
+                        output.accept(ModItems.MOONCAKE_EGG.get());
+                        output.accept(ModItems.MOONCAKE_FRUIT.get());
+                        output.accept(ModItems.MOONCAKE_HAM.get());
+
+                        // Phase 7: Soufflés
+                        output.accept(ModItems.SOUFFLE.get());
+                        output.accept(ModItems.SOUFFLE_CHOCOLATE.get());
+
                         // Decor
                         output.accept(ModItems.PLATE.get());
                         output.accept(ModItems.XMAS_TREE.get());

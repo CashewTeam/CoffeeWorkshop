@@ -135,6 +135,56 @@ public class ModItems {
     public static RegistryObject<Item> COOKIE_ICECREAM_LEMON;
     public static RegistryObject<Item> COOKIE_ICECREAM_MELON;
 
+    // Phase 7: Pies
+    public static RegistryObject<Item> PIE_APPLE;
+    public static RegistryObject<Item> PIE_BERRY;
+    public static RegistryObject<Item> PIE_CARAMEL;
+    public static RegistryObject<Item> PIE_CHOCOLATE;
+    public static RegistryObject<Item> PIE_COFFEE;
+    public static RegistryObject<Item> PIE_LEMON;
+    public static RegistryObject<Item> PIE_MELON;
+    public static RegistryObject<Item> PIE_TEA;
+
+    // Phase 7: Muffins
+    public static RegistryObject<Item> MUFFIN;
+    public static RegistryObject<Item> MUFFIN_BERRY;
+    public static RegistryObject<Item> MUFFIN_CARROT;
+    public static RegistryObject<Item> MUFFIN_CHOCOLATE;
+    public static RegistryObject<Item> MUFFIN_COFFEE;
+    public static RegistryObject<Item> MUFFIN_LEMON;
+    public static RegistryObject<Item> MUFFIN_PUMPKIN;
+    public static RegistryObject<Item> MUFFIN_REDVELVET;
+    public static RegistryObject<Item> MUFFIN_TEA;
+
+    // Phase 7: Pastries
+    public static RegistryObject<Item> CROISSANT;
+    public static RegistryObject<Item> CROISSANT_CHOCOLATE;
+    public static RegistryObject<Item> GINGER_BREAD;
+    public static RegistryObject<Item> GINGER_BREAD_MAN;
+    public static RegistryObject<Item> PUFF;
+    public static RegistryObject<Item> MILLE_FEUILLE;
+
+    // Phase 7: Jiggy Cakes
+    public static RegistryObject<Item> JIGGY_CAKE;
+    public static RegistryObject<Item> JIGGY_CAKE_BERRY;
+    public static RegistryObject<Item> JIGGY_CAKE_CARROT;
+    public static RegistryObject<Item> JIGGY_CAKE_CHOCOLATE;
+    public static RegistryObject<Item> JIGGY_CAKE_COFFEE;
+    public static RegistryObject<Item> JIGGY_CAKE_LEMON;
+    public static RegistryObject<Item> JIGGY_CAKE_PUMPKIN;
+    public static RegistryObject<Item> JIGGY_CAKE_REDVELVET;
+    public static RegistryObject<Item> JIGGY_CAKE_TEA;
+
+    // Phase 7: Mooncakes
+    public static RegistryObject<Item> MOONCAKE;
+    public static RegistryObject<Item> MOONCAKE_EGG;
+    public static RegistryObject<Item> MOONCAKE_FRUIT;
+    public static RegistryObject<Item> MOONCAKE_HAM;
+
+    // Phase 7: Soufflés
+    public static RegistryObject<Item> SOUFFLE;
+    public static RegistryObject<Item> SOUFFLE_CHOCOLATE;
+
     // ========================================================================
     // Seeds — ModEquipmentItems
     // ========================================================================

@@ -212,5 +212,93 @@ public class ModBakeryItems {
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).build())));
         ModItems.ICECREAM_MELON = items.register("icecream_melon",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).build())));
+
+        // ── Phase 7: Pies (8 new, pie_cream already registered) ──
+        ModItems.PIE_APPLE = items.register("pie_apple",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F).build())));
+        ModItems.PIE_BERRY = items.register("pie_berry",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F).build())));
+        ModItems.PIE_CARAMEL = items.register("pie_caramel",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F).build())));
+        ModItems.PIE_CHOCOLATE = items.register("pie_chocolate",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F).build())));
+        ModItems.PIE_COFFEE = items.register("pie_coffee",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F).build())));
+        ModItems.PIE_LEMON = items.register("pie_lemon",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F).build())));
+        ModItems.PIE_MELON = items.register("pie_melon",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F).build())));
+        ModItems.PIE_TEA = items.register("pie_tea",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F).build())));
+
+        // Phase 7: Muffins (9 finished)
+        ModItems.MUFFIN = items.register("muffin",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5F).build())));
+        ModItems.MUFFIN_BERRY = items.register("muffin_berry",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5F).build())));
+        ModItems.MUFFIN_CARROT = items.register("muffin_carrot",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5F).build())));
+        ModItems.MUFFIN_CHOCOLATE = items.register("muffin_chocolate",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5F).build())));
+        ModItems.MUFFIN_COFFEE = items.register("muffin_coffee",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5F).build())));
+        ModItems.MUFFIN_LEMON = items.register("muffin_lemon",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5F).build())));
+        ModItems.MUFFIN_PUMPKIN = items.register("muffin_pumpkin",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5F).build())));
+        ModItems.MUFFIN_REDVELVET = items.register("muffin_redvelvet",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5F).build())));
+        ModItems.MUFFIN_TEA = items.register("muffin_tea",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5F).build())));
+
+        // Phase 7: Pastries (6 finished)
+        ModItems.CROISSANT = items.register("croissant",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.5F).build())));
+        ModItems.CROISSANT_CHOCOLATE = items.register("croissant_chocolate",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.5F).build())));
+        ModItems.GINGER_BREAD = items.register("ginger_bread",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.GINGER_BREAD_MAN = items.register("ginger_bread_man",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.4F).build())));
+        ModItems.PUFF = items.register("puff",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.4F).build())));
+        ModItems.MILLE_FEUILLE = items.register("mille_feuille",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationMod(0.6F).build())));
+
+        // Phase 7: Jiggy Cakes (9 finished)
+        ModItems.JIGGY_CAKE = items.register("jiggy_cake",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.JIGGY_CAKE_BERRY = items.register("jiggy_cake_berry",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.JIGGY_CAKE_CARROT = items.register("jiggy_cake_carrot",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.JIGGY_CAKE_CHOCOLATE = items.register("jiggy_cake_chocolate",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.JIGGY_CAKE_COFFEE = items.register("jiggy_cake_coffee",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.JIGGY_CAKE_LEMON = items.register("jiggy_cake_lemon",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.JIGGY_CAKE_PUMPKIN = items.register("jiggy_cake_pumpkin",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.JIGGY_CAKE_REDVELVET = items.register("jiggy_cake_redvelvet",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+        ModItems.JIGGY_CAKE_TEA = items.register("jiggy_cake_tea",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4F).build())));
+
+        // Phase 7: Mooncakes (4 finished)
+        ModItems.MOONCAKE = items.register("mooncake",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.5F).build())));
+        ModItems.MOONCAKE_EGG = items.register("mooncake_egg",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.5F).build())));
+        ModItems.MOONCAKE_FRUIT = items.register("mooncake_fruit",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.5F).build())));
+        ModItems.MOONCAKE_HAM = items.register("mooncake_ham",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.5F).build())));
+
+        // Phase 7: Soufflés (2 finished)
+        ModItems.SOUFFLE = items.register("souffle",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.4F).build())));
+        ModItems.SOUFFLE_CHOCOLATE = items.register("souffle_chocolate",
+                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.4F).build())));
     }
 }
