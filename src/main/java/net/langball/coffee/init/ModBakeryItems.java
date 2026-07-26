@@ -316,5 +316,38 @@ public class ModBakeryItems {
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.4F).build())));
         ModItems.SOUFFLE_CHOCOLATE = items.register("souffle_chocolate",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.4F).build())));
+
+        // Phase 7: Raw intermediates (muffin, soufflé, mooncake) — craft→raw→oven→finished
+        // Match 1.12.2 registerRaw2CookedRecipes behavior
+        ModItems.MUFFIN_RAW = items.register("muffin_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MUFFIN_BERRY_RAW = items.register("muffin_berry_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MUFFIN_CARROT_RAW = items.register("muffin_carrot_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MUFFIN_CHOCOLATE_RAW = items.register("muffin_chocolate_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MUFFIN_COFFEE_RAW = items.register("muffin_coffee_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MUFFIN_LEMON_RAW = items.register("muffin_lemon_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MUFFIN_PUMPKIN_RAW = items.register("muffin_pumpkin_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MUFFIN_REDVELVET_RAW = items.register("muffin_redvelvet_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MUFFIN_TEA_RAW = items.register("muffin_tea_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.SOUFFLE_RAW = items.register("souffle_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.SOUFFLE_CHOCOLATE_RAW = items.register("souffle_chocolate_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MOONCAKE_RAW = items.register("mooncake_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MOONCAKE_EGG_RAW = items.register("mooncake_egg_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MOONCAKE_FRUIT_RAW = items.register("mooncake_fruit_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.MOONCAKE_HAM_RAW = items.register("mooncake_ham_raw",
+                () -> new Item(new Item.Properties()));
     }
 }

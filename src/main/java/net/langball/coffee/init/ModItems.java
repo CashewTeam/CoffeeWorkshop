@@ -191,6 +191,24 @@ public class ModItems {
     public static RegistryObject<Item> SOUFFLE;
     public static RegistryObject<Item> SOUFFLE_CHOCOLATE;
 
+    // Phase 7: Raw intermediates (muffin, soufflé, mooncake)
+    // Match 1.12.2 registerRaw2CookedRecipes: craft→raw→oven→finished
+    public static RegistryObject<Item> MUFFIN_RAW;
+    public static RegistryObject<Item> MUFFIN_BERRY_RAW;
+    public static RegistryObject<Item> MUFFIN_CARROT_RAW;
+    public static RegistryObject<Item> MUFFIN_CHOCOLATE_RAW;
+    public static RegistryObject<Item> MUFFIN_COFFEE_RAW;
+    public static RegistryObject<Item> MUFFIN_LEMON_RAW;
+    public static RegistryObject<Item> MUFFIN_PUMPKIN_RAW;
+    public static RegistryObject<Item> MUFFIN_REDVELVET_RAW;
+    public static RegistryObject<Item> MUFFIN_TEA_RAW;
+    public static RegistryObject<Item> SOUFFLE_RAW;
+    public static RegistryObject<Item> SOUFFLE_CHOCOLATE_RAW;
+    public static RegistryObject<Item> MOONCAKE_RAW;
+    public static RegistryObject<Item> MOONCAKE_EGG_RAW;
+    public static RegistryObject<Item> MOONCAKE_FRUIT_RAW;
+    public static RegistryObject<Item> MOONCAKE_HAM_RAW;
+
     // ========================================================================
     // Seeds — ModEquipmentItems
     // ========================================================================

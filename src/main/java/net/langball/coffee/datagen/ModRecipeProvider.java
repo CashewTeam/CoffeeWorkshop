@@ -1026,44 +1026,62 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.TEA_LEAF.get())
                 .save(writer, modLoc("pie_tea"));
 
-        // Phase 7: Muffins (dough + flavor)
-        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN.get(), ModItems.DOUGH.get())
+        // Phase 7: Muffin raw (dough + egg + sugar ± flavor → muffin_raw ×3)
+        // Match 1.12.2 registerRaw2CookedRecipes pattern, oven recipe in ModMachineRecipeProvider
+        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_RAW.get(), 3, ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
-                .requires(Items.MILK_BUCKET)
-                .save(writer, modLoc("muffin"));
-        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_BERRY.get(), ModItems.DOUGH.get())
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .save(writer, modLoc("muffin_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_BERRY_RAW.get(), 3, ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
                 .requires(Items.SWEET_BERRIES)
-                .save(writer, modLoc("muffin_berry"));
-        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_CHOCOLATE.get(), ModItems.DOUGH.get())
+                .save(writer, modLoc("muffin_berry_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_CHOCOLATE_RAW.get(), 3, ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
                 .requires(ModItems.COCOA_POWDER.get())
-                .save(writer, modLoc("muffin_chocolate"));
-        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_CARROT.get(), ModItems.DOUGH.get())
+                .save(writer, modLoc("muffin_chocolate_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_CARROT_RAW.get(), 3, ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
                 .requires(Items.CARROT)
-                .save(writer, modLoc("muffin_carrot"));
-        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_COFFEE.get(), ModItems.DOUGH.get())
+                .save(writer, modLoc("muffin_carrot_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_COFFEE_RAW.get(), 3, ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
                 .requires(ModItems.COFFEE_POWDER.get())
-                .save(writer, modLoc("muffin_coffee"));
-        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_LEMON.get(), ModItems.DOUGH.get())
+                .save(writer, modLoc("muffin_coffee_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_LEMON_RAW.get(), 3, ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
                 .requires(ModItems.LEMON.get())
-                .save(writer, modLoc("muffin_lemon"));
-        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_PUMPKIN.get(), ModItems.DOUGH.get())
+                .save(writer, modLoc("muffin_lemon_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_PUMPKIN_RAW.get(), 3, ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
                 .requires(Items.PUMPKIN)
-                .save(writer, modLoc("muffin_pumpkin"));
-        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_REDVELVET.get(), ModItems.DOUGH.get())
+                .save(writer, modLoc("muffin_pumpkin_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_REDVELVET_RAW.get(), 3, ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
                 .requires(ModItems.COCOA_POWDER.get())
                 .requires(Items.BEETROOT)
-                .save(writer, modLoc("muffin_redvelvet"));
-        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_TEA.get(), ModItems.DOUGH.get())
+                .save(writer, modLoc("muffin_redvelvet_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.MUFFIN_TEA_RAW.get(), 3, ModItems.DOUGH.get())
                 .requires(ModItems.DOUGH.get())
+                .requires(Items.EGG)
+                .requires(Items.SUGAR)
                 .requires(ModItems.TEA_LEAF.get())
-                .save(writer, modLoc("muffin_tea"));
+                .save(writer, modLoc("muffin_tea_raw"));
 
         // Phase 7: Pastries (fill remaining 5)
         shapeless(RecipeCategory.FOOD, ModItems.CROISSANT_CHOCOLATE.get(), ModItems.DOUGH_PASTRY.get())
@@ -1130,38 +1148,48 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.TEA_LEAF.get())
                 .save(writer, modLoc("jiggy_cake_tea"));
 
-        // Phase 7: Mooncakes (dough + mooncake_model + flavor)
-        shapeless(RecipeCategory.FOOD, ModItems.MOONCAKE.get(), ModItems.MOONCAKE_MODEL.get())
+        // Phase 7: Mooncake raw (dough_pastry + sugar + mooncake_model + flavor → raw ×2)
+        // Match 1.12.2 registerRaw2CookedRecipes, oven recipe in ModMachineRecipeProvider
+        shapeless(RecipeCategory.FOOD, ModItems.MOONCAKE_RAW.get(), 2, ModItems.MOONCAKE_MODEL.get())
                 .requires(ModItems.MOONCAKE_MODEL.get())
-                .requires(ModItems.DOUGH.get())
-                .save(writer, modLoc("mooncake"));
-        shapeless(RecipeCategory.FOOD, ModItems.MOONCAKE_EGG.get(), ModItems.MOONCAKE_MODEL.get())
+                .requires(ModItems.DOUGH_PASTRY.get())
+                .requires(Items.SUGAR)
+                .requires(ModItems.COFFEE_SEEDS.get())
+                .save(writer, modLoc("mooncake_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.MOONCAKE_EGG_RAW.get(), 2, ModItems.MOONCAKE_MODEL.get())
                 .requires(ModItems.MOONCAKE_MODEL.get())
-                .requires(ModItems.DOUGH.get())
+                .requires(ModItems.DOUGH_PASTRY.get())
+                .requires(Items.SUGAR)
                 .requires(Items.EGG)
-                .save(writer, modLoc("mooncake_egg"));
-        shapeless(RecipeCategory.FOOD, ModItems.MOONCAKE_FRUIT.get(), ModItems.MOONCAKE_MODEL.get())
+                .save(writer, modLoc("mooncake_egg_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.MOONCAKE_FRUIT_RAW.get(), 2, ModItems.MOONCAKE_MODEL.get())
                 .requires(ModItems.MOONCAKE_MODEL.get())
-                .requires(ModItems.DOUGH.get())
+                .requires(ModItems.DOUGH_PASTRY.get())
+                .requires(Items.SUGAR)
                 .requires(Items.SWEET_BERRIES)
-                .save(writer, modLoc("mooncake_fruit"));
-        shapeless(RecipeCategory.FOOD, ModItems.MOONCAKE_HAM.get(), ModItems.MOONCAKE_MODEL.get())
+                .save(writer, modLoc("mooncake_fruit_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.MOONCAKE_HAM_RAW.get(), 2, ModItems.MOONCAKE_MODEL.get())
                 .requires(ModItems.MOONCAKE_MODEL.get())
-                .requires(ModItems.DOUGH.get())
+                .requires(ModItems.DOUGH_PASTRY.get())
+                .requires(Items.SUGAR)
                 .requires(Items.COOKED_PORKCHOP)
-                .save(writer, modLoc("mooncake_ham"));
+                .save(writer, modLoc("mooncake_ham_raw"));
 
-        // Phase 7: Soufflés (custard + egg → souffle)
-        shapeless(RecipeCategory.FOOD, ModItems.SOUFFLE.get(), ModItems.CUSTARD.get())
-                .requires(ModItems.CUSTARD.get())
+        // Phase 7: Soufflé raw (dough + egg + sugar + butter ± cocoa → raw ×4)
+        // Match 1.12.2 registerRaw2CookedRecipes, oven recipe in ModMachineRecipeProvider
+        shapeless(RecipeCategory.FOOD, ModItems.SOUFFLE_RAW.get(), 4, ModItems.DOUGH.get())
+                .requires(ModItems.DOUGH.get())
                 .requires(Items.EGG)
                 .requires(Items.SUGAR)
-                .save(writer, modLoc("souffle"));
-        shapeless(RecipeCategory.FOOD, ModItems.SOUFFLE_CHOCOLATE.get(), ModItems.CUSTARD.get())
-                .requires(ModItems.CUSTARD.get())
+                .requires(ModItems.BUTTER.get())
+                .save(writer, modLoc("souffle_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.SOUFFLE_CHOCOLATE_RAW.get(), 4, ModItems.DOUGH.get())
+                .requires(ModItems.DOUGH.get())
                 .requires(Items.EGG)
+                .requires(Items.SUGAR)
+                .requires(ModItems.BUTTER.get())
                 .requires(ModItems.COCOA_POWDER.get())
-                .save(writer, modLoc("souffle_chocolate"));
+                .save(writer, modLoc("souffle_chocolate_raw"));
 
         // ===================================================================
         // COOLING RECIPES (hot drink + ice_slag → iced drink)

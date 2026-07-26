@@ -203,6 +203,72 @@ public final class ModMachineRecipeProvider {
                 new ItemStack(ModBlocks.MOUSSE_LEMON.get()))
                 .experience(0.25F).cookingTime(300)
                 .save(writer, id("icecream_making/mousse_lemon_from_raw"));
+
+        // Phase 7: Muffin raw → Oven (Match 1.12.2 registerRaw2CookedRecipes)
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MUFFIN_RAW.get()),
+                new ItemStack(ModItems.MUFFIN.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/muffin_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MUFFIN_BERRY_RAW.get()),
+                new ItemStack(ModItems.MUFFIN_BERRY.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/muffin_berry_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MUFFIN_CARROT_RAW.get()),
+                new ItemStack(ModItems.MUFFIN_CARROT.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/muffin_carrot_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MUFFIN_CHOCOLATE_RAW.get()),
+                new ItemStack(ModItems.MUFFIN_CHOCOLATE.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/muffin_chocolate_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MUFFIN_COFFEE_RAW.get()),
+                new ItemStack(ModItems.MUFFIN_COFFEE.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/muffin_coffee_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MUFFIN_LEMON_RAW.get()),
+                new ItemStack(ModItems.MUFFIN_LEMON.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/muffin_lemon_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MUFFIN_PUMPKIN_RAW.get()),
+                new ItemStack(ModItems.MUFFIN_PUMPKIN.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/muffin_pumpkin_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MUFFIN_REDVELVET_RAW.get()),
+                new ItemStack(ModItems.MUFFIN_REDVELVET.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/muffin_redvelvet_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MUFFIN_TEA_RAW.get()),
+                new ItemStack(ModItems.MUFFIN_TEA.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/muffin_tea_from_raw"));
+
+        // Phase 7: Soufflé raw → Oven
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.SOUFFLE_RAW.get()),
+                new ItemStack(ModItems.SOUFFLE.get()))
+                .experience(0.25F).cookingTime(300)
+                .save(writer, id("oven_baking/souffle_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.SOUFFLE_CHOCOLATE_RAW.get()),
+                new ItemStack(ModItems.SOUFFLE_CHOCOLATE.get()))
+                .experience(0.25F).cookingTime(300)
+                .save(writer, id("oven_baking/souffle_chocolate_from_raw"));
+
+        // Phase 7: Mooncake raw → Oven (mooncake_model returned by recipe as crafting remainder)
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MOONCAKE_RAW.get()),
+                new ItemStack(ModItems.MOONCAKE.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/mooncake_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MOONCAKE_EGG_RAW.get()),
+                new ItemStack(ModItems.MOONCAKE_EGG.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/mooncake_egg_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MOONCAKE_FRUIT_RAW.get()),
+                new ItemStack(ModItems.MOONCAKE_FRUIT.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/mooncake_fruit_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MOONCAKE_HAM_RAW.get()),
+                new ItemStack(ModItems.MOONCAKE_HAM.get()))
+                .experience(0.2F).cookingTime(200)
+                .save(writer, id("oven_baking/mooncake_ham_from_raw"));
     }
 
     private static void buildRollingRecipes(Consumer<FinishedRecipe> writer) {

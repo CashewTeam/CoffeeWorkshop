@@ -8,25 +8,25 @@
 | Registry Type | Count |
 |---|---|
 | block | 50 |
-| item | 297 |
+| item | 312 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **358** |
-| **Orphan Assets** | **520** |
+| **Total Registered** | **373** |
+| **Orphan Assets** | **505** |
 
 ## Item Completeness Matrix
 
 | Metric | Count | % |
 |---|---|---|
-| Model | 297/297 | 100% |
-| Texture | 297/297 | 100% |
-| en_us Key Coverage | 297/297 | 100% |
-| zh_cn Key Coverage | 297/297 | 100% |
-| ja_jp Key Coverage | 297/297 | 100% |
-| Creative Tab | 297/297 | 100% |
-| Survival Source | 297/297 | 100% |
+| Model | 312/312 | 100% |
+| Texture | 312/312 | 100% |
+| en_us Key Coverage | 312/312 | 100% |
+| zh_cn Key Coverage | 312/312 | 100% |
+| ja_jp Key Coverage | 312/312 | 100% |
+| Creative Tab | 312/312 | 100% |
+| Survival Source | 312/312 | 100% |
 
 ## Registered Items
 
@@ -258,9 +258,13 @@
 | `mixing_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake_egg` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `mooncake_egg_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake_fruit` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `mooncake_fruit_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake_ham` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `mooncake_ham_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `mooncake_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_berry_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mousse_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -271,13 +275,22 @@
 | `mousse_lemon_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_berry_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_carrot_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_chocolate_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_lemon_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin_pumpkin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_pumpkin_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_redvelvet_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `muffin_tea_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `oven_off` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `pie_apple` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `pie_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -313,6 +326,8 @@
 | `soda_ore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
 | `souffle` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `souffle_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `souffle_chocolate_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `souffle_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `spices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `syrup_caramel` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `syrup_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -405,7 +420,7 @@
 
 | Classification | Count |
 |---|---|
-| ASSET_ARCHIVE | 481 |
+| ASSET_ARCHIVE | 466 |
 | MERGED | 14 |
 | REDESIGN | 4 |
 | REMOVED | 21 |
@@ -470,7 +485,7 @@ No intention to restore.
   item_model: turkey_coffee_pot_unheated
 ```
 
-### ASSET_ARCHIVE (481)
+### ASSET_ARCHIVE (466)
 
 Companion assets (raw/model/slice variants) — archive to reference/legacy-assets/.
 
@@ -883,10 +898,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   item_model: jiggy_cake_redvelvet_raw
   item_model: jiggy_cake_tea_model
   item_model: jiggy_cake_tea_raw
-  item_model: mooncake_egg_raw
-  item_model: mooncake_fruit_raw
-  item_model: mooncake_ham_raw
-  item_model: mooncake_raw
   item_model: mousse_berry_model
   block_model: mousse_berry_slice1
   block_model: mousse_berry_slice2
@@ -919,15 +930,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: mousse_lemon_slice5
   block_model: mousse_lemon_slice6
   block_model: mousse_lemon_uneaten
-  item_model: muffin_berry_raw
-  item_model: muffin_carrot_raw
-  item_model: muffin_chocolate_raw
-  item_model: muffin_coffee_raw
-  item_model: muffin_lemon_raw
-  item_model: muffin_pumpkin_raw
-  item_model: muffin_raw
-  item_model: muffin_redvelvet_raw
-  item_model: muffin_tea_raw
   item_model: plate_ginger
   item_model: plate_pastry
   item_model: plate_pastry_raw
@@ -935,8 +937,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   item_model: records_kusa_noshi_to_ne
   item_model: records_lazy_lady_kaguya
   item_model: records_the_grimoire_of_marisa
-  item_model: souffle_chocolate_raw
-  item_model: souffle_raw
   block_model: strong_cocoa_plate
   blockstate: strong_cocoa_plate
   item_model: tiramisu_model

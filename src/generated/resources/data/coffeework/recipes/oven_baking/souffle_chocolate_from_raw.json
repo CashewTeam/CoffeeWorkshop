@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:oven_baking",
+  "cookingtime": 300,
+  "experience": 0.25,
+  "ingredient": {
+    "item": "coffeework:souffle_chocolate_raw"
+  },
+  "result": {
+    "item": "coffeework:souffle_chocolate"
+  }
+}

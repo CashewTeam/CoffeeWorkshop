@@ -208,6 +208,15 @@ public class ModCreativeTabs {
                         output.accept(ModItems.MUFFIN_PUMPKIN.get());
                         output.accept(ModItems.MUFFIN_REDVELVET.get());
                         output.accept(ModItems.MUFFIN_TEA.get());
+                        output.accept(ModItems.MUFFIN_RAW.get());
+                        output.accept(ModItems.MUFFIN_BERRY_RAW.get());
+                        output.accept(ModItems.MUFFIN_CARROT_RAW.get());
+                        output.accept(ModItems.MUFFIN_CHOCOLATE_RAW.get());
+                        output.accept(ModItems.MUFFIN_COFFEE_RAW.get());
+                        output.accept(ModItems.MUFFIN_LEMON_RAW.get());
+                        output.accept(ModItems.MUFFIN_PUMPKIN_RAW.get());
+                        output.accept(ModItems.MUFFIN_REDVELVET_RAW.get());
+                        output.accept(ModItems.MUFFIN_TEA_RAW.get());
 
                         // Phase 7: Pastries
                         output.accept(ModItems.CROISSANT.get());
@@ -233,10 +242,16 @@ public class ModCreativeTabs {
                         output.accept(ModItems.MOONCAKE_EGG.get());
                         output.accept(ModItems.MOONCAKE_FRUIT.get());
                         output.accept(ModItems.MOONCAKE_HAM.get());
+                        output.accept(ModItems.MOONCAKE_RAW.get());
+                        output.accept(ModItems.MOONCAKE_EGG_RAW.get());
+                        output.accept(ModItems.MOONCAKE_FRUIT_RAW.get());
+                        output.accept(ModItems.MOONCAKE_HAM_RAW.get());
 
                         // Phase 7: Soufflés
                         output.accept(ModItems.SOUFFLE.get());
                         output.accept(ModItems.SOUFFLE_CHOCOLATE.get());
+                        output.accept(ModItems.SOUFFLE_RAW.get());
+                        output.accept(ModItems.SOUFFLE_CHOCOLATE_RAW.get());
 
                         // Decor
                         output.accept(ModItems.PLATE.get());

@@ -1,0 +1,11 @@
+{
+  "type": "coffeework:oven_baking",
+  "cookingtime": 200,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "coffeework:muffin_redvelvet_raw"
+  },
+  "result": {
+    "item": "coffeework:muffin_redvelvet"
+  }
+}

@@ -1,30 +1,30 @@
 {
   "stats": {
-    "registered": 358,
+    "registered": 373,
     "by_type": {
-      "item": 297,
+      "item": 312,
       "block": 50,
       "mob_effect": 3,
       "villager_profession": 3,
       "poi_type": 2,
       "sound_event": 3
     },
-    "orphan_assets": 520,
+    "orphan_assets": 505,
     "orphan_by_classification": {
-      "ASSET_ARCHIVE": 481,
+      "ASSET_ARCHIVE": 466,
       "MERGED": 14,
       "REMOVED": 21,
       "REDESIGN": 4
     },
     "completeness": {
-      "model_ok": 297,
-      "texture_ok": 297,
-      "lang_en_ok": 297,
-      "lang_zh_ok": 297,
-      "lang_ja_ok": 297,
-      "creative_tab_ok": 297,
-      "has_source": 297,
-      "total_items": 297
+      "model_ok": 312,
+      "texture_ok": 312,
+      "lang_en_ok": 312,
+      "lang_zh_ok": 312,
+      "lang_ja_ok": 312,
+      "creative_tab_ok": 312,
+      "has_source": 312,
+      "total_items": 312
     }
   },
   "registry": [
@@ -3731,7 +3731,39 @@
       "block_item": false
     },
     {
+      "id": "mooncake_egg_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "mooncake_fruit",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "mooncake_fruit_raw",
       "type": "item",
       "registered": true,
       "model": true,
@@ -3763,7 +3795,39 @@
       "block_item": false
     },
     {
+      "id": "mooncake_ham_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "mooncake_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "mooncake_raw",
       "type": "item",
       "registered": true,
       "model": true,
@@ -3943,7 +4007,39 @@
       "block_item": false
     },
     {
+      "id": "muffin_berry_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "muffin_carrot",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "muffin_carrot_raw",
       "type": "item",
       "registered": true,
       "model": true,
@@ -3975,7 +4071,39 @@
       "block_item": false
     },
     {
+      "id": "muffin_chocolate_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "muffin_coffee",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "muffin_coffee_raw",
       "type": "item",
       "registered": true,
       "model": true,
@@ -4007,7 +4135,55 @@
       "block_item": false
     },
     {
+      "id": "muffin_lemon_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "muffin_pumpkin",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "muffin_pumpkin_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "muffin_raw",
       "type": "item",
       "registered": true,
       "model": true,
@@ -4039,7 +4215,39 @@
       "block_item": false
     },
     {
+      "id": "muffin_redvelvet_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "muffin_tea",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "muffin_tea_raw",
       "type": "item",
       "registered": true,
       "model": true,
@@ -4609,6 +4817,38 @@
     },
     {
       "id": "souffle_chocolate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "souffle_chocolate_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "souffle_raw",
       "type": "item",
       "registered": true,
       "model": true,
@@ -6251,26 +6491,6 @@
       "classification": "REMOVED"
     },
     {
-      "id": "mooncake_egg_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mooncake_fruit_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mooncake_ham_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "mooncake_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
       "id": "mousse_berry_model",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
@@ -6287,51 +6507,6 @@
     },
     {
       "id": "mousse_lemon_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_berry_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_carrot_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_chocolate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_coffee_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_lemon_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_pumpkin_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_redvelvet_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "muffin_tea_raw",
       "type": "item_model",
       "classification": "ASSET_ARCHIVE"
     },
@@ -6394,16 +6569,6 @@
       "id": "soda_machine_top",
       "type": "item_model",
       "classification": "REMOVED"
-    },
-    {
-      "id": "souffle_chocolate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "souffle_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
     },
     {
       "id": "syrup_brown",
