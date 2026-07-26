@@ -35,16 +35,20 @@ public final class JEIRecipeTypes {
     public static final mezz.jei.api.recipe.RecipeType<CoolingRecipe> COOLING =
             mezz.jei.api.recipe.RecipeType.create(CoffeeWork.MODID, "cooling", CoolingRecipe.class);
 
-    /** Fetch CoolingRecipes from the client-side RecipeManager. */
-    @SuppressWarnings("unchecked")
+    /** Fetch CoolingRecipes from the client-side RecipeManager.
+     *  CoolingRecipe extends CustomRecipe and lives under {@link net.minecraft.world.item.crafting.RecipeType#CRAFTING}.
+     *  We cannot query by a custom RecipeType because that would require
+     *  the CoolingRecipe to override {@code getType()} and break the workbench lookup.
+     *  Instead we filter the CRAFTING list by class. */
     public static List<CoolingRecipe> getCoolingRecipes() {
         ClientLevel level = Minecraft.getInstance().level;
         if (level == null) return List.of();
         RecipeManager rm = level.getRecipeManager();
         List<CoolingRecipe> result = new ArrayList<>();
-        for (var recipe : rm.getAllRecipesFor((net.minecraft.world.item.crafting.RecipeType) ModRecipeTypes.COOLING_SERIALIZER.get())) {
-            // Note: COOLING_SERIALIZER doesn't have a RecipeType, so we use the cooling registry directly
-            if (recipe instanceof CoolingRecipe cr) result.add(cr);
+        for (var recipe : rm.getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.CRAFTING)) {
+            if (recipe instanceof CoolingRecipe cr) {
+                result.add(cr);
+            }
         }
         return result;
     }

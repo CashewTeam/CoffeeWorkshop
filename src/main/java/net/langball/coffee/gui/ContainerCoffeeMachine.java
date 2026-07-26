@@ -36,7 +36,8 @@ import java.util.HashSet;
  */
 public class ContainerCoffeeMachine extends AbstractMachineMenu {
 
-    private final java.util.Map<net.minecraft.world.item.Item, java.util.Set<java.util.function.IntSupplier>> itemToSlots =
+    /** Global item → valid-slot set, built ONCE from registered recipes. */
+    private final java.util.Map<net.minecraft.world.item.Item, java.util.Set<Integer>> itemToValidSlots =
             new java.util.HashMap<>();
 
     public ContainerCoffeeMachine(int id, Inventory inv, BlockPos pos) {
@@ -89,50 +90,59 @@ public class ContainerCoffeeMachine extends AbstractMachineMenu {
     // ── Global role routing (independent of recipe iteration order) ──────
 
     /**
-     * Build a multi-set mapping each item to all valid role slots.
-     * Slot priority: container > base > modifier > additive.
+     * Build a map from each Item to the SET of slots it is valid for.
+     * Iterates all recipes ONCE during construction; the result is
+     * independent of any subsequent recipe iteration order.
      */
     private void buildItemRouting() {
         if (level == null) return;
         for (CoffeeBrewingRecipe r : level.getRecipeManager()
                 .getAllRecipesFor((RecipeType<CoffeeBrewingRecipe>) getRecipeType())) {
-            // Order matters: later role adds are LOWER priority
-            if (r.additive() != null) addRoleItems(r, r.additive().ingredient(), CoffeeMachineBlockEntity.SLOT_ADDITIVE);
-            addRoleItems(r, r.modifier() != null ? r.modifier().ingredient() : null, CoffeeMachineBlockEntity.SLOT_MODIFIER);
-            addRoleItems(r, r.base().ingredient(), CoffeeMachineBlockEntity.SLOT_BASE);
-            // Container is highest priority — placed first
-            addRoleItems(r, r.container().ingredient(), CoffeeMachineBlockEntity.SLOT_CONTAINER);
+            // Collect item → slots (lower priority slots added LATER;
+            // prioritySlots lookup iterates by priority order)
+            addRoleItems(r.base().ingredient(), CoffeeMachineBlockEntity.SLOT_BASE);
+            if (r.modifier() != null)
+                addRoleItems(r.modifier().ingredient(), CoffeeMachineBlockEntity.SLOT_MODIFIER);
+            if (r.additive() != null)
+                addRoleItems(r.additive().ingredient(), CoffeeMachineBlockEntity.SLOT_ADDITIVE);
+            addRoleItems(r.container().ingredient(), CoffeeMachineBlockEntity.SLOT_CONTAINER);
         }
     }
 
-    private void addRoleItems(CoffeeBrewingRecipe r, net.minecraft.world.item.crafting.Ingredient ing, int slot) {
+    private void addRoleItems(net.minecraft.world.item.crafting.Ingredient ing, int slot) {
         if (ing == null) return;
         for (ItemStack s : ing.getItems()) {
-            itemToSlots.computeIfAbsent(s.getItem(), k -> new HashSet<>())
-                    .add(() -> slot);
+            itemToValidSlots.computeIfAbsent(s.getItem(), k -> new HashSet<>()).add(slot);
         }
     }
 
     /**
-     * Resolves the target slot for a shift-clicked item.
-     * Returns the highest-priority valid empty slot, or -1 if none.
+     * Resolves the target slot for a shift-clicked item.  Returns the
+     * highest-priority valid slot that is currently empty (or can stack
+     * with the item), or -1 if the item isn't valid for any slot.
+     *
+     * <p>Priority order: container > base > modifier > additive.
      */
     private int findSlotForStack(ItemStack stack) {
         if (stack.isEmpty()) return -1;
-        // Priority order: container > base > modifier > additive
-        int[] prioritySlots = {CoffeeMachineBlockEntity.SLOT_CONTAINER,
+
+        int[] prioritySlots = {
+                CoffeeMachineBlockEntity.SLOT_CONTAINER,
                 CoffeeMachineBlockEntity.SLOT_BASE,
                 CoffeeMachineBlockEntity.SLOT_MODIFIER,
-                CoffeeMachineBlockEntity.SLOT_ADDITIVE};
+                CoffeeMachineBlockEntity.SLOT_ADDITIVE
+        };
+
+        java.util.Set<Integer> validSlots = itemToValidSlots.get(stack.getItem());
+        if (validSlots == null) return -1; // item not valid for any role
 
         for (int slot : prioritySlots) {
+            if (!validSlots.contains(slot)) continue; // strict role check
             ItemStack current = itemHandler.getStackInSlot(slot);
-            if (!current.isEmpty()) continue; // slot already occupied
-            // Check if this item is valid for this slot via the global role set
-            if (itemToSlots.containsKey(stack.getItem())) return slot;
+            if (current.isEmpty()) return slot;
+            if (net.minecraftforge.items.ItemHandlerHelper.canItemStacksStack(current, stack)) return slot;
         }
-        // Fallback: just slot 0
-        return CoffeeMachineBlockEntity.SLOT_BASE;
+        return -1;
     }
 
     @Override
@@ -162,13 +172,16 @@ public class ContainerCoffeeMachine extends AbstractMachineMenu {
                 if (!moveItemStackTo(stack, targetSlot, targetSlot + 1, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index >= playerInvStartIndex && index < hotbarStartIndex) {
-                if (!moveItemStackTo(stack, hotbarStartIndex, slots.size(), false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (index >= hotbarStartIndex && index < slots.size()) {
-                if (!moveItemStackTo(stack, playerInvStartIndex, hotbarStartIndex, false)) {
-                    return ItemStack.EMPTY;
+            } else {
+                // No valid role slot — perform standard inventory ↔ hotbar swap.
+                if (index >= playerInvStartIndex && index < hotbarStartIndex) {
+                    if (!moveItemStackTo(stack, hotbarStartIndex, slots.size(), false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (index >= hotbarStartIndex && index < slots.size()) {
+                    if (!moveItemStackTo(stack, playerInvStartIndex, hotbarStartIndex, false)) {
+                        return ItemStack.EMPTY;
+                    }
                 }
             }
         }

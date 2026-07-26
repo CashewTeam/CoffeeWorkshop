@@ -87,22 +87,20 @@ MACHINE_BLOCKS = {
 # ── Tag cache ─────────────────────────────────────────────────────────
 
 def load_tag_items(tag_id):
-    """Expand a tag ID (like '#minecraft:logs') to a set of concrete item IDs."""
+    """Expand a tag ID (like '#minecraft:logs') to a set of concrete item IDs.
+    Strict path resolution: <root>/<namespace>/tags/items/<path>.json.
+    """
     raw = tag_id.lstrip("#")
     if ":" not in raw:
         return set()
     ns, path = raw.split(":", 1)
-    path_parts = path.split("/")
-    for tag_dir in TAG_DIRS:
-        # Match namespace AND path
-        ns_dir = tag_dir.parent / "tags" / "items"
-        # Try both ns subdir and direct (modern structure: namespace/path)
-        candidate = ns_dir / ns / "/".join(path_parts) if (ns_dir / ns).exists() else tag_dir / ns / "/".join(path_parts)
-        # Simpler: just look in the right namespace subdir
-        candidate = tag_dir.parent / "tags" / "items" / ns / "/".join(path_parts)
-        if not candidate.exists():
-            # Legacy: try without ns subdir if ns is coffeework
-            candidate = tag_dir.parent / "tags" / "items" / "/".join(path_parts)
+    # Resolve from mod's generated data first, then vanilla data
+    TAG_ROOTS = [
+        REPO_ROOT / "src" / "generated" / "resources" / "data",
+        REPO_ROOT / "src" / "main" / "resources" / "data",
+    ]
+    for root in TAG_ROOTS:
+        candidate = root / ns / "tags" / "items" / f"{path}.json"
         if candidate.exists():
             try:
                 data = json.loads(candidate.read_text(encoding="utf-8"))
@@ -116,7 +114,7 @@ def load_tag_items(tag_id):
                 else:
                     items.add(entry)
             return items
-    # Tag not found — return empty (won't block reachability)
+    # Tag not found → return empty (does NOT block reachability)
     return set()
 
 TAG_CACHE = {}
@@ -202,7 +200,11 @@ def _add_ingredient_items(items, ing_obj):
 
 
 def extract_result(recipe):
-    """Extract output item ID from a recipe JSON."""
+    """Extract output item ID from a recipe JSON.  Supports cooling recipes
+    that store the output under the "iced" key."""
+    # Cooling recipes: output is under "iced" (input is under "hot")
+    if recipe.get("type") == "coffeework:cooling":
+        return recipe.get("iced", "")
     result = recipe.get("result")
     if result:
         if isinstance(result, str):
@@ -394,7 +396,16 @@ def main():
         ("coffeework:coffee_powder", "coffeework:coffee_americano_ice", "coffee_brewing"),
         ("coffeework:coffee_powder", "coffeework:coffee_latte_ice", "coffee_brewing"),
         ("coffeework:coldbrew_bottle", "coffeework:coffee_coldbrew_ice", "coffee_brewing"),
-    ]
+        # Cooling recipe outputs (workbench, not coffee machine)
+        # Note: input is the HOT drink, not a basic ingredient.
+        ("coffeework:coffee_coldbrew_fruit", "coffeework:coffee_coldbrew_fruit_ice", "cooling"),
+        ("coffeework:coffee_coldbrew_latte_caramel", "coffeework:coffee_coldbrew_latte_caramel_ice", "cooling"),
+        ("coffeework:coffee_coldbrew_latte_chocolate", "coffeework:coffee_coldbrew_latte_chocolate_ice", "cooling"),
+        ("coffeework:coffee_coldbrew_latte_fruit", "coffeework:coffee_coldbrew_latte_fruit_ice", "cooling"),
+        ("coffeework:coffee_coldbrew_latte_mint", "coffeework:coffee_coldbrew_latte_mint_ice", "cooling"),
+        ("coffeework:coffee_coldbrew_latte_vanilla", "coffeework:coffee_coldbrew_latte_vanilla_ice", "cooling"),
+        ("coffeework:coffee_mandarin_drink", "coffeework:coffee_mandarin_drink_ice", "cooling"),
+    ]   
     lines.append("## P0 Critical Chain\n")
     lines.append("| Input | Output | Method | Status |")
     lines.append("|-------|--------|--------|--------|")

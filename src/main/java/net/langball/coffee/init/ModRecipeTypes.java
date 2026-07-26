@@ -69,14 +69,12 @@ public final class ModRecipeTypes {
     public static final RegistryObject<MachineRecipeSerializer> OVEN_BAKING_SERIALIZER =
             SERIALIZERS.register("oven_baking", () -> new MachineRecipeSerializer(OVEN_BAKING));
 
-    /** Custom serializer for CoolingRecipe — hot drink → iced drink (NBT-preserving). */
+    /** Custom serializer for CoolingRecipe — hot drink → iced drink (NBT-preserving).
+     *  CoolingRecipe lives under {@link net.minecraft.world.item.crafting.RecipeType#CRAFTING}
+     *  so it remains discoverable via the workbench lookup. */
     public static final RegistryObject<net.langball.coffee.recipes.CoolingRecipe.Serializer> COOLING_SERIALIZER =
             SERIALIZERS.register("cooling",
                     net.langball.coffee.recipes.CoolingRecipe.Serializer::new);
-
-    /** RecipeType for CoolingRecipe (used by RecipeManager queries). */
-    public static final net.minecraft.world.item.crafting.RecipeType<net.langball.coffee.recipes.CoolingRecipe> COOLING_TYPE =
-            net.minecraft.world.item.crafting.RecipeType.simple(CoffeeWork.id("cooling"));
 
     private ModRecipeTypes() {
     }
