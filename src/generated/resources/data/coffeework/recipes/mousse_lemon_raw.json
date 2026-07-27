@@ -3,10 +3,13 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "coffeework:mixing_bowl"
+      "item": "coffeework:cake_model"
     },
     {
       "item": "coffeework:gelatin"
+    },
+    {
+      "item": "minecraft:milk_bucket"
     },
     {
       "item": "minecraft:milk_bucket"
@@ -18,7 +21,7 @@
       "item": "minecraft:egg"
     },
     {
-      "item": "minecraft:sugar"
+      "item": "minecraft:egg"
     }
   ],
   "result": {

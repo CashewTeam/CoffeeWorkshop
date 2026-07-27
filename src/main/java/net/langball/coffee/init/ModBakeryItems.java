@@ -1,9 +1,11 @@
 package net.langball.coffee.init;
 
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -169,114 +171,241 @@ public class ModBakeryItems {
         ModItems.CAKE_SPONGE_TEA_RAW = items.register("cake_sponge_tea_raw",
                 () -> new Item(new Item.Properties()));
 
-        // Phase 5.4: Cake model intermediates — 1.12.2: plain=4(0.6), flavored=6(0.6)
+        // Phase 5.4: Cake model intermediates — non-edible, return mold when assembled into block
+        // 1.12.2: model items serve purely as an intermediate; mold is returned at Model→Finished
         ModItems.CAKE_SPONGE_MODEL = items.register("cake_sponge_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_BERRY_MODEL = items.register("cake_sponge_berry_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_CARROT_MODEL = items.register("cake_sponge_carrot_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_CHOCOLATE_MODEL = items.register("cake_sponge_chocolate_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_COFFEE_MODEL = items.register("cake_sponge_coffee_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_LEMON_MODEL = items.register("cake_sponge_lemon_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_PUMPKIN_MODEL = items.register("cake_sponge_pumpkin_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_REDVELVET_MODEL = items.register("cake_sponge_redvelvet_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_TEA_MODEL = items.register("cake_sponge_tea_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
         ModItems.CAKE_CHEESE_MODEL = items.register("cake_cheese_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
 
-        // Phase 5.4: Cake plate intermediates (raw→model→base) — 1.12.2 values
-        // Plain sponge plates
+        // Phase 5.4: Cake plate intermediates (raw→model→base)
+        // Plate models return CAKE_MODEL_PLATE when assembled into base
         ModItems.CAKE_SPONGE_PLATE_RAW = items.register("cake_sponge_plate_raw",
                 () -> new Item(new Item.Properties()));
         ModItems.CAKE_SPONGE_PLATE_MODEL = items.register("cake_sponge_plate_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_PLATE.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_BASE = items.register("cake_sponge_base",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.6F).build())));
         // Berry plates
         ModItems.CAKE_SPONGE_BERRY_PLATE_RAW = items.register("cake_sponge_berry_plate_raw",
                 () -> new Item(new Item.Properties()));
         ModItems.CAKE_SPONGE_BERRY_PLATE_MODEL = items.register("cake_sponge_berry_plate_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_PLATE.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_BERRY_BASE = items.register("cake_sponge_berry_base",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
         // Carrot plates
         ModItems.CAKE_SPONGE_CARROT_PLATE_RAW = items.register("cake_sponge_carrot_plate_raw",
                 () -> new Item(new Item.Properties()));
         ModItems.CAKE_SPONGE_CARROT_PLATE_MODEL = items.register("cake_sponge_carrot_plate_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_PLATE.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_CARROT_BASE = items.register("cake_sponge_carrot_base",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
         // Chocolate plates
         ModItems.CAKE_SPONGE_CHOCOLATE_PLATE_RAW = items.register("cake_sponge_chocolate_plate_raw",
                 () -> new Item(new Item.Properties()));
         ModItems.CAKE_SPONGE_CHOCOLATE_PLATE_MODEL = items.register("cake_sponge_chocolate_plate_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_PLATE.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_CHOCOLATE_BASE = items.register("cake_sponge_chocolate_base",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
         // Coffee plates
         ModItems.CAKE_SPONGE_COFFEE_PLATE_RAW = items.register("cake_sponge_coffee_plate_raw",
                 () -> new Item(new Item.Properties()));
         ModItems.CAKE_SPONGE_COFFEE_PLATE_MODEL = items.register("cake_sponge_coffee_plate_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_PLATE.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_COFFEE_BASE = items.register("cake_sponge_coffee_base",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
         // Lemon plates
         ModItems.CAKE_SPONGE_LEMON_PLATE_RAW = items.register("cake_sponge_lemon_plate_raw",
                 () -> new Item(new Item.Properties()));
         ModItems.CAKE_SPONGE_LEMON_PLATE_MODEL = items.register("cake_sponge_lemon_plate_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_PLATE.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_LEMON_BASE = items.register("cake_sponge_lemon_base",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
         // Pumpkin plates
         ModItems.CAKE_SPONGE_PUMPKIN_PLATE_RAW = items.register("cake_sponge_pumpkin_plate_raw",
                 () -> new Item(new Item.Properties()));
         ModItems.CAKE_SPONGE_PUMPKIN_PLATE_MODEL = items.register("cake_sponge_pumpkin_plate_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_PLATE.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_PUMPKIN_BASE = items.register("cake_sponge_pumpkin_base",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
         // Red velvet plates
         ModItems.CAKE_SPONGE_REDVELVET_PLATE_RAW = items.register("cake_sponge_redvelvet_plate_raw",
                 () -> new Item(new Item.Properties()));
         ModItems.CAKE_SPONGE_REDVELVET_PLATE_MODEL = items.register("cake_sponge_redvelvet_plate_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_PLATE.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_REDVELVET_BASE = items.register("cake_sponge_redvelvet_base",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
         // Tea plates
         ModItems.CAKE_SPONGE_TEA_PLATE_RAW = items.register("cake_sponge_tea_plate_raw",
                 () -> new Item(new Item.Properties()));
         ModItems.CAKE_SPONGE_TEA_PLATE_MODEL = items.register("cake_sponge_tea_plate_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_PLATE.get());
+                    }
+                });
         ModItems.CAKE_SPONGE_TEA_BASE = items.register("cake_sponge_tea_base",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
 
-        // Phase 5.4: Jiggy raw/model (generic items, shared models for all flavors)
+        // Phase 5.4: Jiggy raw/model (generic, returns CAKE_MODEL_SQUARE at Model→Finished)
         ModItems.JIGGY_CAKE_RAW = items.register("jiggy_cake_raw",
                 () -> new Item(new Item.Properties()));
         ModItems.JIGGY_CAKE_MODEL = items.register("jiggy_cake_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.4F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_SQUARE.get());
+                    }
+                });
 
         // Phase 5.4: Mousse model intermediates (raw→icecream machine→model→block)
+        // Models return CAKE_MODEL (round mold) when assembled into block
         ModItems.MOUSSE_BERRY_MODEL = items.register("mousse_berry_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
         ModItems.MOUSSE_CHOCOLATE_MODEL = items.register("mousse_chocolate_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
         ModItems.MOUSSE_COFFEE_MODEL = items.register("mousse_coffee_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
         ModItems.MOUSSE_LEMON_MODEL = items.register("mousse_lemon_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL.get());
+                    }
+                });
 
-        // Phase 5.4: Tiramisu raw → icecream machine → model → block
+        // Phase 5.4: Tiramisu intermediates — model returns CAKE_MODEL_SQUARE
         ModItems.TIRAMISU_RAW = items.register("tiramisu_raw",
                 () -> new Item(new Item.Properties()));
         ModItems.TIRAMISU_MODEL = items.register("tiramisu_model",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationMod(0.6F).build())));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_SQUARE.get());
+                    }
+                });
 
         // Phase 6: Creams — 1.12.2: milk=2(0.4), flavored=4(0.4)
         ModItems.CREAM_MILK = items.register("cream_milk",
@@ -421,20 +550,11 @@ public class ModBakeryItems {
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F).build())));
 
         // Phase 7: Soufflés — 1.12.2: plain=8(0.6), choc=10(0.6)
+        // Override finishUsingItem to return Small Mold (1.12.2 ItemFoodContain pattern)
         ModItems.SOUFFLE = items.register("souffle",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationMod(0.6F).build())) {
-                    @Override public boolean hasCraftingRemainingItem() { return true; }
-                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
-                        return new ItemStack(ModItems.SMALL_MODEL.get());
-                    }
-                });
+                () -> new SouffleItem(new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationMod(0.6F).build())));
         ModItems.SOUFFLE_CHOCOLATE = items.register("souffle_chocolate",
-                () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F).build())) {
-                    @Override public boolean hasCraftingRemainingItem() { return true; }
-                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
-                        return new ItemStack(ModItems.SMALL_MODEL.get());
-                    }
-                });
+                () -> new SouffleItem(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F).build())));
 
         // Phase 7: Raw intermediates (muffin, soufflé, mooncake) — 1.12.2 values
         // Muffin raw: all 2(0.2); Soufflé raw: all 2(0.2); Mooncake raw: all 2(0.4)
@@ -468,5 +588,28 @@ public class ModBakeryItems {
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.4F).build())));
         ModItems.MOONCAKE_HAM_RAW = items.register("mooncake_ham_raw",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.4F).build())));
+    }
+
+    /**
+     * Soufflé food item that returns a Small Mold when finished eating.
+     * Matches 1.12.2 {@code ItemFoodContain} pattern: container returned via
+     * {@code onItemUseFinish} rather than crafting remainder.
+     */
+    private static class SouffleItem extends Item {
+        SouffleItem(Properties props) {
+            super(props);
+        }
+
+        @Override
+        public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+            ItemStack result = super.finishUsingItem(stack, level, entity);
+            if (entity instanceof net.minecraft.world.entity.player.Player player) {
+                ItemStack mold = new ItemStack(ModItems.SMALL_MODEL.get());
+                if (!player.getInventory().add(mold)) {
+                    player.drop(mold, false);
+                }
+            }
+            return result;
+        }
     }
 }

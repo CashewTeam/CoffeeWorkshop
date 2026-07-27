@@ -338,45 +338,8 @@ public final class ModMachineRecipeProvider {
                 .experience(0.1F).cookingTime(200)
                 .save(writer, id("rolling/plate_dough_ginger"));
 
-        // Phase 5.4: Cake rolls (finished sponge block → Roller → roll)
-        // The full production chain is: raw → Oven → sponge → Roller → cake_roll.
-        // Flavored rolls follow the same pattern: flavored sponge block → Roller.
-        MachineRecipeBuilder.rolling(Ingredient.of(ModBlocks.CAKE_SPONGE.get().asItem()),
-                new ItemStack(ModItems.CAKE_ROLL.get()))
-                .experience(0.15F).cookingTime(200)
-                .save(writer, id("rolling/cake_roll"));
-        MachineRecipeBuilder.rolling(Ingredient.of(ModBlocks.CAKE_SPONGE_BERRY.get().asItem()),
-                new ItemStack(ModItems.CAKE_BERRY_ROLL.get()))
-                .experience(0.15F).cookingTime(200)
-                .save(writer, id("rolling/cake_berry_roll"));
-        MachineRecipeBuilder.rolling(Ingredient.of(ModBlocks.CAKE_SPONGE_CARROT.get().asItem()),
-                new ItemStack(ModItems.CAKE_CARROT_ROLL.get()))
-                .experience(0.15F).cookingTime(200)
-                .save(writer, id("rolling/cake_carrot_roll"));
-        MachineRecipeBuilder.rolling(Ingredient.of(ModBlocks.CAKE_SPONGE_CHOCOLATE.get().asItem()),
-                new ItemStack(ModItems.CAKE_CHOCOLATE_ROLL.get()))
-                .experience(0.15F).cookingTime(200)
-                .save(writer, id("rolling/cake_chocolate_roll"));
-        MachineRecipeBuilder.rolling(Ingredient.of(ModBlocks.CAKE_SPONGE_COFFEE.get().asItem()),
-                new ItemStack(ModItems.CAKE_COFFEE_ROLL.get()))
-                .experience(0.15F).cookingTime(200)
-                .save(writer, id("rolling/cake_coffee_roll"));
-        MachineRecipeBuilder.rolling(Ingredient.of(ModBlocks.CAKE_SPONGE_LEMON.get().asItem()),
-                new ItemStack(ModItems.CAKE_LEMON_ROLL.get()))
-                .experience(0.15F).cookingTime(200)
-                .save(writer, id("rolling/cake_lemon_roll"));
-        MachineRecipeBuilder.rolling(Ingredient.of(ModBlocks.CAKE_SPONGE_PUMPKIN.get().asItem()),
-                new ItemStack(ModItems.CAKE_PUMPKIN_ROLL.get()))
-                .experience(0.15F).cookingTime(200)
-                .save(writer, id("rolling/cake_pumpkin_roll"));
-        MachineRecipeBuilder.rolling(Ingredient.of(ModBlocks.CAKE_SPONGE_REDVELVET.get().asItem()),
-                new ItemStack(ModItems.CAKE_REDVELVET_ROLL.get()))
-                .experience(0.15F).cookingTime(200)
-                .save(writer, id("rolling/cake_redvelvet_roll"));
-        MachineRecipeBuilder.rolling(Ingredient.of(ModBlocks.CAKE_SPONGE_TEA.get().asItem()),
-                new ItemStack(ModItems.CAKE_TEA_ROLL.get()))
-                .experience(0.15F).cookingTime(200)
-                .save(writer, id("rolling/cake_tea_roll"));
+        // Phase 5.4: Cake rolls via Base + Cream workbench path only
+        // (Sponge → Roller shortcuts REMOVED — use Cake Base + Cream → Roll path)
     }
 
     private static void buildIcecreamRecipes(Consumer<FinishedRecipe> writer) {

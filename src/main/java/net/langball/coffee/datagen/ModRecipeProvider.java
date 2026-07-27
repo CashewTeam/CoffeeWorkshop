@@ -694,7 +694,7 @@ public class ModRecipeProvider extends RecipeProvider {
         // Tiramisu raw (1.12.2: square_model + base + cheese + espresso + cream + cocoa → raw)
         shapeless(RecipeCategory.FOOD, ModItems.TIRAMISU_RAW.get(), ModItems.CAKE_MODEL_SQUARE.get())
                 .requires(ModItems.CAKE_MODEL_SQUARE.get())
-                .requires(ModBlocks.CAKE_SPONGE.get())
+                .requires(ModItems.CAKE_SPONGE_BASE.get())
                 .requires(ModItems.CHEESE.get())
                 .requires(ModItems.ESPRESSO.get())
                 .requires(ModItems.CREAM_MILK.get())
@@ -726,34 +726,10 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.VANILLA.get())
                 .save(writer, modLoc("icecream_mix_vanilla"));
 
-        // Phase 5.2-B: Flavored ice creams (icecream_vanilla + flavor → flavored)
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_APPLE.get(), ModItems.ICECREAM_VANILLA.get())
-                .requires(ModItems.ICECREAM_VANILLA.get())
-                .requires(Items.APPLE)
-                .save(writer, modLoc("icecream_apple"));
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_BERRY.get(), ModItems.ICECREAM_VANILLA.get())
-                .requires(ModItems.ICECREAM_VANILLA.get())
-                .requires(Items.SWEET_BERRIES)
-                .save(writer, modLoc("icecream_berry"));
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_CHOCOLATE.get(), ModItems.ICECREAM_VANILLA.get())
-                .requires(ModItems.ICECREAM_VANILLA.get())
-                .requires(ModItems.COCOA_POWDER.get())
-                .save(writer, modLoc("icecream_chocolate"));
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_COFFEE.get(), ModItems.ICECREAM_VANILLA.get())
-                .requires(ModItems.ICECREAM_VANILLA.get())
-                .requires(ModItems.COFFEE_POWDER.get())
-                .save(writer, modLoc("icecream_coffee"));
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_LEMON.get(), ModItems.ICECREAM_VANILLA.get())
-                .requires(ModItems.ICECREAM_VANILLA.get())
-                .requires(ModItems.LEMON.get())
-                .save(writer, modLoc("icecream_lemon"));
-        shapeless(RecipeCategory.FOOD, ModItems.ICECREAM_MELON.get(), ModItems.ICECREAM_VANILLA.get())
-                .requires(ModItems.ICECREAM_VANILLA.get())
-                .requires(Items.MELON_SLICE)
-                .save(writer, modLoc("icecream_melon"));
-
-        // NOTE: plate_dough, plate_dough_pastry, plate_dough_ginger crafting
-        // fallbacks REMOVED — use Roller machine instead
+        // Phase 6: Creams (milk + sugar + flavor → cream — via Icecream Machine)
+        // (Machine recipes in ModMachineRecipeProvider)
+        // NOTE: vanilla_icecream + flavor → flavored ice cream REMOVED
+        // Use Cream → Icecream Machine path instead (1.12.2 flavoring at cream stage).
 
         // ===================================================================
         // PHASE 5.3 — CONFECTIONERY FOUNDATION
@@ -979,39 +955,43 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.CAKE_CHEESE_MODEL.get())
                 .save(writer, modLoc("cake_cheese_model_to_block"));
 
-        // Mousse raw intermediates (gelatin + milk + egg + sugar + flavor → mixing bowl)
-        // Mousse uses Icecream Machine for setting, not Oven
-        shapeless(RecipeCategory.FOOD, ModItems.MOUSSE_BERRY_RAW.get(), ModItems.MIXING_BOWL.get())
-                .requires(ModItems.MIXING_BOWL.get())
+        // Mousse raw intermediates (1.12.2: 2 milk + 2 eggs + gelatin + cake_model + flavor → raw)
+        // Mousse uses Icecream Machine for cold-set processing
+        shapeless(RecipeCategory.FOOD, ModItems.MOUSSE_BERRY_RAW.get(), ModItems.CAKE_MODEL.get())
+                .requires(ModItems.CAKE_MODEL.get())
                 .requires(ModItems.GELATIN.get())
+                .requires(Items.MILK_BUCKET)
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.SWEET_BERRIES)
                 .requires(Items.EGG)
-                .requires(Items.SUGAR)
+                .requires(Items.EGG)
                 .save(writer, modLoc("mousse_berry_raw"));
-        shapeless(RecipeCategory.FOOD, ModItems.MOUSSE_CHOCOLATE_RAW.get(), ModItems.MIXING_BOWL.get())
-                .requires(ModItems.MIXING_BOWL.get())
+        shapeless(RecipeCategory.FOOD, ModItems.MOUSSE_CHOCOLATE_RAW.get(), ModItems.CAKE_MODEL.get())
+                .requires(ModItems.CAKE_MODEL.get())
                 .requires(ModItems.GELATIN.get())
+                .requires(Items.MILK_BUCKET)
                 .requires(Items.MILK_BUCKET)
                 .requires(ModItems.COCOA_POWDER.get())
                 .requires(Items.EGG)
-                .requires(Items.SUGAR)
+                .requires(Items.EGG)
                 .save(writer, modLoc("mousse_chocolate_raw"));
-        shapeless(RecipeCategory.FOOD, ModItems.MOUSSE_COFFEE_RAW.get(), ModItems.MIXING_BOWL.get())
-                .requires(ModItems.MIXING_BOWL.get())
+        shapeless(RecipeCategory.FOOD, ModItems.MOUSSE_COFFEE_RAW.get(), ModItems.CAKE_MODEL.get())
+                .requires(ModItems.CAKE_MODEL.get())
                 .requires(ModItems.GELATIN.get())
+                .requires(Items.MILK_BUCKET)
                 .requires(Items.MILK_BUCKET)
                 .requires(ModItems.COFFEE_POWDER.get())
                 .requires(Items.EGG)
-                .requires(Items.SUGAR)
+                .requires(Items.EGG)
                 .save(writer, modLoc("mousse_coffee_raw"));
-        shapeless(RecipeCategory.FOOD, ModItems.MOUSSE_LEMON_RAW.get(), ModItems.MIXING_BOWL.get())
-                .requires(ModItems.MIXING_BOWL.get())
+        shapeless(RecipeCategory.FOOD, ModItems.MOUSSE_LEMON_RAW.get(), ModItems.CAKE_MODEL.get())
+                .requires(ModItems.CAKE_MODEL.get())
                 .requires(ModItems.GELATIN.get())
+                .requires(Items.MILK_BUCKET)
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.YELLOW_DYE)
                 .requires(Items.EGG)
-                .requires(Items.SUGAR)
+                .requires(Items.EGG)
                 .save(writer, modLoc("mousse_lemon_raw"));
 
         // Mousse model → block assembly (1.12.2: model → block)
@@ -1074,22 +1054,117 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.MELON_SLICE)
                 .save(writer, modLoc("cream_melon"));
 
-        // Phase 5.4: Cake ↔ 8 Slices bidirectional (1.12.2 registerCakeSlices)
-        // sponge → 8 slices
+        // Phase 5.4: Cake ↔ 8 Slices bidirectional (1.12.2 registerCakeSlices — all 18 cakes)
+        // Sponge cakes → sponge slices
         shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_SLICE.get(), 8, ModBlocks.CAKE_SPONGE.get())
                 .requires(ModBlocks.CAKE_SPONGE.get())
                 .save(writer, modLoc("cake_sponge_to_slices"));
-        // 8 slices → sponge (reassembly)
         shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE.get(), ModItems.CAKE_SPONGE_SLICE.get())
-                .requires(ModItems.CAKE_SPONGE_SLICE.get())
-                .requires(ModItems.CAKE_SPONGE_SLICE.get())
-                .requires(ModItems.CAKE_SPONGE_SLICE.get())
-                .requires(ModItems.CAKE_SPONGE_SLICE.get())
-                .requires(ModItems.CAKE_SPONGE_SLICE.get())
-                .requires(ModItems.CAKE_SPONGE_SLICE.get())
-                .requires(ModItems.CAKE_SPONGE_SLICE.get())
-                .requires(ModItems.CAKE_SPONGE_SLICE.get())
+                .requires(ModItems.CAKE_SPONGE_SLICE.get(), 8)
                 .save(writer, modLoc("cake_sponge_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_BERRY_SLICES.get(), 8, ModBlocks.CAKE_SPONGE_BERRY.get())
+                .requires(ModBlocks.CAKE_SPONGE_BERRY.get())
+                .save(writer, modLoc("cake_sponge_berry_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_BERRY.get(), ModItems.CAKE_SPONGE_BERRY_SLICES.get())
+                .requires(ModItems.CAKE_SPONGE_BERRY_SLICES.get(), 8)
+                .save(writer, modLoc("cake_sponge_berry_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_CARROT_SLICES.get(), 8, ModBlocks.CAKE_SPONGE_CARROT.get())
+                .requires(ModBlocks.CAKE_SPONGE_CARROT.get())
+                .save(writer, modLoc("cake_sponge_carrot_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_CARROT.get(), ModItems.CAKE_SPONGE_CARROT_SLICES.get())
+                .requires(ModItems.CAKE_SPONGE_CARROT_SLICES.get(), 8)
+                .save(writer, modLoc("cake_sponge_carrot_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_CHOCOLATE_SLICES.get(), 8, ModBlocks.CAKE_SPONGE_CHOCOLATE.get())
+                .requires(ModBlocks.CAKE_SPONGE_CHOCOLATE.get())
+                .save(writer, modLoc("cake_sponge_chocolate_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_CHOCOLATE.get(), ModItems.CAKE_SPONGE_CHOCOLATE_SLICES.get())
+                .requires(ModItems.CAKE_SPONGE_CHOCOLATE_SLICES.get(), 8)
+                .save(writer, modLoc("cake_sponge_chocolate_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_COFFEE_SLICES.get(), 8, ModBlocks.CAKE_SPONGE_COFFEE.get())
+                .requires(ModBlocks.CAKE_SPONGE_COFFEE.get())
+                .save(writer, modLoc("cake_sponge_coffee_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_COFFEE.get(), ModItems.CAKE_SPONGE_COFFEE_SLICES.get())
+                .requires(ModItems.CAKE_SPONGE_COFFEE_SLICES.get(), 8)
+                .save(writer, modLoc("cake_sponge_coffee_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_LEMON_SLICES.get(), 8, ModBlocks.CAKE_SPONGE_LEMON.get())
+                .requires(ModBlocks.CAKE_SPONGE_LEMON.get())
+                .save(writer, modLoc("cake_sponge_lemon_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_LEMON.get(), ModItems.CAKE_SPONGE_LEMON_SLICES.get())
+                .requires(ModItems.CAKE_SPONGE_LEMON_SLICES.get(), 8)
+                .save(writer, modLoc("cake_sponge_lemon_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_PUMPKIN_SLICES.get(), 8, ModBlocks.CAKE_SPONGE_PUMPKIN.get())
+                .requires(ModBlocks.CAKE_SPONGE_PUMPKIN.get())
+                .save(writer, modLoc("cake_sponge_pumpkin_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_PUMPKIN.get(), ModItems.CAKE_SPONGE_PUMPKIN_SLICES.get())
+                .requires(ModItems.CAKE_SPONGE_PUMPKIN_SLICES.get(), 8)
+                .save(writer, modLoc("cake_sponge_pumpkin_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_REDVELVET_SLICES.get(), 8, ModBlocks.CAKE_SPONGE_REDVELVET.get())
+                .requires(ModBlocks.CAKE_SPONGE_REDVELVET.get())
+                .save(writer, modLoc("cake_sponge_redvelvet_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_REDVELVET.get(), ModItems.CAKE_SPONGE_REDVELVET_SLICES.get())
+                .requires(ModItems.CAKE_SPONGE_REDVELVET_SLICES.get(), 8)
+                .save(writer, modLoc("cake_sponge_redvelvet_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SPONGE_TEA_SLICES.get(), 8, ModBlocks.CAKE_SPONGE_TEA.get())
+                .requires(ModBlocks.CAKE_SPONGE_TEA.get())
+                .save(writer, modLoc("cake_sponge_tea_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_TEA.get(), ModItems.CAKE_SPONGE_TEA_SLICES.get())
+                .requires(ModItems.CAKE_SPONGE_TEA_SLICES.get(), 8)
+                .save(writer, modLoc("cake_sponge_tea_slices_to_cake"));
+        // Large cakes → large slices
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SLICES.get(), 8, ModBlocks.CAKE_CARROT.get())
+                .requires(ModBlocks.CAKE_CARROT.get())
+                .save(writer, modLoc("cake_carrot_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_CARROT.get(), ModItems.CAKE_SLICES.get())
+                .requires(ModItems.CAKE_SLICES.get(), 8)
+                .save(writer, modLoc("cake_carrot_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_COFFEE_SLICES.get(), 8, ModBlocks.CAKE_COFFEE.get())
+                .requires(ModBlocks.CAKE_COFFEE.get())
+                .save(writer, modLoc("cake_coffee_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_COFFEE.get(), ModItems.CAKE_COFFEE_SLICES.get())
+                .requires(ModItems.CAKE_COFFEE_SLICES.get(), 8)
+                .save(writer, modLoc("cake_coffee_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_HARVEST_SLICES.get(), 8, ModBlocks.CAKE_HARVEST.get())
+                .requires(ModBlocks.CAKE_HARVEST.get())
+                .save(writer, modLoc("cake_harvest_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_HARVEST.get(), ModItems.CAKE_HARVEST_SLICES.get())
+                .requires(ModItems.CAKE_HARVEST_SLICES.get(), 8)
+                .save(writer, modLoc("cake_harvest_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_LEMON_SLICES.get(), 8, ModBlocks.CAKE_LEMON.get())
+                .requires(ModBlocks.CAKE_LEMON.get())
+                .save(writer, modLoc("cake_lemon_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_LEMON.get(), ModItems.CAKE_LEMON_SLICES.get())
+                .requires(ModItems.CAKE_LEMON_SLICES.get(), 8)
+                .save(writer, modLoc("cake_lemon_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_TEA_SLICES.get(), 8, ModBlocks.CAKE_TEA.get())
+                .requires(ModBlocks.CAKE_TEA.get())
+                .save(writer, modLoc("cake_tea_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_TEA.get(), ModItems.CAKE_TEA_SLICES.get())
+                .requires(ModItems.CAKE_TEA_SLICES.get(), 8)
+                .save(writer, modLoc("cake_tea_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_BERRY_SLICES.get(), 8, ModBlocks.CAKE_BERRY.get())
+                .requires(ModBlocks.CAKE_BERRY.get())
+                .save(writer, modLoc("cake_berry_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_BERRY.get(), ModItems.CAKE_BERRY_SLICES.get())
+                .requires(ModItems.CAKE_BERRY_SLICES.get(), 8)
+                .save(writer, modLoc("cake_berry_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_CHEESE_SLICES.get(), 8, ModBlocks.CAKE_CHEESE.get())
+                .requires(ModBlocks.CAKE_CHEESE.get())
+                .save(writer, modLoc("cake_cheese_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_CHEESE.get(), ModItems.CAKE_CHEESE_SLICES.get())
+                .requires(ModItems.CAKE_CHEESE_SLICES.get(), 8)
+                .save(writer, modLoc("cake_cheese_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SCHWARZWALD_SLICES.get(), 8, ModBlocks.CAKE_SCHWARZWALD.get())
+                .requires(ModBlocks.CAKE_SCHWARZWALD.get())
+                .save(writer, modLoc("cake_schwarzwald_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SCHWARZWALD.get(), ModItems.CAKE_SCHWARZWALD_SLICES.get())
+                .requires(ModItems.CAKE_SCHWARZWALD_SLICES.get(), 8)
+                .save(writer, modLoc("cake_schwarzwald_slices_to_cake"));
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_REDVELVET_SLICES.get(), 8, ModBlocks.CAKE_REDVELVET.get())
+                .requires(ModBlocks.CAKE_REDVELVET.get())
+                .save(writer, modLoc("cake_redvelvet_to_slices"));
+        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_REDVELVET.get(), ModItems.CAKE_REDVELVET_SLICES.get())
+                .requires(ModItems.CAKE_REDVELVET_SLICES.get(), 8)
+                .save(writer, modLoc("cake_redvelvet_slices_to_cake"));
 
         // Phase 6: Cream → Cake Roll assembly (cream as filling for plain rolls)
         // These provide a cream consumption path — cream as a public intermediate.
@@ -1313,48 +1388,48 @@ public class ModRecipeProvider extends RecipeProvider {
 
         // Phase 7: Pastries — croissant via Oven (machine recipe in ModMachineRecipeProvider)
 
-        // Phase 7: Marshmallow + gelatin → jiggy cake base
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE.get(), ModItems.GELATIN.get())
-                .requires(ModItems.GELATIN.get())
-                .requires(Items.SUGAR)
-                .requires(Items.MILK_BUCKET)
-                .save(writer, modLoc("jiggy_cake"));
-        // Jiggy cake flavors
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_BERRY.get(), ModItems.JIGGY_CAKE.get())
-                .requires(ModItems.JIGGY_CAKE.get())
+        // Phase 7: Jiggy cake — model→finished chain (9 variants)
+        // raw → Oven → model (ModMachineRecipeProvider) → assemble
+        // Model returns CAKE_MODEL_SQUARE as crafting remainder at assembly stage
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE.get(), ModItems.JIGGY_CAKE_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_MODEL.get())
+                .save(writer, modLoc("jiggy_cake_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_BERRY.get(), ModItems.JIGGY_CAKE_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_MODEL.get())
                 .requires(Items.SWEET_BERRIES)
-                .save(writer, modLoc("jiggy_cake_berry"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_CARROT.get(), ModItems.JIGGY_CAKE.get())
-                .requires(ModItems.JIGGY_CAKE.get())
+                .save(writer, modLoc("jiggy_cake_berry_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_CARROT.get(), ModItems.JIGGY_CAKE_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_MODEL.get())
                 .requires(Items.CARROT)
-                .save(writer, modLoc("jiggy_cake_carrot"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_CHOCOLATE.get(), ModItems.JIGGY_CAKE.get())
-                .requires(ModItems.JIGGY_CAKE.get())
+                .save(writer, modLoc("jiggy_cake_carrot_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_CHOCOLATE.get(), ModItems.JIGGY_CAKE_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_MODEL.get())
                 .requires(ModItems.COCOA_POWDER.get())
-                .save(writer, modLoc("jiggy_cake_chocolate"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_COFFEE.get(), ModItems.JIGGY_CAKE.get())
-                .requires(ModItems.JIGGY_CAKE.get())
+                .save(writer, modLoc("jiggy_cake_chocolate_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_COFFEE.get(), ModItems.JIGGY_CAKE_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_MODEL.get())
                 .requires(ModItems.COFFEE_POWDER.get())
-                .save(writer, modLoc("jiggy_cake_coffee"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_LEMON.get(), ModItems.JIGGY_CAKE.get())
-                .requires(ModItems.JIGGY_CAKE.get())
+                .save(writer, modLoc("jiggy_cake_coffee_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_LEMON.get(), ModItems.JIGGY_CAKE_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_MODEL.get())
                 .requires(ModItems.LEMON.get())
-                .save(writer, modLoc("jiggy_cake_lemon"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_PUMPKIN.get(), ModItems.JIGGY_CAKE.get())
-                .requires(ModItems.JIGGY_CAKE.get())
+                .save(writer, modLoc("jiggy_cake_lemon_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_PUMPKIN.get(), ModItems.JIGGY_CAKE_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_MODEL.get())
                 .requires(Items.PUMPKIN)
-                .save(writer, modLoc("jiggy_cake_pumpkin"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_REDVELVET.get(), ModItems.JIGGY_CAKE.get())
-                .requires(ModItems.JIGGY_CAKE.get())
+                .save(writer, modLoc("jiggy_cake_pumpkin_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_REDVELVET.get(), ModItems.JIGGY_CAKE_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_MODEL.get())
                 .requires(ModItems.COCOA_POWDER.get())
                 .requires(Items.BEETROOT)
-                .save(writer, modLoc("jiggy_cake_redvelvet"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_TEA.get(), ModItems.JIGGY_CAKE.get())
-                .requires(ModItems.JIGGY_CAKE.get())
+                .save(writer, modLoc("jiggy_cake_redvelvet_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_TEA.get(), ModItems.JIGGY_CAKE_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_MODEL.get())
                 .requires(ModItems.TEA_LEAF.get())
-                .save(writer, modLoc("jiggy_cake_tea"));
+                .save(writer, modLoc("jiggy_cake_tea_from_model"));
 
         // Phase 7: Jiggy cake raw (1.12.2: CAKE_MODEL_SQUARE + 2× batter → jiggy_raw)
+        // Mold is consumed at this stage; returned at Model→Finished stage
         shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_RAW.get(), ModItems.CAKE_MODEL_SQUARE.get())
                 .requires(ModItems.CAKE_MODEL_SQUARE.get())
                 .requires(ModItems.IRON_BOWL_BATTER.get())

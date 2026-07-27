@@ -118,36 +118,19 @@ public class ModIngredientItems {
                 () -> new Item(new Item.Properties()));
 
         // ── Tools / Molds ──
+        // Molds are consumed in Raw-stage recipes; returned when Model assembles into Finished
         ModItems.IRON_BOWL = items.register("iron_bowl",
-                () -> new Item(new Item.Properties().stacksTo(16)) {
-                    @Override public boolean hasCraftingRemainingItem() { return true; }
-                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
-                });
+                () -> new Item(new Item.Properties().stacksTo(16)));
         ModItems.CAKE_MODEL = items.register("cake_model",
-                () -> new Item(new Item.Properties().stacksTo(16)) {
-                    @Override public boolean hasCraftingRemainingItem() { return true; }
-                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
-                });
+                () -> new Item(new Item.Properties().stacksTo(16)));
         ModItems.CAKE_MODEL_SQUARE = items.register("cake_model_square",
-                () -> new Item(new Item.Properties().stacksTo(16)) {
-                    @Override public boolean hasCraftingRemainingItem() { return true; }
-                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
-                });
+                () -> new Item(new Item.Properties().stacksTo(16)));
         ModItems.CAKE_MODEL_PLATE = items.register("cake_model_plate",
-                () -> new Item(new Item.Properties().stacksTo(16)) {
-                    @Override public boolean hasCraftingRemainingItem() { return true; }
-                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
-                });
+                () -> new Item(new Item.Properties().stacksTo(16)));
         ModItems.SMALL_MODEL = items.register("small_model",
-                () -> new Item(new Item.Properties().stacksTo(16)) {
-                    @Override public boolean hasCraftingRemainingItem() { return true; }
-                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
-                });
+                () -> new Item(new Item.Properties().stacksTo(16)));
         ModItems.MOONCAKE_MODEL = items.register("mooncake_model",
-                () -> new Item(new Item.Properties()) {
-                    @Override public boolean hasCraftingRemainingItem() { return true; }
-                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
-                });
+                () -> new Item(new Item.Properties()));
         ModItems.MIXING_BOWL = items.register("mixing_bowl",
                 () -> new Item(new Item.Properties()) {
                     @Override public boolean hasCraftingRemainingItem() { return true; }
