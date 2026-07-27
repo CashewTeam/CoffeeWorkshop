@@ -3,6 +3,7 @@ package net.langball.coffee.block;
 import net.langball.coffee.block.entity.MokaPotBlockEntity;
 import net.langball.coffee.init.ModBlockEntities;
 import net.langball.coffee.init.ModItems;
+import net.langball.coffee.item.DrinkCoffee;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -112,6 +113,35 @@ public class MokaPotBlock extends BaseEntityBlock {
                 if (!moka.isReady()) {
                     level.setBlock(pos, state.setValue(HEATED, false), 3);
                 }
+                return InteractionResult.CONSUME;
+            }
+        }
+
+        if (held.getItem() == ModItems.COFFEE_POT_ITEM.get() && moka.isReady()) {
+            CompoundTag potTag = held.getOrCreateTagElement("BlockEntityTag");
+            var potData = new net.langball.coffee.block.entity.CoffeePotBlockEntity(pos, state);
+            if (!potTag.isEmpty()) potData.load(potTag);
+            if (potData.getServings() < potData.getCapacity()) {
+                int space = potData.getCapacity() - potData.getServings();
+                int moved = Math.min(space, moka.getServings());
+                if (moka.isEmpty() || moved <= 0) return InteractionResult.PASS;
+
+                if (potData.isEmpty()) {
+                    potData.setStoredDrink(moka.getStoredDrink().copy());
+                    potData.getStoredDrink().setCount(1);
+                    DrinkCoffee.setRemainingCups(potData.getStoredDrink(), 1);
+                }
+                potData.setServings(potData.getServings() + moved);
+                for (int i = 0; i < moved; i++) moka.pourServing();
+
+                CompoundTag saveTag = potData.saveForItem();
+                if (!saveTag.isEmpty()) {
+                    held.getOrCreateTag().put("BlockEntityTag", saveTag);
+                }
+                if (!moka.isReady()) {
+                    level.setBlock(pos, state.setValue(HEATED, false), 3);
+                }
+                level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.5f, 1.0f);
                 return InteractionResult.CONSUME;
             }
         }
