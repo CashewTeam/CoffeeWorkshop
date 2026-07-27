@@ -4,7 +4,7 @@
   "textures": {
     "0": "block/oak_log",
     "1": "block/oak_planks",
-    "2": "block/iron_block",
+    "2": "block/anvil",
     "3": "coffeework:block/model/texture4",
     "particle": "block/oak_log"
   },
@@ -234,3 +234,4 @@
     }
   }
 }
+

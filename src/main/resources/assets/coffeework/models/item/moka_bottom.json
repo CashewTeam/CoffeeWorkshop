@@ -2,7 +2,7 @@
   "credit": "Made with Blockbench",
   "textures": {
     "0": "block/iron_block",
-    "1": "block/smooth_stone_slab_top",
+    "1": "block/smooth_stone",
     "particle": "block/iron_block"
   },
   "elements": [

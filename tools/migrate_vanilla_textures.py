@@ -46,13 +46,14 @@ MIGRATION = {
     "blocks/wool_colored_white": "block/white_wool",
     "blocks/wool_colored_brown": "block/brown_wool",
     "blocks/stone_slab_side": "block/smooth_stone_slab_side",
-    "blocks/stone_slab_top": "block/smooth_stone_slab_top",
+    "blocks/stone_slab_top": "block/smooth_stone",
+    "blocks/anvil_base": "block/anvil",
 }
 
 # Bare vanilla tokens that have no clean modern equivalent and require a
 # human to pick a replacement. Files containing these are listed in a review
 # report. Safe replacements still apply.
-REPORT_KEYS = {"blocks/anvil_base"}
+REPORT_KEYS: set[str] = set()  # all previously-unmapped tokens are now handled
 
 EXACT_RE = re.compile(r"^[A-Za-z0-9_\-]+/[A-Za-z0-9_\-]+$")
 

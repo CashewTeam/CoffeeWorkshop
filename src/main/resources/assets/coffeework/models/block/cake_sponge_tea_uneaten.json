@@ -1,5 +1,5 @@
 {
-  "parent": "block/cake_uneaten",
+  "parent": "block/cake",
   "textures": {
     "particle": "coffeework:block/cake_sponge_tea_side",
     "bottom": "coffeework:block/cake_sponge_tea_bottom",

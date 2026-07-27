@@ -3,7 +3,7 @@
   "textures": {
     "0": "block/white_concrete",
     "1": "block/smooth_stone_slab_side",
-    "2": "block/smooth_stone_slab_top",
+    "2": "block/smooth_stone",
     "particle": "block/white_concrete"
   },
   "elements": [
