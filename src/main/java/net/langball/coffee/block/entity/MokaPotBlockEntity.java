@@ -36,7 +36,7 @@ public class MokaPotBlockEntity extends BlockEntity implements ServingContainer 
     }
 
     public boolean isBrewing() { return brewProgress > 0 && brewProgress < MAX_BREW_TIME; }
-    public boolean isReady() { return brewProgress >= MAX_BREW_TIME && !serving.isEmpty(); }
+    public boolean isReady() { return !serving.isEmpty(); }
     public boolean hasCoffeeInput() { return hasCoffee; }
     public boolean hasWaterInput() { return hasWater; }
     public int getBrewProgress() { return brewProgress; }
