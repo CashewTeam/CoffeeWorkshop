@@ -106,7 +106,15 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
                 if (cookTime >= totalCookTime) {
                     itemHandler.extractItem(SLOT_BOTTLE, 1, false);
                     itemHandler.extractItem(SLOT_SODA, 1, false);
-                    itemHandler.extractItem(SLOT_FLAVOR, 1, false);
+                    ItemStack flavorExtracted = itemHandler.extractItem(SLOT_FLAVOR, 1, false);
+                    if (!flavorExtracted.isEmpty() && flavorExtracted.getItem().hasCraftingRemainingItem()) {
+                        ItemStack remainder = new ItemStack(flavorExtracted.getItem().getCraftingRemainingItem());
+                        ItemStack leftover = itemHandler.insertItem(SLOT_FLAVOR, remainder, false);
+                        if (!leftover.isEmpty()) {
+                            net.minecraft.world.Containers.dropItemStack(level,
+                                    pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, leftover);
+                        }
+                    }
 
                     if (resultSlot.isEmpty()) {
                         itemHandler.setStackInSlot(SLOT_OUTPUT, result.copy());

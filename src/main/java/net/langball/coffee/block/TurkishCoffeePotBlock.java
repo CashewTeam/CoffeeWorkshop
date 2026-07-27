@@ -5,6 +5,7 @@ import net.langball.coffee.init.ModBlockEntities;
 import net.langball.coffee.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -78,13 +79,6 @@ public class TurkishCoffeePotBlock extends BaseEntityBlock {
         boolean sneaking = player.isShiftKeyDown();
 
         if (sneaking && held.isEmpty()) {
-            if (pot.isReady() && pot.getServings() > 0) {
-                ItemStack drink = pot.getStoredDrink().copy();
-                drink.setCount(pot.getServings());
-                net.minecraft.world.Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drink);
-                pot.clear();
-            }
-            pot.pickUpPot(level, pos);
             level.removeBlock(pos, false);
             return InteractionResult.CONSUME;
         }
@@ -130,11 +124,13 @@ public class TurkishCoffeePotBlock extends BaseEntityBlock {
         if (!state.is(newState.getBlock())) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof TurkishCoffeePotBlockEntity pot) {
-                if (pot.isReady() && pot.getServings() > 0) {
-                    ItemStack drink = pot.getStoredDrink().copy();
-                    drink.setCount(pot.getServings());
-                    net.minecraft.world.Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drink);
+                ItemStack drop = new ItemStack(ModItems.TURKISH_COFFEE_POT_ITEM.get());
+                CompoundTag beTag = new CompoundTag();
+                pot.saveToTag(beTag);
+                if (!beTag.isEmpty()) {
+                    drop.getOrCreateTag().put("BlockEntityTag", beTag);
                 }
+                net.minecraft.world.Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop);
             }
             super.onRemove(state, level, pos, newState, isMoving);
         }

@@ -68,11 +68,15 @@ public interface ServingContainer {
 
     default void loadFromTag(CompoundTag tag) {
         if (tag.contains("StoredDrink")) {
-            setStoredDrink(ItemStack.of(tag.getCompound("StoredDrink")));
+            ItemStack loaded = ItemStack.of(tag.getCompound("StoredDrink"));
+            if (!loaded.isEmpty() && loaded.getCount() <= loaded.getMaxStackSize()) {
+                setStoredDrink(loaded);
+                getStoredDrink().setCount(1);
+            }
         }
-        setServings(tag.getInt("Servings"));
-        if (tag.contains("Capacity")) {
-            setCapacity(tag.getInt("Capacity"));
-        }
+        int s = tag.getInt("Servings");
+        int c = tag.contains("Capacity") ? tag.getInt("Capacity") : getCapacity();
+        if (c > 0) setCapacity(c);
+        setServings(Math.max(0, Math.min(s, getCapacity())));
     }
 }

@@ -56,6 +56,13 @@
     "coffeework:coffee_milk_tea_ice": "coffeework:block/coffee_milk_tea_ice_plate",
     "coffeework:coffee_mochaccino": "coffeework:block/coffee_mochaccino_plate",
     "coffeework:coffee_mochaccino_ice": "coffeework:block/coffee_mochaccino_ice_plate",
-    "coffeework:espresso": "coffeework:block/espresso_plate"
+    "coffeework:espresso": "coffeework:block/espresso_plate",
+    "coffeework:coffee_turkish": "coffeework:block/coffee_turkish_plate",
+    "coffeework:soda_caramel": "coffeework:block/soda_caramel_plate",
+    "coffeework:soda_chocolate": "coffeework:block/soda_chocolate_plate",
+    "coffeework:soda_fruit": "coffeework:block/soda_fruit_plate",
+    "coffeework:soda_mint": "coffeework:block/soda_mint_plate",
+    "coffeework:soda_vanilla": "coffeework:block/soda_vanilla_plate",
+    "coffeework:soda_sakura": "coffeework:block/soda_sakura_plate"
   }
 }

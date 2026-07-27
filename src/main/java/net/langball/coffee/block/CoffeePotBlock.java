@@ -2,8 +2,10 @@ package net.langball.coffee.block;
 
 import net.langball.coffee.block.entity.CoffeePotBlockEntity;
 import net.langball.coffee.init.ModItems;
+import net.langball.coffee.item.DrinkCoffee;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -74,13 +76,6 @@ public class CoffeePotBlock extends BaseEntityBlock {
         boolean sneaking = player.isShiftKeyDown();
 
         if (sneaking && held.isEmpty()) {
-            if (pot.isReady() && pot.getServings() > 0) {
-                ItemStack drink = pot.getStoredDrink().copy();
-                drink.setCount(pot.getServings());
-                net.minecraft.world.Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drink);
-                pot.clear();
-            }
-            pot.pickUpPot(level, pos);
             level.removeBlock(pos, false);
             return InteractionResult.CONSUME;
         }
@@ -99,6 +94,23 @@ public class CoffeePotBlock extends BaseEntityBlock {
             }
         }
 
+        if (held.getItem() instanceof DrinkCoffee && !pot.isFull()) {
+            if (pot.isEmpty()) {
+                pot.fillFrom(held, DrinkCoffee.getRemainingCups(held));
+                held.shrink(1);
+            } else if (pot.canAccept(held)) {
+                int cups = DrinkCoffee.getRemainingCups(held);
+                pot.fillFrom(held, cups);
+                held.shrink(1);
+            } else {
+                return InteractionResult.PASS;
+            }
+            level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.5f, 1.0f);
+            int newLevel = pot.getFillLevel();
+            level.setBlock(pos, state.setValue(LEVEL, newLevel), 3);
+            return InteractionResult.CONSUME;
+        }
+
         return InteractionResult.PASS;
     }
 
@@ -107,11 +119,13 @@ public class CoffeePotBlock extends BaseEntityBlock {
         if (!state.is(newState.getBlock())) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof CoffeePotBlockEntity pot) {
-                if (pot.isReady() && pot.getServings() > 0) {
-                    ItemStack drink = pot.getStoredDrink().copy();
-                    drink.setCount(pot.getServings());
-                    net.minecraft.world.Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drink);
+                ItemStack drop = new ItemStack(ModItems.COFFEE_POT_ITEM.get());
+                CompoundTag beTag = new CompoundTag();
+                pot.saveToTag(beTag);
+                if (!beTag.isEmpty()) {
+                    drop.getOrCreateTag().put("BlockEntityTag", beTag);
                 }
+                net.minecraft.world.Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop);
             }
             super.onRemove(state, level, pos, newState, isMoving);
         }

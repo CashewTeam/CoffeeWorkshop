@@ -132,9 +132,9 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         add(ModBlocks.MOUSSE_COFFEE.get(), noDrop());
         add(ModBlocks.CAKE_CARROT.get(), noDrop());
         add(ModBlocks.DRINK_DISPLAY.get(), noDrop()); // drops handled by DrinkDisplayBlock#onRemove
-        dropSelf(ModBlocks.MOKA_POT.get()); // contents dropped by MokaPotBlock#onRemove
-        dropSelf(ModBlocks.TURKISH_COFFEE_POT.get());
-        dropSelf(ModBlocks.COFFEE_POT.get());
+        add(ModBlocks.MOKA_POT.get(), noDrop()); // drops with NBT handled by MokaPotBlock#onRemove
+        add(ModBlocks.TURKISH_COFFEE_POT.get(), noDrop()); // drops with NBT handled by TurkishCoffeePotBlock#onRemove
+        add(ModBlocks.COFFEE_POT.get(), noDrop()); // drops with NBT handled by CoffeePotBlock#onRemove
         dropSelf(ModBlocks.SODA_MACHINE.get());
         dropSelf(ModBlocks.PHONOGRAPH.get());
         dropSelf(ModBlocks.STONE_BAR_COUNTER.get());

@@ -77,6 +77,10 @@ public class CoffeePotBlockEntity extends BlockEntity implements ServingContaine
         }
     }
 
+    public void saveToTag(CompoundTag tag) {
+        saveAdditional(tag);
+    }
+
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);

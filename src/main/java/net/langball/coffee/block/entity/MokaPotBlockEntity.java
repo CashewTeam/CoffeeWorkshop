@@ -15,8 +15,11 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.FurnaceBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
 
 public class MokaPotBlockEntity extends BlockEntity implements ServingContainer {
@@ -115,6 +118,7 @@ public class MokaPotBlockEntity extends BlockEntity implements ServingContainer 
                 ItemStack drink = new ItemStack(ModItems.ESPRESSO.get());
                 if (drink.getItem() instanceof net.langball.coffee.item.DrinkCoffee dc) {
                     dc.initializeFreshStack(drink);
+                    net.langball.coffee.item.DrinkCoffee.setRemainingCups(drink, 1);
                 }
                 this.setStoredDrink(drink);
                 this.setServings(MAX_SERVINGS);
@@ -129,7 +133,12 @@ public class MokaPotBlockEntity extends BlockEntity implements ServingContainer 
     }
 
     static boolean isOnHeatSource(Level level, BlockPos pos) {
-        return level.getBlockState(pos.below()).is(HEAT_SOURCE_TAG);
+        BlockState below = level.getBlockState(pos.below());
+        if (!below.is(HEAT_SOURCE_TAG)) return false;
+        if (below.hasProperty(BlockStateProperties.LIT)) {
+            return below.getValue(BlockStateProperties.LIT);
+        }
+        return true;
     }
 
     void sync() {
@@ -137,6 +146,10 @@ public class MokaPotBlockEntity extends BlockEntity implements ServingContainer 
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
             setChanged();
         }
+    }
+
+    public void saveToTag(CompoundTag tag) {
+        saveAdditional(tag);
     }
 
     @Override

@@ -15,9 +15,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class BarCounterBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -30,7 +33,13 @@ public class BarCounterBlock extends Block {
     }
     public static final EnumProperty<Shape> SHAPE = EnumProperty.create("shape", Shape.class);
 
-    private static final VoxelShape SHAPE_VOXEL = Shapes.box(0, 0, 0.25, 1, 1, 1);
+    private static final Map<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
+    static {
+        SHAPES.put(Direction.NORTH, Shapes.box(0, 0, 0.25, 1, 1, 1));
+        SHAPES.put(Direction.SOUTH, Shapes.box(0, 0, 0, 1, 1, 0.75));
+        SHAPES.put(Direction.WEST, Shapes.box(0.25, 0, 0, 1, 1, 1));
+        SHAPES.put(Direction.EAST, Shapes.box(0, 0, 0, 0.75, 1, 1));
+    }
     private final boolean isStone;
 
     public BarCounterBlock(Properties props, boolean isStone) {
@@ -45,7 +54,7 @@ public class BarCounterBlock extends Block {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-        return SHAPE_VOXEL;
+        return SHAPES.getOrDefault(state.getValue(FACING), SHAPES.get(Direction.NORTH));
     }
 
     @Override
