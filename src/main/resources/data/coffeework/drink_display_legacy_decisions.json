@@ -61,8 +61,18 @@
   },
   "base_models": {
     "coffee_plate": {
-      "role": "shared_parent_model",
-      "note": "models/item/coffee_plate.json is the shared parent for all drink plate models. Block model and blockstate are legacy artifacts superseded by coffeework:drink_display."
+      "item_model": {
+        "role": "shared_parent_model",
+        "note": "models/item/coffee_plate.json is the shared parent for all drink plate models (referenced by 57 item models)"
+      },
+      "block_model": {
+        "role": "legacy_block_superseded",
+        "note": "Legacy block geometry superseded by coffeework:drink_display block + BER"
+      },
+      "blockstate": {
+        "role": "legacy_blockstate_superseded",
+        "note": "Legacy blockstate superseded by coffeework:drink_display unified blockstate"
+      }
     }
   }
 }

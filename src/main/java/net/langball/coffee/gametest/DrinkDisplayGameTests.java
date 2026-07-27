@@ -458,4 +458,67 @@ public class DrinkDisplayGameTests {
                 "Max cups must survive NBT round-trip");
         helper.succeed();
     }
+
+    // ========================================================================
+    // Recovery: invalid BE → plate
+    // ========================================================================
+
+    @GameTest(template = "empty")
+    public static void invalidDisplay_reportsInvalidState(GameTestHelper helper) {
+        helper.setBlock(POS, ModBlocks.DRINK_DISPLAY.get().defaultBlockState());
+        BlockEntity be = helper.getBlockEntity(POS);
+        helper.assertTrue(be instanceof DrinkDisplayBlockEntity, "Must be DrinkDisplayBlockEntity");
+
+        DrinkDisplayBlockEntity dbe = (DrinkDisplayBlockEntity) be;
+        dbe.setDrink(ItemStack.EMPTY);
+        helper.assertTrue(!dbe.hasValidDrink(), "Empty drink must not be valid");
+
+        helper.assertTrue(dbe.getDrink().isEmpty(),
+                "Drink must remain empty after setDrink(EMPTY)");
+        helper.succeed();
+    }
+
+    // ========================================================================
+    // Creative mode drinking
+    // ========================================================================
+
+    @GameTest(template = "empty")
+    public static void creativeDrink_appliesEffectWithoutConsumingCups(GameTestHelper helper) {
+        var player = helper.makeMockPlayer();
+        player.getAbilities().instabuild = true;
+
+        ItemStack drink = new ItemStack(ModItems.COFFEE_AMERICANO.get());
+        DrinkCoffee.initCupCount(drink, 4);
+        player.setItemInHand(InteractionHand.MAIN_HAND, drink);
+
+        int remainingBefore = DrinkCoffee.getRemainingCups(player.getItemInHand(InteractionHand.MAIN_HAND));
+
+        drink.getItem().finishUsingItem(drink, helper.getLevel(), player);
+
+        int remainingAfter = DrinkCoffee.getRemainingCups(player.getItemInHand(InteractionHand.MAIN_HAND));
+        helper.assertTrue(remainingAfter == remainingBefore,
+                "Creative mode must not consume cups (was " + remainingBefore + ", now " + remainingAfter + ")");
+        helper.succeed();
+    }
+
+    // ========================================================================
+    // Breaking drops
+    // ========================================================================
+
+    @GameTest(template = "empty")
+    public static void breakingDisplay_dropsItemsInWorld(GameTestHelper helper) {
+        placePlate(helper);
+        var player = helper.makeMockPlayer();
+
+        ItemStack drink = new ItemStack(ModItems.COFFEE_AMERICANO.get());
+        DrinkCoffee.initCupCount(drink, 4);
+        player.setItemInHand(InteractionHand.MAIN_HAND, drink);
+        helper.useBlock(POS, player);
+
+        helper.assertBlockPresent(ModBlocks.DRINK_DISPLAY.get(), POS);
+        helper.destroyBlock(POS);
+        helper.assertBlockNotPresent(ModBlocks.DRINK_DISPLAY.get(), POS);
+        helper.assertBlockNotPresent(ModBlocks.PLATE.get(), POS);
+        helper.succeed();
+    }
 }

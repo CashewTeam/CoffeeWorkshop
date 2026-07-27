@@ -31,6 +31,7 @@ Output:
 """
 
 import json
+import os
 import re
 import sys
 from collections import defaultdict
@@ -95,10 +96,62 @@ def _load_plate_decisions() -> dict:
     path = "src/main/resources/data/coffeework/drink_display_legacy_decisions.json"
     try:
         with open(path, encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+        _validate_plate_decisions(data)
+        return data
     except Exception as e:
-        print(f"  WARNING: failed to load plate decisions: {e}")
+        print(f"  WARNING: failed to load or validate plate decisions: {e}")
         return {"aliases": {}, "excluded": {}, "base_models": {}}
+
+
+def _validate_plate_decisions(data: dict):
+    """Validate the shared decisions file structure and references."""
+    errors = []
+    model_dir = "src/main/resources/assets/coffeework/models"
+
+    # Validate aliases
+    for name, entry in data.get("aliases", {}).items():
+        if not isinstance(entry, dict):
+            errors.append(f"alias '{name}': entry is not a dict")
+            continue
+        repl = entry.get("replacement_model", "")
+        if not repl or not isinstance(repl, str):
+            errors.append(f"alias '{name}': missing or invalid replacement_model")
+        elif not os.path.exists(os.path.join(model_dir, f"block/{repl}.json")):
+            errors.append(f"alias '{name}': replacement_model '{repl}' not found on disk")
+        owner = entry.get("runtime_owner", "")
+        if not owner or not isinstance(owner, str):
+            errors.append(f"alias '{name}': missing or invalid runtime_owner")
+        if not entry.get("reason"):
+            errors.append(f"alias '{name}': missing reason")
+        if not isinstance(entry.get("asset_file_used"), bool):
+            errors.append(f"alias '{name}': asset_file_used must be a boolean")
+
+    # Validate excluded
+    for name, entry in data.get("excluded", {}).items():
+        if not isinstance(entry, dict):
+            errors.append(f"excluded '{name}': entry is not a dict")
+            continue
+        if not entry.get("reason"):
+            errors.append(f"excluded '{name}': missing reason")
+        if not entry.get("evidence"):
+            errors.append(f"excluded '{name}': missing evidence")
+
+    # Validate base_models
+    for name, entry in data.get("base_models", {}).items():
+        if not isinstance(entry, dict):
+            errors.append(f"base_model '{name}': entry is not a dict")
+            continue
+        for asset_type in ("item_model", "block_model", "blockstate"):
+            if asset_type in entry:
+                type_entry = entry[asset_type]
+                if not isinstance(type_entry, dict):
+                    errors.append(f"base_model '{name}'.{asset_type}: entry is not a dict")
+                elif not type_entry.get("role"):
+                    errors.append(f"base_model '{name}'.{asset_type}: missing role")
+
+    if errors:
+        raise ValueError("Decision file validation failed:\n" + "\n".join("  - " + e for e in errors))
 
 # Populated in main()
 PLATE_DECISIONS: dict = {}
@@ -624,9 +677,12 @@ def _classify_orphan(orphan: dict, registry_ids: set,
             return result
         if asset_id in base_models:
             entry = base_models[asset_id]
+            if isinstance(entry, dict) and asset_type in entry:
+                entry = entry[asset_type]
+            role = entry.get("role", "base_model") if isinstance(entry, dict) else entry
             result["status"] = STATUS_MERGED
             result["runtime_owner"] = "coffeework:drink_display"
-            result["runtime_role"] = "drink_display:" + entry.get("role", "base_model")
+            result["runtime_role"] = "drink_display:" + role
             result["target_phase"] = "8"
             result["notes"] = entry.get("note", "shared base model for drink display")
             return result
@@ -1158,6 +1214,9 @@ def main() -> int:
     print(f"Restored (now registered): +{summary.get('restored_from_baseline', 0)}")
     print(f"Tracked: {summary['total_legacy_assets']}")
     print(f"Active + Merged (runtime covered): {summary['active_runtime'] + summary['merged']}/{summary.get('total_baseline_assets', summary['total_legacy_assets'])}")
+    excluded_count = summary.get("by_status", {}).get(STATUS_EXCLUDED, 0)
+    if excluded_count > 0:
+        print(f"Excluded (legacy, not counted as covered): {excluded_count}")
     print(f"To port: {summary['to_port_standalone'] + summary['to_port_intermediate'] + summary['to_wire_state'] + summary['to_wire_display'] + summary['to_port_machine'] + summary['to_port_decor']}")
     print(f"UNASSIGNED: {summary['unassigned']}")
     print(f"Missing target owner: {summary['missing_target_owner']}")

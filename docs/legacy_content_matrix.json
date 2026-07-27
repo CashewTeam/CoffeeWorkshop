@@ -5845,35 +5845,35 @@
       "source": "legacy_1_12",
       "survival_chain": "",
       "old_classification": "ASSET_ARCHIVE",
-      "notes": "models/item/coffee_plate.json is the shared parent for all drink plate models. Block model and blockstate are legacy artifacts superseded by coffeework:drink_display."
+      "notes": "models/item/coffee_plate.json is the shared parent for all drink plate models (referenced by 57 item models)"
     },
     {
       "asset_id": "coffee_plate",
       "asset_type": "block_model",
       "content_family": "coffee_drinks",
       "runtime_owner": "coffeework:drink_display",
-      "runtime_role": "drink_display:shared_parent_model",
+      "runtime_role": "drink_display:legacy_block_superseded",
       "target_owner": null,
       "target_phase": "8",
       "status": "MERGED_RUNTIME_VARIANT",
       "source": "legacy_1_12",
       "survival_chain": "",
       "old_classification": "ASSET_ARCHIVE",
-      "notes": "models/item/coffee_plate.json is the shared parent for all drink plate models. Block model and blockstate are legacy artifacts superseded by coffeework:drink_display."
+      "notes": "Legacy block geometry superseded by coffeework:drink_display block + BER"
     },
     {
       "asset_id": "coffee_plate",
       "asset_type": "blockstate",
       "content_family": "coffee_drinks",
       "runtime_owner": "coffeework:drink_display",
-      "runtime_role": "drink_display:shared_parent_model",
+      "runtime_role": "drink_display:legacy_blockstate_superseded",
       "target_owner": null,
       "target_phase": "8",
       "status": "MERGED_RUNTIME_VARIANT",
       "source": "legacy_1_12",
       "survival_chain": "",
       "old_classification": "ASSET_ARCHIVE",
-      "notes": "models/item/coffee_plate.json is the shared parent for all drink plate models. Block model and blockstate are legacy artifacts superseded by coffeework:drink_display."
+      "notes": "Legacy blockstate superseded by coffeework:drink_display unified blockstate"
     },
     {
       "asset_id": "coffee_pot",
