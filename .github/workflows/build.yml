@@ -126,6 +126,12 @@ jobs:
             exit 1
           }
 
+      - name: Audit drink display models
+        run: |
+          set -euo pipefail
+          mkdir -p build/reports
+          python tools/audit_drink_display_models.py | tee build/reports/drink-display-model-audit.md
+
       # 只有一次 Gradle 启动。
       #
       # 普通构建：

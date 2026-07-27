@@ -87,6 +87,32 @@ def _load_wired_plate_models() -> set:
     return models
 
 
+# ── Legacy plate model classification maps ─────────────────────────
+
+# Models that are aliased to existing mapped plate models (old naming variants)
+PLATE_ALIASES = {
+    "coffee_american_plate": ("coffeework:coffee_americano",
+        "old English misspelling, aliased to coffee_americano_plate"),
+    "strong_cocoa_plate": ("coffeework:cocoa_strong",
+        "old naming convention, aliased to cocoa_strong_plate"),
+}
+
+# Models without corresponding registered drink items (explicitly excluded)
+PLATE_EXCLUDED = {
+    "coffee_berry_plate":    "legacy decorative plate, no registered drink item",
+    "coffee_cheese_plate":   "legacy decorative plate, no registered drink item",
+    "coffee_cream_plate":    "legacy decorative plate, no registered drink item",
+    "coffee_ice_plate":      "legacy decorative plate, no registered drink item",
+    "coffee_icecream_plate": "legacy decorative plate, no registered drink item",
+    "coffee_milk_plate":     "legacy decorative plate, no registered drink item",
+    "coffee_mint_plate":     "legacy decorative plate, no registered drink item",
+    "coffee_turkey_plate":   "legacy decorative plate, no registered drink item",
+    "coffee_vanilla_plate":  "legacy decorative plate, no registered drink item",
+    "cocoa_gingerbread_plate": "legacy variant, no registered drink item",
+    "cocoa_marshmallow_plate": "legacy variant, no registered drink item",
+}
+
+
 # Populated in main()
 WIRED_PLATE_MODELS: set = set()
 
@@ -582,6 +608,19 @@ def _classify_orphan(orphan: dict, registry_ids: set,
             result["runtime_owner"] = "coffeework:drink_display"
             result["runtime_role"] = "drink_display:plate_model"
             result["notes"] = "Wired to DrinkDisplayBlock system"
+            return result
+        if asset_id in PLATE_ALIASES:
+            _, note = PLATE_ALIASES[asset_id]
+            result["status"] = STATUS_MERGED
+            result["runtime_owner"] = "coffeework:drink_display"
+            result["runtime_role"] = "drink_display:aliased_model"
+            result["notes"] = note
+            return result
+        if asset_id in PLATE_EXCLUDED:
+            result["status"] = STATUS_MERGED
+            result["runtime_owner"] = "coffeework:drink_display"
+            result["runtime_role"] = "drink_display:legacy_excluded"
+            result["notes"] = PLATE_EXCLUDED[asset_id]
             return result
         drink_id = asset_id[:-6]
         owner = f"coffeework:{drink_id}" if drink_id in registry_ids else None

@@ -325,6 +325,41 @@ public class DrinkDisplayGameTests {
     }
 
     // ========================================================================
+    // Reverse coverage: every DrinkCoffee must have a model or exclusion
+    // ========================================================================
+
+    private static final java.util.Set<String> EXPLICIT_EXCLUSIONS = java.util.Set.of(
+            // Items that are DrinkCoffee but intentionally don't have plate models
+    );
+
+    @GameTest(template = "empty")
+    public static void allDrinkCoffeeItems_haveModelMapping(GameTestHelper helper) {
+        int total = 0;
+        int mapped = 0;
+        int excluded = 0;
+
+        for (net.minecraft.world.item.Item item : net.minecraftforge.registries.ForgeRegistries.ITEMS) {
+            if (item instanceof DrinkCoffee) {
+                total++;
+                var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item);
+                if (id != null && EXPLICIT_EXCLUSIONS.contains(id.toString())) {
+                    excluded++;
+                } else if (id != null && DrinkDisplayRegistry.canDisplay(id)) {
+                    mapped++;
+                } else {
+                    helper.assertTrue(false,
+                            "DrinkCoffee '" + id + "' has no display model mapping or exclusion");
+                }
+            }
+        }
+
+        helper.assertTrue(total == mapped + excluded,
+                "All " + total + " DrinkCoffee items must be mapped (" + mapped
+                        + ") or explicitly excluded (" + excluded + ")");
+        helper.succeed();
+    }
+
+    // ========================================================================
     // Breaking drops
     // ========================================================================
 

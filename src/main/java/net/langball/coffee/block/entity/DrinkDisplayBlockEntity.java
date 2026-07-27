@@ -35,6 +35,7 @@ public class DrinkDisplayBlockEntity extends BlockEntity {
 
     public void setDrink(ItemStack stack) {
         this.drink = stack.copy();
+        this.needsRecovery = false;
         setChanged();
         if (level != null) {
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
@@ -152,6 +153,7 @@ public class DrinkDisplayBlockEntity extends BlockEntity {
                 return;
             }
             drink = loaded;
+            needsRecovery = false;
         } else {
             needsRecovery = true;
         }
