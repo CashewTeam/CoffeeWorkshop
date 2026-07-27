@@ -1,6 +1,7 @@
 package net.langball.coffee.block.entity;
 
 import net.langball.coffee.init.ModBlockEntities;
+import net.langball.coffee.init.ModBlocks;
 import net.langball.coffee.item.DrinkCoffee;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -76,6 +77,38 @@ public class DrinkDisplayBlockEntity extends BlockEntity {
     public boolean hasValidDrink() {
         return drink != null && !drink.isEmpty()
                 && ForgeRegistries.ITEMS.getKey(drink.getItem()) != null;
+    }
+
+    /** Return the drink and clear the internal reference (for pickup). */
+    public ItemStack removeDrink() {
+        ItemStack result = getDrink();
+        drink = ItemStack.EMPTY;
+        setChanged();
+        return result;
+    }
+
+    /** Clear the drink without returning it (for last-cup consumption). */
+    public void clearDrink() {
+        drink = ItemStack.EMPTY;
+        setChanged();
+    }
+
+    /**
+     * Called every server tick by {@link DrinkDisplayBlock}.  If this BE
+     * was loaded with invalid/corrupted NBT (unregistered item, non-drink,
+     * bad cup count), revert back to an empty Plate so the block doesn't
+     * become a permanent invisible ghost.
+     */
+    public void recoverIfInvalid() {
+        if (drink != null && !drink.isEmpty() && !hasValidDrink()) {
+            LOGGER.warn("DrinkDisplayBlockEntity at {} has invalid drink, reverting to plate", worldPosition);
+            if (level != null && !level.isClientSide) {
+                level.setBlock(worldPosition, ModBlocks.PLATE.get().defaultBlockState()
+                        .setValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING,
+                                getBlockState().getValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING)),
+                        3);
+            }
+        }
     }
 
     @Nullable

@@ -10,6 +10,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
@@ -24,11 +27,21 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = CoffeeWork.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class DrinkDisplayModelRegistry {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Gson GSON = new GsonBuilder().create();
     private static final Map<ResourceLocation, ResourceLocation> DRINK_TO_MODEL = new ConcurrentHashMap<>();
     private static volatile boolean loaded = false;
+
+    @SubscribeEvent
+    public static void registerAdditionalModels(ModelEvent.RegisterAdditional event) {
+        ensureLoaded();
+        for (ResourceLocation modelLoc : getRegisteredModels()) {
+            event.register(modelLoc);
+        }
+        LOGGER.info("DrinkDisplayModelRegistry: registered {} extra models", getRegisteredModels().size());
+    }
 
     private DrinkDisplayModelRegistry() {}
 

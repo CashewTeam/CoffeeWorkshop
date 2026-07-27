@@ -8,14 +8,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -92,7 +88,9 @@ public class DrinkDisplayBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return null;
+        if (level.isClientSide) return null;
+        return createTickerHelper(type, net.langball.coffee.init.ModBlockEntities.DRINK_DISPLAY.get(),
+                (lvl, pos, st, be) -> be.recoverIfInvalid());
     }
 
     @Override
@@ -103,7 +101,9 @@ public class DrinkDisplayBlock extends BaseEntityBlock {
                 if (be.hasValidDrink()) {
                     Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.getDrink());
                 }
-                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModBlocks.PLATE.get()));
+                if (!newState.is(ModBlocks.PLATE.get())) {
+                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModBlocks.PLATE.get()));
+                }
             }
             super.onRemove(state, level, pos, newState, isMoving);
         }
@@ -123,71 +123,39 @@ public class DrinkDisplayBlock extends BaseEntityBlock {
         // Sneak + empty hand → pickup drink, revert to plate
         if (player.isShiftKeyDown() && player.getItemInHand(hand).isEmpty()) {
             if (!level.isClientSide) {
-                ItemStack drink = be.getDrink();
+                ItemStack drink = be.removeDrink();
+                level.setBlock(pos, ModBlocks.PLATE.get().defaultBlockState()
+                        .setValue(FACING, state.getValue(FACING)), 3);
                 if (!player.getInventory().add(drink)) {
                     Containers.dropItemStack(level, pos.getX(), pos.getY() + 0.5, pos.getZ(), drink);
                 }
-                level.setBlock(pos, ModBlocks.PLATE.get().defaultBlockState()
-                        .setValue(FACING, state.getValue(FACING)), 3);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        // Empty hand → consume one cup
+        // Empty hand → consume
         if (player.getItemInHand(hand).isEmpty()) {
             if (!level.isClientSide) {
                 int remaining = be.getRemainingCups();
                 if (remaining > 0) {
                     ItemStack drinkStack = be.getDrinkRaw();
-                    // Apply food stats (same as DrinkCoffee.finishUsingItem)
-                    FoodProperties food = drinkStack.getFoodProperties(player);
-                    if (food != null) {
-                        player.getFoodData().eat(food.getNutrition(), food.getSaturationModifier());
-                    }
 
-                    level.playSound(null, pos, SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
-
-                    // Apply effects
                     if (drinkStack.getItem() instanceof DrinkCoffee dc) {
-                        MobEffectInstance[][] effectTable = dc.getEffectTable();
-                        if (effectTable != null && effectTable.length > 0) {
-                            MobEffectInstance[] variant = effectTable[0];
-                            if (variant != null) {
-                                for (MobEffectInstance effect : variant) {
-                                    if (effect != null) {
-                                        player.addEffect(new MobEffectInstance(effect));
-                                    }
+                        ItemStack empty = dc.consumeOneServing(drinkStack, player, level);
+                        be.setDrink(drinkStack);
+                        level.playSound(null, pos, SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS,
+                                0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+
+                        if (DrinkCoffee.getRemainingCups(drinkStack) <= 0) {
+                            be.clearDrink();
+                            level.setBlock(pos, ModBlocks.PLATE.get().defaultBlockState()
+                                    .setValue(FACING, state.getValue(FACING)), 3);
+                            if (!empty.isEmpty()) {
+                                if (!player.getInventory().add(empty)) {
+                                    Containers.dropItemStack(level, pos.getX(), pos.getY() + 0.5, pos.getZ(), empty);
                                 }
                             }
                         }
-                    }
-
-                    player.awardStat(Stats.ITEM_USED.get(drinkStack.getItem()));
-
-                    boolean multiCup = net.langball.coffee.ModConfig.ENABLE_MULTI_CUP.get()
-                            && be.getMaxCups() > 1;
-
-                    if (multiCup) {
-                        be.consumeOneCup();
-                    } else {
-                        DrinkCoffee.setRemainingCups(drinkStack, 0);
-                        be.setDrink(drinkStack);
-                    }
-
-                    if (be.getRemainingCups() <= 0) {
-                        // Last cup: revert to plate, handle empty container
-                        Item emptyCup = null;
-                        if (drinkStack.getItem() instanceof DrinkCoffee dc) {
-                            emptyCup = dc.getEmptyCupItem();
-                        }
-                        if (emptyCup != null) {
-                            ItemStack cupStack = new ItemStack(emptyCup);
-                            if (!player.getInventory().add(cupStack)) {
-                                Containers.dropItemStack(level, pos.getX(), pos.getY() + 0.5, pos.getZ(), cupStack);
-                            }
-                        }
-                        level.setBlock(pos, ModBlocks.PLATE.get().defaultBlockState()
-                                .setValue(FACING, state.getValue(FACING)), 3);
                     }
                 }
             }
@@ -216,6 +184,9 @@ public class DrinkDisplayBlock extends BaseEntityBlock {
         if (level.getBlockEntity(pos) instanceof DrinkDisplayBlockEntity be) {
             ItemStack stored = drinkStack.copy();
             stored.setCount(1);
+            if (stored.getItem() instanceof DrinkCoffee dc) {
+                dc.ensureCupData(stored);
+            }
             be.setDrink(stored);
             return true;
         }

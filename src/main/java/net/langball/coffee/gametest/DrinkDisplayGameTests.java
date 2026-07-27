@@ -96,10 +96,14 @@ public class DrinkDisplayGameTests {
         ItemStack drink = new ItemStack(ModItems.COFFEE_AMERICANO.get());
         DrinkCoffee.initCupCount(drink, 4);
         player.setItemInHand(InteractionHand.MAIN_HAND, drink);
+        int initialCount = countInInventory(player, ModItems.COFFEE_AMERICANO.get());
 
         helper.useBlock(POS, player);
 
         helper.assertBlockPresent(ModBlocks.DRINK_DISPLAY.get(), POS);
+        int afterCount = countInInventory(player, ModItems.COFFEE_AMERICANO.get());
+        helper.assertTrue(afterCount == initialCount - 1,
+                "Placing drink must consume exactly 1 (was " + initialCount + ", now " + afterCount + ")");
         helper.succeed();
     }
 
@@ -187,19 +191,28 @@ public class DrinkDisplayGameTests {
         placePlate(helper);
         var player = helper.makeMockPlayer();
 
+        int plateBefore = countInInventory(player, ModItems.PLATE.get());
+
         ItemStack drink = new ItemStack(ModItems.COFFEE_AMERICANO.get());
         DrinkCoffee.initCupCount(drink, 4);
         DrinkCoffee.setRemainingCups(drink, 1);
         player.setItemInHand(InteractionHand.MAIN_HAND, drink);
         helper.useBlock(POS, player);
 
-        // Single remaining cup - consume it
+        int americanoBefore = countInInventory(player, ModItems.COFFEE_AMERICANO.get());
+
         player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         helper.useBlock(POS, player);
 
-        // Should be back to Plate now
         helper.assertBlockPresent(ModBlocks.PLATE.get(), POS);
         helper.assertBlockNotPresent(ModBlocks.DRINK_DISPLAY.get(), POS);
+
+        int americanoAfter = countInInventory(player, ModItems.COFFEE_AMERICANO.get());
+        int plateAfter = countInInventory(player, ModItems.PLATE.get());
+        helper.assertTrue(americanoAfter == americanoBefore,
+                "Last cup must NOT duplicate drink");
+        helper.assertTrue(plateAfter == plateBefore,
+                "Last cup must NOT duplicate plate");
         helper.succeed();
     }
 
@@ -212,11 +225,15 @@ public class DrinkDisplayGameTests {
         placePlate(helper);
         var player = helper.makeMockPlayer();
 
+        int plateBefore = countInInventory(player, ModItems.PLATE.get());
+
         ItemStack drink = new ItemStack(ModItems.COFFEE_AMERICANO.get());
         DrinkCoffee.initCupCount(drink, 4);
         DrinkCoffee.setRemainingCups(drink, 3);
         player.setItemInHand(InteractionHand.MAIN_HAND, drink);
         helper.useBlock(POS, player);
+
+        int americanoBefore = countInInventory(player, ModItems.COFFEE_AMERICANO.get());
 
         player.setShiftKeyDown(true);
         player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
@@ -225,8 +242,12 @@ public class DrinkDisplayGameTests {
         helper.assertBlockPresent(ModBlocks.PLATE.get(), POS);
         helper.assertBlockNotPresent(ModBlocks.DRINK_DISPLAY.get(), POS);
 
-        helper.assertTrue(countInInventory(player, ModItems.COFFEE_AMERICANO.get()) >= 1,
-                "Player must have americano in inventory after pickup");
+        int americanoAfter = countInInventory(player, ModItems.COFFEE_AMERICANO.get());
+        int plateAfter = countInInventory(player, ModItems.PLATE.get());
+        helper.assertTrue(americanoAfter == americanoBefore + 1,
+                "Pickup must return exactly 1 drink (had " + americanoBefore + ", now " + americanoAfter + ")");
+        helper.assertTrue(plateAfter == plateBefore,
+                "Pickup must NOT duplicate plate");
         helper.succeed();
     }
 

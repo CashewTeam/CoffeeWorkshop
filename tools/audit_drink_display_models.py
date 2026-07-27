@@ -88,12 +88,11 @@ def main() -> int:
             print(f"FAIL: {drink_id} → {err}")
             exit_code = 2
 
-    # ── Check 3: no duplicate model refs ──
+    # ── Check 3: duplicate model refs (non-blocking: aliased models are valid) ──
     seen = {}
     for drink_id, model_rl in mappings.items():
         if model_rl in seen:
-            print(f"FAIL: {model_rl} mapped to both {seen[model_rl]} and {drink_id}")
-            exit_code = 2
+            print(f"INFO: {model_rl} shared by both {seen[model_rl]} and {drink_id} (alias)")
         seen[model_rl] = drink_id
 
     # ── Check 4: orphan plate block models ──

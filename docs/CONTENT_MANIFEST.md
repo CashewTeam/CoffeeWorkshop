@@ -463,7 +463,7 @@
 | `double_bag_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `double_bag_flour` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `double_bag_sugar` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `drink_display` | ❌ | ❌ | ✅ | ✅ | ✅ | — |
+| `drink_display` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `ginger_house` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `grinder` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `icecream_machine` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |

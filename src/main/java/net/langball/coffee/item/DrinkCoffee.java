@@ -89,7 +89,7 @@ public class DrinkCoffee extends Item {
      * legacy stacks), set it to this item's configured maxCups so the drink
      * behaves correctly rather than defaulting to 1.
      */
-    private void ensureCupData(ItemStack stack) {
+    public void ensureCupData(ItemStack stack) {
         CompoundTag tag = stack.getOrCreateTag();
         if (!tag.contains(TAG_MAX_CUPS)) {
             tag.putInt(TAG_MAX_CUPS, maxCups);
@@ -134,68 +134,70 @@ public class DrinkCoffee extends Item {
         return effectTable;
     }
 
+    /**
+     * Apply one serving of this drink: food, effects, stats, criteria,
+     * and cup-count logic.  Modifies the stack's {@code remaining_cups}
+     * in-place.  Does NOT check creative mode — callers must gate that.
+     *
+     * @return the empty container to give back (empty if still has cups,
+     *         or the configured empty-cup / bottle item)
+     */
+    public ItemStack consumeOneServing(ItemStack stack, LivingEntity entity, Level level) {
+        ensureCupData(stack);
+
+        if (!level.isClientSide) {
+            FoodProperties food = stack.getFoodProperties(entity);
+            if (food != null && entity instanceof Player player) {
+                player.getFoodData().eat(food.getNutrition(), food.getSaturationModifier());
+            }
+        }
+
+        if (entity instanceof ServerPlayer sp) {
+            CriteriaTriggers.CONSUME_ITEM.trigger(sp, stack);
+            sp.awardStat(Stats.ITEM_USED.get(this));
+        }
+
+        if (!level.isClientSide && effectTable != null && effectTable.length > 0) {
+            MobEffectInstance[] variant = effectTable[0];
+            if (variant != null) {
+                for (MobEffectInstance effect : variant) {
+                    if (effect != null) {
+                        entity.addEffect(new MobEffectInstance(effect));
+                    }
+                }
+            }
+        }
+
+        boolean multiCup = net.langball.coffee.ModConfig.ENABLE_MULTI_CUP.get() && hasMultiCup();
+        int remaining = getRemainingCups(stack);
+        if (multiCup) {
+            remaining = Math.max(0, remaining - 1);
+        } else {
+            remaining = 0;
+        }
+        setRemainingCups(stack, remaining);
+
+        if (remaining <= 0) {
+            boolean cupReturn = net.langball.coffee.ModConfig.ENABLE_EMPTY_CUP_RETURN.get()
+                    && emptyCupItem != null && emptyCupItem.get() != null;
+            return cupReturn ? new ItemStack(emptyCupItem.get()) : ItemStack.EMPTY;
+        }
+        return ItemStack.EMPTY;
+    }
+
     // ========================================================================
     // Item overrides
     // ========================================================================
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
-        // Ensure NBT is initialised even for /give or legacy stacks
-        ensureCupData(stack);
-
-        // Apply food stats manually (do NOT call super.finishUsingItem which
-        // would eat() and shrink the stack, interfering with multi-cup tracking).
-        if (!level.isClientSide) {
-            FoodProperties food = stack.getFoodProperties(livingEntity);
-            if (food != null && livingEntity instanceof Player player) {
-                player.getFoodData().eat(food.getNutrition(), food.getSaturationModifier());
-            }
-        }
-
-        // Trigger stats and advancements (server only)
-        if (livingEntity instanceof ServerPlayer serverPlayer) {
-            CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
-            serverPlayer.awardStat(Stats.ITEM_USED.get(this));
-        }
-
-        // Apply effects — only the first (or only) variant in the table.
-        if (!level.isClientSide && effectTable != null && effectTable.length > 0) {
-            MobEffectInstance[] variant = effectTable[0];
-            if (variant != null) {
-                for (MobEffectInstance effect : variant) {
-                    if (effect != null) {
-                        livingEntity.addEffect(new MobEffectInstance(effect));
-                    }
-                }
-            }
-        }
-
-        // Handle multi-cup logic
         if (livingEntity instanceof Player player && !player.getAbilities().instabuild) {
-            boolean multiCup = net.langball.coffee.ModConfig.ENABLE_MULTI_CUP.get() && hasMultiCup();
-            boolean cupReturn = net.langball.coffee.ModConfig.ENABLE_EMPTY_CUP_RETURN.get()
-                    && emptyCupItem != null && emptyCupItem.get() != null;
-
-            if (multiCup) {
-                int remaining = getRemainingCups(stack);
-                remaining--;
-
-                if (remaining <= 0) {
-                    // Last cup consumed — return empty cup if configured, else consume
-                    return cupReturn ? new ItemStack(emptyCupItem.get()) : ItemStack.EMPTY;
-                } else {
-                    // Still has remaining servings
-                    setRemainingCups(stack, remaining);
-                    return stack;
-                }
-            } else {
-                // Single-cup: the drink MUST be consumed in survival.
-                // Returning the original `stack` here would allow infinite drinking.
-                return cupReturn ? new ItemStack(emptyCupItem.get()) : ItemStack.EMPTY;
+            ItemStack empty = consumeOneServing(stack, livingEntity, level);
+            if (getRemainingCups(stack) > 0) {
+                return stack;
             }
+            return empty;
         }
-
-        // Creative mode: keep the stack
         return stack;
     }
 

@@ -33,6 +33,7 @@
     "coffeework:coffee_green_tea": "coffeework:block/coffee_green_tea_plate",
     "coffeework:coffee_green_tea_ice": "coffeework:block/coffee_green_tea_ice_plate",
     "coffeework:coffee_instant": "coffeework:block/coffee_instant_plate",
+    "coffeework:coffee_instant_cup": "coffeework:block/coffee_instant_plate",
     "coffeework:coffee_latte": "coffeework:block/coffee_latte_plate",
     "coffeework:coffee_latte_caramel": "coffeework:block/coffee_latte_caramel_plate",
     "coffeework:coffee_latte_caramel_ice": "coffeework:block/coffee_latte_caramel_ice_plate",
