@@ -63,7 +63,7 @@ public class DrinkDisplayBlockEntity extends BlockEntity {
 
     public boolean hasValidDrink() {
         if (drink == null || drink.isEmpty()) return false;
-        if (!(drink.getItem() instanceof DrinkCoffee dc)) return false;
+        if (!(drink.getItem() instanceof DrinkCoffee)) return false;
 
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(drink.getItem());
         if (id == null) return false;
@@ -71,9 +71,7 @@ public class DrinkDisplayBlockEntity extends BlockEntity {
 
         int remaining = DrinkCoffee.getRemainingCups(drink);
         int max = DrinkCoffee.getMaxCups(drink);
-        return max == dc.getConfiguredMaxCups()
-                && remaining >= 1
-                && remaining <= max;
+        return remaining >= 1 && remaining <= max && max >= 1;
     }
 
     /** Return the drink and clear the internal reference (for pickup). */
