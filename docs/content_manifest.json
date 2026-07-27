@@ -1,30 +1,30 @@
 {
   "stats": {
-    "registered": 452,
+    "registered": 475,
     "by_type": {
-      "item": 390,
-      "block": 51,
+      "item": 406,
+      "block": 58,
       "mob_effect": 3,
       "villager_profession": 3,
       "poi_type": 2,
       "sound_event": 3
     },
-    "orphan_assets": 427,
+    "orphan_assets": 429,
     "orphan_by_classification": {
       "ASSET_ARCHIVE": 388,
       "MERGED": 14,
-      "REMOVED": 21,
+      "REMOVED": 23,
       "REDESIGN": 4
     },
     "completeness": {
-      "model_ok": 390,
-      "texture_ok": 390,
-      "lang_en_ok": 390,
-      "lang_zh_ok": 390,
-      "lang_ja_ok": 390,
-      "creative_tab_ok": 390,
-      "has_source": 390,
-      "total_items": 390
+      "model_ok": 406,
+      "texture_ok": 406,
+      "lang_en_ok": 406,
+      "lang_zh_ok": 406,
+      "lang_ja_ok": 406,
+      "creative_tab_ok": 406,
+      "has_source": 405,
+      "total_items": 406
     }
   },
   "registry": [
@@ -3049,6 +3049,24 @@
       "block_item": false
     },
     {
+      "id": "coffee_pot",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "coffee_pot"
+    },
+    {
       "id": "coffee_powder",
       "type": "item",
       "registered": true,
@@ -3079,7 +3097,8 @@
       "sources": [
         "loot"
       ],
-      "block_item": false
+      "block_item": true,
+      "block_of": "moka_pot"
     },
     {
       "id": "coffee_tree",
@@ -3098,6 +3117,20 @@
       ],
       "block_item": true,
       "block_of": "coffee_tree"
+    },
+    {
+      "id": "coffee_turkish",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [],
+      "block_item": false
     },
     {
       "id": "coldbrew_bottle",
@@ -4852,6 +4885,56 @@
       "block_item": false
     },
     {
+      "id": "moka_bottom",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "moka_pot",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "moka_pot"
+    },
+    {
+      "id": "moka_top",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "mooncake",
       "type": "item",
       "registered": true,
@@ -5498,6 +5581,24 @@
       "block_of": "oven"
     },
     {
+      "id": "phonograph",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "phonograph"
+    },
+    {
       "id": "pie_apple",
       "type": "item",
       "registered": true,
@@ -6015,6 +6116,88 @@
       "block_item": false
     },
     {
+      "id": "soda_caramel",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "soda_chocolate",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "soda_fruit",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "soda_machine",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "soda_machine"
+    },
+    {
+      "id": "soda_mint",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "soda_ore",
       "type": "item",
       "registered": true,
@@ -6031,6 +6214,38 @@
       ],
       "block_item": true,
       "block_of": "soda_ore"
+    },
+    {
+      "id": "soda_sakura",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "soda_vanilla",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
     },
     {
       "id": "souffle",
@@ -6112,6 +6327,24 @@
         "trade"
       ],
       "block_item": false
+    },
+    {
+      "id": "stone_bar_counter",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "stone_bar_counter"
     },
     {
       "id": "syrup_caramel",
@@ -6324,6 +6557,24 @@
       "block_item": false
     },
     {
+      "id": "turkish_coffee_pot",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "turkish_coffee_pot"
+    },
+    {
       "id": "vanilla",
       "type": "item",
       "registered": true,
@@ -6355,6 +6606,24 @@
         "loot"
       ],
       "block_item": false
+    },
+    {
+      "id": "wooden_bar_counter",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe",
+        "loot"
+      ],
+      "block_item": true,
+      "block_of": "wooden_bar_counter"
     },
     {
       "id": "xmas_tree",
@@ -6688,6 +6957,17 @@
       "loot_table": true
     },
     {
+      "id": "coffee_pot",
+      "type": "block",
+      "registered": true,
+      "blockstate": true,
+      "block_model": true,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "loot_table": true
+    },
+    {
       "id": "coffee_tree",
       "type": "block",
       "registered": true,
@@ -6831,6 +7111,17 @@
       "loot_table": true
     },
     {
+      "id": "moka_pot",
+      "type": "block",
+      "registered": true,
+      "blockstate": true,
+      "block_model": true,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "loot_table": true
+    },
+    {
       "id": "mousse_berry",
       "type": "block",
       "registered": true,
@@ -6886,6 +7177,17 @@
       "loot_table": false
     },
     {
+      "id": "phonograph",
+      "type": "block",
+      "registered": true,
+      "blockstate": true,
+      "block_model": true,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "loot_table": true
+    },
+    {
       "id": "plate",
       "type": "block",
       "registered": true,
@@ -6908,7 +7210,29 @@
       "loot_table": true
     },
     {
+      "id": "soda_machine",
+      "type": "block",
+      "registered": true,
+      "blockstate": true,
+      "block_model": true,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "loot_table": true
+    },
+    {
       "id": "soda_ore",
+      "type": "block",
+      "registered": true,
+      "blockstate": true,
+      "block_model": true,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "loot_table": true
+    },
+    {
+      "id": "stone_bar_counter",
       "type": "block",
       "registered": true,
       "blockstate": true,
@@ -6930,6 +7254,17 @@
       "loot_table": false
     },
     {
+      "id": "turkish_coffee_pot",
+      "type": "block",
+      "registered": true,
+      "blockstate": true,
+      "block_model": true,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "loot_table": true
+    },
+    {
       "id": "vanilla_crop",
       "type": "block",
       "registered": true,
@@ -6939,6 +7274,17 @@
       "lang_zh": true,
       "lang_ja": true,
       "loot_table": false
+    },
+    {
+      "id": "wooden_bar_counter",
+      "type": "block",
+      "registered": true,
+      "blockstate": true,
+      "block_model": true,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "loot_table": true
     },
     {
       "id": "xmas_tree",
@@ -7392,27 +7738,12 @@
       "classification": "MERGED"
     },
     {
-      "id": "moka_bottom",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
       "id": "moka_pot_heated",
       "type": "item_model",
       "classification": "REMOVED"
     },
     {
       "id": "moka_pot_unheated",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "moka_top",
-      "type": "item_model",
-      "classification": "REMOVED"
-    },
-    {
-      "id": "phonograph",
       "type": "item_model",
       "classification": "REMOVED"
     },
@@ -8507,11 +8838,6 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
-      "id": "coffee_pot",
-      "type": "block_model",
-      "classification": "REMOVED"
-    },
-    {
       "id": "coffee_pot_1",
       "type": "block_model",
       "classification": "REMOVED"
@@ -8580,6 +8906,26 @@
       "id": "grinder_off",
       "type": "block_model",
       "classification": "MERGED"
+    },
+    {
+      "id": "moka_bottom",
+      "type": "block_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "moka_pot_heated",
+      "type": "block_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "moka_pot_unheated",
+      "type": "block_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "moka_top",
+      "type": "block_model",
+      "classification": "REMOVED"
     },
     {
       "id": "mousse_berry_slice1",
@@ -8770,6 +9116,16 @@
       "id": "tiramisu_uneaten",
       "type": "block_model",
       "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "turkey_coffee_pot_heated",
+      "type": "block_model",
+      "classification": "REMOVED"
+    },
+    {
+      "id": "turkey_coffee_pot_unheated",
+      "type": "block_model",
+      "classification": "REMOVED"
     },
     {
       "id": "vanilla_stage_0",
