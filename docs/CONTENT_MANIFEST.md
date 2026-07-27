@@ -14,7 +14,7 @@
 | sound_event | 3 |
 | villager_profession | 3 |
 | **Total Registered** | **475** |
-| **Orphan Assets** | **429** |
+| **Orphan Assets** | **436** |
 
 ## Item Completeness Matrix
 
@@ -216,7 +216,7 @@
 | `coffee_milk_tea_ice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `coffee_mochaccino` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `coffee_mochaccino_ice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `coffee_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
+| `coffee_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `coffee_powder` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `coffee_seeds` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot |
 | `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
@@ -330,7 +330,7 @@
 | `mille_feuille` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mixing_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `moka_bottom` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `moka_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
+| `moka_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `moka_top` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake_egg` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -432,7 +432,7 @@
 | `tiramisu_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `tiramisu_slice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `toast` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
-| `turkish_coffee_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
+| `turkish_coffee_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot |
 | `vanilla_seeds` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `wooden_bar_counter` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
@@ -470,7 +470,7 @@
 | `cake_sponge_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `coffee_machine` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `coffee_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `coffee_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `coldbrew_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `double_bag_cocoa` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -484,7 +484,7 @@
 | `ginger_house` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `grinder` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `icecream_machine` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `moka_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `moka_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `mousse_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `mousse_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `mousse_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
@@ -497,7 +497,7 @@
 | `soda_ore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `stone_bar_counter` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `tiramisu` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| `turkish_coffee_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `turkish_coffee_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `vanilla_crop` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `wooden_bar_counter` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `xmas_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -522,7 +522,7 @@
 
 | Classification | Count |
 |---|---|
-| ASSET_ARCHIVE | 388 |
+| ASSET_ARCHIVE | 395 |
 | MERGED | 14 |
 | REDESIGN | 4 |
 | REMOVED | 23 |
@@ -589,7 +589,7 @@ No intention to restore.
   block_model: turkey_coffee_pot_unheated
 ```
 
-### ASSET_ARCHIVE (388)
+### ASSET_ARCHIVE (395)
 
 Companion assets (raw/model/slice variants) — archive to reference/legacy-assets/.
 
@@ -919,6 +919,7 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: coffee_stage3
   block_model: coffee_turkey_plate
   blockstate: coffee_turkey_plate
+  block_model: coffee_turkish_plate
   block_model: coffee_vanilla_plate
   blockstate: coffee_vanilla_plate
   item_model: coldbrew_pot_finished
@@ -965,6 +966,12 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   item_model: records_kusa_noshi_to_ne
   item_model: records_lazy_lady_kaguya
   item_model: records_the_grimoire_of_marisa
+  block_model: soda_caramel_plate
+  block_model: soda_chocolate_plate
+  block_model: soda_fruit_plate
+  block_model: soda_mint_plate
+  block_model: soda_sakura_plate
+  block_model: soda_vanilla_plate
   block_model: strong_cocoa_plate
   blockstate: strong_cocoa_plate
   block_model: tiramisu_slice1

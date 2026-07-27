@@ -9,9 +9,9 @@
       "poi_type": 2,
       "sound_event": 3
     },
-    "orphan_assets": 429,
+    "orphan_assets": 436,
     "orphan_by_classification": {
-      "ASSET_ARCHIVE": 388,
+      "ASSET_ARCHIVE": 395,
       "MERGED": 14,
       "REMOVED": 23,
       "REDESIGN": 4
@@ -3060,8 +3060,7 @@
       "lang_ja": true,
       "creative_tab": true,
       "sources": [
-        "recipe",
-        "loot"
+        "recipe"
       ],
       "block_item": true,
       "block_of": "coffee_pot"
@@ -4912,8 +4911,7 @@
       "lang_ja": true,
       "creative_tab": true,
       "sources": [
-        "recipe",
-        "loot"
+        "recipe"
       ],
       "block_item": true,
       "block_of": "moka_pot"
@@ -6568,8 +6566,7 @@
       "lang_ja": true,
       "creative_tab": true,
       "sources": [
-        "recipe",
-        "loot"
+        "recipe"
       ],
       "block_item": true,
       "block_of": "turkish_coffee_pot"
@@ -6965,7 +6962,7 @@
       "lang_en": true,
       "lang_zh": true,
       "lang_ja": true,
-      "loot_table": true
+      "loot_table": false
     },
     {
       "id": "coffee_tree",
@@ -7119,7 +7116,7 @@
       "lang_en": true,
       "lang_zh": true,
       "lang_ja": true,
-      "loot_table": true
+      "loot_table": false
     },
     {
       "id": "mousse_berry",
@@ -7262,7 +7259,7 @@
       "lang_en": true,
       "lang_zh": true,
       "lang_ja": true,
-      "loot_table": true
+      "loot_table": false
     },
     {
       "id": "vanilla_crop",
@@ -8883,6 +8880,11 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
+      "id": "coffee_turkish_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
       "id": "coffee_vanilla_plate",
       "type": "block_model",
       "classification": "ASSET_ARCHIVE"
@@ -9068,6 +9070,21 @@
       "classification": "ASSET_ARCHIVE"
     },
     {
+      "id": "soda_caramel_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "soda_chocolate_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "soda_fruit_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
       "id": "soda_machine_bottom",
       "type": "block_model",
       "classification": "REMOVED"
@@ -9076,6 +9093,21 @@
       "id": "soda_machine_top",
       "type": "block_model",
       "classification": "REMOVED"
+    },
+    {
+      "id": "soda_mint_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "soda_sakura_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
+    },
+    {
+      "id": "soda_vanilla_plate",
+      "type": "block_model",
+      "classification": "ASSET_ARCHIVE"
     },
     {
       "id": "strong_cocoa_plate",
