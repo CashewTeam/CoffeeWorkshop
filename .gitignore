@@ -30,3 +30,8 @@ run
 .alma-snapshots
 nul
 /.zcode
+
+# local build / compile logs
+build_output.txt
+compile_log.txt
+*.compile.log

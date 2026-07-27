@@ -19,16 +19,16 @@
 | Restored (now registered) | +212 |
 | Total legacy assets (tracked) | 639 |
 | **ACTIVE_RUNTIME_ASSET** (already in use) | 392 |
-| **MERGED_RUNTIME_VARIANT** (old ID merged) | 215 |
-| **→ Runtime covered** | **607/639** |
+| **MERGED_RUNTIME_VARIANT** (old ID merged) | 196 |
+| **→ Runtime covered** | **588/639** |
 | TO_PORT_STANDALONE (needs registration) | 4 |
 | TO_PORT_INTERMEDIATE (raw/model/base) | 3 |
 | TO_WIRE_STATE_VARIANT (block states) | 0 |
-| TO_WIRE_DISPLAY_VARIANT (display system) | 3 |
+| TO_WIRE_DISPLAY_VARIANT (display system) | 0 |
 | TO_PORT_MACHINE (machine devices) | 17 |
 | TO_PORT_DECOR (decor blocks) | 5 |
 
-**Display Variants**: 3 asset files / 1 unique drink variants
+**Display Variants**: 0 asset files / 0 unique drink variants
 
 | **UNASSIGNED** (not yet determined) | 0 |
 
@@ -42,12 +42,12 @@
 | cake_mousse | 36 | 36 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | cake_roll | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | cake_system | 216 | 215 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| coffee_drinks | 189 | 10 | 175 | 1 | 0 | 0 | 3 | 0 | 0 | 0 |
-| confectionery | 27 | 11 | 14 | 0 | 2 | 0 | 0 | 0 | 0 | 0 |
+| coffee_drinks | 189 | 10 | 162 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| confectionery | 27 | 11 | 12 | 0 | 2 | 0 | 0 | 0 | 0 | 0 |
 | crops | 13 | 12 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | decor_bar | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
 | decor_phonograph | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
-| icecream | 4 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| icecream | 4 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | icecream_cookie | 7 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | icecream_cream | 13 | 13 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | machines | 10 | 0 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -58,7 +58,7 @@
 | sandwich | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | soda_machine | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
 | syrups | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| traditional_brew | 14 | 1 | 2 | 0 | 0 | 0 | 0 | 11 | 0 | 0 |
+| traditional_brew | 14 | 1 | 0 | 0 | 0 | 0 | 0 | 11 | 0 | 0 |
 
 ## ACTIVE_RUNTIME_ASSET (392 assets)
 

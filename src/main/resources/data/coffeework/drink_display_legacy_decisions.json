@@ -1,0 +1,68 @@
+{
+  "aliases": {
+    "coffee_american_plate": {
+      "replacement_model": "coffee_americano_plate",
+      "runtime_owner": "coffeework:coffee_americano",
+      "reason": "old English misspelling, behavior aliased to coffee_americano_plate",
+      "asset_file_used": false
+    },
+    "strong_cocoa_plate": {
+      "replacement_model": "cocoa_strong_plate",
+      "runtime_owner": "coffeework:cocoa_strong",
+      "reason": "old naming convention, behavior aliased to cocoa_strong_plate",
+      "asset_file_used": false
+    }
+  },
+  "excluded": {
+    "coffee_berry_plate": {
+      "reason": "legacy decorative plate block, no registered drink item",
+      "evidence": "1.12.2 BlockCoffee decorative variant without drink ItemStack"
+    },
+    "coffee_cheese_plate": {
+      "reason": "legacy decorative plate block, no registered drink item",
+      "evidence": "1.12.2 BlockCoffee decorative variant without drink ItemStack"
+    },
+    "coffee_cream_plate": {
+      "reason": "legacy decorative plate block, no registered drink item",
+      "evidence": "1.12.2 BlockCoffee decorative variant without drink ItemStack"
+    },
+    "coffee_ice_plate": {
+      "reason": "legacy decorative plate block, no registered drink item",
+      "evidence": "1.12.2 BlockCoffee decorative variant without drink ItemStack"
+    },
+    "coffee_icecream_plate": {
+      "reason": "legacy decorative plate block, no registered drink item",
+      "evidence": "1.12.2 BlockCoffee decorative variant without drink ItemStack"
+    },
+    "coffee_milk_plate": {
+      "reason": "legacy decorative plate block, no registered drink item",
+      "evidence": "1.12.2 BlockCoffee decorative variant without drink ItemStack"
+    },
+    "coffee_mint_plate": {
+      "reason": "legacy decorative plate block, no registered drink item",
+      "evidence": "1.12.2 BlockCoffee decorative variant without drink ItemStack"
+    },
+    "coffee_turkey_plate": {
+      "reason": "legacy decorative plate block, no registered drink item",
+      "evidence": "1.12.2 BlockCoffee decorative variant without drink ItemStack"
+    },
+    "coffee_vanilla_plate": {
+      "reason": "legacy decorative plate block, no registered drink item",
+      "evidence": "1.12.2 BlockCoffee decorative variant without drink ItemStack"
+    },
+    "cocoa_gingerbread_plate": {
+      "reason": "legacy cocoa variant, no registered drink item",
+      "evidence": "1.12.2 BlockCoffee cocoa variant without drink ItemStack"
+    },
+    "cocoa_marshmallow_plate": {
+      "reason": "legacy cocoa variant, no registered drink item",
+      "evidence": "1.12.2 BlockCoffee cocoa variant without drink ItemStack"
+    }
+  },
+  "base_models": {
+    "coffee_plate": {
+      "role": "shared_parent_model",
+      "note": "models/item/coffee_plate.json is the shared parent for all drink plate models. Block model and blockstate are legacy artifacts superseded by coffeework:drink_display."
+    }
+  }
+}

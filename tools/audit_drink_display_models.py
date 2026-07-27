@@ -17,27 +17,22 @@ from glob import glob
 MOD_DIR = "src/main/resources/assets/coffeework"
 DATA_DIR = "src/main/resources/data/coffeework"
 MAPPING_FILE = os.path.join(DATA_DIR, "drink_display_models.json")
+DECISIONS_FILE = os.path.join(DATA_DIR, "drink_display_legacy_decisions.json")
 MANIFEST_FILE = "docs/content_manifest.json"
 
-# ── Approved orphan _plate models (legacy, no registered drink item, explicitly excluded) ──
-APPROVED_ORPHANS = {
-    # Decorative blocks without drink items (1.12.2 legacy)
-    "coffee_berry_plate",
-    "coffee_cheese_plate",
-    "coffee_cream_plate",
-    "coffee_ice_plate",
-    "coffee_icecream_plate",
-    "coffee_milk_plate",
-    "coffee_mint_plate",
-    "coffee_turkey_plate",
-    "coffee_vanilla_plate",
-    # Cocoa variants without registered drinks
-    "cocoa_gingerbread_plate",
-    "cocoa_marshmallow_plate",
-    # Old naming variants (renamed drinks)
-    "coffee_american_plate",   # → coffee_americano (legacy English misspelling)
-    "strong_cocoa_plate",      # → cocoa_strong (old naming convention)
-}
+def _load_approved_orphans() -> set[str]:
+    """Load allowed orphan model names from the shared decisions file."""
+    try:
+        with open(DECISIONS_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        result = set(data.get("excluded", {}).keys())
+        result.update(data.get("aliases", {}).keys())
+        return result
+    except Exception:
+        return set()
+
+# ── Approved orphan _plate models (loaded from shared JSON, unified with legacy audit) ──
+APPROVED_ORPHANS = _load_approved_orphans()
 
 
 def load_manifest_items() -> set[str]:

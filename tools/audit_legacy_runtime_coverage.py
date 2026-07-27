@@ -67,6 +67,7 @@ STATUS_DISPLAY_VARIANT = "TO_WIRE_DISPLAY_VARIANT"
 STATUS_MACHINE = "TO_PORT_MACHINE"
 STATUS_DECOR = "TO_PORT_DECOR"
 STATUS_MERGED = "MERGED_RUNTIME_VARIANT"
+STATUS_EXCLUDED = "EXCLUDED_LEGACY_ASSET"
 STATUS_UNASSIGNED = "UNASSIGNED"
 
 
@@ -87,30 +88,20 @@ def _load_wired_plate_models() -> set:
     return models
 
 
-# ── Legacy plate model classification maps ─────────────────────────
+# ── Legacy plate model classification maps (loaded from shared JSON) ──
 
-# Models that are aliased to existing mapped plate models (old naming variants)
-PLATE_ALIASES = {
-    "coffee_american_plate": ("coffeework:coffee_americano",
-        "old English misspelling, aliased to coffee_americano_plate"),
-    "strong_cocoa_plate": ("coffeework:cocoa_strong",
-        "old naming convention, aliased to cocoa_strong_plate"),
-}
+def _load_plate_decisions() -> dict:
+    """Load aliases, excluded, and base_models from the shared decisions file."""
+    path = "src/main/resources/data/coffeework/drink_display_legacy_decisions.json"
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"  WARNING: failed to load plate decisions: {e}")
+        return {"aliases": {}, "excluded": {}, "base_models": {}}
 
-# Models without corresponding registered drink items (explicitly excluded)
-PLATE_EXCLUDED = {
-    "coffee_berry_plate":    "legacy decorative plate, no registered drink item",
-    "coffee_cheese_plate":   "legacy decorative plate, no registered drink item",
-    "coffee_cream_plate":    "legacy decorative plate, no registered drink item",
-    "coffee_ice_plate":      "legacy decorative plate, no registered drink item",
-    "coffee_icecream_plate": "legacy decorative plate, no registered drink item",
-    "coffee_milk_plate":     "legacy decorative plate, no registered drink item",
-    "coffee_mint_plate":     "legacy decorative plate, no registered drink item",
-    "coffee_turkey_plate":   "legacy decorative plate, no registered drink item",
-    "coffee_vanilla_plate":  "legacy decorative plate, no registered drink item",
-    "cocoa_gingerbread_plate": "legacy variant, no registered drink item",
-    "cocoa_marshmallow_plate": "legacy variant, no registered drink item",
-}
+# Populated in main()
+PLATE_DECISIONS: dict = {}
 
 
 # Populated in main()
@@ -603,24 +594,41 @@ def _classify_orphan(orphan: dict, registry_ids: set,
 
     # Plate models → display system (Phase 8)
     if asset_id.endswith("_plate"):
+        decisions = PLATE_DECISIONS
+        aliases = decisions.get("aliases", {})
+        excluded = decisions.get("excluded", {})
+        base_models = decisions.get("base_models", {})
+
         if asset_id in WIRED_PLATE_MODELS:
             result["status"] = STATUS_MERGED
             result["runtime_owner"] = "coffeework:drink_display"
             result["runtime_role"] = "drink_display:plate_model"
+            result["target_phase"] = "8"
             result["notes"] = "Wired to DrinkDisplayBlock system"
             return result
-        if asset_id in PLATE_ALIASES:
-            _, note = PLATE_ALIASES[asset_id]
+        if asset_id in aliases:
+            entry = aliases[asset_id]
             result["status"] = STATUS_MERGED
             result["runtime_owner"] = "coffeework:drink_display"
-            result["runtime_role"] = "drink_display:aliased_model"
-            result["notes"] = note
+            result["runtime_role"] = "drink_display:behavior_alias"
+            result["target_phase"] = "8"
+            result["notes"] = (f"Behavior aliased to {entry.get('replacement_model', '?')}. "
+                               f"Asset file not directly used.")
             return result
-        if asset_id in PLATE_EXCLUDED:
-            result["status"] = STATUS_MERGED
+        if asset_id in excluded:
+            result["status"] = STATUS_EXCLUDED
             result["runtime_owner"] = "coffeework:drink_display"
             result["runtime_role"] = "drink_display:legacy_excluded"
-            result["notes"] = PLATE_EXCLUDED[asset_id]
+            result["target_phase"] = "8"
+            result["notes"] = excluded[asset_id].get("reason", "legacy, no registered drink")
+            return result
+        if asset_id in base_models:
+            entry = base_models[asset_id]
+            result["status"] = STATUS_MERGED
+            result["runtime_owner"] = "coffeework:drink_display"
+            result["runtime_role"] = "drink_display:" + entry.get("role", "base_model")
+            result["target_phase"] = "8"
+            result["notes"] = entry.get("note", "shared base model for drink display")
             return result
         drink_id = asset_id[:-6]
         owner = f"coffeework:{drink_id}" if drink_id in registry_ids else None
@@ -876,8 +884,8 @@ def _build_summary(classified: list, total_baseline: int, baseline_registered: i
         if st in (STATUS_ACTIVE, STATUS_MERGED):
             if entry.get("runtime_owner") is None:
                 missing_runtime_owner += 1
-        else:
-            # Non-ACTIVE must have target_owner
+        elif st != STATUS_EXCLUDED:
+            # Non-ACTIVE, non-EXCLUDED must have target_owner
             if entry.get("target_owner") is None:
                 missing_target_owner += 1
 
@@ -1068,8 +1076,9 @@ def main() -> int:
         return 2
 
     # Collect data
-    global WIRED_PLATE_MODELS
+    global WIRED_PLATE_MODELS, PLATE_DECISIONS
     WIRED_PLATE_MODELS = _load_wired_plate_models()
+    PLATE_DECISIONS = _load_plate_decisions()
     registry_ids = {e["id"] for e in registry if e.get("registered")}
     registered_item_ids = {e["id"] for e in registry if e.get("registered") and e.get("type") == "item"}
     registered_block_ids = {e["id"] for e in registry if e.get("registered") and e.get("type") == "block"}

@@ -28,6 +28,7 @@ public class DrinkDisplayBlockEntity extends BlockEntity {
     @Nullable
     private ItemStack drink = ItemStack.EMPTY;
     private boolean needsRecovery = false;
+    private int tickCounter = 0;
 
     public DrinkDisplayBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.DRINK_DISPLAY.get(), pos, state);
@@ -96,6 +97,8 @@ public class DrinkDisplayBlockEntity extends BlockEntity {
      * become a permanent invisible ghost.
      */
     public void recoverIfInvalid() {
+        tickCounter++;
+        if (tickCounter % 20 != 0) return;
         if (!needsRecovery && hasValidDrink()) {
             return;
         }
