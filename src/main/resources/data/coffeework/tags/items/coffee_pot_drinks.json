@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "coffeework:espresso",
+    "coffeework:coffee_americano",
+    "coffeework:coffee_latte",
+    "coffeework:coffee_cappuccino",
+    "coffeework:coffee_macchiato",
+    "coffeework:coffee_mochaccino",
+    "coffeework:coffee_turkish"
+  ]
+}

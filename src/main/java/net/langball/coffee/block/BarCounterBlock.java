@@ -84,7 +84,13 @@ public class BarCounterBlock extends Block {
         Direction right = facing.getClockWise();
         BlockPos rightPos = pos.relative(right);
         BlockState rightState = level.getBlockState(rightPos);
-        if (rightState.is(thisBlock) && rightState.getValue(FACING) != facing) {
+        if (rightState.is(thisBlock) && rightState.getValue(FACING) == facing.getOpposite()) {
+            return Shape.INNER;
+        }
+        Direction left = facing.getCounterClockWise();
+        BlockPos leftPos = pos.relative(left);
+        BlockState leftState = level.getBlockState(leftPos);
+        if (leftState.is(thisBlock) && leftState.getValue(FACING) == facing.getOpposite()) {
             return Shape.INNER;
         }
         return Shape.NORMAL;

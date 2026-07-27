@@ -8,6 +8,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -33,6 +37,8 @@ import org.jetbrains.annotations.Nullable;
 public class CoffeePotBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final IntegerProperty LEVEL = IntegerProperty.create("level", 0, 4);
+    private static final TagKey<Item> COFFEE_POT_DRINKS =
+            ItemTags.create(new ResourceLocation("coffeework", "coffee_pot_drinks"));
 
     private static final VoxelShape SHAPE = Shapes.box(0.125, 0, 0.125, 0.875, 0.75, 0.875);
 
@@ -95,6 +101,7 @@ public class CoffeePotBlock extends BaseEntityBlock {
         }
 
         if (held.getItem() instanceof DrinkCoffee && !pot.isFull()) {
+            if (!held.is(COFFEE_POT_DRINKS)) return InteractionResult.PASS;
             int available = DrinkCoffee.getRemainingCups(held);
             int space = pot.getCapacity() - pot.getServings();
             int moved = Math.min(available, space);
