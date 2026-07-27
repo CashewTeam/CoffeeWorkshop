@@ -136,6 +136,9 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.TURKISH_COFFEE_POT.get());
         dropSelf(ModBlocks.COFFEE_POT.get());
         dropSelf(ModBlocks.SODA_MACHINE.get());
+        dropSelf(ModBlocks.PHONOGRAPH.get());
+        dropSelf(ModBlocks.STONE_BAR_COUNTER.get());
+        dropSelf(ModBlocks.WOODEN_BAR_COUNTER.get());
     }
 
     @Override

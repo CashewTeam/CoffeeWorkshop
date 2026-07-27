@@ -32,5 +32,11 @@ public class ModDecorBlocks {
                 () -> new TurkishCoffeePotBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F).sound(SoundType.LANTERN).noOcclusion()));
         ModBlocks.COFFEE_POT = blocks.register("coffee_pot",
                 () -> new CoffeePotBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F).sound(SoundType.LANTERN).noOcclusion()));
+        ModBlocks.PHONOGRAPH = blocks.register("phonograph",
+                () -> new PhonographBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
+        ModBlocks.STONE_BAR_COUNTER = blocks.register("stone_bar_counter",
+                () -> new BarCounterBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(2.0F).sound(SoundType.STONE).noOcclusion(), true));
+        ModBlocks.WOODEN_BAR_COUNTER = blocks.register("wooden_bar_counter",
+                () -> new BarCounterBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F).sound(SoundType.WOOD).noOcclusion(), false));
     }
 }

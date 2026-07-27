@@ -30,6 +30,9 @@ public class ModCreativeTabs {
                         output.accept(ModItems.TURKISH_COFFEE_POT_ITEM.get());
                         output.accept(ModItems.COFFEE_POT_ITEM.get());
                         output.accept(ModItems.SODA_MACHINE_ITEM.get());
+                        output.accept(ModItems.PHONOGRAPH_ITEM.get());
+                        output.accept(ModItems.STONE_BAR_COUNTER.get());
+                        output.accept(ModItems.WOODEN_BAR_COUNTER.get());
 
                         // Plants
                         output.accept(ModItems.COFFEE_TREE_ITEM.get());

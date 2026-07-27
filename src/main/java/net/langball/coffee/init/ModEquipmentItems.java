@@ -158,5 +158,11 @@ public class ModEquipmentItems {
                 () -> new BlockItem(ModBlocks.COFFEE_POT.get(), new Item.Properties()));
         ModItems.SODA_MACHINE_ITEM = items.register("soda_machine",
                 () -> new BlockItem(ModBlocks.SODA_MACHINE.get(), new Item.Properties()));
+        ModItems.PHONOGRAPH_ITEM = items.register("phonograph",
+                () -> new BlockItem(ModBlocks.PHONOGRAPH.get(), new Item.Properties()));
+        ModItems.STONE_BAR_COUNTER = items.register("stone_bar_counter",
+                () -> new BlockItem(ModBlocks.STONE_BAR_COUNTER.get(), new Item.Properties()));
+        ModItems.WOODEN_BAR_COUNTER = items.register("wooden_bar_counter",
+                () -> new BlockItem(ModBlocks.WOODEN_BAR_COUNTER.get(), new Item.Properties()));
     }
 }

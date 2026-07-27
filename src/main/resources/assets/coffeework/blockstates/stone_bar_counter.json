@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,shape=normal": { "model": "coffeework:block/bar_stone_normal" },
+    "facing=north,shape=inner": { "model": "coffeework:block/bar_stone_inner" },
+    "facing=south,shape=normal": { "model": "coffeework:block/bar_stone_normal", "y": 180 },
+    "facing=south,shape=inner": { "model": "coffeework:block/bar_stone_inner", "y": 180 },
+    "facing=west,shape=normal": { "model": "coffeework:block/bar_stone_normal", "y": 270 },
+    "facing=west,shape=inner": { "model": "coffeework:block/bar_stone_inner", "y": 270 },
+    "facing=east,shape=normal": { "model": "coffeework:block/bar_stone_normal", "y": 90 },
+    "facing=east,shape=inner": { "model": "coffeework:block/bar_stone_inner", "y": 90 }
+  }
+}

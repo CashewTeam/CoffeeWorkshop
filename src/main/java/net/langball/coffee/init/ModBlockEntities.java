@@ -8,6 +8,7 @@ import net.langball.coffee.block.entity.GrinderBlockEntity;
 import net.langball.coffee.block.entity.IcecreamMachineBlockEntity;
 import net.langball.coffee.block.entity.MokaPotBlockEntity;
 import net.langball.coffee.block.entity.OvenBlockEntity;
+import net.langball.coffee.block.entity.PhonographBlockEntity;
 import net.langball.coffee.block.entity.RollerBlockEntity;
 import net.langball.coffee.block.entity.SodaMachineBlockEntity;
 import net.langball.coffee.block.entity.TurkishCoffeePotBlockEntity;
@@ -80,5 +81,11 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(
                     SodaMachineBlockEntity::new,
                     ModBlocks.SODA_MACHINE.get()
+            ).build(null));
+
+    public static final RegistryObject<BlockEntityType<PhonographBlockEntity>> PHONOGRAPH = BLOCK_ENTITIES.register("phonograph",
+            () -> BlockEntityType.Builder.of(
+                    PhonographBlockEntity::new,
+                    ModBlocks.PHONOGRAPH.get()
             ).build(null));
 }

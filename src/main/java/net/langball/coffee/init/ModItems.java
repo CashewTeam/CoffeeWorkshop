@@ -506,6 +506,8 @@ public class ModItems {
     public static RegistryObject<Item> COFFEE_POT_ITEM;
     public static RegistryObject<Item> SODA_MACHINE_ITEM;
     public static RegistryObject<Item> PHONOGRAPH_ITEM;
+    public static RegistryObject<Item> STONE_BAR_COUNTER;
+    public static RegistryObject<Item> WOODEN_BAR_COUNTER;
 
     // ========================================================================
     // Registration bootstrap

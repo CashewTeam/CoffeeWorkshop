@@ -96,6 +96,8 @@ public class ModBlocks {
     public static RegistryObject<Block> COFFEE_POT;
     public static RegistryObject<Block> SODA_MACHINE;
     public static RegistryObject<Block> PHONOGRAPH;
+    public static RegistryObject<Block> STONE_BAR_COUNTER;
+    public static RegistryObject<Block> WOODEN_BAR_COUNTER;
 
     // ========== Registration bootstrap ==========
     static {
