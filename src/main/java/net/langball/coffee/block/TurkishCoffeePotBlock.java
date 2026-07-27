@@ -125,8 +125,7 @@ public class TurkishCoffeePotBlock extends BaseEntityBlock {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof TurkishCoffeePotBlockEntity pot) {
                 ItemStack drop = new ItemStack(ModItems.TURKISH_COFFEE_POT_ITEM.get());
-                CompoundTag beTag = new CompoundTag();
-                pot.saveToTag(beTag);
+                CompoundTag beTag = pot.saveForItem();
                 if (!beTag.isEmpty()) {
                     drop.getOrCreateTag().put("BlockEntityTag", beTag);
                 }

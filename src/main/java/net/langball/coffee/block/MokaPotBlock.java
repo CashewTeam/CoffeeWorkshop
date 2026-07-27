@@ -125,8 +125,7 @@ public class MokaPotBlock extends BaseEntityBlock {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof MokaPotBlockEntity moka) {
                 ItemStack drop = new ItemStack(ModItems.MOKA_POT_ITEM.get());
-                CompoundTag beTag = new CompoundTag();
-                moka.saveToTag(beTag);
+                CompoundTag beTag = moka.saveForItem();
                 if (!beTag.isEmpty()) {
                     drop.getOrCreateTag().put("BlockEntityTag", beTag);
                 }

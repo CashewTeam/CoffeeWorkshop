@@ -95,16 +95,31 @@ public class CoffeePotBlock extends BaseEntityBlock {
         }
 
         if (held.getItem() instanceof DrinkCoffee && !pot.isFull()) {
+            int available = DrinkCoffee.getRemainingCups(held);
+            int space = pot.getCapacity() - pot.getServings();
+            int moved = Math.min(available, space);
+            if (moved <= 0) return InteractionResult.PASS;
+
             if (pot.isEmpty()) {
-                pot.fillFrom(held, DrinkCoffee.getRemainingCups(held));
-                held.shrink(1);
-            } else if (pot.canAccept(held)) {
-                int cups = DrinkCoffee.getRemainingCups(held);
-                pot.fillFrom(held, cups);
-                held.shrink(1);
-            } else {
+                pot.setStoredDrink(held.copy());
+                pot.getStoredDrink().setCount(1);
+                DrinkCoffee.setRemainingCups(pot.getStoredDrink(), 1);
+            } else if (!pot.canAccept(held)) {
                 return InteractionResult.PASS;
             }
+            pot.setServings(pot.getServings() + moved);
+
+            if (!player.getAbilities().instabuild) {
+                DrinkCoffee.setRemainingCups(held, available - moved);
+                if (DrinkCoffee.getRemainingCups(held) <= 0) {
+                    ItemStack container = ItemStack.EMPTY;
+                    if (held.getItem() instanceof DrinkCoffee dc && dc.getEmptyCupItem() != null) {
+                        container = new ItemStack(dc.getEmptyCupItem());
+                    }
+                    player.setItemInHand(hand, container);
+                }
+            }
+
             level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.5f, 1.0f);
             int newLevel = pot.getFillLevel();
             level.setBlock(pos, state.setValue(LEVEL, newLevel), 3);
@@ -120,8 +135,7 @@ public class CoffeePotBlock extends BaseEntityBlock {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof CoffeePotBlockEntity pot) {
                 ItemStack drop = new ItemStack(ModItems.COFFEE_POT_ITEM.get());
-                CompoundTag beTag = new CompoundTag();
-                pot.saveToTag(beTag);
+                CompoundTag beTag = pot.saveForItem();
                 if (!beTag.isEmpty()) {
                     drop.getOrCreateTag().put("BlockEntityTag", beTag);
                 }

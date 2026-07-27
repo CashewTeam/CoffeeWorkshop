@@ -35,26 +35,35 @@ public class CoffeePotBlockEntity extends BlockEntity implements ServingContaine
     }
 
     public void fillFrom(ItemStack drink, int servings) {
-        fill(drink, servings);
+        if (getStoredDrink().isEmpty()) {
+            ItemStack template = drink.copy();
+            template.setCount(1);
+            if (template.getItem() instanceof net.langball.coffee.item.DrinkCoffee dc) {
+                dc.ensureCupData(template);
+            }
+            setStoredDrink(template);
+        }
+        int moved = Math.min(servings, CAPACITY - getServings());
+        if (moved > 0) {
+            setServings(getServings() + moved);
+        }
         setChanged();
         sync();
-    }
-
-    public void pickUpPot(Level level, BlockPos pos) {
-        ItemStack drop = new ItemStack(ModItems.COFFEE_POT_ITEM.get());
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag);
-        if (!tag.isEmpty()) {
-            drop.getOrCreateTag().put("BlockEntityTag", tag);
-        }
-        net.minecraft.world.entity.item.ItemEntity item = new net.minecraft.world.entity.item.ItemEntity(
-                level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop);
-        level.addFreshEntity(item);
     }
 
     public int getFillLevel() {
         if (serving.isEmpty()) return 0;
         return Math.min(serving.getServings(), 4);
+    }
+
+    public CompoundTag saveForItem() {
+        CompoundTag tag = new CompoundTag();
+        writeContents(tag);
+        return tag;
+    }
+
+    private void writeContents(CompoundTag tag) {
+        ServingContainer.super.saveToTag(tag);
     }
 
     @Override
@@ -70,6 +79,17 @@ public class CoffeePotBlockEntity extends BlockEntity implements ServingContaine
     @Override
     public void setCapacity(int c) { serving.setCapacity(c); }
 
+    public void onLoadSyncLevel() {
+        if (level != null && !level.isClientSide) {
+            BlockState state = getBlockState();
+            int lvl = getFillLevel();
+            if (state.hasProperty(net.langball.coffee.block.CoffeePotBlock.LEVEL)
+                    && state.getValue(net.langball.coffee.block.CoffeePotBlock.LEVEL) != lvl) {
+                level.setBlock(worldPosition, state.setValue(net.langball.coffee.block.CoffeePotBlock.LEVEL, lvl), 3);
+            }
+        }
+    }
+
     void sync() {
         if (level != null && !level.isClientSide) {
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
@@ -77,20 +97,22 @@ public class CoffeePotBlockEntity extends BlockEntity implements ServingContaine
         }
     }
 
-    public void saveToTag(CompoundTag tag) {
-        saveAdditional(tag);
-    }
-
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        saveToTag(tag);
+        writeContents(tag);
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
         loadFromTag(tag);
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        onLoadSyncLevel();
     }
 
     @Override

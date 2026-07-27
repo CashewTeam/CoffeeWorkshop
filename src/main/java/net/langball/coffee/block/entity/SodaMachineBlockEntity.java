@@ -98,10 +98,9 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
                 cookTime++;
 
                 if (!active) {
-                    active = true;
-                    level.setBlock(pos, state.setValue(
-                            net.langball.coffee.block.SodaMachineBlock.ACTIVE, true), 3);
-                }
+                active = true;
+                setActiveState(level, pos, true);
+            }
 
                 if (cookTime >= totalCookTime) {
                     itemHandler.extractItem(SLOT_BOTTLE, 1, false);
@@ -129,8 +128,7 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
                 totalCookTime = 0;
                 if (active) {
                     active = false;
-                    level.setBlock(pos, state.setValue(
-                            net.langball.coffee.block.SodaMachineBlock.ACTIVE, false), 3);
+                    setActiveState(level, pos, false);
                 }
             }
         } else {
@@ -138,8 +136,7 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
                 cookTime = 0;
                 totalCookTime = 0;
                 active = false;
-                level.setBlock(pos, state.setValue(
-                        net.langball.coffee.block.SodaMachineBlock.ACTIVE, false), 3);
+                setActiveState(level, pos, false);
             }
         }
         setChanged();
@@ -206,5 +203,17 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
 
     public ItemStackHandler getItemHandler() {
         return itemHandler;
+    }
+
+    private void setActiveState(Level level, BlockPos pos, boolean active) {
+        BlockState lower = level.getBlockState(pos);
+        if (lower.hasProperty(net.langball.coffee.block.SodaMachineBlock.ACTIVE)) {
+            level.setBlock(pos, lower.setValue(net.langball.coffee.block.SodaMachineBlock.ACTIVE, active), 3);
+        }
+        BlockPos upperPos = pos.above();
+        BlockState upper = level.getBlockState(upperPos);
+        if (upper.hasProperty(net.langball.coffee.block.SodaMachineBlock.ACTIVE)) {
+            level.setBlock(upperPos, upper.setValue(net.langball.coffee.block.SodaMachineBlock.ACTIVE, active), 3);
+        }
     }
 }

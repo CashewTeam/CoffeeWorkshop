@@ -15,8 +15,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CampfireBlock;
-import net.minecraft.world.level.block.FurnaceBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -63,21 +61,25 @@ public class MokaPotBlockEntity extends BlockEntity implements ServingContainer 
     public ItemStack pourServing() {
         if (!isReady()) return ItemStack.EMPTY;
         ItemStack result = pourOneServing();
+        if (getServings() <= 0) {
+            brewProgress = 0;
+        }
         setChanged();
         sync();
         return result;
     }
 
-    public void pickUpPot(Level level, BlockPos pos) {
-        ItemStack drop = new ItemStack(ModItems.MOKA_POT_ITEM.get());
+    public CompoundTag saveForItem() {
         CompoundTag tag = new CompoundTag();
-        saveAdditional(tag);
-        if (!tag.isEmpty()) {
-            drop.getOrCreateTag().put("BlockEntityTag", tag);
-        }
-        net.minecraft.world.entity.item.ItemEntity item = new net.minecraft.world.entity.item.ItemEntity(
-                level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop);
-        level.addFreshEntity(item);
+        writeContents(tag);
+        return tag;
+    }
+
+    private void writeContents(CompoundTag tag) {
+        tag.putBoolean("HasCoffee", hasCoffee);
+        tag.putBoolean("HasWater", hasWater);
+        tag.putInt("BrewProgress", brewProgress);
+        ServingContainer.super.saveToTag(tag);
     }
 
     @Override
@@ -119,6 +121,7 @@ public class MokaPotBlockEntity extends BlockEntity implements ServingContainer 
                 if (drink.getItem() instanceof net.langball.coffee.item.DrinkCoffee dc) {
                     dc.initializeFreshStack(drink);
                     net.langball.coffee.item.DrinkCoffee.setRemainingCups(drink, 1);
+                    drink.getOrCreateTag().putInt("max_cups", 1);
                 }
                 this.setStoredDrink(drink);
                 this.setServings(MAX_SERVINGS);
@@ -148,17 +151,10 @@ public class MokaPotBlockEntity extends BlockEntity implements ServingContainer 
         }
     }
 
-    public void saveToTag(CompoundTag tag) {
-        saveAdditional(tag);
-    }
-
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putBoolean("HasCoffee", hasCoffee);
-        tag.putBoolean("HasWater", hasWater);
-        tag.putInt("BrewProgress", brewProgress);
-        saveToTag(tag);
+        writeContents(tag);
     }
 
     @Override

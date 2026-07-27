@@ -61,21 +61,25 @@ public class TurkishCoffeePotBlockEntity extends BlockEntity implements ServingC
     public ItemStack pourServing() {
         if (!isReady()) return ItemStack.EMPTY;
         ItemStack result = pourOneServing();
+        if (getServings() <= 0) {
+            brewProgress = 0;
+        }
         setChanged();
         sync();
         return result;
     }
 
-    public void pickUpPot(Level level, BlockPos pos) {
-        ItemStack drop = new ItemStack(ModItems.TURKISH_COFFEE_POT_ITEM.get());
+    public CompoundTag saveForItem() {
         CompoundTag tag = new CompoundTag();
-        saveAdditional(tag);
-        if (!tag.isEmpty()) {
-            drop.getOrCreateTag().put("BlockEntityTag", tag);
-        }
-        net.minecraft.world.entity.item.ItemEntity item = new net.minecraft.world.entity.item.ItemEntity(
-                level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop);
-        level.addFreshEntity(item);
+        writeContents(tag);
+        return tag;
+    }
+
+    private void writeContents(CompoundTag tag) {
+        tag.putBoolean("HasCoffee", hasCoffee);
+        tag.putBoolean("HasWater", hasWater);
+        tag.putInt("BrewProgress", brewProgress);
+        ServingContainer.super.saveToTag(tag);
     }
 
     @Override
@@ -117,6 +121,7 @@ public class TurkishCoffeePotBlockEntity extends BlockEntity implements ServingC
                 if (drink.getItem() instanceof net.langball.coffee.item.DrinkCoffee dc) {
                     dc.initializeFreshStack(drink);
                     net.langball.coffee.item.DrinkCoffee.setRemainingCups(drink, 1);
+                    drink.getOrCreateTag().putInt("max_cups", 1);
                 }
                 setStoredDrink(drink);
                 setServings(MAX_SERVINGS);
@@ -146,17 +151,10 @@ public class TurkishCoffeePotBlockEntity extends BlockEntity implements ServingC
         }
     }
 
-    public void saveToTag(CompoundTag tag) {
-        saveAdditional(tag);
-    }
-
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putBoolean("HasCoffee", hasCoffee);
-        tag.putBoolean("HasWater", hasWater);
-        tag.putInt("BrewProgress", brewProgress);
-        saveToTag(tag);
+        writeContents(tag);
     }
 
     @Override

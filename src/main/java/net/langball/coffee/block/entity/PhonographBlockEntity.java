@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -57,9 +58,9 @@ public class PhonographBlockEntity extends BlockEntity {
 
     private void playRecord() {
         if (level == null || level.isClientSide) return;
-        if (record.getItem() instanceof RecordItem recordItem) {
+        if (record.getItem() instanceof RecordItem) {
             level.gameEvent(GameEvent.JUKEBOX_PLAY, worldPosition, GameEvent.Context.of(getBlockState()));
-            level.levelEvent(1010, worldPosition, 0);
+            level.levelEvent(1010, worldPosition, Item.getId(record.getItem()));
         }
     }
 
