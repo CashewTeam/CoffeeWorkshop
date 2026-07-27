@@ -118,6 +118,13 @@ public class MokaPotBlock extends BaseEntityBlock {
         }
 
         if (held.getItem() == ModItems.COFFEE_POT_ITEM.get() && moka.isReady()) {
+            // Phase 9 Fix4 P0-2: refuse to mutate BlockEntityTag on a stacked
+            // pot — this would silently duplicate the contents across the
+            // entire stack.  Items are also stacksTo(1) so the only way to
+            // reach here is via /give abuse or creative duplication.
+            if (held.getCount() != 1) {
+                return InteractionResult.PASS;
+            }
             CompoundTag potTag = held.getOrCreateTagElement("BlockEntityTag");
             var potData = new net.langball.coffee.block.entity.CoffeePotBlockEntity(pos, state);
             if (!potTag.isEmpty()) potData.load(potTag);

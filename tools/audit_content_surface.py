@@ -672,12 +672,20 @@ def build_report():
     # 9. Survival source check — dynamically parsed from ModCakeBlocks.java
     cake_slice_data = parse_cake_slice_items()
     interact_items = cake_slice_data['slice_item_ids']
-    all_sources = recipe_outputs | loot_items | traded_items | worldgen_items | interact_items
+    # Phase 9 Fix4: align with tools/report_recipe_reachability.py
+    # NON_RECIPE_EDGES.  These items are produced by block interactions
+    # that the JSON-recipe scanner cannot see.
+    block_interaction_items = {
+        "coffee_turkish",     # Turkish Pot brewing (water + powder → result)
+    }
+    all_sources = (recipe_outputs | loot_items | traded_items
+                   | worldgen_items | interact_items
+                   | block_interaction_items)
     # Special items that are tools/molds (no "source" needed but should be craftable)
     tool_like = {"cake_model", "cake_model_square", "cake_model_plate", "small_model",
                  "mooncake_model", "mixing_bowl", "iron_bowl"}
     internal_items = {"vanilla", "bag", "syrup_empty"}
-    
+
     for item_id in sorted(registry_items):
         if item_id in all_sources or item_id in tool_like or item_id in internal_items:
             continue

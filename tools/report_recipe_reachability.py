@@ -65,8 +65,10 @@ INITIAL_ITEMS = {
     "minecraft:piston",
     "minecraft:note_block",
     "minecraft:smooth_stone",
-    # Phase 9: machine output (BE-based, not JSON recipes)
-    "coffeework:coffee_turkish",
+    # Phase 9: machine output (BE-based, not JSON recipes) is intentionally
+    # NOT listed here — coffee_turkish is reached only via the explicit
+    # NON_RECIPE_EDGES edge below, so the Turkish Pot chain is actually
+    # validated instead of being a false-positive pass-through.
 }
 
 # Common vanilla Tag → concrete item mappings.  Used as a fallback when
@@ -98,8 +100,15 @@ WORLDGEN_SOURCES = {
 NON_RECIPE_EDGES = {
     # coldbrew_pot (full) + glass_bottle → coldbrew_bottle (after random ticks complete)
     "coffeework:coldbrew_bottle": ["coffeework:coldbrew_pot", "minecraft:glass_bottle"],
-    # Turkish coffee pot + coffee powder → turkish coffee (BE interaction)
-    "coffeework:coffee_turkish": ["coffeework:turkish_coffee_pot", "coffeework:coffee_powder"],
+    # Turkish coffee pot + water + coffee powder → turkish coffee (BE interaction)
+    # Phase 9 Fix4: water_bucket is required because Turkish Pot must be filled
+    # with water before coffee powder can become turkish coffee.  Listing only
+    # the pot and powder would let a missing water chain pass silently.
+    "coffeework:coffee_turkish": [
+        "coffeework:turkish_coffee_pot",
+        "coffeework:coffee_powder",
+        "minecraft:water_bucket",
+    ],
 }
 
 # Machine recipe types and their required machine blocks.

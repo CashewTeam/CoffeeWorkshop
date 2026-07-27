@@ -78,10 +78,21 @@ public interface ServingContainer {
                 return;
             }
             loaded.setCount(1);
+            // Phase 9 Fix4 P2-1: normalise stored drink so the template
+            // always represents a single serving.  An old / corrupted stack
+            // may carry remaining_cups > 1, which would let a single
+            // pourServing() copy the entire multi-cup payload.
             int rem = net.langball.coffee.item.DrinkCoffee.getRemainingCups(loaded);
             if (rem <= 0) {
                 clear();
                 return;
+            }
+            if (rem > 1) {
+                net.langball.coffee.item.DrinkCoffee.setRemainingCups(loaded, 1);
+            }
+            CompoundTag nd = loaded.getOrCreateTag();
+            if (!nd.contains("max_cups") || nd.getInt("max_cups") > 1) {
+                nd.putInt("max_cups", 1);
             }
             setStoredDrink(loaded);
         } else if (tag.getInt("Servings") > 0) {
@@ -89,9 +100,12 @@ public interface ServingContainer {
             return;
         }
         int s = tag.getInt("Servings");
-        int c = tag.contains("Capacity") ? tag.getInt("Capacity") : getCapacity();
-        if (c > 0 && c <= 64) setCapacity(c);
-        setServings(Math.max(0, Math.min(s, getCapacity())));
+        // Phase 9 Fix4 P2-1: never trust a Capacity value from NBT for fixed
+        // containers.  The BE constructor initialises the design capacity;
+        // we only need to clamp servings to that value.
+        int cap = getCapacity();
+        if (cap <= 0) cap = 4; // safety net
+        setServings(Math.max(0, Math.min(s, cap)));
         if (getServings() <= 0) {
             setStoredDrink(ItemStack.EMPTY);
         }

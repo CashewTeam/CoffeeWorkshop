@@ -149,13 +149,15 @@ public class ModEquipmentItems {
                         new Item.Properties().rarity(Rarity.RARE),
                         "item.coffeework.record_the_grimoire_of_marisa.desc", 100));
 
-        // Phase 9: Moka Pot block item
+        // Phase 9: Moka Pot block item.
+        // Phase 9 Fix4: stacksTo(1) to prevent duplication via held ItemStack
+        // because pot right-click modifies the held BlockEntityTag.
         ModItems.MOKA_POT_ITEM = items.register("moka_pot",
-                () -> new BlockItem(ModBlocks.MOKA_POT.get(), new Item.Properties()));
+                () -> new BlockItem(ModBlocks.MOKA_POT.get(), new Item.Properties().stacksTo(1)));
         ModItems.TURKISH_COFFEE_POT_ITEM = items.register("turkish_coffee_pot",
-                () -> new BlockItem(ModBlocks.TURKISH_COFFEE_POT.get(), new Item.Properties()));
+                () -> new BlockItem(ModBlocks.TURKISH_COFFEE_POT.get(), new Item.Properties().stacksTo(1)));
         ModItems.COFFEE_POT_ITEM = items.register("coffee_pot",
-                () -> new BlockItem(ModBlocks.COFFEE_POT.get(), new Item.Properties()));
+                () -> new BlockItem(ModBlocks.COFFEE_POT.get(), new Item.Properties().stacksTo(1)));
         ModItems.SODA_MACHINE_ITEM = items.register("soda_machine",
                 () -> new BlockItem(ModBlocks.SODA_MACHINE.get(), new Item.Properties()));
         ModItems.PHONOGRAPH_ITEM = items.register("phonograph",

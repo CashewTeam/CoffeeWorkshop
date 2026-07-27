@@ -80,7 +80,7 @@ public class BarCounterBlock extends Block {
         }
     }
 
-    static Shape determineShape(Level level, BlockPos pos, Direction facing, Block thisBlock) {
+    public static Shape determineShape(Level level, BlockPos pos, Direction facing, Block thisBlock) {
         Direction right = facing.getClockWise();
         BlockPos rightPos = pos.relative(right);
         BlockState rightState = level.getBlockState(rightPos);

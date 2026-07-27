@@ -1,6 +1,7 @@
 package net.langball.coffee.block.entity;
 
 import net.langball.coffee.init.ModBlockEntities;
+import net.langball.coffee.init.ModItems;
 import net.langball.coffee.init.ModRecipeTypes;
 import net.langball.coffee.recipes.SodaMachineRecipe;
 import net.minecraft.core.BlockPos;
@@ -43,8 +44,12 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return switch (slot) {
+                // Phase 9 Fix4 P2-2: restrict base/flavor slots to their
+                // intended role items so junk like an apple can't lock up
+                // the recipe matcher or drain a glass bottle.
                 case SLOT_BOTTLE -> stack.getItem() == Items.GLASS_BOTTLE;
-                case SLOT_SODA, SLOT_FLAVOR -> true;
+                case SLOT_SODA -> stack.getItem() == ModItems.SODA.get();
+                case SLOT_FLAVOR -> isValidFlavor(stack);
                 case SLOT_OUTPUT -> false;
                 default -> false;
             };
@@ -57,6 +62,21 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
             }
         }
     };
+
+    /** Phase 9 Fix4 P2-2: accepted flavor items for the Soda Machine.
+     *  Includes the syrup bottles themselves plus the empty syrup container
+     *  (so a player can refill from an empty bottle without first filling). */
+    private static boolean isValidFlavor(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        var item = stack.getItem();
+        return item == ModItems.SYRUP_EMPTY.get()
+                || item == ModItems.SYRUP_CARAMEL.get()
+                || item == ModItems.SYRUP_CHOCOLATE.get()
+                || item == ModItems.SYRUP_FRUIT.get()
+                || item == ModItems.SYRUP_MINT.get()
+                || item == ModItems.SYRUP_VANILLA.get()
+                || item == ModItems.SYRUP_SAKURA.get();
+    }
 
     private LazyOptional<IItemHandler> lazyHandler = LazyOptional.empty();
 
@@ -124,6 +144,20 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
                     }
                     cookTime = 0;
                     totalCookTime = 0;
+                }
+
+                // Phase 9 Fix4 P2-3: emit bubble particles while processing
+                // to give visual feedback that the machine is active.
+                // Emission rate is throttled to one particle every 10 ticks
+                // so we don't flood the client packet budget.
+                if (cookTime % 10 == 0) {
+                    double x = pos.getX() + 0.5 + (level.random.nextDouble() - 0.5) * 0.4;
+                    double y = pos.getY() + 0.6;
+                    double z = pos.getZ() + 0.5 + (level.random.nextDouble() - 0.5) * 0.4;
+                    level.addParticle(
+                            net.minecraft.core.particles.ParticleTypes.BUBBLE,
+                            x, y, z,
+                            0.0, 0.04, 0.0);
                 }
             } else {
                 cookTime = 0;

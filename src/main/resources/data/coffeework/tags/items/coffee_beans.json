@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "coffeework:coffee_bean_raw",
+    "coffeework:coffee_bean"
+  ]
+}

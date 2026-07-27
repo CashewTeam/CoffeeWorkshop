@@ -78,7 +78,12 @@ public class PhonographBlockEntity extends BlockEntity {
     }
 
     public int getAnalogOutputSignal() {
-        return hasRecord() ? 15 : 0;
+        if (!hasRecord()) return 0;
+        // Phase 9 Fix4 P2-4: read the real RecordItem analog signal instead
+        // of hard-coding 15.  Vanilla jukebox uses this value so redstone
+        // dust strengths and comparator subtraction behave identically for
+        // both vanilla and coffeework records.
+        return record.getItem() instanceof RecordItem rec ? rec.getAnalogOutput() : 0;
     }
 
     @Override

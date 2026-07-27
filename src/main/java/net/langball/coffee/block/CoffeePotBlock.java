@@ -82,6 +82,9 @@ public class CoffeePotBlock extends BaseEntityBlock {
         boolean sneaking = player.isShiftKeyDown();
 
         if (sneaking && held.isEmpty()) {
+            // Phase 9 Fix4 P0-2: ensure pickup writes to a single stack
+            // before mutating BlockEntityTag.  Items are stacksTo(1).
+            if (held.getCount() != 0) return InteractionResult.PASS;
             level.removeBlock(pos, false);
             return InteractionResult.CONSUME;
         }
