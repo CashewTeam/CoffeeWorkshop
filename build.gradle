@@ -126,3 +126,33 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.compilerArgs << '-Xlint:-deprecation' << '-Xlint:-removal'
 }
+
+// ── Content manifest + legacy matrix auto-generation ──────────────────
+// These run after runData to keep docs/ content_manifest.json and
+// docs/LEGACY_CONTENT_MATRIX.md in sync with every build.
+// CI also runs them pre-build as a verification gate (build.yml).
+
+tasks.register('updateContentManifest', Exec) {
+    group = 'coffeework'
+    description = 'Regenerate docs/content_manifest.json'
+    workingDir = project.projectDir
+    commandLine = ['python', 'tools/build_content_manifest.py']
+}
+
+tasks.register('updateLegacyMatrix', Exec) {
+    group = 'coffeework'
+    description = 'Regenerate docs/LEGACY_CONTENT_MATRIX.md and docs/legacy_content_matrix.json'
+    workingDir = project.projectDir
+    commandLine = ['python', 'tools/audit_legacy_runtime_coverage.py']
+}
+
+// Hook manifest + matrix auto-generation to run after DataGen.
+// 'runData' is a lazy task created by the ForgeGradle 'minecraft.runs.data' block;
+// we use afterEvaluate to ensure it exists before wiring.
+afterEvaluate {
+    def dataTask = tasks.findByName('runData')
+    if (dataTask != null) {
+        dataTask.finalizedBy 'updateContentManifest'
+        dataTask.finalizedBy 'updateLegacyMatrix'
+    }
+}
