@@ -2,8 +2,11 @@ package net.langball.coffee.init;
 
 import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.recipes.CoffeeBrewingRecipeSerializer;
+import net.langball.coffee.recipes.DrinkTransformRecipe;
 import net.langball.coffee.recipes.MachineRecipe;
 import net.langball.coffee.recipes.MachineRecipeSerializer;
+import net.langball.coffee.recipes.SodaMachineRecipe;
+import net.langball.coffee.recipes.SodaMachineRecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -47,6 +50,10 @@ public final class ModRecipeTypes {
     public static final RecipeType<MachineRecipe> OVEN_BAKING =
             RecipeType.simple(CoffeeWork.id("oven_baking"));
 
+    /** Soda Machine — combines bottle + soda powder + flavor → soda drink. */
+    public static final RecipeType<SodaMachineRecipe> SODA_MAKING =
+            RecipeType.simple(CoffeeWork.id("soda_making"));
+
     // ========================================================================
     // Recipe Serializers  (registered to Forge's registry)
     // ========================================================================
@@ -80,6 +87,9 @@ public final class ModRecipeTypes {
     public static final RegistryObject<net.langball.coffee.recipes.DrinkTransformRecipe.Serializer> DRINK_TRANSFORM_SERIALIZER =
             SERIALIZERS.register("drink_transform",
                     net.langball.coffee.recipes.DrinkTransformRecipe.Serializer::new);
+
+    public static final RegistryObject<SodaMachineRecipeSerializer> SODA_MAKING_SERIALIZER =
+            SERIALIZERS.register("soda_making", () -> SodaMachineRecipeSerializer.INSTANCE);
 
     private ModRecipeTypes() {
     }

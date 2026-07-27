@@ -22,5 +22,7 @@ public class ModMachineBlocks {
                 () -> new BlockRoller(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
         ModBlocks.OVEN = blocks.register("oven",
                 () -> new BlockClayOven(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
+        ModBlocks.SODA_MACHINE = blocks.register("soda_machine",
+                () -> new SodaMachineBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(5.0F).requiresCorrectToolForDrops().noOcclusion()));
     }
 }

@@ -6,6 +6,7 @@ import net.langball.coffee.gui.ContainerGrinder;
 import net.langball.coffee.gui.ContainerIcecreamMachine;
 import net.langball.coffee.gui.ContainerOven;
 import net.langball.coffee.gui.ContainerRoller;
+import net.langball.coffee.gui.ContainerSodaMachine;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -30,4 +31,7 @@ public class ModMenuTypes {
 
     public static final RegistryObject<MenuType<ContainerOven>> OVEN = MENUS.register("oven",
             () -> IForgeMenuType.create((id, inv, data) -> new ContainerOven(id, inv, data.readBlockPos())));
+
+    public static final RegistryObject<MenuType<ContainerSodaMachine>> SODA_MACHINE = MENUS.register("soda_machine",
+            () -> IForgeMenuType.create((id, inv, data) -> new ContainerSodaMachine(id, inv, data)));
 }

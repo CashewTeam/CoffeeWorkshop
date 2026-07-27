@@ -504,6 +504,8 @@ public class ModItems {
     public static RegistryObject<Item> COFFEE_TURKISH;
     public static RegistryObject<Item> TURKISH_COFFEE_POT_ITEM;
     public static RegistryObject<Item> COFFEE_POT_ITEM;
+    public static RegistryObject<Item> SODA_MACHINE_ITEM;
+    public static RegistryObject<Item> PHONOGRAPH_ITEM;
 
     // ========================================================================
     // Registration bootstrap

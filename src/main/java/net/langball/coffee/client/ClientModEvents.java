@@ -29,6 +29,7 @@ public class ClientModEvents {
             MenuScreens.register(ModMenuTypes.ICECREAM_MACHINE.get(), GuiIcecreamMachine::new);
             MenuScreens.register(ModMenuTypes.ROLLER.get(), GuiRoller::new);
             MenuScreens.register(ModMenuTypes.OVEN.get(), GuiOven::new);
+            MenuScreens.register(ModMenuTypes.SODA_MACHINE.get(), GuiSodaMachine::new);
 
             ResourceManager rm = Minecraft.getInstance().getResourceManager();
             DrinkDisplayModelRegistry.loadModels(rm);
