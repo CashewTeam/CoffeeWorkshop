@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["IGI", "IPI", "IBI"],
+  "key": { "I": { "item": "minecraft:iron_ingot" }, "G": { "item": "minecraft:glass" }, "P": { "item": "minecraft:piston" }, "B": { "item": "minecraft:bucket" } },
+  "result": { "item": "coffeework:soda_machine" }
+}

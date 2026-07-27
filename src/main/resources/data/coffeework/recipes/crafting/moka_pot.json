@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "coffeework:moka_bottom" },
+    { "item": "coffeework:moka_top" }
+  ],
+  "result": { "item": "coffeework:moka_pot" }
+}

@@ -520,5 +520,48 @@ public class ModCoffeeItems {
                                 new MobEffectInstance(ModEffects.CAFFEINE.get(), 6000, 2),
                                 new MobEffectInstance(ModEffects.RELAX.get(), 800, 1),
                         }, 4, () -> ModItems.CUP.get()));
+
+        // Phase 9: Soda drinks (bottle-based)
+        ModItems.SODA_CARAMEL = items.register("soda_caramel",
+                () -> new DrinkCoffee(
+                        new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+                        new MobEffectInstance[]{
+                                new MobEffectInstance(ModEffects.CAFFEINE.get(), 2400, 0),
+                                new MobEffectInstance(ModEffects.RELAX.get(), 600, 0),
+                        }, 1, () -> net.minecraft.world.item.Items.GLASS_BOTTLE));
+        ModItems.SODA_CHOCOLATE = items.register("soda_chocolate",
+                () -> new DrinkCoffee(
+                        new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+                        new MobEffectInstance[]{
+                                new MobEffectInstance(ModEffects.CAFFEINE.get(), 2400, 0),
+                                new MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 600, 0),
+                        }, 1, () -> net.minecraft.world.item.Items.GLASS_BOTTLE));
+        ModItems.SODA_FRUIT = items.register("soda_fruit",
+                () -> new DrinkCoffee(
+                        new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.4F).alwaysEat().build()),
+                        new MobEffectInstance[]{
+                                new MobEffectInstance(ModEffects.CAFFEINE.get(), 2400, 0),
+                                new MobEffectInstance(net.minecraft.world.effect.MobEffects.REGENERATION, 200, 0),
+                        }, 1, () -> net.minecraft.world.item.Items.GLASS_BOTTLE));
+        ModItems.SODA_MINT = items.register("soda_mint",
+                () -> new DrinkCoffee(
+                        new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+                        new MobEffectInstance[]{
+                                new MobEffectInstance(ModEffects.CAFFEINE.get(), 3600, 0),
+                        }, 1, () -> net.minecraft.world.item.Items.GLASS_BOTTLE));
+        ModItems.SODA_VANILLA = items.register("soda_vanilla",
+                () -> new DrinkCoffee(
+                        new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+                        new MobEffectInstance[]{
+                                new MobEffectInstance(ModEffects.CAFFEINE.get(), 2400, 0),
+                                new MobEffectInstance(ModEffects.RELAX.get(), 900, 0),
+                        }, 1, () -> net.minecraft.world.item.Items.GLASS_BOTTLE));
+        ModItems.SODA_SAKURA = items.register("soda_sakura",
+                () -> new DrinkCoffee(
+                        new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).alwaysEat().build()),
+                        new MobEffectInstance[]{
+                                new MobEffectInstance(ModEffects.CAFFEINE.get(), 2400, 0),
+                                new MobEffectInstance(ModEffects.GOLDEN_HEART.get(), 600, 0),
+                        }, 1, () -> net.minecraft.world.item.Items.GLASS_BOTTLE));
     }
 }

@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["I I", "III", "   "],
+  "key": { "I": { "item": "minecraft:iron_ingot" } },
+  "result": { "item": "coffeework:turkish_coffee_pot" }
+}

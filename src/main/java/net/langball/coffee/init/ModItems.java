@@ -509,6 +509,14 @@ public class ModItems {
     public static RegistryObject<Item> STONE_BAR_COUNTER;
     public static RegistryObject<Item> WOODEN_BAR_COUNTER;
 
+    // Phase 9: Soda drinks
+    public static RegistryObject<Item> SODA_CARAMEL;
+    public static RegistryObject<Item> SODA_CHOCOLATE;
+    public static RegistryObject<Item> SODA_FRUIT;
+    public static RegistryObject<Item> SODA_MINT;
+    public static RegistryObject<Item> SODA_VANILLA;
+    public static RegistryObject<Item> SODA_SAKURA;
+
     // ========================================================================
     // Registration bootstrap
     // ========================================================================

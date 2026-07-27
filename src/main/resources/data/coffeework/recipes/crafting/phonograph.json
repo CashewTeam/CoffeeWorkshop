@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["PPP", "PNP", "PIP"],
+  "key": { "P": { "item": "minecraft:oak_planks" }, "N": { "item": "minecraft:note_block" }, "I": { "item": "minecraft:iron_ingot" } },
+  "result": { "item": "coffeework:phonograph" }
+}

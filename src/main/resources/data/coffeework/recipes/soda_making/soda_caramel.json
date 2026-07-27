@@ -1,0 +1,9 @@
+{
+  "type": "coffeework:soda_making",
+  "container": { "item": "minecraft:glass_bottle" },
+  "base": { "item": "coffeework:soda" },
+  "flavor": { "item": "coffeework:syrup_caramel" },
+  "result": { "item": "coffeework:soda_caramel" },
+  "experience": 0.5,
+  "processing_time": 200
+}

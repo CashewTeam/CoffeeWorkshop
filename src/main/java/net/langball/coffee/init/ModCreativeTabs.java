@@ -412,6 +412,13 @@ public class ModCreativeTabs {
                         output.accept(ModItems.COFFEE_INSTANT.get());
                         output.accept(ModItems.ESPRESSO.get());
                         output.accept(ModItems.COFFEE_TURKISH.get());
+                        // Soda drinks
+                        output.accept(ModItems.SODA_CARAMEL.get());
+                        output.accept(ModItems.SODA_CHOCOLATE.get());
+                        output.accept(ModItems.SODA_FRUIT.get());
+                        output.accept(ModItems.SODA_MINT.get());
+                        output.accept(ModItems.SODA_VANILLA.get());
+                        output.accept(ModItems.SODA_SAKURA.get());
                         output.accept(ModItems.COFFEE_AMERICANO.get());
                         output.accept(ModItems.COFFEE_AMERICANO_ICE.get());
                         output.accept(ModItems.COFFEE_AMERICANO_FRUIT.get());

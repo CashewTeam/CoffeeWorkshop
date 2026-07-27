@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["SSS", "S S", "SSS"],
+  "key": { "S": { "item": "minecraft:smooth_stone" } },
+  "result": { "item": "coffeework:stone_bar_counter", "count": 2 }
+}
