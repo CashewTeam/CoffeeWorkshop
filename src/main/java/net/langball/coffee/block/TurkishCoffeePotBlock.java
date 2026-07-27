@@ -78,6 +78,12 @@ public class TurkishCoffeePotBlock extends BaseEntityBlock {
         boolean sneaking = player.isShiftKeyDown();
 
         if (sneaking && held.isEmpty()) {
+            if (pot.isReady() && pot.getServings() > 0) {
+                ItemStack drink = pot.getStoredDrink().copy();
+                drink.setCount(pot.getServings());
+                net.minecraft.world.Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drink);
+                pot.clear();
+            }
             pot.pickUpPot(level, pos);
             level.removeBlock(pos, false);
             return InteractionResult.CONSUME;

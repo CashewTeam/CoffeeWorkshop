@@ -2,7 +2,6 @@ package net.langball.coffee.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.langball.coffee.CoffeeWork;
-import net.langball.coffee.block.entity.SodaMachineBlockEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;

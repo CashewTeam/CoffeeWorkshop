@@ -1,6 +1,7 @@
 package net.langball.coffee.block.entity;
 
 import net.langball.coffee.brewing.ServingContainer;
+import net.langball.coffee.brewing.ServingDataImpl;
 import net.langball.coffee.init.ModBlockEntities;
 import net.langball.coffee.init.ModItems;
 import net.minecraft.core.BlockPos;
@@ -17,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 public class CoffeePotBlockEntity extends BlockEntity implements ServingContainer {
     private static final int CAPACITY = 4;
 
-    private ServingData serving = new ServingData(CAPACITY);
+    private ServingDataImpl serving = new ServingDataImpl(CAPACITY);
 
     public CoffeePotBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.COFFEE_POT.get(), pos, state);
@@ -99,20 +100,5 @@ public class CoffeePotBlockEntity extends BlockEntity implements ServingContaine
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    private static class ServingData implements ServingContainer {
-        private ItemStack storedDrink = ItemStack.EMPTY;
-        private int servings;
-        private final int capacity;
-
-        ServingData(int capacity) { this.capacity = capacity; }
-
-        @Override public ItemStack getStoredDrink() { return storedDrink; }
-        @Override public void setStoredDrink(ItemStack d) { storedDrink = d; }
-        @Override public int getServings() { return servings; }
-        @Override public void setServings(int s) { servings = s; }
-        @Override public int getCapacity() { return capacity; }
-        @Override public void setCapacity(int c) {}
     }
 }

@@ -1,20 +1,12 @@
 {
   "variants": {
-    "facing=north,assembled=true,heated=false": { "model": "coffeework:block/moka_pot_unheated" },
-    "facing=north,assembled=true,heated=true": { "model": "coffeework:block/moka_pot_heated" },
-    "facing=south,assembled=true,heated=false": { "model": "coffeework:block/moka_pot_unheated", "y": 180 },
-    "facing=south,assembled=true,heated=true": { "model": "coffeework:block/moka_pot_heated", "y": 180 },
-    "facing=west,assembled=true,heated=false": { "model": "coffeework:block/moka_pot_unheated", "y": 270 },
-    "facing=west,assembled=true,heated=true": { "model": "coffeework:block/moka_pot_heated", "y": 270 },
-    "facing=east,assembled=true,heated=false": { "model": "coffeework:block/moka_pot_unheated", "y": 90 },
-    "facing=east,assembled=true,heated=true": { "model": "coffeework:block/moka_pot_heated", "y": 90 },
-    "facing=north,assembled=false,heated=false": { "model": "coffeework:block/moka_bottom" },
-    "facing=north,assembled=false,heated=true": { "model": "coffeework:block/moka_bottom" },
-    "facing=south,assembled=false,heated=false": { "model": "coffeework:block/moka_bottom", "y": 180 },
-    "facing=south,assembled=false,heated=true": { "model": "coffeework:block/moka_bottom", "y": 180 },
-    "facing=west,assembled=false,heated=false": { "model": "coffeework:block/moka_bottom", "y": 270 },
-    "facing=west,assembled=false,heated=true": { "model": "coffeework:block/moka_bottom", "y": 270 },
-    "facing=east,assembled=false,heated=false": { "model": "coffeework:block/moka_bottom", "y": 90 },
-    "facing=east,assembled=false,heated=true": { "model": "coffeework:block/moka_bottom", "y": 90 }
+    "facing=north,heated=false": { "model": "coffeework:block/moka_pot_unheated" },
+    "facing=north,heated=true": { "model": "coffeework:block/moka_pot_heated" },
+    "facing=south,heated=false": { "model": "coffeework:block/moka_pot_unheated", "y": 180 },
+    "facing=south,heated=true": { "model": "coffeework:block/moka_pot_heated", "y": 180 },
+    "facing=west,heated=false": { "model": "coffeework:block/moka_pot_unheated", "y": 270 },
+    "facing=west,heated=true": { "model": "coffeework:block/moka_pot_heated", "y": 270 },
+    "facing=east,heated=false": { "model": "coffeework:block/moka_pot_unheated", "y": 90 },
+    "facing=east,heated=true": { "model": "coffeework:block/moka_pot_heated", "y": 90 }
   }
 }

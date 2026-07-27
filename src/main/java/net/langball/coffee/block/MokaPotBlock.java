@@ -5,10 +5,8 @@ import net.langball.coffee.init.ModBlockEntities;
 import net.langball.coffee.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +34,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class MokaPotBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final BooleanProperty ASSEMBLED = BooleanProperty.create("assembled");
     public static final BooleanProperty HEATED = BooleanProperty.create("heated");
 
     private static final VoxelShape SHAPE = Shapes.box(0.125, 0, 0.125, 0.875, 0.8125, 0.875);
@@ -45,7 +42,6 @@ public class MokaPotBlock extends BaseEntityBlock {
         super(props);
         registerDefaultState(stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
-                .setValue(ASSEMBLED, true)
                 .setValue(HEATED, false));
     }
 
@@ -61,7 +57,7 @@ public class MokaPotBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, ASSEMBLED, HEATED);
+        builder.add(FACING, HEATED);
     }
 
     @Nullable
@@ -82,6 +78,12 @@ public class MokaPotBlock extends BaseEntityBlock {
         boolean sneaking = player.isShiftKeyDown();
 
         if (sneaking && held.isEmpty()) {
+            if (moka.isReady() && moka.getServings() > 0) {
+                ItemStack drink = moka.getStoredDrink().copy();
+                drink.setCount(moka.getServings());
+                net.minecraft.world.Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drink);
+                moka.clear();
+            }
             moka.pickUpPot(level, pos);
             level.removeBlock(pos, false);
             return InteractionResult.CONSUME;

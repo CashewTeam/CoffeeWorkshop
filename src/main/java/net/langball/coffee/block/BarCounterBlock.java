@@ -80,9 +80,4 @@ public class BarCounterBlock extends Block {
         }
         return Shape.NORMAL;
     }
-
-    public String getModelVariant(Shape shape, boolean isStone) {
-        String prefix = isStone ? "bar_stone" : "bar_wooden";
-        return "coffeework:block/" + prefix + "_" + shape.name().toLowerCase(Locale.ROOT);
-    }
 }

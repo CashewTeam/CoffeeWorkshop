@@ -1,18 +1,20 @@
 package net.langball.coffee.block.entity;
 
 import net.langball.coffee.brewing.ServingContainer;
+import net.langball.coffee.brewing.ServingDataImpl;
 import net.langball.coffee.init.ModBlockEntities;
 import net.langball.coffee.init.ModItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -20,12 +22,13 @@ import org.jetbrains.annotations.Nullable;
 public class MokaPotBlockEntity extends BlockEntity implements ServingContainer {
     private static final int MAX_BREW_TIME = 400;
     private static final int MAX_SERVINGS = 4;
+    private static final TagKey<Block> HEAT_SOURCE_TAG =
+            BlockTags.create(new ResourceLocation("coffeework", "moka_heat_sources"));
 
     private boolean hasCoffee;
     private boolean hasWater;
     private int brewProgress;
-    private ServingData serving = new ServingData(MAX_SERVINGS);
-    private int tickCounter;
+    private ServingDataImpl serving = new ServingDataImpl(MAX_SERVINGS);
 
     public MokaPotBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.MOKA_POT.get(), pos, state);
@@ -88,7 +91,6 @@ public class MokaPotBlockEntity extends BlockEntity implements ServingContainer 
     public void setCapacity(int c) { serving.setCapacity(c); }
 
     public void serverTick(Level level, BlockPos pos, BlockState state) {
-        this.tickCounter++;
         boolean wasHeated = state.getValue(net.langball.coffee.block.MokaPotBlock.HEATED);
 
         if (this.isReady()) {
@@ -127,10 +129,7 @@ public class MokaPotBlockEntity extends BlockEntity implements ServingContainer 
     }
 
     static boolean isOnHeatSource(Level level, BlockPos pos) {
-        BlockPos below = pos.below();
-        BlockState belowState = level.getBlockState(below);
-        ResourceLocation tagId = new ResourceLocation("coffeework", "moka_heat_sources");
-        return belowState.is(BlockTags.create(tagId));
+        return level.getBlockState(pos.below()).is(HEAT_SOURCE_TAG);
     }
 
     void sync() {
@@ -169,20 +168,5 @@ public class MokaPotBlockEntity extends BlockEntity implements ServingContainer 
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    private static class ServingData implements ServingContainer {
-        private ItemStack storedDrink = ItemStack.EMPTY;
-        private int servings;
-        private final int capacity;
-
-        ServingData(int capacity) { this.capacity = capacity; }
-
-        @Override public ItemStack getStoredDrink() { return storedDrink; }
-        @Override public void setStoredDrink(ItemStack d) { storedDrink = d; }
-        @Override public int getServings() { return servings; }
-        @Override public void setServings(int s) { servings = s; }
-        @Override public int getCapacity() { return capacity; }
-        @Override public void setCapacity(int c) {}
     }
 }

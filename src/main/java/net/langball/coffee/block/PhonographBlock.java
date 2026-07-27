@@ -1,7 +1,6 @@
 package net.langball.coffee.block;
 
 import net.langball.coffee.block.entity.PhonographBlockEntity;
-import net.langball.coffee.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;

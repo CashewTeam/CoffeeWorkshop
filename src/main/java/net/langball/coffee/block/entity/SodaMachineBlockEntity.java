@@ -24,6 +24,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.langball.coffee.capability.ExtractOnlyItemHandler;
+import net.langball.coffee.capability.InsertOnlyItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -114,6 +116,14 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
                     cookTime = 0;
                     totalCookTime = 0;
                 }
+            } else {
+                cookTime = 0;
+                totalCookTime = 0;
+                if (active) {
+                    active = false;
+                    level.setBlock(pos, state.setValue(
+                            net.langball.coffee.block.SodaMachineBlock.ACTIVE, false), 3);
+                }
             }
         } else {
             if (cookTime > 0 || active) {
@@ -133,7 +143,12 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
             if (!lazyHandler.isPresent()) {
                 lazyHandler = LazyOptional.of(() -> itemHandler);
             }
-            return lazyHandler.cast();
+            IItemHandler handler = lazyHandler.orElse(itemHandler);
+            if (side == null) return lazyHandler.cast();
+            if (side == Direction.DOWN) {
+                return LazyOptional.of(() -> new ExtractOnlyItemHandler(handler, SLOT_OUTPUT)).cast();
+            }
+            return LazyOptional.of(() -> new InsertOnlyItemHandler(handler, SLOT_BOTTLE, SLOT_SODA, SLOT_FLAVOR)).cast();
         }
         return super.getCapability(cap, side);
     }

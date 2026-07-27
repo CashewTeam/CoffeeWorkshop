@@ -2,7 +2,6 @@ package net.langball.coffee.block;
 
 import net.langball.coffee.block.entity.SodaMachineBlockEntity;
 import net.langball.coffee.init.ModBlockEntities;
-import net.langball.coffee.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -91,11 +90,15 @@ public class SodaMachineBlock extends BaseEntityBlock {
     public BlockState updateShape(BlockState state, Direction dir, BlockState neighborState,
                                    LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         DoubleBlockHalf half = state.getValue(HALF);
-        if (dir.getAxis() == Direction.Axis.Y) {
-            if (half == DoubleBlockHalf.LOWER == (dir == Direction.UP)) {
-                return neighborState.is(this) && neighborState.getValue(HALF) != half
-                        ? state : Blocks.AIR.defaultBlockState();
-            }
+        if (dir.getAxis() != Direction.Axis.Y) return state;
+
+        if (half == DoubleBlockHalf.LOWER && dir == Direction.UP) {
+            return neighborState.is(this) && neighborState.getValue(HALF) == DoubleBlockHalf.UPPER
+                    ? state : Blocks.AIR.defaultBlockState();
+        }
+        if (half == DoubleBlockHalf.UPPER && dir == Direction.DOWN) {
+            return neighborState.is(this) && neighborState.getValue(HALF) == DoubleBlockHalf.LOWER
+                    ? state : Blocks.AIR.defaultBlockState();
         }
         return state;
     }
@@ -128,27 +131,28 @@ public class SodaMachineBlock extends BaseEntityBlock {
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
-            BlockPos bePos = state.getValue(HALF) == DoubleBlockHalf.LOWER ? pos : pos.below();
-            BlockEntity be = level.getBlockEntity(bePos);
-            if (be instanceof SodaMachineBlockEntity smbe) {
-                net.minecraft.world.Containers.dropContents(level, bePos,
-                        net.minecraft.core.NonNullList.of(ItemStack.EMPTY,
-                                smbe.getItemHandler().getStackInSlot(0),
-                                smbe.getItemHandler().getStackInSlot(1),
-                                smbe.getItemHandler().getStackInSlot(2),
-                                smbe.getItemHandler().getStackInSlot(3)));
-            }
-            if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
+            boolean isLower = state.getValue(HALF) == DoubleBlockHalf.LOWER;
+
+            if (isLower) {
+                BlockEntity be = level.getBlockEntity(pos);
+                if (be instanceof SodaMachineBlockEntity smbe) {
+                    net.minecraft.world.Containers.dropContents(level, pos,
+                            net.minecraft.core.NonNullList.of(ItemStack.EMPTY,
+                                    smbe.getItemHandler().getStackInSlot(0),
+                                    smbe.getItemHandler().getStackInSlot(1),
+                                    smbe.getItemHandler().getStackInSlot(2),
+                                    smbe.getItemHandler().getStackInSlot(3)));
+                }
                 BlockPos upperPos = pos.above();
                 BlockState upperState = level.getBlockState(upperPos);
                 if (upperState.is(this)) {
-                    level.setBlock(upperPos, Blocks.AIR.defaultBlockState(), 35);
+                    level.removeBlock(upperPos, false);
                 }
             } else {
                 BlockPos lowerPos = pos.below();
                 BlockState lowerState = level.getBlockState(lowerPos);
                 if (lowerState.is(this)) {
-                    level.setBlock(lowerPos, Blocks.AIR.defaultBlockState(), 35);
+                    level.removeBlock(lowerPos, false);
                 }
             }
             super.onRemove(state, level, pos, newState, isMoving);

@@ -28,10 +28,10 @@ public record SodaMachineRecipe(
     @Override
     public boolean matches(RecipeWrapper inv, Level level) {
         if (level.isClientSide) return false;
-        int size = inv.getContainerSize();
+        if (inv.getContainerSize() < 3) return false;
         return container.test(inv.getItem(0))
-                && (size <= 1 || base.test(inv.getItem(1)))
-                && (size <= 2 || flavor.test(inv.getItem(2)));
+                && base.test(inv.getItem(1))
+                && flavor.test(inv.getItem(2));
     }
 
     @Override
