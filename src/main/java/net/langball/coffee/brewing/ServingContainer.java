@@ -69,14 +69,31 @@ public interface ServingContainer {
     default void loadFromTag(CompoundTag tag) {
         if (tag.contains("StoredDrink")) {
             ItemStack loaded = ItemStack.of(tag.getCompound("StoredDrink"));
-            if (!loaded.isEmpty() && loaded.getCount() <= loaded.getMaxStackSize()) {
-                setStoredDrink(loaded);
-                getStoredDrink().setCount(1);
+            if (loaded.isEmpty() || loaded.getCount() > loaded.getMaxStackSize()) {
+                clear();
+                return;
             }
+            if (!(loaded.getItem() instanceof net.langball.coffee.item.DrinkCoffee)) {
+                clear();
+                return;
+            }
+            loaded.setCount(1);
+            int rem = net.langball.coffee.item.DrinkCoffee.getRemainingCups(loaded);
+            if (rem <= 0) {
+                clear();
+                return;
+            }
+            setStoredDrink(loaded);
+        } else if (tag.getInt("Servings") > 0) {
+            clear();
+            return;
         }
         int s = tag.getInt("Servings");
         int c = tag.contains("Capacity") ? tag.getInt("Capacity") : getCapacity();
-        if (c > 0) setCapacity(c);
+        if (c > 0 && c <= 64) setCapacity(c);
         setServings(Math.max(0, Math.min(s, getCapacity())));
+        if (getServings() <= 0) {
+            setStoredDrink(ItemStack.EMPTY);
+        }
     }
 }

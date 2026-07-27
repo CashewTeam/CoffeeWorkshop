@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": { "item": "coffeework:phonograph" },
+    "title": { "translate": "advancements.coffeework.phonograph_play.title" },
+    "description": { "translate": "advancements.coffeework.phonograph_play.description" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "coffeework:root",
+  "criteria": {
+    "play_record": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": [ "coffeework:phonograph" ]
+              }
+            }
+          }
+        ],
+        "item": {
+          "tag": "minecraft:music_discs"
+        }
+      }
+    }
+  },
+  "requirements": [ [ "play_record" ] ]
+}

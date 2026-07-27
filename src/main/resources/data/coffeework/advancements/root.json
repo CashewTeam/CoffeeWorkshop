@@ -1,0 +1,21 @@
+{
+  "display": {
+    "icon": { "item": "coffeework:coffee_bean" },
+    "title": { "translate": "advancements.coffeework.root.title" },
+    "description": { "translate": "advancements.coffeework.root.description" },
+    "frame": "task",
+    "background": "minecraft:textures/block/brown_concrete.png",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has_coffee": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [ { "tag": "coffeework:coffee_beans" } ]
+      }
+    }
+  },
+  "requirements": [ [ "has_coffee" ] ]
+}

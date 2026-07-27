@@ -6,7 +6,9 @@ import net.langball.coffee.block.CoffeePotBlock;
 import net.langball.coffee.block.MokaPotBlock;
 import net.langball.coffee.block.entity.CoffeePotBlockEntity;
 import net.langball.coffee.block.entity.MokaPotBlockEntity;
+import net.langball.coffee.block.entity.PhonographBlockEntity;
 import net.langball.coffee.block.entity.SodaMachineBlockEntity;
+import net.langball.coffee.block.entity.TurkishCoffeePotBlockEntity;
 import net.langball.coffee.init.ModBlocks;
 import net.langball.coffee.init.ModItems;
 import net.langball.coffee.item.DrinkCoffee;
@@ -210,6 +212,69 @@ public class Phase9GameTests {
         helper.assertTrue(!handler.isItemValid(SodaMachineBlockEntity.SLOT_OUTPUT,
                 new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE)),
                 "Output slot should reject items");
+
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void turkishPotServingNormalization(GameTestHelper helper) {
+        helper.setBlock(POT_POS, ModBlocks.TURKISH_COFFEE_POT.get());
+        BlockEntity be = helper.getBlockEntity(POT_POS);
+        helper.assertTrue(be instanceof TurkishCoffeePotBlockEntity, "BE must be TurkishCoffeePotBlockEntity");
+        TurkishCoffeePotBlockEntity pot = (TurkishCoffeePotBlockEntity) be;
+
+        ItemStack drink = new ItemStack(ModItems.COFFEE_TURKISH.get());
+        if (drink.getItem() instanceof DrinkCoffee dc) dc.initializeFreshStack(drink);
+        DrinkCoffee.setRemainingCups(drink, 1);
+        pot.setStoredDrink(drink);
+        pot.setServings(4);
+
+        helper.assertTrue(pot.isReady(), "Turkish pot should be ready");
+        ItemStack poured = pot.pourServing();
+        helper.assertTrue(poured.getItem() instanceof DrinkCoffee, "Poured should be DrinkCoffee");
+        helper.assertTrue(DrinkCoffee.getRemainingCups(poured) <= 1,
+                "Poured drink should be single serving");
+        helper.assertTrue(pot.getServings() == 3, "Should have 3 left, got " + pot.getServings());
+
+        while (pot.getServings() > 0) pot.pourServing();
+        helper.assertTrue(pot.getServings() == 0, "Pot should be empty after all pours");
+        helper.assertTrue(pot.getBrewProgress() == 0, "brewProgress should reset");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void phonographInsertEjectPreservesRecord(GameTestHelper helper) {
+        helper.setBlock(POT_POS, ModBlocks.PHONOGRAPH.get());
+        BlockEntity be = helper.getBlockEntity(POT_POS);
+        helper.assertTrue(be instanceof PhonographBlockEntity, "BE must be PhonographBlockEntity");
+        PhonographBlockEntity ph = (PhonographBlockEntity) be;
+
+        ItemStack record = new ItemStack(ModItems.RECORD_KUSA_NOSHI_TO_NE.get());
+        ItemStack remaining = ph.insertRecord(record.copy());
+        helper.assertTrue(remaining.getCount() < record.getCount(), "Record should be inserted");
+        helper.assertTrue(ph.hasRecord(), "Phonograph should have record");
+
+        ItemStack ejected = ph.ejectRecord();
+        helper.assertTrue(!ejected.isEmpty(), "Ejected record should not be empty");
+        helper.assertTrue(ejected.getItem() == ModItems.RECORD_KUSA_NOSHI_TO_NE.get(),
+                "Ejected should be same record type");
+        helper.assertTrue(!ph.hasRecord(), "Phonograph should be empty after eject");
+
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void phonographRejectsNonRecord(GameTestHelper helper) {
+        helper.setBlock(POT_POS, ModBlocks.PHONOGRAPH.get());
+        BlockEntity be = helper.getBlockEntity(POT_POS);
+        helper.assertTrue(be instanceof PhonographBlockEntity, "BE must be PhonographBlockEntity");
+        PhonographBlockEntity ph = (PhonographBlockEntity) be;
+
+        ItemStack apple = new ItemStack(net.minecraft.world.item.Items.APPLE);
+        ItemStack returned = ph.insertRecord(apple.copy());
+        helper.assertTrue(returned.getCount() == apple.getCount(),
+                "Non-record item should be fully returned");
+        helper.assertTrue(!ph.hasRecord(), "Phonograph should not accept non-records");
 
         helper.succeed();
     }
