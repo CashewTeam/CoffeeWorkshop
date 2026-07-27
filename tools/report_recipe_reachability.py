@@ -60,6 +60,13 @@ INITIAL_ITEMS = {
     "minecraft:spruce_log", "minecraft:birch_log",
     "minecraft:spruce_planks", "minecraft:birch_planks",
     "minecraft:glass_bottle",
+    # Phase 9: vanilla intermediates needed by coffeework recipes
+    "minecraft:glass",
+    "minecraft:piston",
+    "minecraft:note_block",
+    "minecraft:smooth_stone",
+    # Phase 9: machine output (BE-based, not JSON recipes)
+    "coffeework:coffee_turkish",
 }
 
 # Common vanilla Tag → concrete item mappings.  Used as a fallback when
@@ -91,6 +98,8 @@ WORLDGEN_SOURCES = {
 NON_RECIPE_EDGES = {
     # coldbrew_pot (full) + glass_bottle → coldbrew_bottle (after random ticks complete)
     "coffeework:coldbrew_bottle": ["coffeework:coldbrew_pot", "minecraft:glass_bottle"],
+    # Turkish coffee pot + coffee powder → turkish coffee (BE interaction)
+    "coffeework:coffee_turkish": ["coffeework:turkish_coffee_pot", "coffeework:coffee_powder"],
 }
 
 # Machine recipe types and their required machine blocks.
@@ -100,6 +109,7 @@ MACHINE_BLOCKS = {
     "coffeework:rolling": "coffeework:roller",
     "coffeework:icecream_making": "coffeework:icecream_machine",
     "coffeework:coffee_brewing": "coffeework:coffee_machine",
+    "coffeework:soda_making": "coffeework:soda_machine",
 }
 
 # ── Tag cache ─────────────────────────────────────────────────────────
@@ -205,6 +215,13 @@ def extract_ingredients(recipe):
         obj = recipe.get(key)
         if obj and "ingredient" in obj:
             _add_ingredient_items(items, obj["ingredient"])
+
+    # SodaMachineRecipe: container / base / flavor (plain {item:...} objects)
+    if t == "coffeework:soda_making":
+        for key in ("container", "base", "flavor"):
+            obj = recipe.get(key)
+            if isinstance(obj, dict):
+                _add_ingredient_items(items, obj)
 
     # Shapeless (ingredients array)
     for ing_obj in recipe.get("ingredients", []):
