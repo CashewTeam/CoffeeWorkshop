@@ -2,7 +2,7 @@
   "type": "minecraft:smelting",
   "category": "food",
   "cookingtime": 200,
-  "experience": 0.15,
+  "experience": 0.2,
   "ingredient": {
     "item": "coffeework:mooncake_egg_raw"
   },

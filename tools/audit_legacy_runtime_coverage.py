@@ -574,6 +574,12 @@ def _classify_orphan(orphan: dict, registry_ids: set,
 
     # Cake slices item
     if asset_id.endswith("_slices") and not any(asset_id.endswith(f"_slice{i}") for i in range(1, 7)):
+        if asset_id == "cake_sponge_slices":
+            result["status"] = STATUS_MERGED
+            result["runtime_owner"] = "coffeework:cake_sponge_slice"
+            result["runtime_role"] = "old_naming_variant"
+            result["notes"] = "Plural model name merged into singular registry ID"
+            return result
         base = asset_id[:-7]
         result["status"] = STATUS_STANDALONE
         result["runtime_role"] = "slice_item"
@@ -640,6 +646,7 @@ def _classify_orphan(orphan: dict, registry_ids: set,
         "records_kusa_noshi_to_ne": ("record_kusa_noshi_to_ne", "old plural→singular record name"),
         "records_lazy_lady_kaguya": ("record_lazy_lady_kaguya", "old plural→singular record name"),
         "records_the_grimoire_of_marisa": ("record_the_grimoire_of_marisa", "old plural→singular record name"),
+        "cake_sponge_slices": ("cake_sponge_slice", "old plural model name merged into singular registry ID"),
     }
     if asset_id in old_name_merged:
         owner, note = old_name_merged[asset_id]

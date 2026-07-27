@@ -2,7 +2,7 @@
   "type": "minecraft:smelting",
   "category": "misc",
   "cookingtime": 200,
-  "experience": 0.15,
+  "experience": 0.0,
   "ingredient": {
     "item": "coffeework:jiggy_cake_pumpkin_raw"
   },

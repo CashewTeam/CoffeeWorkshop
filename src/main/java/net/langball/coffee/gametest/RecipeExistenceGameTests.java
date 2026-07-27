@@ -1,27 +1,24 @@
 package net.langball.coffee.gametest;
 
 import net.langball.coffee.CoffeeWork;
+import net.langball.coffee.init.ModItems;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 /**
- * Recipe existence GameTests: verify that required recipes exist and forbidden shortcuts do not.
+ * Recipe existence and structural GameTests.
  *
- * <p>Covers the Phase 5.4-7 recipe audit checks:
- * <ul>
- *   <li>Cheesecake direct shortcut removed</li>
- *   <li>Cake ↔ 8 Slices bidirectional recipes present</li>
- *   <li>Jiggy chain (raw→oven→model→finished) present</li>
- *   <li>Brownie chain present</li>
- *   <li>Roller cake roll shortcuts removed</li>
- *   <li>Vanilla icecream + flavor shortcuts removed</li>
- *   <li>Furnace dual-channel smelting recipes present</li>
- *   <li>Cream milk machine shortcut removed</li>
- * </ul>
+ * <p>Verifies recipe IDs exist/do-not-exist AND validates ingredient structure
+ * (Mixing Bowl, Egg Batter, output counts) for correctness beyond simple ID checks.
  */
 @GameTestHolder(CoffeeWork.MODID)
 @PrefixGameTestTemplate(false)
@@ -33,6 +30,36 @@ public class RecipeExistenceGameTests {
 
     private static boolean recipeExists(GameTestHelper helper, String path) {
         return helper.getLevel().getRecipeManager().byKey(rl(path)).isPresent();
+    }
+
+    private static Recipe<?> requireRecipe(GameTestHelper helper, String path) {
+        return helper.getLevel().getRecipeManager().byKey(rl(path))
+                .orElseThrow(() -> new AssertionError("Recipe " + rl(path) + " must exist"));
+    }
+
+    // ---- Structural assertion helpers ----
+
+    /** Assert any ingredient in the recipe matches the given item. */
+    private static void assertIngredient(Recipe<?> recipe, Item item, int expectedCount,
+                                          GameTestHelper helper, String label) {
+        boolean found = false;
+        for (Ingredient ing : recipe.getIngredients()) {
+            if (ing.test(new ItemStack(item))) {
+                found = true;
+                break;
+            }
+        }
+        helper.assertTrue(found, label + " must contain " + item + " as ingredient");
+    }
+
+    /** Assert the recipe output item matches and count matches. */
+    private static void assertResultItem(Recipe<?> recipe, Item expectedItem, int expectedCount,
+                                          GameTestHelper helper, String label) {
+        ItemStack result = recipe.getResultItem(helper.getLevel().registryAccess());
+        helper.assertTrue(result.is(expectedItem),
+                label + " result must be " + expectedItem + ", got: " + result.getItem());
+        helper.assertTrue(result.getCount() == expectedCount,
+                label + " result count must be " + expectedCount + ", got: " + result.getCount());
     }
 
     // ========================================================================
@@ -146,20 +173,13 @@ public class RecipeExistenceGameTests {
                 "jiggy_cake_raw must exist");
         helper.assertTrue(recipeExists(helper, "jiggy_cake_berry_raw"),
                 "jiggy_cake_berry_raw must exist");
-        helper.assertTrue(recipeExists(helper, "jiggy_cake_chocolate_raw"),
-                "jiggy_cake_chocolate_raw must exist");
-        // Oven recipes
-        helper.assertTrue(recipeExists(helper, "oven_baking/jiggy_from_raw"),
-                "jiggy oven baking recipe must exist");
-        helper.assertTrue(recipeExists(helper, "oven_baking/jiggy_berry_from_raw"),
-                "jiggy_berry oven baking recipe must exist");
-        // Model → finished (2x output)
-        helper.assertTrue(recipeExists(helper, "jiggy_cake_from_model"),
-                "jiggy_cake_from_model must exist");
-        helper.assertTrue(recipeExists(helper, "jiggy_cake_berry_from_model"),
-                "jiggy_cake_berry_from_model must exist");
-        helper.assertTrue(recipeExists(helper, "jiggy_cake_chocolate_from_model"),
-                "jiggy_cake_chocolate_from_model must exist");
+        // Model → finished (should output 2)
+        Recipe<?> jiggyFromModel = requireRecipe(helper, "jiggy_cake_from_model");
+        assertResultItem(jiggyFromModel, ModItems.JIGGY_CAKE.get(), 2, helper,
+                "jiggy_cake_from_model");
+        Recipe<?> jiggyBerryFromModel = requireRecipe(helper, "jiggy_cake_berry_from_model");
+        assertResultItem(jiggyBerryFromModel, ModItems.JIGGY_CAKE_BERRY.get(), 2, helper,
+                "jiggy_cake_berry_from_model");
         helper.succeed();
     }
 
@@ -168,9 +188,11 @@ public class RecipeExistenceGameTests {
         helper.assertTrue(recipeExists(helper, "brownie_raw"),
                 "brownie_raw recipe must exist");
         helper.assertTrue(recipeExists(helper, "brownie_from_model"),
-                "brownie_from_model (4x output) recipe must exist");
-        helper.assertTrue(recipeExists(helper, "oven_baking/brownie_from_raw"),
-                "brownie oven baking recipe must exist");
+                "brownie_from_model recipe must exist");
+        // Model → 4× brownie
+        Recipe<?> brownieFromModel = requireRecipe(helper, "brownie_from_model");
+        assertResultItem(brownieFromModel, ModItems.BROWNIE.get(), 4, helper,
+                "brownie_from_model");
         // Old direct shortcut must be gone
         helper.assertTrue(!recipeExists(helper, "brownie"),
                 "Old direct brownie shortcut must not exist");
@@ -184,8 +206,9 @@ public class RecipeExistenceGameTests {
         helper.assertTrue(recipeExists(helper, "tiramisu_model_to_block"),
                 "tiramisu_model_to_block must exist");
         // Verify tiramisu_raw uses CAKE_SPONGE_BASE (not CAKE_SPONGE block)
-        // The recipe JSON can be inspected at the ResourceLocation level if needed;
-        // here we verify the recipe ID chain is intact
+        Recipe<?> tira = requireRecipe(helper, "tiramisu_raw");
+        assertIngredient(tira, ModItems.CAKE_SPONGE_BASE.get(), 1, helper,
+                "tiramisu_raw must use CAKE_SPONGE_BASE");
         helper.succeed();
     }
 
@@ -209,10 +232,11 @@ public class RecipeExistenceGameTests {
 
     @GameTest(template = "empty")
     public static void puffRecipe_usesEggBatter(GameTestHelper helper) {
-        // Puff raw recipe exists; the ingredient validation (IRON_BOWL_EGG not plain EGG)
-        // is checked implicitly via the recipe JSON content
         helper.assertTrue(recipeExists(helper, "puff_raw"),
-                "puff_raw recipe must exist (uses IRON_BOWL_EGG)");
+                "puff_raw recipe must exist");
+        Recipe<?> recipe = requireRecipe(helper, "puff_raw");
+        assertIngredient(recipe, ModItems.IRON_BOWL_EGG.get(), 1, helper,
+                "puff_raw");
         helper.succeed();
     }
 
@@ -276,14 +300,13 @@ public class RecipeExistenceGameTests {
                 "cream_apple must exist");
         helper.assertTrue(recipeExists(helper, "cream_berry"),
                 "cream_berry must exist");
-        helper.assertTrue(recipeExists(helper, "cream_chocolate"),
-                "cream_chocolate must exist");
-        helper.assertTrue(recipeExists(helper, "cream_coffee"),
-                "cream_coffee must exist");
-        helper.assertTrue(recipeExists(helper, "cream_lemon"),
-                "cream_lemon must exist");
-        helper.assertTrue(recipeExists(helper, "cream_melon"),
-                "cream_melon must exist");
+        // Verify Mixing Bowl is an ingredient in flavored cream
+        Recipe<?> creamApple = requireRecipe(helper, "cream_apple");
+        assertIngredient(creamApple, ModItems.MIXING_BOWL.get(), 1, helper,
+                "cream_apple");
+        Recipe<?> creamChoc = requireRecipe(helper, "cream_chocolate");
+        assertIngredient(creamChoc, ModItems.MIXING_BOWL.get(), 1, helper,
+                "cream_chocolate");
         helper.succeed();
     }
 

@@ -4,10 +4,10 @@
     "total_baseline_assets": 639,
     "restored_from_baseline": 212,
     "by_status": {
-      "TO_PORT_STANDALONE": 5,
+      "TO_PORT_STANDALONE": 4,
       "TO_PORT_DECOR": 5,
       "ACTIVE_RUNTIME_ASSET": 392,
-      "MERGED_RUNTIME_VARIANT": 26,
+      "MERGED_RUNTIME_VARIANT": 27,
       "TO_WIRE_DISPLAY_VARIANT": 191,
       "TO_PORT_MACHINE": 17,
       "TO_PORT_INTERMEDIATE": 3
@@ -53,7 +53,7 @@
         "total": 216,
         "by_status": {
           "ACTIVE_RUNTIME_ASSET": 215,
-          "TO_PORT_STANDALONE": 1
+          "MERGED_RUNTIME_VARIANT": 1
         }
       },
       "coffee_drinks": {
@@ -172,8 +172,8 @@
       }
     },
     "active_runtime": 392,
-    "merged": 26,
-    "to_port_standalone": 5,
+    "merged": 27,
+    "to_port_standalone": 4,
     "to_port_intermediate": 3,
     "to_wire_state": 0,
     "to_wire_display": 191,
@@ -2840,15 +2840,15 @@
       "asset_id": "cake_sponge_slices",
       "asset_type": "item_model",
       "content_family": "cake_system",
-      "runtime_owner": null,
-      "runtime_role": "slice_item",
-      "target_owner": "coffeework:cake_sponge",
+      "runtime_owner": "coffeework:cake_sponge_slice",
+      "runtime_role": "old_naming_variant",
+      "target_owner": null,
       "target_phase": "5.4",
-      "status": "TO_PORT_STANDALONE",
+      "status": "MERGED_RUNTIME_VARIANT",
       "source": "legacy_1_12",
-      "survival_chain": "interact with cake_sponge cake block",
+      "survival_chain": "",
       "old_classification": "ASSET_ARCHIVE",
-      "notes": ""
+      "notes": "Plural model name merged into singular registry ID"
     },
     {
       "asset_id": "cake_sponge_tea_base",

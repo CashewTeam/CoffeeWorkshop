@@ -526,21 +526,23 @@ These will be resolved in a future slot-extension phase.
 
 ## 2026-07-27 — Phase 5.4–7 Bakery Chain Restoration
 
-### Furnace/Oven dual-channel
+### Furnace/Oven path (SUPERSEDED — see 2026-07-27 update below)
+
+**Superseded on 2026-07-27.** The original 1.20.1 decision was Oven-only.
+The Furnace dual-channel has now been fully restored for all bakery raw items.
+See the updated section at the end of this file.
+
+<details>
+<summary>Original decision (superseded)</summary>
 
 1.12.2 supported both vanilla Furnace smelting AND the custom Oven machine
-for raw→cooked recipes (`GameRegistry.addSmelting` + `OvenRecipes.addSmeltingRecipe`).
+for raw→cooked recipes. In the initial 1.20.1 port, only the coffeework Oven
+was supported. Vanilla furnace smelting was NOT registered.
 
-In 1.20.1, only the coffeework Oven (`oven_baking` recipe type) is supported.
-Vanilla furnace smelting is NOT registered for raw→model or raw→cooked
-transitions.
+This decision was reversed on 2026-07-27. Both Furnace and Oven paths are
+now active for all bakery raw→cooked/model transitions.
 
-**Decision:** Oven-only, no vanilla furnace fallback. Reason:
-- Custom Oven is the standard baking machine in the mod
-- Data-driven recipes (`MachineRecipeBuilder`) have no vanilla furnace equivalent
-- Adding vanilla furnace recipes would require `SimpleCookingRecipeBuilder`
-  registration with separate advancement logic, doubling recipe maintenance
-- Players already use the Oven for all baking operations
+</details>
 
 ### Raw item count choice
 
@@ -574,15 +576,21 @@ cake slicing on the Tiramisu block.
   to `assets/coffeework/textures/item/` (singular) for 1.20.1 compatibility.
 - Model JSON `layer0` references updated accordingly.
 
-### Cream recipe dual-path
+### Cream recipe paths (updated 2026-07-27)
 
-1.12.2 produced `cream_milk` via workbench: `mixing_bowl + milk + vanilla`.
-The icecream machine also accepted milk → cream_milk.
-In 1.20.1, the machine shortcut (milk_bucket → icecream_making → cream_milk)
-has been REMOVED. Only the workbench path remains:
+1.12.2 produced `cream_milk` exclusively via workbench:
+`mixing_bowl + milk + vanilla → cream_milk`.
+
+The 1.12.2 Icecream Machine accepted flavored cream → flavored icecream
+and vanilla mix → vanilla icecream. The machine shortcut
+`milk_bucket → icecream_making → cream_milk` existed in 1.12.2 but has been
+REMOVED in 1.20.1 to enforce the workbench path.
+
+Current 1.20.1 paths:
 - Workbench: `mixing_bowl + milk + vanilla → cream_milk`
-- Flavored creams: `mixing_bowl + cream_milk + flavor → flavored_cream`
-- Flavored cream → Icecream Machine → flavored icecream
+- Workbench: `mixing_bowl + cream_milk + flavor → flavored_cream`
+- Icecream Machine: `vanilla_mix → vanilla_icecream`
+- Icecream Machine: `flavored_cream → flavored_icecream`
 
 ### Modern extensions (2026-07-27 Phase 5.4-7 closure)
 

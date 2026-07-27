@@ -1,8 +1,8 @@
 {
   "type": "minecraft:smelting",
   "category": "misc",
-  "cookingtime": 200,
-  "experience": 0.15,
+  "cookingtime": 300,
+  "experience": 0.0,
   "ingredient": {
     "item": "coffeework:cake_cheese_raw"
   },

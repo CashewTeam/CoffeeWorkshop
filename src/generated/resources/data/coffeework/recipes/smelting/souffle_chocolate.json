@@ -1,8 +1,8 @@
 {
   "type": "minecraft:smelting",
   "category": "food",
-  "cookingtime": 200,
-  "experience": 0.15,
+  "cookingtime": 300,
+  "experience": 0.25,
   "ingredient": {
     "item": "coffeework:souffle_chocolate_raw"
   },

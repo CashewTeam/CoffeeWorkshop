@@ -19,9 +19,9 @@
 | Restored (now registered) | +212 |
 | Total legacy assets (tracked) | 639 |
 | **ACTIVE_RUNTIME_ASSET** (already in use) | 392 |
-| **MERGED_RUNTIME_VARIANT** (old ID merged) | 26 |
-| **→ Runtime covered** | **418/639** |
-| TO_PORT_STANDALONE (needs registration) | 5 |
+| **MERGED_RUNTIME_VARIANT** (old ID merged) | 27 |
+| **→ Runtime covered** | **419/639** |
+| TO_PORT_STANDALONE (needs registration) | 4 |
 | TO_PORT_INTERMEDIATE (raw/model/base) | 3 |
 | TO_WIRE_STATE_VARIANT (block states) | 0 |
 | TO_WIRE_DISPLAY_VARIANT (display system) | 191 |
@@ -41,7 +41,7 @@
 | cake_jiggy | 27 | 27 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | cake_mousse | 36 | 36 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | cake_roll | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| cake_system | 216 | 215 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| cake_system | 216 | 215 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | coffee_drinks | 189 | 10 | 5 | 1 | 0 | 0 | 173 | 0 | 0 | 0 |
 | confectionery | 27 | 11 | 0 | 0 | 2 | 0 | 14 | 0 | 0 | 0 |
 | crops | 13 | 12 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
