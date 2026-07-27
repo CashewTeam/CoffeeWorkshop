@@ -16,13 +16,13 @@
 | Metric | Count |
 |---|---|
 | **Fixed baseline assets** | **639** |
-| Restored (now registered) | +194 |
+| Restored (now registered) | +210 |
 | Total legacy assets (tracked) | 639 |
-| **ACTIVE_RUNTIME_ASSET** (already in use) | 374 |
+| **ACTIVE_RUNTIME_ASSET** (already in use) | 390 |
 | **MERGED_RUNTIME_VARIANT** (old ID merged) | 26 |
-| **→ Runtime covered** | **400/639** |
+| **→ Runtime covered** | **416/639** |
 | TO_PORT_STANDALONE (needs registration) | 5 |
-| TO_PORT_INTERMEDIATE (raw/model/base) | 21 |
+| TO_PORT_INTERMEDIATE (raw/model/base) | 5 |
 | TO_WIRE_STATE_VARIANT (block states) | 0 |
 | TO_WIRE_DISPLAY_VARIANT (display system) | 191 |
 | TO_PORT_MACHINE (machine devices) | 17 |
@@ -38,7 +38,7 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | bags | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | bakery | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 |
-| cake_jiggy | 27 | 11 | 0 | 0 | 16 | 0 | 0 | 0 | 0 | 0 |
+| cake_jiggy | 27 | 27 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | cake_mousse | 36 | 36 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | cake_roll | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | cake_system | 216 | 215 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -60,7 +60,7 @@
 | syrups | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | traditional_brew | 14 | 1 | 0 | 0 | 0 | 0 | 2 | 11 | 0 | 0 |
 
-## ACTIVE_RUNTIME_ASSET (374 assets)
+## ACTIVE_RUNTIME_ASSET (390 assets)
 
 These are already wired to existing blockstates, recipes, or registered items.
 
@@ -325,15 +325,31 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `iron_bowl_egg` | coffeework:iron_bowl_egg | registered_item_model |
 | `jiggy_cake` | coffeework:jiggy_cake | registered_item_model |
 | `jiggy_cake_berry` | coffeework:jiggy_cake_berry | registered_item_model |
+| `jiggy_cake_berry_model` | coffeework:jiggy_cake_berry_model | registered_item_model |
+| `jiggy_cake_berry_raw` | coffeework:jiggy_cake_berry_raw | registered_item_model |
 | `jiggy_cake_carrot` | coffeework:jiggy_cake_carrot | registered_item_model |
+| `jiggy_cake_carrot_model` | coffeework:jiggy_cake_carrot_model | registered_item_model |
+| `jiggy_cake_carrot_raw` | coffeework:jiggy_cake_carrot_raw | registered_item_model |
 | `jiggy_cake_chocolate` | coffeework:jiggy_cake_chocolate | registered_item_model |
+| `jiggy_cake_chocolate_model` | coffeework:jiggy_cake_chocolate_model | registered_item_model |
+| `jiggy_cake_chocolate_raw` | coffeework:jiggy_cake_chocolate_raw | registered_item_model |
 | `jiggy_cake_coffee` | coffeework:jiggy_cake_coffee | registered_item_model |
+| `jiggy_cake_coffee_model` | coffeework:jiggy_cake_coffee_model | registered_item_model |
+| `jiggy_cake_coffee_raw` | coffeework:jiggy_cake_coffee_raw | registered_item_model |
 | `jiggy_cake_lemon` | coffeework:jiggy_cake_lemon | registered_item_model |
+| `jiggy_cake_lemon_model` | coffeework:jiggy_cake_lemon_model | registered_item_model |
+| `jiggy_cake_lemon_raw` | coffeework:jiggy_cake_lemon_raw | registered_item_model |
 | `jiggy_cake_model` | coffeework:jiggy_cake_model | registered_item_model |
 | `jiggy_cake_pumpkin` | coffeework:jiggy_cake_pumpkin | registered_item_model |
+| `jiggy_cake_pumpkin_model` | coffeework:jiggy_cake_pumpkin_model | registered_item_model |
+| `jiggy_cake_pumpkin_raw` | coffeework:jiggy_cake_pumpkin_raw | registered_item_model |
 | `jiggy_cake_raw` | coffeework:jiggy_cake_raw | registered_item_model |
 | `jiggy_cake_redvelvet` | coffeework:jiggy_cake_redvelvet | registered_item_model |
+| `jiggy_cake_redvelvet_model` | coffeework:jiggy_cake_redvelvet_model | registered_item_model |
+| `jiggy_cake_redvelvet_raw` | coffeework:jiggy_cake_redvelvet_raw | registered_item_model |
 | `jiggy_cake_tea` | coffeework:jiggy_cake_tea | registered_item_model |
+| `jiggy_cake_tea_model` | coffeework:jiggy_cake_tea_model | registered_item_model |
+| `jiggy_cake_tea_raw` | coffeework:jiggy_cake_tea_raw | registered_item_model |
 | `marshmallow` | coffeework:marshmallow | registered_item_model |
 | `marshmallow_chocolate` | coffeework:marshmallow_chocolate | registered_item_model |
 | `marshmallow_roast` | coffeework:marshmallow_roast | registered_item_model |

@@ -1,30 +1,30 @@
 {
   "stats": {
-    "registered": 433,
+    "registered": 449,
     "by_type": {
-      "item": 372,
+      "item": 388,
       "block": 50,
       "mob_effect": 3,
       "villager_profession": 3,
       "poi_type": 2,
       "sound_event": 3
     },
-    "orphan_assets": 445,
+    "orphan_assets": 429,
     "orphan_by_classification": {
-      "ASSET_ARCHIVE": 406,
+      "ASSET_ARCHIVE": 390,
       "MERGED": 14,
       "REMOVED": 21,
       "REDESIGN": 4
     },
     "completeness": {
-      "model_ok": 372,
-      "texture_ok": 372,
-      "lang_en_ok": 372,
-      "lang_zh_ok": 372,
-      "lang_ja_ok": 372,
-      "creative_tab_ok": 372,
-      "has_source": 372,
-      "total_items": 372
+      "model_ok": 388,
+      "texture_ok": 388,
+      "lang_en_ok": 388,
+      "lang_zh_ok": 388,
+      "lang_ja_ok": 388,
+      "creative_tab_ok": 388,
+      "has_source": 388,
+      "total_items": 388
     }
   },
   "registry": [
@@ -794,8 +794,7 @@
       "lang_ja": true,
       "creative_tab": true,
       "sources": [
-        "recipe",
-        "interact"
+        "recipe"
       ],
       "block_item": false
     },
@@ -4309,7 +4308,71 @@
       "block_item": false
     },
     {
+      "id": "jiggy_cake_berry_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "jiggy_cake_berry_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "jiggy_cake_carrot",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "jiggy_cake_carrot_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "jiggy_cake_carrot_raw",
       "type": "item",
       "registered": true,
       "model": true,
@@ -4341,6 +4404,38 @@
       "block_item": false
     },
     {
+      "id": "jiggy_cake_chocolate_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "jiggy_cake_chocolate_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "jiggy_cake_coffee",
       "type": "item",
       "registered": true,
@@ -4357,7 +4452,71 @@
       "block_item": false
     },
     {
+      "id": "jiggy_cake_coffee_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "jiggy_cake_coffee_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "jiggy_cake_lemon",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "jiggy_cake_lemon_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "jiggy_cake_lemon_raw",
       "type": "item",
       "registered": true,
       "model": true,
@@ -4405,6 +4564,38 @@
       "block_item": false
     },
     {
+      "id": "jiggy_cake_pumpkin_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "jiggy_cake_pumpkin_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "jiggy_cake_raw",
       "type": "item",
       "registered": true,
@@ -4437,7 +4628,71 @@
       "block_item": false
     },
     {
+      "id": "jiggy_cake_redvelvet_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "jiggy_cake_redvelvet_raw",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
       "id": "jiggy_cake_tea",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "jiggy_cake_tea_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "jiggy_cake_tea_raw",
       "type": "item",
       "registered": true,
       "model": true,
@@ -7102,86 +7357,6 @@
       "id": "icecreammachine_on",
       "type": "item_model",
       "classification": "MERGED"
-    },
-    {
-      "id": "jiggy_cake_berry_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_berry_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_carrot_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_carrot_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_chocolate_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_chocolate_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_coffee_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_coffee_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_lemon_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_lemon_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_pumpkin_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_pumpkin_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_redvelvet_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_redvelvet_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_tea_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "jiggy_cake_tea_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
     },
     {
       "id": "moka_bottom",

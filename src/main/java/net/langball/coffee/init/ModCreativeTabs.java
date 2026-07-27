@@ -180,9 +180,25 @@ public class ModCreativeTabs {
                         output.accept(ModItems.CAKE_SPONGE_TEA_PLATE_MODEL.get());
                         output.accept(ModItems.CAKE_SPONGE_TEA_BASE.get());
 
-                        // Phase 5.4: Jiggy intermediates
+                        // Phase 5.4: Jiggy intermediates (generic + 8 flavored)
                         output.accept(ModItems.JIGGY_CAKE_RAW.get());
                         output.accept(ModItems.JIGGY_CAKE_MODEL.get());
+                        output.accept(ModItems.JIGGY_CAKE_BERRY_RAW.get());
+                        output.accept(ModItems.JIGGY_CAKE_BERRY_MODEL.get());
+                        output.accept(ModItems.JIGGY_CAKE_CARROT_RAW.get());
+                        output.accept(ModItems.JIGGY_CAKE_CARROT_MODEL.get());
+                        output.accept(ModItems.JIGGY_CAKE_CHOCOLATE_RAW.get());
+                        output.accept(ModItems.JIGGY_CAKE_CHOCOLATE_MODEL.get());
+                        output.accept(ModItems.JIGGY_CAKE_COFFEE_RAW.get());
+                        output.accept(ModItems.JIGGY_CAKE_COFFEE_MODEL.get());
+                        output.accept(ModItems.JIGGY_CAKE_LEMON_RAW.get());
+                        output.accept(ModItems.JIGGY_CAKE_LEMON_MODEL.get());
+                        output.accept(ModItems.JIGGY_CAKE_PUMPKIN_RAW.get());
+                        output.accept(ModItems.JIGGY_CAKE_PUMPKIN_MODEL.get());
+                        output.accept(ModItems.JIGGY_CAKE_REDVELVET_RAW.get());
+                        output.accept(ModItems.JIGGY_CAKE_REDVELVET_MODEL.get());
+                        output.accept(ModItems.JIGGY_CAKE_TEA_RAW.get());
+                        output.accept(ModItems.JIGGY_CAKE_TEA_MODEL.get());
 
                         // Phase 5.4: Mousse model intermediates
                         output.accept(ModItems.MOUSSE_BERRY_MODEL.get());

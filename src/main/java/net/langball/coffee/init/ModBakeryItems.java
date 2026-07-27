@@ -354,10 +354,85 @@ public class ModBakeryItems {
         ModItems.CAKE_SPONGE_TEA_BASE = items.register("cake_sponge_tea_base",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).build())));
 
-        // Phase 5.4: Jiggy raw/model (generic, returns CAKE_MODEL_SQUARE at Model→Finished)
+        // Phase 5.4: Jiggy raw/model (generic + 8 flavored, 1.12.2: one per flavor)
+        // Each model returns CAKE_MODEL_SQUARE as crafting remainder at assembly stage
         ModItems.JIGGY_CAKE_RAW = items.register("jiggy_cake_raw",
                 () -> new Item(new Item.Properties()));
         ModItems.JIGGY_CAKE_MODEL = items.register("jiggy_cake_model",
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_SQUARE.get());
+                    }
+                });
+        // Flavored jiggy raws
+        ModItems.JIGGY_CAKE_BERRY_RAW = items.register("jiggy_cake_berry_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.JIGGY_CAKE_CARROT_RAW = items.register("jiggy_cake_carrot_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.JIGGY_CAKE_CHOCOLATE_RAW = items.register("jiggy_cake_chocolate_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.JIGGY_CAKE_COFFEE_RAW = items.register("jiggy_cake_coffee_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.JIGGY_CAKE_LEMON_RAW = items.register("jiggy_cake_lemon_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.JIGGY_CAKE_PUMPKIN_RAW = items.register("jiggy_cake_pumpkin_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.JIGGY_CAKE_REDVELVET_RAW = items.register("jiggy_cake_redvelvet_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.JIGGY_CAKE_TEA_RAW = items.register("jiggy_cake_tea_raw",
+                () -> new Item(new Item.Properties()));
+        // Flavored jiggy models
+        ModItems.JIGGY_CAKE_BERRY_MODEL = items.register("jiggy_cake_berry_model",
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_SQUARE.get());
+                    }
+                });
+        ModItems.JIGGY_CAKE_CARROT_MODEL = items.register("jiggy_cake_carrot_model",
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_SQUARE.get());
+                    }
+                });
+        ModItems.JIGGY_CAKE_CHOCOLATE_MODEL = items.register("jiggy_cake_chocolate_model",
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_SQUARE.get());
+                    }
+                });
+        ModItems.JIGGY_CAKE_COFFEE_MODEL = items.register("jiggy_cake_coffee_model",
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_SQUARE.get());
+                    }
+                });
+        ModItems.JIGGY_CAKE_LEMON_MODEL = items.register("jiggy_cake_lemon_model",
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_SQUARE.get());
+                    }
+                });
+        ModItems.JIGGY_CAKE_PUMPKIN_MODEL = items.register("jiggy_cake_pumpkin_model",
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_SQUARE.get());
+                    }
+                });
+        ModItems.JIGGY_CAKE_REDVELVET_MODEL = items.register("jiggy_cake_redvelvet_model",
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_SQUARE.get());
+                    }
+                });
+        ModItems.JIGGY_CAKE_TEA_MODEL = items.register("jiggy_cake_tea_model",
                 () -> new Item(new Item.Properties()) {
                     @Override public boolean hasCraftingRemainingItem() { return true; }
                     @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {

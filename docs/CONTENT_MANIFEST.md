@@ -8,25 +8,25 @@
 | Registry Type | Count |
 |---|---|
 | block | 50 |
-| item | 372 |
+| item | 388 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **433** |
-| **Orphan Assets** | **445** |
+| **Total Registered** | **449** |
+| **Orphan Assets** | **429** |
 
 ## Item Completeness Matrix
 
 | Metric | Count | % |
 |---|---|---|
-| Model | 372/372 | 100% |
-| Texture | 372/372 | 100% |
-| en_us Key Coverage | 372/372 | 100% |
-| zh_cn Key Coverage | 372/372 | 100% |
-| ja_jp Key Coverage | 372/372 | 100% |
-| Creative Tab | 372/372 | 100% |
-| Survival Source | 372/372 | 100% |
+| Model | 388/388 | 100% |
+| Texture | 388/388 | 100% |
+| en_us Key Coverage | 388/388 | 100% |
+| zh_cn Key Coverage | 388/388 | 100% |
+| ja_jp Key Coverage | 388/388 | 100% |
+| Creative Tab | 388/388 | 100% |
+| Survival Source | 388/388 | 100% |
 
 ## Registered Items
 
@@ -77,7 +77,7 @@
 | `cake_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_schwarzwald` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_schwarzwald_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,interact |
-| `cake_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,interact |
+| `cake_slices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_base` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_sponge_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -293,15 +293,31 @@
 | `iron_bowl_egg` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_berry_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_berry_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake_carrot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_carrot_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_carrot_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_chocolate_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_chocolate_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_coffee_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_lemon_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_lemon_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake_pumpkin` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_pumpkin_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_pumpkin_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake_redvelvet` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_redvelvet_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_redvelvet_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `jiggy_cake_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_tea_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `jiggy_cake_tea_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | trade |
 | `marshmallow` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `marshmallow_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -480,7 +496,7 @@
 
 | Classification | Count |
 |---|---|
-| ASSET_ARCHIVE | 406 |
+| ASSET_ARCHIVE | 390 |
 | MERGED | 14 |
 | REDESIGN | 4 |
 | REMOVED | 21 |
@@ -545,7 +561,7 @@ No intention to restore.
   item_model: turkey_coffee_pot_unheated
 ```
 
-### ASSET_ARCHIVE (406)
+### ASSET_ARCHIVE (390)
 
 Companion assets (raw/model/slice variants) — archive to reference/legacy-assets/.
 
@@ -889,22 +905,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   blockstate: espresso_plate
   item_model: field_ration_d
   item_model: hardtack_raw
-  item_model: jiggy_cake_berry_model
-  item_model: jiggy_cake_berry_raw
-  item_model: jiggy_cake_carrot_model
-  item_model: jiggy_cake_carrot_raw
-  item_model: jiggy_cake_chocolate_model
-  item_model: jiggy_cake_chocolate_raw
-  item_model: jiggy_cake_coffee_model
-  item_model: jiggy_cake_coffee_raw
-  item_model: jiggy_cake_lemon_model
-  item_model: jiggy_cake_lemon_raw
-  item_model: jiggy_cake_pumpkin_model
-  item_model: jiggy_cake_pumpkin_raw
-  item_model: jiggy_cake_redvelvet_model
-  item_model: jiggy_cake_redvelvet_raw
-  item_model: jiggy_cake_tea_model
-  item_model: jiggy_cake_tea_raw
   block_model: mousse_berry_slice1
   block_model: mousse_berry_slice2
   block_model: mousse_berry_slice3

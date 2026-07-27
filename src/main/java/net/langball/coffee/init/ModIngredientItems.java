@@ -130,7 +130,10 @@ public class ModIngredientItems {
         ModItems.SMALL_MODEL = items.register("small_model",
                 () -> new Item(new Item.Properties().stacksTo(16)));
         ModItems.MOONCAKE_MODEL = items.register("mooncake_model",
-                () -> new Item(new Item.Properties()));
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
+                });
         ModItems.MIXING_BOWL = items.register("mixing_bowl",
                 () -> new Item(new Item.Properties()) {
                     @Override public boolean hasCraftingRemainingItem() { return true; }

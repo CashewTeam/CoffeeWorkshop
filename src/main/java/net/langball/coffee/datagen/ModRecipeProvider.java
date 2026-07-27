@@ -668,13 +668,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.CHEESE.get())
                 .save(writer, modLoc("cake_redvelvet"));
 
-        // Cheese Cake
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_CHEESE.get(), ModItems.CAKE_MODEL.get())
-                .requires(ModItems.CAKE_MODEL.get())
-                .requires(ModItems.CHEESE.get())
-                .requires(Items.MILK_BUCKET)
-                .requires(Items.SUGAR)
-                .save(writer, modLoc("cake_cheese"));
+        // Cheese Cake — produced via Raw→Oven→Model chain only (no direct shortcut)
+        // raw: ModRecipeProvider cake intermediates, oven: ModMachineRecipeProvider
 
         // Black Forest Cake (Schwarzwald)
         shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SCHWARZWALD.get(), ModBlocks.CAKE_SPONGE_CHOCOLATE.get())
@@ -1110,13 +1105,14 @@ public class ModRecipeProvider extends RecipeProvider {
         shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_SPONGE_TEA.get(), ModItems.CAKE_SPONGE_TEA_SLICES.get())
                 .requires(ModItems.CAKE_SPONGE_TEA_SLICES.get(), 8)
                 .save(writer, modLoc("cake_sponge_tea_slices_to_cake"));
-        // Large cakes → large slices
-        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SLICES.get(), 8, ModBlocks.CAKE_CARROT.get())
-                .requires(ModBlocks.CAKE_CARROT.get())
-                .save(writer, modLoc("cake_carrot_to_slices"));
-        shapeless(RecipeCategory.FOOD, ModBlocks.CAKE_CARROT.get(), ModItems.CAKE_SLICES.get())
+        // Generic cake_slices ↔ vanilla minecraft:cake (Blocks.CAKE)
+        shapeless(RecipeCategory.FOOD, ModItems.CAKE_SLICES.get(), 8, Blocks.CAKE)
+                .requires(Blocks.CAKE)
+                .save(writer, modLoc("cake_vanilla_to_slices"));
+        shapeless(RecipeCategory.FOOD, Blocks.CAKE, ModItems.CAKE_SLICES.get())
                 .requires(ModItems.CAKE_SLICES.get(), 8)
-                .save(writer, modLoc("cake_carrot_slices_to_cake"));
+                .save(writer, modLoc("cake_vanilla_slices_to_cake"));
+        // Large cakes → large slices
         shapeless(RecipeCategory.FOOD, ModItems.CAKE_COFFEE_SLICES.get(), 8, ModBlocks.CAKE_COFFEE.get())
                 .requires(ModBlocks.CAKE_COFFEE.get())
                 .save(writer, modLoc("cake_coffee_to_slices"));
@@ -1361,10 +1357,10 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.COCOA_POWDER.get())
                 .save(writer, modLoc("croissant_chocolate_raw"));
 
-        // Puff raw (1.12.2: iron_bowl_batter + pastry_dough + sugar + butter + cream → 8× puff_raw → oven → puff)
+        // Puff raw (1.12.2: egg_batter + pastry_dough + sugar + butter + cream → 8× puff_raw → oven → puff)
         shapeless(RecipeCategory.FOOD, ModItems.PUFF_RAW.get(), 8, ModItems.DOUGH_PASTRY.get())
                 .requires(ModItems.DOUGH_PASTRY.get())
-                .requires(Items.EGG)
+                .requires(ModItems.IRON_BOWL_EGG.get())
                 .requires(Items.SUGAR)
                 .requires(ModItems.BUTTER.get())
                 .requires(ModItems.CREAM_MILK.get())
@@ -1388,53 +1384,83 @@ public class ModRecipeProvider extends RecipeProvider {
 
         // Phase 7: Pastries — croissant via Oven (machine recipe in ModMachineRecipeProvider)
 
-        // Phase 7: Jiggy cake — model→finished chain (9 variants)
-        // raw → Oven → model (ModMachineRecipeProvider) → assemble
-        // Model returns CAKE_MODEL_SQUARE as crafting remainder at assembly stage
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE.get(), ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.JIGGY_CAKE_MODEL.get())
-                .save(writer, modLoc("jiggy_cake_from_model"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_BERRY.get(), ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(Items.SWEET_BERRIES)
-                .save(writer, modLoc("jiggy_cake_berry_from_model"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_CARROT.get(), ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(Items.CARROT)
-                .save(writer, modLoc("jiggy_cake_carrot_from_model"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_CHOCOLATE.get(), ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.COCOA_POWDER.get())
-                .save(writer, modLoc("jiggy_cake_chocolate_from_model"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_COFFEE.get(), ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.COFFEE_POWDER.get())
-                .save(writer, modLoc("jiggy_cake_coffee_from_model"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_LEMON.get(), ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.LEMON.get())
-                .save(writer, modLoc("jiggy_cake_lemon_from_model"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_PUMPKIN.get(), ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(Items.PUMPKIN)
-                .save(writer, modLoc("jiggy_cake_pumpkin_from_model"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_REDVELVET.get(), ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.COCOA_POWDER.get())
-                .requires(Items.BEETROOT)
-                .save(writer, modLoc("jiggy_cake_redvelvet_from_model"));
-        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_TEA.get(), ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.JIGGY_CAKE_MODEL.get())
-                .requires(ModItems.TEA_LEAF.get())
-                .save(writer, modLoc("jiggy_cake_tea_from_model"));
-
-        // Phase 7: Jiggy cake raw (1.12.2: CAKE_MODEL_SQUARE + 2× batter → jiggy_raw)
-        // Mold is consumed at this stage; returned at Model→Finished stage
+        // Phase 7: Jiggy cake — flavored batter → raw → Oven → model → 2× finished (1.12.2 chain)
+        // Each flavor has its own raw/model pair; mold returned at model→finished assembly
+        // Oven recipes: ModMachineRecipeProvider
         shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_RAW.get(), ModItems.CAKE_MODEL_SQUARE.get())
                 .requires(ModItems.CAKE_MODEL_SQUARE.get())
                 .requires(ModItems.IRON_BOWL_BATTER.get())
                 .requires(ModItems.IRON_BOWL_BATTER.get())
                 .save(writer, modLoc("jiggy_cake_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_BERRY_RAW.get(), ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.IRON_BOWL_BATTER_BERRY.get())
+                .requires(ModItems.IRON_BOWL_BATTER_BERRY.get())
+                .save(writer, modLoc("jiggy_cake_berry_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_CARROT_RAW.get(), ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.IRON_BOWL_BATTER_CARROT.get())
+                .requires(ModItems.IRON_BOWL_BATTER_CARROT.get())
+                .save(writer, modLoc("jiggy_cake_carrot_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_CHOCOLATE_RAW.get(), ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.IRON_BOWL_BATTER_CHOCOLATE.get())
+                .requires(ModItems.IRON_BOWL_BATTER_CHOCOLATE.get())
+                .save(writer, modLoc("jiggy_cake_chocolate_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_COFFEE_RAW.get(), ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.IRON_BOWL_BATTER_COFFEE.get())
+                .requires(ModItems.IRON_BOWL_BATTER_COFFEE.get())
+                .save(writer, modLoc("jiggy_cake_coffee_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_LEMON_RAW.get(), ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.IRON_BOWL_BATTER_LEMON.get())
+                .requires(ModItems.IRON_BOWL_BATTER_LEMON.get())
+                .save(writer, modLoc("jiggy_cake_lemon_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_PUMPKIN_RAW.get(), ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.IRON_BOWL_BATTER_PUMPKIN.get())
+                .requires(ModItems.IRON_BOWL_BATTER_PUMPKIN.get())
+                .save(writer, modLoc("jiggy_cake_pumpkin_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_REDVELVET_RAW.get(), ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.IRON_BOWL_BATTER_RED.get())
+                .requires(ModItems.IRON_BOWL_BATTER_RED.get())
+                .save(writer, modLoc("jiggy_cake_redvelvet_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_TEA_RAW.get(), ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.CAKE_MODEL_SQUARE.get())
+                .requires(ModItems.IRON_BOWL_BATTER_TEA.get())
+                .requires(ModItems.IRON_BOWL_BATTER_TEA.get())
+                .save(writer, modLoc("jiggy_cake_tea_raw"));
+
+        // Flavor is baked into the model; assembly simply demolds → 2× finished
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE.get(), 2, ModItems.JIGGY_CAKE_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_MODEL.get())
+                .save(writer, modLoc("jiggy_cake_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_BERRY.get(), 2, ModItems.JIGGY_CAKE_BERRY_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_BERRY_MODEL.get())
+                .save(writer, modLoc("jiggy_cake_berry_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_CARROT.get(), 2, ModItems.JIGGY_CAKE_CARROT_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_CARROT_MODEL.get())
+                .save(writer, modLoc("jiggy_cake_carrot_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_CHOCOLATE.get(), 2, ModItems.JIGGY_CAKE_CHOCOLATE_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_CHOCOLATE_MODEL.get())
+                .save(writer, modLoc("jiggy_cake_chocolate_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_COFFEE.get(), 2, ModItems.JIGGY_CAKE_COFFEE_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_COFFEE_MODEL.get())
+                .save(writer, modLoc("jiggy_cake_coffee_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_LEMON.get(), 2, ModItems.JIGGY_CAKE_LEMON_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_LEMON_MODEL.get())
+                .save(writer, modLoc("jiggy_cake_lemon_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_PUMPKIN.get(), 2, ModItems.JIGGY_CAKE_PUMPKIN_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_PUMPKIN_MODEL.get())
+                .save(writer, modLoc("jiggy_cake_pumpkin_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_REDVELVET.get(), 2, ModItems.JIGGY_CAKE_REDVELVET_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_REDVELVET_MODEL.get())
+                .save(writer, modLoc("jiggy_cake_redvelvet_from_model"));
+        shapeless(RecipeCategory.FOOD, ModItems.JIGGY_CAKE_TEA.get(), 2, ModItems.JIGGY_CAKE_TEA_MODEL.get())
+                .requires(ModItems.JIGGY_CAKE_TEA_MODEL.get())
+                .save(writer, modLoc("jiggy_cake_tea_from_model"));
 
         // Phase 7: Mooncake raw (dough_pastry + sugar + mooncake_model + 2× flavor → raw ×2)
         // Match 1.12.2 registerRaw2CookedRecipes, oven recipe in ModMachineRecipeProvider

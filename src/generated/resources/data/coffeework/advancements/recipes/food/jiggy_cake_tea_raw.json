@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "coffeework:jiggy_cake_redvelvet_model"
+              "coffeework:cake_model_square"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "coffeework:jiggy_cake_redvelvet_from_model"
+        "recipe": "coffeework:jiggy_cake_tea_raw"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "coffeework:jiggy_cake_redvelvet_from_model"
+      "coffeework:jiggy_cake_tea_raw"
     ]
   },
   "sends_telemetry_event": false

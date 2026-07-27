@@ -165,9 +165,26 @@ public class ModItems {
     public static RegistryObject<Item> CAKE_SPONGE_TEA_PLATE_MODEL;
     public static RegistryObject<Item> CAKE_SPONGE_TEA_BASE;
 
-    // Phase 5.4: Jiggy cake intermediates (generic, shared models)
+    // Phase 5.4: Jiggy cake intermediates (generic + 8 flavored)
+    // 1.12.2: each flavor has its own raw/model pair
     public static RegistryObject<Item> JIGGY_CAKE_RAW;
     public static RegistryObject<Item> JIGGY_CAKE_MODEL;
+    public static RegistryObject<Item> JIGGY_CAKE_BERRY_RAW;
+    public static RegistryObject<Item> JIGGY_CAKE_BERRY_MODEL;
+    public static RegistryObject<Item> JIGGY_CAKE_CARROT_RAW;
+    public static RegistryObject<Item> JIGGY_CAKE_CARROT_MODEL;
+    public static RegistryObject<Item> JIGGY_CAKE_CHOCOLATE_RAW;
+    public static RegistryObject<Item> JIGGY_CAKE_CHOCOLATE_MODEL;
+    public static RegistryObject<Item> JIGGY_CAKE_COFFEE_RAW;
+    public static RegistryObject<Item> JIGGY_CAKE_COFFEE_MODEL;
+    public static RegistryObject<Item> JIGGY_CAKE_LEMON_RAW;
+    public static RegistryObject<Item> JIGGY_CAKE_LEMON_MODEL;
+    public static RegistryObject<Item> JIGGY_CAKE_PUMPKIN_RAW;
+    public static RegistryObject<Item> JIGGY_CAKE_PUMPKIN_MODEL;
+    public static RegistryObject<Item> JIGGY_CAKE_REDVELVET_RAW;
+    public static RegistryObject<Item> JIGGY_CAKE_REDVELVET_MODEL;
+    public static RegistryObject<Item> JIGGY_CAKE_TEA_RAW;
+    public static RegistryObject<Item> JIGGY_CAKE_TEA_MODEL;
 
     // Phase 5.4: Mousse model intermediates
     public static RegistryObject<Item> MOUSSE_BERRY_MODEL;

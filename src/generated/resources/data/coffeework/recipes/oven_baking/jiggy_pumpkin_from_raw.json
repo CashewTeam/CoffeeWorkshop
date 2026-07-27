@@ -1,0 +1,10 @@
+{
+  "type": "coffeework:oven_baking",
+  "cookingtime": 200,
+  "ingredient": {
+    "item": "coffeework:jiggy_cake_pumpkin_raw"
+  },
+  "result": {
+    "item": "coffeework:jiggy_cake_pumpkin_model"
+  }
+}

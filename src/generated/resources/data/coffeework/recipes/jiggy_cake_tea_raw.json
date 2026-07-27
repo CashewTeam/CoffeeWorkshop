@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coffeework:cake_model_square"
+    },
+    {
+      "item": "coffeework:iron_bowl_batter_tea"
+    },
+    {
+      "item": "coffeework:iron_bowl_batter_tea"
+    }
+  ],
+  "result": {
+    "item": "coffeework:jiggy_cake_tea_raw"
+  }
+}

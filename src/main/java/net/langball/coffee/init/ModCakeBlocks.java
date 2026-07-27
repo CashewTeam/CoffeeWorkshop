@@ -80,23 +80,18 @@ public class ModCakeBlocks {
                 () -> new BlockCakeBasic(5, 6, 0.5F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL),
                         () -> ModItems.TIRAMISU_SLICE.get()));
 
-        // ── Mousses ──
+        // ── Mousses (no plate-cut slices — prevent cross-type conversion) ──
         ModBlocks.MOUSSE_BERRY = blocks.register("mousse_berry",
-                () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(0.5F).sound(SoundType.WOOL),
-                        () -> ModItems.CAKE_SLICES.get()));
+                () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(0.5F).sound(SoundType.WOOL)));
         ModBlocks.MOUSSE_LEMON = blocks.register("mousse_lemon",
-                () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.WOOL),
-                        () -> ModItems.CAKE_SLICES.get()));
+                () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.WOOL)));
         ModBlocks.MOUSSE_CHOCOLATE = blocks.register("mousse_chocolate",
-                () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL),
-                        () -> ModItems.CAKE_SLICES.get()));
+                () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
         ModBlocks.MOUSSE_COFFEE = blocks.register("mousse_coffee",
-                () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL),
-                        () -> ModItems.CAKE_SLICES.get()));
+                () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOL)));
 
-        // Phase 5.4: cake_carrot
+        // Phase 5.4: cake_carrot (no plate-cut slice — 1.20.1 extension, standalone cake)
         ModBlocks.CAKE_CARROT = blocks.register("cake_carrot",
-                () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_ORANGE).strength(0.5F).sound(SoundType.WOOL),
-                        () -> ModItems.CAKE_SLICES.get()));
+                () -> new BlockCakeBasic(3, 4, 0.3F, BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_ORANGE).strength(0.5F).sound(SoundType.WOOL)));
     }
 }

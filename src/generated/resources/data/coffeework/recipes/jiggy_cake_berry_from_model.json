@@ -3,13 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "coffeework:jiggy_cake_model"
-    },
-    {
-      "item": "minecraft:sweet_berries"
+      "item": "coffeework:jiggy_cake_berry_model"
     }
   ],
   "result": {
+    "count": 2,
     "item": "coffeework:jiggy_cake_berry"
   }
 }

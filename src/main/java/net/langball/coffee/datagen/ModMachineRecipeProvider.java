@@ -226,11 +226,43 @@ public final class ModMachineRecipeProvider {
                 .experience(0F).cookingTime(200)
                 .save(writer, id("oven_baking/sponge_tea_plate_from_raw"));
 
-        // Phase 7: Jiggy raw → oven → jiggy model
+        // Phase 7: Jiggy raw → oven → jiggy model (generic + 8 flavored)
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.JIGGY_CAKE_RAW.get()),
                 new ItemStack(ModItems.JIGGY_CAKE_MODEL.get()))
                 .experience(0F).cookingTime(200)
                 .save(writer, id("oven_baking/jiggy_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.JIGGY_CAKE_BERRY_RAW.get()),
+                new ItemStack(ModItems.JIGGY_CAKE_BERRY_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/jiggy_berry_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.JIGGY_CAKE_CARROT_RAW.get()),
+                new ItemStack(ModItems.JIGGY_CAKE_CARROT_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/jiggy_carrot_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.JIGGY_CAKE_CHOCOLATE_RAW.get()),
+                new ItemStack(ModItems.JIGGY_CAKE_CHOCOLATE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/jiggy_chocolate_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.JIGGY_CAKE_COFFEE_RAW.get()),
+                new ItemStack(ModItems.JIGGY_CAKE_COFFEE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/jiggy_coffee_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.JIGGY_CAKE_LEMON_RAW.get()),
+                new ItemStack(ModItems.JIGGY_CAKE_LEMON_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/jiggy_lemon_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.JIGGY_CAKE_PUMPKIN_RAW.get()),
+                new ItemStack(ModItems.JIGGY_CAKE_PUMPKIN_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/jiggy_pumpkin_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.JIGGY_CAKE_REDVELVET_RAW.get()),
+                new ItemStack(ModItems.JIGGY_CAKE_REDVELVET_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/jiggy_redvelvet_from_raw"));
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.JIGGY_CAKE_TEA_RAW.get()),
+                new ItemStack(ModItems.JIGGY_CAKE_TEA_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/jiggy_tea_from_raw"));
 
         // Mousse: raw → Icecream Machine → model (1.12.2 cold-set)
         MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.MOUSSE_BERRY_RAW.get()),
@@ -298,7 +330,7 @@ public final class ModMachineRecipeProvider {
                 .experience(0.25F).cookingTime(300)
                 .save(writer, id("oven_baking/souffle_chocolate_from_raw"));
 
-        // Phase 7: Mooncake raw → Oven (mooncake_model returned by recipe as crafting remainder)
+        // Phase 7: Mooncake raw → Oven (mooncake_model is crafting remainder, returned at Raw stage)
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.MOONCAKE_RAW.get()),
                 new ItemStack(ModItems.MOONCAKE.get()))
                 .experience(0.2F).cookingTime(200)
@@ -349,11 +381,8 @@ public final class ModMachineRecipeProvider {
                 .experience(0.2F).cookingTime(400)
                 .save(writer, id("icecream_making/vanilla"));
 
-        // Phase 6: Cream milk base (milk → icecream machine → cream)
-        MachineRecipeBuilder.icecreamMaking(Ingredient.of(Items.MILK_BUCKET),
-                new ItemStack(ModItems.CREAM_MILK.get()))
-                .experience(0.1F).cookingTime(400)
-                .save(writer, id("icecream_making/cream_milk"));
+        // Phase 6: Cream milk base via workbench only (Mixing Bowl + Milk + Vanilla)
+        // Milk → Icecream Machine → Cream Milk shortcut REMOVED (bypasses Mixing Bowl and Vanilla)
 
         // Phase 6: Cream → Icecream Machine → icecream (1.12.2)
         MachineRecipeBuilder.icecreamMaking(Ingredient.of(ModItems.CREAM_APPLE.get()),
