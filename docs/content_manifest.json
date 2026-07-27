@@ -1,9 +1,9 @@
 {
   "stats": {
-    "registered": 451,
+    "registered": 452,
     "by_type": {
       "item": 390,
-      "block": 50,
+      "block": 51,
       "mob_effect": 3,
       "villager_profession": 3,
       "poi_type": 2,
@@ -6785,6 +6785,17 @@
       "lang_zh": true,
       "lang_ja": true,
       "loot_table": true
+    },
+    {
+      "id": "drink_display",
+      "type": "block",
+      "registered": true,
+      "blockstate": false,
+      "block_model": false,
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "loot_table": false
     },
     {
       "id": "ginger_house",

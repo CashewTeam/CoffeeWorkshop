@@ -70,6 +70,27 @@ STATUS_MERGED = "MERGED_RUNTIME_VARIANT"
 STATUS_UNASSIGNED = "UNASSIGNED"
 
 
+def _load_wired_plate_models() -> set:
+    """Load model names (e.g. 'coffee_americano_plate') that are wired
+    via the drink_display_models.json mapping."""
+    models = set()
+    path = "src/main/resources/data/coffeework/drink_display_models.json"
+    try:
+        with open(path, encoding="utf-8") as f:
+            root = json.load(f)
+            for drink_id, model_rl in root.get("drinks", {}).items():
+                # model_rl e.g. "coffeework:block/coffee_americano_plate"
+                model_name = model_rl.rsplit("/", 1)[-1]
+                models.add(model_name)
+    except Exception as e:
+        print(f"  WARNING: failed to load drink display models: {e}")
+    return models
+
+
+# Populated in main()
+WIRED_PLATE_MODELS: set = set()
+
+
 # ── Content family grouping ────────────────────────────────────────────
 #
 # Patterns are ordered from most specific to least specific so that
@@ -554,8 +575,14 @@ def _classify_orphan(orphan: dict, registry_ids: set,
         result["survival_chain"] = f"base layer for {base}"
         return result
 
-    # Plate models → display system
+    # Plate models → display system (Phase 8)
     if asset_id.endswith("_plate"):
+        if asset_id in WIRED_PLATE_MODELS:
+            result["status"] = STATUS_MERGED
+            result["runtime_owner"] = "coffeework:drink_display"
+            result["runtime_role"] = "drink_display:plate_model"
+            result["notes"] = "Wired to DrinkDisplayBlock system"
+            return result
         drink_id = asset_id[:-6]
         owner = f"coffeework:{drink_id}" if drink_id in registry_ids else None
         result["status"] = STATUS_DISPLAY_VARIANT
@@ -1002,6 +1029,8 @@ def main() -> int:
         return 2
 
     # Collect data
+    global WIRED_PLATE_MODELS
+    WIRED_PLATE_MODELS = _load_wired_plate_models()
     registry_ids = {e["id"] for e in registry if e.get("registered")}
     registered_item_ids = {e["id"] for e in registry if e.get("registered") and e.get("type") == "item"}
     registered_block_ids = {e["id"] for e in registry if e.get("registered") and e.get("type") == "block"}

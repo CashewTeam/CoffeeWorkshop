@@ -87,6 +87,9 @@ public class ModBlocks {
     // Phase 5.4
     public static RegistryObject<Block> CAKE_CARROT;
 
+    // Phase 8: Drink display system
+    public static RegistryObject<Block> DRINK_DISPLAY;
+
     // ========== Registration bootstrap ==========
     static {
         ModMachineBlocks.registerAll(BLOCKS);

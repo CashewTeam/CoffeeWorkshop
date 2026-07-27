@@ -7,13 +7,13 @@
 
 | Registry Type | Count |
 |---|---|
-| block | 50 |
+| block | 51 |
 | item | 390 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **451** |
+| **Total Registered** | **452** |
 | **Orphan Assets** | **427** |
 
 ## Item Completeness Matrix
@@ -463,6 +463,7 @@
 | `double_bag_coffee_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `double_bag_flour` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `double_bag_sugar` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `drink_display` | ❌ | ❌ | ✅ | ✅ | ✅ | — |
 | `ginger_house` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `grinder` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `icecream_machine` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |

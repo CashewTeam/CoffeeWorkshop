@@ -1,7 +1,9 @@
 package net.langball.coffee.block;
 
+import net.langball.coffee.item.DrinkCoffee;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -9,7 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
@@ -23,6 +24,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class BlockPlate extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -70,6 +72,21 @@ public class BlockPlate extends Block {
     @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
                                  InteractionHand hand, BlockHitResult hit) {
+        ItemStack held = player.getItemInHand(hand);
+        if (!held.isEmpty() && held.getItem() instanceof DrinkCoffee) {
+            ResourceLocation drinkId = ForgeRegistries.ITEMS.getKey(held.getItem());
+            if (drinkId != null && DrinkDisplayRegistry.canDisplay(drinkId)) {
+                if (!level.isClientSide) {
+                    if (DrinkDisplayBlock.placeDrink(level, pos, state.getValue(FACING), held)) {
+                        if (!player.getAbilities().instabuild) {
+                            held.shrink(1);
+                        }
+                    }
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+        }
+
         if (!level.isClientSide) {
             popResource(level, pos, new ItemStack(this));
             level.removeBlock(pos, false);

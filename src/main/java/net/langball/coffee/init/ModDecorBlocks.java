@@ -5,6 +5,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.DeferredRegister;
 
 /**
@@ -23,5 +24,7 @@ public class ModDecorBlocks {
                 () -> new BlockXmasTree(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(0.5F).sound(SoundType.WOOD).noOcclusion()));
         ModBlocks.GINGER_HOUSE = blocks.register("ginger_house",
                 () -> new BlockGingerHouse(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOD).noOcclusion()));
+        ModBlocks.DRINK_DISPLAY = blocks.register("drink_display",
+                () -> new DrinkDisplayBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).strength(0.5F).sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
     }
 }

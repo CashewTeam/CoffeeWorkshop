@@ -125,6 +125,15 @@ public class DrinkCoffee extends Item {
         return maxCups > 1 && net.langball.coffee.ModConfig.ENABLE_MULTI_CUP.get();
     }
 
+    @Nullable
+    public Item getEmptyCupItem() {
+        return emptyCupItem != null ? emptyCupItem.get() : null;
+    }
+
+    public MobEffectInstance[][] getEffectTable() {
+        return effectTable;
+    }
+
     // ========================================================================
     // Item overrides
     // ========================================================================
