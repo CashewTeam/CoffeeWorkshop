@@ -148,5 +148,9 @@ public class ModEquipmentItems {
                         ModSounds.RECORD_THE_GRIMOIRE_OF_MARISA,
                         new Item.Properties().rarity(Rarity.RARE),
                         "item.coffeework.record_the_grimoire_of_marisa.desc", 100));
+
+        // Phase 9: Moka Pot block item
+        ModItems.MOKA_POT_ITEM = items.register("moka_pot",
+                () -> new BlockItem(ModBlocks.MOKA_POT.get(), new Item.Properties()));
     }
 }

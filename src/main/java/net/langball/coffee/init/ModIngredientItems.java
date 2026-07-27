@@ -161,5 +161,11 @@ public class ModIngredientItems {
                     @Override public boolean hasCraftingRemainingItem() { return true; }
                     @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return stack.copyWithCount(1); }
                 });
+
+        // Phase 9: Moka Pot components
+        ModItems.MOKA_BOTTOM = items.register("moka_bottom",
+                () -> new Item(new Item.Properties().stacksTo(1)));
+        ModItems.MOKA_TOP = items.register("moka_top",
+                () -> new Item(new Item.Properties().stacksTo(1)));
     }
 }

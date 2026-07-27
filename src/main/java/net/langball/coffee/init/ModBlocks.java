@@ -90,6 +90,9 @@ public class ModBlocks {
     // Phase 8: Drink display system
     public static RegistryObject<Block> DRINK_DISPLAY;
 
+    // Phase 9: Traditional brewing
+    public static RegistryObject<Block> MOKA_POT;
+
     // ========== Registration bootstrap ==========
     static {
         ModMachineBlocks.registerAll(BLOCKS);

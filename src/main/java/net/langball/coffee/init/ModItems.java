@@ -496,6 +496,14 @@ public class ModItems {
     public static RegistryObject<Item> RECORD_THE_GRIMOIRE_OF_MARISA;
 
     // ========================================================================
+    // Phase 9: Traditional Coffee Brewing
+    // ========================================================================
+    public static RegistryObject<Item> MOKA_POT_ITEM;
+    public static RegistryObject<Item> MOKA_BOTTOM;
+    public static RegistryObject<Item> MOKA_TOP;
+    public static RegistryObject<Item> COFFEE_TURKISH;
+
+    // ========================================================================
     // Registration bootstrap
     // ========================================================================
     static {

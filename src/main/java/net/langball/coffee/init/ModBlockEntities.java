@@ -5,6 +5,7 @@ import net.langball.coffee.block.entity.CoffeeMachineBlockEntity;
 import net.langball.coffee.block.entity.DrinkDisplayBlockEntity;
 import net.langball.coffee.block.entity.GrinderBlockEntity;
 import net.langball.coffee.block.entity.IcecreamMachineBlockEntity;
+import net.langball.coffee.block.entity.MokaPotBlockEntity;
 import net.langball.coffee.block.entity.OvenBlockEntity;
 import net.langball.coffee.block.entity.RollerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -52,5 +53,11 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(
                     DrinkDisplayBlockEntity::new,
                     ModBlocks.DRINK_DISPLAY.get()
+            ).build(null));
+
+    public static final RegistryObject<BlockEntityType<MokaPotBlockEntity>> MOKA_POT = BLOCK_ENTITIES.register("moka_pot",
+            () -> BlockEntityType.Builder.of(
+                    MokaPotBlockEntity::new,
+                    ModBlocks.MOKA_POT.get()
             ).build(null));
 }

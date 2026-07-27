@@ -26,5 +26,7 @@ public class ModDecorBlocks {
                 () -> new BlockGingerHouse(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5F).sound(SoundType.WOOD).noOcclusion()));
         ModBlocks.DRINK_DISPLAY = blocks.register("drink_display",
                 () -> new DrinkDisplayBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).strength(0.5F).sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
+        ModBlocks.MOKA_POT = blocks.register("moka_pot",
+                () -> new MokaPotBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F).sound(SoundType.LANTERN).noOcclusion()));
     }
 }

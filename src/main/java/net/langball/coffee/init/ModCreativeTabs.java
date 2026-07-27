@@ -24,6 +24,9 @@ public class ModCreativeTabs {
                         output.accept(ModItems.ROLLER.get());
                         output.accept(ModItems.OVEN.get());
                         output.accept(ModItems.COLD_BREW_POT.get());
+                        output.accept(ModItems.MOKA_POT_ITEM.get());
+                        output.accept(ModItems.MOKA_BOTTOM.get());
+                        output.accept(ModItems.MOKA_TOP.get());
 
                         // Plants
                         output.accept(ModItems.COFFEE_TREE_ITEM.get());
