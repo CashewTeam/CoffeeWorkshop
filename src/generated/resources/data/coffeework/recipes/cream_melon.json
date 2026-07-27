@@ -3,6 +3,9 @@
   "category": "misc",
   "ingredients": [
     {
+      "item": "coffeework:mixing_bowl"
+    },
+    {
       "item": "coffeework:cream_milk"
     },
     {

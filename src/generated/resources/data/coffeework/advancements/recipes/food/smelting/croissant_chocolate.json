@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_croissant_chocolate": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "coffeework:croissant_chocolate_raw"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "coffeework:smelting/croissant_chocolate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_croissant_chocolate",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "coffeework:smelting/croissant_chocolate"
+    ]
+  },
+  "sends_telemetry_event": false
+}

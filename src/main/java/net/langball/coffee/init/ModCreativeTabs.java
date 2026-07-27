@@ -73,6 +73,8 @@ public class ModCreativeTabs {
                         output.accept(ModItems.BLUEBERRY.get());
                         output.accept(ModItems.CHOCOLATE_BAR.get());
                         output.accept(ModItems.CHOCOLATE_CHIP.get());
+                        output.accept(ModItems.BROWNIE_RAW.get());
+                        output.accept(ModItems.BROWNIE_MODEL.get());
                         output.accept(ModItems.BROWNIE.get());
                         output.accept(ModItems.FIELD_RATION.get());
                         output.accept(ModItems.CARAMEL_APPLE.get());

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_mooncake_ham": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "coffeework:mooncake_ham_raw"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "coffeework:smelting/mooncake_ham"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_mooncake_ham",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "coffeework:smelting/mooncake_ham"
+    ]
+  },
+  "sends_telemetry_event": false
+}

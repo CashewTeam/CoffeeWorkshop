@@ -16,13 +16,13 @@
 | Metric | Count |
 |---|---|
 | **Fixed baseline assets** | **639** |
-| Restored (now registered) | +210 |
+| Restored (now registered) | +212 |
 | Total legacy assets (tracked) | 639 |
-| **ACTIVE_RUNTIME_ASSET** (already in use) | 390 |
+| **ACTIVE_RUNTIME_ASSET** (already in use) | 392 |
 | **MERGED_RUNTIME_VARIANT** (old ID merged) | 26 |
-| **→ Runtime covered** | **416/639** |
+| **→ Runtime covered** | **418/639** |
 | TO_PORT_STANDALONE (needs registration) | 5 |
-| TO_PORT_INTERMEDIATE (raw/model/base) | 5 |
+| TO_PORT_INTERMEDIATE (raw/model/base) | 3 |
 | TO_WIRE_STATE_VARIANT (block states) | 0 |
 | TO_WIRE_DISPLAY_VARIANT (display system) | 191 |
 | TO_PORT_MACHINE (machine devices) | 17 |
@@ -37,7 +37,7 @@
 | Family | Total | Active | Merged | Standalone | Intermediate | State | Display | Machine | Decor | Unassigned |
 |---|---|---|---|---|---|---|---|---|---|---|
 | bags | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
-| bakery | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 |
+| bakery | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | cake_jiggy | 27 | 27 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | cake_mousse | 36 | 36 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | cake_roll | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -60,7 +60,7 @@
 | syrups | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | traditional_brew | 14 | 1 | 0 | 0 | 0 | 0 | 2 | 11 | 0 | 0 |
 
-## ACTIVE_RUNTIME_ASSET (390 assets)
+## ACTIVE_RUNTIME_ASSET (392 assets)
 
 These are already wired to existing blockstates, recipes, or registered items.
 
@@ -70,6 +70,8 @@ These are already wired to existing blockstates, recipes, or registered items.
 | `blueberry_stage1` | coffeework:blueberry_bush | blockstate:variants=age=1 |
 | `blueberry_stage2` | coffeework:blueberry_bush | blockstate:variants=age=2 |
 | `blueberry_stage3` | coffeework:blueberry_bush | blockstate:variants=age=3 |
+| `brownie_model` | coffeework:brownie_model | registered_item_model |
+| `brownie_raw` | coffeework:brownie_raw | registered_item_model |
 | `cake_berry_roll` | coffeework:cake_berry_roll | registered_item_model |
 | `cake_berry_slice1` | coffeework:cake_berry | blockstate:variants=bites=1 |
 | `cake_berry_slice2` | coffeework:cake_berry | blockstate:variants=bites=2 |

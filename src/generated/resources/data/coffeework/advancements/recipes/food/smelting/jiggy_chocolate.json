@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_jiggy_chocolate": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "coffeework:jiggy_cake_chocolate_raw"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "coffeework:smelting/jiggy_chocolate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_jiggy_chocolate",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "coffeework:smelting/jiggy_chocolate"
+    ]
+  },
+  "sends_telemetry_event": false
+}

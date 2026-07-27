@@ -2,15 +2,15 @@
   "summary": {
     "total_legacy_assets": 639,
     "total_baseline_assets": 639,
-    "restored_from_baseline": 210,
+    "restored_from_baseline": 212,
     "by_status": {
       "TO_PORT_STANDALONE": 5,
       "TO_PORT_DECOR": 5,
-      "ACTIVE_RUNTIME_ASSET": 390,
-      "TO_PORT_INTERMEDIATE": 5,
+      "ACTIVE_RUNTIME_ASSET": 392,
       "MERGED_RUNTIME_VARIANT": 26,
       "TO_WIRE_DISPLAY_VARIANT": 191,
-      "TO_PORT_MACHINE": 17
+      "TO_PORT_MACHINE": 17,
+      "TO_PORT_INTERMEDIATE": 3
     },
     "by_type": {
       "block_model": 264,
@@ -28,7 +28,7 @@
       "bakery": {
         "total": 2,
         "by_status": {
-          "TO_PORT_INTERMEDIATE": 2
+          "ACTIVE_RUNTIME_ASSET": 2
         }
       },
       "cake_jiggy": {
@@ -171,10 +171,10 @@
         }
       }
     },
-    "active_runtime": 390,
+    "active_runtime": 392,
     "merged": 26,
     "to_port_standalone": 5,
-    "to_port_intermediate": 5,
+    "to_port_intermediate": 3,
     "to_wire_state": 0,
     "to_wire_display": 191,
     "to_port_machine": 17,
@@ -334,13 +334,13 @@
       "asset_id": "brownie_model",
       "asset_type": "item_model",
       "content_family": "bakery",
-      "runtime_owner": "coffeework:brownie",
-      "runtime_role": "intermediate:mold_form",
-      "target_owner": "coffeework:brownie",
+      "runtime_owner": "coffeework:brownie_model",
+      "runtime_role": "registered_item_model",
+      "target_owner": null,
       "target_phase": "5.3",
-      "status": "TO_PORT_INTERMEDIATE",
+      "status": "ACTIVE_RUNTIME_ASSET",
       "source": "legacy_1_12",
-      "survival_chain": "mold form for brownie",
+      "survival_chain": "",
       "old_classification": "ASSET_ARCHIVE",
       "notes": ""
     },
@@ -348,13 +348,13 @@
       "asset_id": "brownie_raw",
       "asset_type": "item_model",
       "content_family": "bakery",
-      "runtime_owner": "coffeework:brownie",
-      "runtime_role": "intermediate:raw",
-      "target_owner": "coffeework:brownie",
+      "runtime_owner": "coffeework:brownie_raw",
+      "runtime_role": "registered_item_model",
+      "target_owner": null,
       "target_phase": "5.3",
-      "status": "TO_PORT_INTERMEDIATE",
+      "status": "ACTIVE_RUNTIME_ASSET",
       "source": "legacy_1_12",
-      "survival_chain": "raw material for brownie",
+      "survival_chain": "",
       "old_classification": "ASSET_ARCHIVE",
       "notes": ""
     },

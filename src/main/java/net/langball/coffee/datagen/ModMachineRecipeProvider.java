@@ -320,6 +320,12 @@ public final class ModMachineRecipeProvider {
                 .experience(0.2F).cookingTime(200)
                 .save(writer, id("oven_baking/muffin_tea_from_raw"));
 
+        // Phase 7: Brownie raw → oven → brownie model
+        MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.BROWNIE_RAW.get()),
+                new ItemStack(ModItems.BROWNIE_MODEL.get()))
+                .experience(0F).cookingTime(200)
+                .save(writer, id("oven_baking/brownie_from_raw"));
+
         // Phase 7: Soufflé raw → Oven
         MachineRecipeBuilder.ovenBaking(Ingredient.of(ModItems.SOUFFLE_RAW.get()),
                 new ItemStack(ModItems.SOUFFLE.get()))

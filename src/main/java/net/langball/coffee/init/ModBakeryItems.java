@@ -655,6 +655,17 @@ public class ModBakeryItems {
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).build())));
         ModItems.SOUFFLE_CHOCOLATE_RAW = items.register("souffle_chocolate_raw",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).build())));
+
+        // Phase 7: Brownie chain (1.12.2 jiggy_cake_raw/model meta 9)
+        ModItems.BROWNIE_RAW = items.register("brownie_raw",
+                () -> new Item(new Item.Properties()));
+        ModItems.BROWNIE_MODEL = items.register("brownie_model",
+                () -> new Item(new Item.Properties()) {
+                    @Override public boolean hasCraftingRemainingItem() { return true; }
+                    @Override public ItemStack getCraftingRemainingItem(ItemStack stack) {
+                        return new ItemStack(ModItems.CAKE_MODEL_SQUARE.get());
+                    }
+                });
         ModItems.MOONCAKE_RAW = items.register("mooncake_raw",
                 () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.4F).build())));
         ModItems.MOONCAKE_EGG_RAW = items.register("mooncake_egg_raw",

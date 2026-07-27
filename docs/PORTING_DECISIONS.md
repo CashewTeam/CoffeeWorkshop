@@ -553,12 +553,14 @@ In 1.20.1, each flavor is a separate registered item. Output counts match
 - Soufflé raw: 4 per craft (matching `souffle:4,X`)
 - Mooncake raw: 2 per craft (matching `mooncake:2,X`)
 
-### Jiggy raw/model as generic items
+### Jiggy raw/model per flavor (now 1.12.2-compatible)
 
-1.12.2 had flavor-specific jiggy raw/model via metadata (0-8 per flavor).
-All 9 flavors shared the same model JSON and texture PNG. In 1.20.1,
-a single generic `jiggy_cake_raw` item and `jiggy_cake_model` item serve
-all 9 jiggy cake flavors. The flavor is carried by the batter input.
+1.12.2 had flavor-specific jiggy raw/model items via metadata. In 1.20.1,
+all 9 variants now have their own raw and model items (one pair per
+flavor), matching 1.12.2 behavior:
+- Each flavor uses `CAKE_MODEL_SQUARE + 2× flavored batter → flavored raw
+  → Oven/Furnace → flavored model → 2× finished jiggy cake`
+- Model items return `CAKE_MODEL_SQUARE` as crafting remainder at assembly.
 
 ### Tiramisu_slice
 
@@ -576,7 +578,49 @@ cake slicing on the Tiramisu block.
 
 1.12.2 produced `cream_milk` via workbench: `mixing_bowl + milk + vanilla`.
 The icecream machine also accepted milk → cream_milk.
-In 1.20.1, both paths exist:
-- Workbench: `mixing_bowl + milk + vanilla` (shapeless)
-- Machine: `milk_bucket → icecream_making → cream_milk`
+In 1.20.1, the machine shortcut (milk_bucket → icecream_making → cream_milk)
+has been REMOVED. Only the workbench path remains:
+- Workbench: `mixing_bowl + milk + vanilla → cream_milk`
+- Flavored creams: `mixing_bowl + cream_milk + flavor → flavored_cream`
+- Flavored cream → Icecream Machine → flavored icecream
+
+### Modern extensions (2026-07-27 Phase 5.4-7 closure)
+
+The following 1.20.1 features have no 1.12.2 precedent and are intentional
+extensions, not replacements for legacy behavior:
+
+- **Plate-based cake slicing:** Right-click a placed cake with a Plate to
+  cut 7 slices (one per BITES level). Plate is not consumed. This is a
+  convenience layer; the primary conversion is the workbench 8-slice
+  bidirectional recipe.
+- **Tiramisu Slice:** `tiramisu_slice` (nutrition 6) is a 1.20.1 extension
+  obtained via plate-based slicing on the Tiramisu block.
+- **Cake Carrot:** `cake_carrot` (nutrition 4, sat 0.3) is a new standalone
+  cake produced via workbench (flour + carrot + milk + egg + sugar). It has
+  no plate-slicing support and no bidirectional 8-slice recipe.
+- **Cream Upgrade path:** `Plain Cake Roll + Flavored Cream → Flavored Cake
+  Roll` is a 1.20.1 extension providing an alternative flavored-roll path
+  alongside the legacy `Cake Base + Cream Milk → Cake Roll` path.
+
+### Brownie chain (2026-07-27)
+
+1.12.2 had brownie as a three-stage jiggy-like production: raw → bake → model
+→ assemble. In 1.20.1, the full chain is now restored:
+- `brownie_raw`: Square Mold + Cocoa Batter + Chocolate Chip
+- `brownie_model`: Brownie Raw → Oven (or Furnace) → Model
+- `brownie`: Brownie Model → 4× Brownie (returns Square Mold)
+
+### Furnace/Oven dual-channel (2026-07-27)
+
+1.12.2 `registerRaw2CookedRecipes` registered both Minecraft Furnace and
+Coffee Workshop Oven paths for all bakery raw items. In 1.20.1, both
+channels are now implemented. All raw bakery items can be smelted in a
+Furnace or baked in the Oven, producing the same output.
+
+### Flavored cream Mixing Bowl (2026-07-27)
+
+1.12.2 required a Mixing Bowl for flavored cream production. In 1.20.1,
+the Mixing Bowl is now required (as a reusable tool with crafting
+remainder) in all 6 flavored cream recipes:
+`mixing_bowl + cream_milk + flavor → flavored_cream`.
 

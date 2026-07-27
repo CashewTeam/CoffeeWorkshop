@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_ginger_bread_man": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "coffeework:ginger_bread_man_raw"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "coffeework:smelting/ginger_bread_man"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_ginger_bread_man",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "coffeework:smelting/ginger_bread_man"
+    ]
+  },
+  "sends_telemetry_event": false
+}

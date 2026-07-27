@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.15,
+  "ingredient": {
+    "item": "coffeework:cake_sponge_carrot_raw"
+  },
+  "result": "coffeework:cake_sponge_carrot_model"
+}

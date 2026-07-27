@@ -8,25 +8,25 @@
 | Registry Type | Count |
 |---|---|
 | block | 50 |
-| item | 388 |
+| item | 390 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **449** |
-| **Orphan Assets** | **429** |
+| **Total Registered** | **451** |
+| **Orphan Assets** | **427** |
 
 ## Item Completeness Matrix
 
 | Metric | Count | % |
 |---|---|---|
-| Model | 388/388 | 100% |
-| Texture | 388/388 | 100% |
-| en_us Key Coverage | 388/388 | 100% |
-| zh_cn Key Coverage | 388/388 | 100% |
-| ja_jp Key Coverage | 388/388 | 100% |
-| Creative Tab | 388/388 | 100% |
-| Survival Source | 388/388 | 100% |
+| Model | 390/390 | 100% |
+| Texture | 390/390 | 100% |
+| en_us Key Coverage | 390/390 | 100% |
+| zh_cn Key Coverage | 390/390 | 100% |
+| ja_jp Key Coverage | 390/390 | 100% |
+| Creative Tab | 390/390 | 100% |
+| Survival Source | 390/390 | 100% |
 
 ## Registered Items
 
@@ -48,6 +48,8 @@
 | `blueberry_bush` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
 | `bread_round` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `brownie` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `brownie_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `brownie_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `butter` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cake_berry_roll` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -496,7 +498,7 @@
 
 | Classification | Count |
 |---|---|
-| ASSET_ARCHIVE | 390 |
+| ASSET_ARCHIVE | 388 |
 | MERGED | 14 |
 | REDESIGN | 4 |
 | REMOVED | 21 |
@@ -561,7 +563,7 @@ No intention to restore.
   item_model: turkey_coffee_pot_unheated
 ```
 
-### ASSET_ARCHIVE (390)
+### ASSET_ARCHIVE (388)
 
 Companion assets (raw/model/slice variants) — archive to reference/legacy-assets/.
 
@@ -571,8 +573,6 @@ Companion assets (raw/model/slice variants) — archive to reference/legacy-asse
   block_model: blueberry_stage1
   block_model: blueberry_stage2
   block_model: blueberry_stage3
-  item_model: brownie_model
-  item_model: brownie_raw
   block_model: cake_berry_slice1
   block_model: cake_berry_slice2
   block_model: cake_berry_slice3

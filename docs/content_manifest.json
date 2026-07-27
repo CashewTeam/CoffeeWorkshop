@@ -1,30 +1,30 @@
 {
   "stats": {
-    "registered": 449,
+    "registered": 451,
     "by_type": {
-      "item": 388,
+      "item": 390,
       "block": 50,
       "mob_effect": 3,
       "villager_profession": 3,
       "poi_type": 2,
       "sound_event": 3
     },
-    "orphan_assets": 429,
+    "orphan_assets": 427,
     "orphan_by_classification": {
-      "ASSET_ARCHIVE": 390,
+      "ASSET_ARCHIVE": 388,
       "MERGED": 14,
       "REMOVED": 21,
       "REDESIGN": 4
     },
     "completeness": {
-      "model_ok": 388,
-      "texture_ok": 388,
-      "lang_en_ok": 388,
-      "lang_zh_ok": 388,
-      "lang_ja_ok": 388,
-      "creative_tab_ok": 388,
-      "has_source": 388,
-      "total_items": 388
+      "model_ok": 390,
+      "texture_ok": 390,
+      "lang_en_ok": 390,
+      "lang_zh_ok": 390,
+      "lang_ja_ok": 390,
+      "creative_tab_ok": 390,
+      "has_source": 390,
+      "total_items": 390
     }
   },
   "registry": [
@@ -286,6 +286,38 @@
     },
     {
       "id": "brownie",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "brownie_model",
+      "type": "item",
+      "registered": true,
+      "model": true,
+      "texture_ok": true,
+      "texture_issues": [],
+      "lang_en": true,
+      "lang_zh": true,
+      "lang_ja": true,
+      "creative_tab": true,
+      "sources": [
+        "recipe"
+      ],
+      "block_item": false
+    },
+    {
+      "id": "brownie_raw",
       "type": "item",
       "registered": true,
       "model": true,
@@ -6998,16 +7030,6 @@
     }
   ],
   "orphan_assets": [
-    {
-      "id": "brownie_model",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
-    {
-      "id": "brownie_raw",
-      "type": "item_model",
-      "classification": "ASSET_ARCHIVE"
-    },
     {
       "id": "cake_sponge_slices",
       "type": "item_model",

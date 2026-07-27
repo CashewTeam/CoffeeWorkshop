@@ -289,6 +289,10 @@ public class ModItems {
     public static RegistryObject<Item> MOONCAKE_FRUIT_RAW;
     public static RegistryObject<Item> MOONCAKE_HAM_RAW;
 
+    // Brownie chain (raw→oven→model→4× finished, 1.12.2 jiggy_cake metadata 9)
+    public static RegistryObject<Item> BROWNIE_RAW;
+    public static RegistryObject<Item> BROWNIE_MODEL;
+
     // ========================================================================
     // Seeds — ModEquipmentItems
     // ========================================================================

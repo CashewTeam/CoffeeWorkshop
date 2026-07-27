@@ -23,10 +23,14 @@ public class ModRecipeProvider extends RecipeProvider {
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> writer) {
         // ===================================================================
-        // SMELTING (Furnace) — only legacy paths not yet replaced by machines
+        // SMELTING (Furnace) — dual-channel: raw → Furnace or raw → Oven
+        // All bakery raw items support both paths per 1.12.2 registerRaw2CookedRecipes
         // ===================================================================
         // Cocoa beans → cocoa powder (keep as alternative to Grinder)
         smelting(Items.COCOA_BEANS, ModItems.COCOA_POWDER.get(), 0.35F, "cocoa_powder").save(writer, modLoc("cocoa_powder_from_beans"));
+
+        // Bakery raw → furnace (all raw items support Furnace + Oven dual-channel)
+        registerFurnaceBakery(writer);
 
         // NOTE: coffee_bean_raw → coffee_bean smelting REMOVED — use Oven machine
         // NOTE: dough_bread → bread smelting REMOVED — use Oven machine
@@ -405,11 +409,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.FLOUR.get())
                 .save(writer, modLoc("field_ration"));
 
-        shapeless(RecipeCategory.FOOD, ModItems.BROWNIE.get(), ModItems.CAKE_MODEL_SQUARE.get())
+        // Brownie chain (1.12.2: square mold + cocoa_batter + chocolate_chip → raw → oven → model → 4× brownie)
+        // Mold returned at model→finished stage; oven recipe in ModMachineRecipeProvider
+        shapeless(RecipeCategory.FOOD, ModItems.BROWNIE_RAW.get(), ModItems.CAKE_MODEL_SQUARE.get())
                 .requires(ModItems.CAKE_MODEL_SQUARE.get())
                 .requires(ModItems.COCOA_BATTER.get())
                 .requires(ModItems.CHOCOLATE_CHIP.get())
-                .save(writer, modLoc("brownie"));
+                .save(writer, modLoc("brownie_raw"));
+        shapeless(RecipeCategory.FOOD, ModItems.BROWNIE.get(), 4, ModItems.BROWNIE_MODEL.get())
+                .requires(ModItems.BROWNIE_MODEL.get())
+                .save(writer, modLoc("brownie_from_model"));
 
         // --- Sandwiches ---
         shapeless(RecipeCategory.FOOD, ModItems.SANDWICH_BLT.get(), Items.BREAD)
@@ -1023,28 +1032,35 @@ public class ModRecipeProvider extends RecipeProvider {
         // Phase 6: Creams (milk + sugar + flavor → cream — via Icecream Machine)
         // (Machine recipes in ModMachineRecipeProvider)
 
-        // Phase 6: Flavored creams (cream_milk + flavor → flavored cream)
+        // Phase 6: Flavored creams (mixing_bowl + cream_milk + flavor → flavored cream)
+        // Mixing Bowl returns itself as crafting remainder (reusable tool)
         shapeless(RecipeCategory.FOOD, ModItems.CREAM_APPLE.get(), ModItems.CREAM_MILK.get())
+                .requires(ModItems.MIXING_BOWL.get())
                 .requires(ModItems.CREAM_MILK.get())
                 .requires(Items.APPLE)
                 .save(writer, modLoc("cream_apple"));
         shapeless(RecipeCategory.FOOD, ModItems.CREAM_BERRY.get(), ModItems.CREAM_MILK.get())
+                .requires(ModItems.MIXING_BOWL.get())
                 .requires(ModItems.CREAM_MILK.get())
                 .requires(Items.SWEET_BERRIES)
                 .save(writer, modLoc("cream_berry"));
         shapeless(RecipeCategory.FOOD, ModItems.CREAM_CHOCOLATE.get(), ModItems.CREAM_MILK.get())
+                .requires(ModItems.MIXING_BOWL.get())
                 .requires(ModItems.CREAM_MILK.get())
                 .requires(ModItems.COCOA_POWDER.get())
                 .save(writer, modLoc("cream_chocolate"));
         shapeless(RecipeCategory.FOOD, ModItems.CREAM_COFFEE.get(), ModItems.CREAM_MILK.get())
+                .requires(ModItems.MIXING_BOWL.get())
                 .requires(ModItems.CREAM_MILK.get())
                 .requires(ModItems.COFFEE_POWDER.get())
                 .save(writer, modLoc("cream_coffee"));
         shapeless(RecipeCategory.FOOD, ModItems.CREAM_LEMON.get(), ModItems.CREAM_MILK.get())
+                .requires(ModItems.MIXING_BOWL.get())
                 .requires(ModItems.CREAM_MILK.get())
                 .requires(ModItems.LEMON.get())
                 .save(writer, modLoc("cream_lemon"));
         shapeless(RecipeCategory.FOOD, ModItems.CREAM_MELON.get(), ModItems.CREAM_MILK.get())
+                .requires(ModItems.MIXING_BOWL.get())
                 .requires(ModItems.CREAM_MILK.get())
                 .requires(Items.MELON_SLICE)
                 .save(writer, modLoc("cream_melon"));
@@ -1650,6 +1666,77 @@ public class ModRecipeProvider extends RecipeProvider {
                 xp,
                 200
         ).unlockedBy("has_" + group, has(input));
+    }
+
+    /**
+     * Register furnace smelting for all bakery raw items (Furnace + Oven dual-channel).
+     * 1.12.2 registerRaw2CookedRecipes registered both furnace and Coffee Workshop oven.
+     */
+    private static void registerFurnaceBakery(Consumer<FinishedRecipe> writer) {
+        var r = writer; // short alias
+        // Sponge cake raws → models
+        registerBakerySmelting(r, ModItems.CAKE_CHEESE_RAW.get(), ModItems.CAKE_CHEESE_MODEL.get(), "cake_cheese");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_RAW.get(), ModItems.CAKE_SPONGE_MODEL.get(), "cake_sponge");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_BERRY_RAW.get(), ModItems.CAKE_SPONGE_BERRY_MODEL.get(), "cake_sponge_berry");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_CARROT_RAW.get(), ModItems.CAKE_SPONGE_CARROT_MODEL.get(), "cake_sponge_carrot");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_CHOCOLATE_RAW.get(), ModItems.CAKE_SPONGE_CHOCOLATE_MODEL.get(), "cake_sponge_chocolate");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_COFFEE_RAW.get(), ModItems.CAKE_SPONGE_COFFEE_MODEL.get(), "cake_sponge_coffee");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_LEMON_RAW.get(), ModItems.CAKE_SPONGE_LEMON_MODEL.get(), "cake_sponge_lemon");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_PUMPKIN_RAW.get(), ModItems.CAKE_SPONGE_PUMPKIN_MODEL.get(), "cake_sponge_pumpkin");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_REDVELVET_RAW.get(), ModItems.CAKE_SPONGE_REDVELVET_MODEL.get(), "cake_sponge_redvelvet");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_TEA_RAW.get(), ModItems.CAKE_SPONGE_TEA_MODEL.get(), "cake_sponge_tea");
+        // Cake plate raws → plate models
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_PLATE_RAW.get(), ModItems.CAKE_SPONGE_PLATE_MODEL.get(), "cake_sponge_plate");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_BERRY_PLATE_RAW.get(), ModItems.CAKE_SPONGE_BERRY_PLATE_MODEL.get(), "cake_sponge_berry_plate");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_CARROT_PLATE_RAW.get(), ModItems.CAKE_SPONGE_CARROT_PLATE_MODEL.get(), "cake_sponge_carrot_plate");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_CHOCOLATE_PLATE_RAW.get(), ModItems.CAKE_SPONGE_CHOCOLATE_PLATE_MODEL.get(), "cake_sponge_chocolate_plate");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_COFFEE_PLATE_RAW.get(), ModItems.CAKE_SPONGE_COFFEE_PLATE_MODEL.get(), "cake_sponge_coffee_plate");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_LEMON_PLATE_RAW.get(), ModItems.CAKE_SPONGE_LEMON_PLATE_MODEL.get(), "cake_sponge_lemon_plate");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_PUMPKIN_PLATE_RAW.get(), ModItems.CAKE_SPONGE_PUMPKIN_PLATE_MODEL.get(), "cake_sponge_pumpkin_plate");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_REDVELVET_PLATE_RAW.get(), ModItems.CAKE_SPONGE_REDVELVET_PLATE_MODEL.get(), "cake_sponge_redvelvet_plate");
+        registerBakerySmelting(r, ModItems.CAKE_SPONGE_TEA_PLATE_RAW.get(), ModItems.CAKE_SPONGE_TEA_PLATE_MODEL.get(), "cake_sponge_tea_plate");
+        // Jiggy raws → jiggy models
+        registerBakerySmelting(r, ModItems.JIGGY_CAKE_RAW.get(), ModItems.JIGGY_CAKE_MODEL.get(), "jiggy");
+        registerBakerySmelting(r, ModItems.JIGGY_CAKE_BERRY_RAW.get(), ModItems.JIGGY_CAKE_BERRY_MODEL.get(), "jiggy_berry");
+        registerBakerySmelting(r, ModItems.JIGGY_CAKE_CARROT_RAW.get(), ModItems.JIGGY_CAKE_CARROT_MODEL.get(), "jiggy_carrot");
+        registerBakerySmelting(r, ModItems.JIGGY_CAKE_CHOCOLATE_RAW.get(), ModItems.JIGGY_CAKE_CHOCOLATE_MODEL.get(), "jiggy_chocolate");
+        registerBakerySmelting(r, ModItems.JIGGY_CAKE_COFFEE_RAW.get(), ModItems.JIGGY_CAKE_COFFEE_MODEL.get(), "jiggy_coffee");
+        registerBakerySmelting(r, ModItems.JIGGY_CAKE_LEMON_RAW.get(), ModItems.JIGGY_CAKE_LEMON_MODEL.get(), "jiggy_lemon");
+        registerBakerySmelting(r, ModItems.JIGGY_CAKE_PUMPKIN_RAW.get(), ModItems.JIGGY_CAKE_PUMPKIN_MODEL.get(), "jiggy_pumpkin");
+        registerBakerySmelting(r, ModItems.JIGGY_CAKE_REDVELVET_RAW.get(), ModItems.JIGGY_CAKE_REDVELVET_MODEL.get(), "jiggy_redvelvet");
+        registerBakerySmelting(r, ModItems.JIGGY_CAKE_TEA_RAW.get(), ModItems.JIGGY_CAKE_TEA_MODEL.get(), "jiggy_tea");
+        // Brownie raw → model
+        registerBakerySmelting(r, ModItems.BROWNIE_RAW.get(), ModItems.BROWNIE_MODEL.get(), "brownie");
+        // Muffin raws → muffin finished
+        registerBakerySmelting(r, ModItems.MUFFIN_RAW.get(), ModItems.MUFFIN.get(), "muffin");
+        registerBakerySmelting(r, ModItems.MUFFIN_BERRY_RAW.get(), ModItems.MUFFIN_BERRY.get(), "muffin_berry");
+        registerBakerySmelting(r, ModItems.MUFFIN_CARROT_RAW.get(), ModItems.MUFFIN_CARROT.get(), "muffin_carrot");
+        registerBakerySmelting(r, ModItems.MUFFIN_CHOCOLATE_RAW.get(), ModItems.MUFFIN_CHOCOLATE.get(), "muffin_chocolate");
+        registerBakerySmelting(r, ModItems.MUFFIN_COFFEE_RAW.get(), ModItems.MUFFIN_COFFEE.get(), "muffin_coffee");
+        registerBakerySmelting(r, ModItems.MUFFIN_LEMON_RAW.get(), ModItems.MUFFIN_LEMON.get(), "muffin_lemon");
+        registerBakerySmelting(r, ModItems.MUFFIN_PUMPKIN_RAW.get(), ModItems.MUFFIN_PUMPKIN.get(), "muffin_pumpkin");
+        registerBakerySmelting(r, ModItems.MUFFIN_REDVELVET_RAW.get(), ModItems.MUFFIN_REDVELVET.get(), "muffin_redvelvet");
+        registerBakerySmelting(r, ModItems.MUFFIN_TEA_RAW.get(), ModItems.MUFFIN_TEA.get(), "muffin_tea");
+        // Mooncake raws → mooncake finished
+        registerBakerySmelting(r, ModItems.MOONCAKE_RAW.get(), ModItems.MOONCAKE.get(), "mooncake");
+        registerBakerySmelting(r, ModItems.MOONCAKE_EGG_RAW.get(), ModItems.MOONCAKE_EGG.get(), "mooncake_egg");
+        registerBakerySmelting(r, ModItems.MOONCAKE_FRUIT_RAW.get(), ModItems.MOONCAKE_FRUIT.get(), "mooncake_fruit");
+        registerBakerySmelting(r, ModItems.MOONCAKE_HAM_RAW.get(), ModItems.MOONCAKE_HAM.get(), "mooncake_ham");
+        // Soufflé raws → soufflé finished
+        registerBakerySmelting(r, ModItems.SOUFFLE_RAW.get(), ModItems.SOUFFLE.get(), "souffle");
+        registerBakerySmelting(r, ModItems.SOUFFLE_CHOCOLATE_RAW.get(), ModItems.SOUFFLE_CHOCOLATE.get(), "souffle_chocolate");
+        // Croissant raws → croissant finished
+        registerBakerySmelting(r, ModItems.CROISSANT_RAW.get(), ModItems.CROISSANT.get(), "croissant");
+        registerBakerySmelting(r, ModItems.CROISSANT_CHOCOLATE_RAW.get(), ModItems.CROISSANT_CHOCOLATE.get(), "croissant_chocolate");
+        // Puff raw → puff finished
+        registerBakerySmelting(r, ModItems.PUFF_RAW.get(), ModItems.PUFF.get(), "puff");
+        // Ginger bread man raw → ginger bread man
+        registerBakerySmelting(r, ModItems.GINGER_BREAD_MAN_RAW.get(), ModItems.GINGER_BREAD_MAN.get(), "ginger_bread_man");
+    }
+
+    private static void registerBakerySmelting(Consumer<FinishedRecipe> writer, net.minecraft.world.level.ItemLike input, net.minecraft.world.level.ItemLike output, String name) {
+        smelting(input, output, 0.15F, "raw_" + name)
+                .save(writer, modLoc("smelting/" + name));
     }
 
     /**
