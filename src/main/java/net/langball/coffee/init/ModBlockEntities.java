@@ -2,6 +2,7 @@ package net.langball.coffee.init;
 
 import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.block.entity.CoffeeMachineBlockEntity;
+import net.langball.coffee.block.entity.CoffeePotBlockEntity;
 import net.langball.coffee.block.entity.DrinkDisplayBlockEntity;
 import net.langball.coffee.block.entity.GrinderBlockEntity;
 import net.langball.coffee.block.entity.IcecreamMachineBlockEntity;
@@ -66,5 +67,11 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(
                     TurkishCoffeePotBlockEntity::new,
                     ModBlocks.TURKISH_COFFEE_POT.get()
+            ).build(null));
+
+    public static final RegistryObject<BlockEntityType<CoffeePotBlockEntity>> COFFEE_POT = BLOCK_ENTITIES.register("coffee_pot",
+            () -> BlockEntityType.Builder.of(
+                    CoffeePotBlockEntity::new,
+                    ModBlocks.COFFEE_POT.get()
             ).build(null));
 }

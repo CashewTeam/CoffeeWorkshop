@@ -134,6 +134,7 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         add(ModBlocks.DRINK_DISPLAY.get(), noDrop()); // drops handled by DrinkDisplayBlock#onRemove
         dropSelf(ModBlocks.MOKA_POT.get()); // contents dropped by MokaPotBlock#onRemove
         dropSelf(ModBlocks.TURKISH_COFFEE_POT.get());
+        dropSelf(ModBlocks.COFFEE_POT.get());
     }
 
     @Override

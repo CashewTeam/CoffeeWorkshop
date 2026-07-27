@@ -30,5 +30,7 @@ public class ModDecorBlocks {
                 () -> new MokaPotBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F).sound(SoundType.LANTERN).noOcclusion()));
         ModBlocks.TURKISH_COFFEE_POT = blocks.register("turkish_coffee_pot",
                 () -> new TurkishCoffeePotBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F).sound(SoundType.LANTERN).noOcclusion()));
+        ModBlocks.COFFEE_POT = blocks.register("coffee_pot",
+                () -> new CoffeePotBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F).sound(SoundType.LANTERN).noOcclusion()));
     }
 }

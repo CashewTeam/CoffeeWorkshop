@@ -154,5 +154,7 @@ public class ModEquipmentItems {
                 () -> new BlockItem(ModBlocks.MOKA_POT.get(), new Item.Properties()));
         ModItems.TURKISH_COFFEE_POT_ITEM = items.register("turkish_coffee_pot",
                 () -> new BlockItem(ModBlocks.TURKISH_COFFEE_POT.get(), new Item.Properties()));
+        ModItems.COFFEE_POT_ITEM = items.register("coffee_pot",
+                () -> new BlockItem(ModBlocks.COFFEE_POT.get(), new Item.Properties()));
     }
 }
