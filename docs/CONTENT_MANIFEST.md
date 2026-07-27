@@ -7,26 +7,26 @@
 
 | Registry Type | Count |
 |---|---|
-| block | 51 |
-| item | 390 |
+| block | 58 |
+| item | 406 |
 | mob_effect | 3 |
 | poi_type | 2 |
 | sound_event | 3 |
 | villager_profession | 3 |
-| **Total Registered** | **452** |
-| **Orphan Assets** | **427** |
+| **Total Registered** | **475** |
+| **Orphan Assets** | **429** |
 
 ## Item Completeness Matrix
 
 | Metric | Count | % |
 |---|---|---|
-| Model | 390/390 | 100% |
-| Texture | 390/390 | 100% |
-| en_us Key Coverage | 390/390 | 100% |
-| zh_cn Key Coverage | 390/390 | 100% |
-| ja_jp Key Coverage | 390/390 | 100% |
-| Creative Tab | 390/390 | 100% |
-| Survival Source | 390/390 | 100% |
+| Model | 406/406 | 100% |
+| Texture | 406/406 | 100% |
+| en_us Key Coverage | 406/406 | 100% |
+| zh_cn Key Coverage | 406/406 | 100% |
+| ja_jp Key Coverage | 406/406 | 100% |
+| Creative Tab | 406/406 | 100% |
+| Survival Source | 405/406 | 99% |
 
 ## Registered Items
 
@@ -216,9 +216,11 @@
 | `coffee_milk_tea_ice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `coffee_mochaccino` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `coffee_mochaccino_ice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `coffee_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `coffee_powder` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
 | `coffee_seeds` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot |
 | `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
+| `coffee_turkish` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `coldbrew_bottle` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `coldbrew_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cookie_black` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -327,6 +329,9 @@
 | `milk_form` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mille_feuille` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mixing_bowl` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `moka_bottom` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `moka_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
+| `moka_top` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake_egg` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `mooncake_egg_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -367,6 +372,7 @@
 | `muffin_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `muffin_tea_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `oven_off` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
+| `phonograph` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `pie_apple` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `pie_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `pie_caramel` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
@@ -399,12 +405,20 @@
 | `small_model` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `smore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `soda` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
+| `soda_caramel` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `soda_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `soda_fruit` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `soda_machine` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
+| `soda_mint` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `soda_ore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
+| `soda_sakura` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `soda_vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `souffle` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `souffle_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `souffle_chocolate_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `souffle_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `spices` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
+| `stone_bar_counter` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `syrup_caramel` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `syrup_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `syrup_empty` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,trade |
@@ -418,8 +432,10 @@
 | `tiramisu_raw` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `tiramisu_slice` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
 | `toast` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
+| `turkish_coffee_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `vanilla` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot |
 | `vanilla_seeds` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
+| `wooden_bar_counter` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `xmas_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe,loot |
 | `yeast` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 
@@ -454,6 +470,7 @@
 | `cake_sponge_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `cake_tea` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `coffee_machine` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `coffee_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `coldbrew_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `double_bag_cocoa` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -467,16 +484,22 @@
 | `ginger_house` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `grinder` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `icecream_machine` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `moka_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `mousse_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `mousse_chocolate` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `mousse_coffee` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `mousse_lemon` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `oven` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `phonograph` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `plate` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `roller` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `soda_machine` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `soda_ore` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `stone_bar_counter` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `tiramisu` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `turkish_coffee_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `vanilla_crop` | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `wooden_bar_counter` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `xmas_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 ## Mob Effects
@@ -502,7 +525,7 @@
 | ASSET_ARCHIVE | 388 |
 | MERGED | 14 |
 | REDESIGN | 4 |
-| REMOVED | 21 |
+| REMOVED | 23 |
 
 ### REDESIGN (4)
 
@@ -536,23 +559,23 @@ Old naming merged into current registry (e.g. _on/_off → LIT property).
   item_model: syrup_full
 ```
 
-### REMOVED (21)
+### REMOVED (23)
 
 No intention to restore.
 
 ```
-  block_model: coffee_pot
   block_model: coffee_pot_1
   block_model: coffee_pot_2
   block_model: coffee_pot_3
   block_model: coffee_pot_4
   item_texture: d_bar
   item_texture: dirty_pastry_bun
-  item_model: moka_bottom
+  block_model: moka_bottom
   item_model: moka_pot_heated
+  block_model: moka_pot_heated
   item_model: moka_pot_unheated
-  item_model: moka_top
-  item_model: phonograph
+  block_model: moka_pot_unheated
+  block_model: moka_top
   item_model: soda_machine_bottom
   block_model: soda_machine_bottom
   blockstate: soda_machine_bottom
@@ -561,7 +584,9 @@ No intention to restore.
   blockstate: soda_machine_top
   item_model: turkey_coffee_pot
   item_model: turkey_coffee_pot_heated
+  block_model: turkey_coffee_pot_heated
   item_model: turkey_coffee_pot_unheated
+  block_model: turkey_coffee_pot_unheated
 ```
 
 ### ASSET_ARCHIVE (388)
