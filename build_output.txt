@@ -1,0 +1,60 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/C:/Users/Con11/.gradle/wrapper/dists/gradle-8.10-bin/deqhafrv1ntovfmgh0nh3npr9/gradle-8.10/lib/native-platform-0.22-milestone-26.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.10/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Java: 17.0.19, JVM: 17.0.19+10-LTS (Microsoft), Arch: amd64
+
+> Task :compileJava
+E:\github\CoffeeWorkshop\src\main\java\net\langball\coffee\block\entity\DrinkDisplayBlockEntity.java:103: 閿欒: 鏃犳硶灏嗙被 StateHolder<O,S>涓殑鏂规硶 setValue搴旂敤鍒扮粰瀹氱被鍨?
+                    .setValue(getBlockState().getValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING)),
+                    ^
+  闇€瑕? Property<T>,V
+  鎵惧埌:    Direction
+  鍘熷洜: 鏃犳硶鎺ㄦ柇绫诲瀷鍙橀噺 T,V
+    (瀹為檯鍙傛暟鍒楄〃鍜屽舰寮忓弬鏁板垪琛ㄩ暱搴︿笉鍚?
+  鍏朵腑, T,V,S,O鏄被鍨嬪彉閲?
+    T鎵╁睍宸插湪鏂规硶 <T,V>setValue(Property<T>,V)涓０鏄庣殑Comparable<T>
+    V鎵╁睍宸插湪鏂规硶 <T,V>setValue(Property<T>,V)涓０鏄庣殑T
+    S鎵╁睍宸插湪绫?StateHolder涓０鏄庣殑Object
+    O鎵╁睍宸插湪绫?StateHolder涓０鏄庣殑Object
+E:\github\CoffeeWorkshop\src\main\java\net\langball\coffee\block\entity\DrinkDisplayBlockEntity.java:103: 閿欒: 涓嶅吋瀹圭殑绫诲瀷: 鎺ㄨ鍙橀噺 T#1 鍏锋湁涓嶅吋瀹圭殑涓婇檺
+                    .setValue(getBlockState().getValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING)),
+                             ^
+    绛夊紡绾︽潫鏉′欢锛欴irection
+    涓嬮檺锛歅roperty<T#2>,Comparable<T#1>
+  鍏朵腑, T#1,T#2,V,S鏄被鍨嬪彉閲?
+    T#1鎵╁睍宸插湪鏂规硶 <T#1>getValue(Property<T#1>)涓０鏄庣殑Comparable<T#1>
+    T#2鎵╁睍宸插湪鏂规硶 <T#2,V>setValue(Property<T#2>,V)涓０鏄庣殑Comparable<T#2>
+    V鎵╁睍宸插湪鏂规硶 <T#2,V>setValue(Property<T#2>,V)涓０鏄庣殑T#2
+    S鎵╁睍宸插湪绫?StateHolder涓０鏄庣殑Object
+娉? 鏌愪簺杈撳叆鏂囦欢浣跨敤鎴栬鐩栦簡宸茶繃鏃剁殑 API銆?
+娉? 鏈夊叧璇︾粏淇℃伅, 璇蜂娇鐢?-Xlint:deprecation 閲嶆柊缂栬瘧銆?
+娉? 鏌愪簺杈撳叆鏂囦欢浣跨敤鎴栬鐩栦簡鏍囪涓哄緟鍒犻櫎鐨勫凡杩囨椂 API銆?
+娉? 鏈夊叧璇︾粏淇℃伅, 璇蜂娇鐢?-Xlint:removal 閲嶆柊缂栬瘧銆?
+2 涓敊璇?
+
+
+> Task :compileJava FAILED
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.10/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 13s
+1 actionable task: 1 executed

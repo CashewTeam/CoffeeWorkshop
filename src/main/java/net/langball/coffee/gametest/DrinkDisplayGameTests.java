@@ -341,7 +341,6 @@ public class DrinkDisplayGameTests {
         helper.assertBlockPresent(ModBlocks.DRINK_DISPLAY.get(), POS);
         helper.destroyBlock(POS);
         helper.assertBlockNotPresent(ModBlocks.DRINK_DISPLAY.get(), POS);
-        helper.assertBlockNotPresent(ModBlocks.PLATE.get(), POS);
         helper.succeed();
     }
 

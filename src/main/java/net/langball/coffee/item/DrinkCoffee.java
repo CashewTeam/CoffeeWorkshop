@@ -137,12 +137,15 @@ public class DrinkCoffee extends Item {
     /**
      * Apply one serving of this drink: food, effects, stats, criteria,
      * and cup-count logic.  Modifies the stack's {@code remaining_cups}
-     * in-place.  Does NOT check creative mode — callers must gate that.
+     * in-place.
      *
+     * @param consumeResource if false, skips cup decrement and empty-container
+     *        return (used for creative-mode drinking where effects/stats
+     *        should still apply but the item is not consumed)
      * @return the empty container to give back (empty if still has cups,
      *         or the configured empty-cup / bottle item)
      */
-    public ItemStack consumeOneServing(ItemStack stack, LivingEntity entity, Level level) {
+    public ItemStack consumeOneServing(ItemStack stack, LivingEntity entity, Level level, boolean consumeResource) {
         ensureCupData(stack);
 
         if (!level.isClientSide) {
@@ -166,6 +169,10 @@ public class DrinkCoffee extends Item {
                     }
                 }
             }
+        }
+
+        if (!consumeResource) {
+            return ItemStack.EMPTY;
         }
 
         boolean multiCup = net.langball.coffee.ModConfig.ENABLE_MULTI_CUP.get() && hasMultiCup();
@@ -192,12 +199,13 @@ public class DrinkCoffee extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         if (livingEntity instanceof Player player && !player.getAbilities().instabuild) {
-            ItemStack empty = consumeOneServing(stack, livingEntity, level);
+            ItemStack empty = consumeOneServing(stack, livingEntity, level, true);
             if (getRemainingCups(stack) > 0) {
                 return stack;
             }
             return empty;
         }
+        consumeOneServing(stack, livingEntity, level, false);
         return stack;
     }
 

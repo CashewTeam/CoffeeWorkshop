@@ -141,7 +141,7 @@ public class DrinkDisplayBlock extends BaseEntityBlock {
                     ItemStack drinkStack = be.getDrinkRaw();
 
                     if (drinkStack.getItem() instanceof DrinkCoffee dc) {
-                        ItemStack empty = dc.consumeOneServing(drinkStack, player, level);
+                        ItemStack empty = dc.consumeOneServing(drinkStack, player, level, true);
                         be.setDrink(drinkStack);
                         level.playSound(null, pos, SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS,
                                 0.5F, level.random.nextFloat() * 0.1F + 0.9F);

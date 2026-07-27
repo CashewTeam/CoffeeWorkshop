@@ -1,9 +1,12 @@
 package net.langball.coffee.block.entity;
 
+import net.langball.coffee.block.BlockPlate;
+import net.langball.coffee.block.DrinkDisplayRegistry;
 import net.langball.coffee.init.ModBlockEntities;
 import net.langball.coffee.init.ModBlocks;
 import net.langball.coffee.item.DrinkCoffee;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -24,6 +27,7 @@ public class DrinkDisplayBlockEntity extends BlockEntity {
 
     @Nullable
     private ItemStack drink = ItemStack.EMPTY;
+    private boolean needsRecovery = false;
 
     public DrinkDisplayBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.DRINK_DISPLAY.get(), pos, state);
@@ -55,28 +59,19 @@ public class DrinkDisplayBlockEntity extends BlockEntity {
         return DrinkCoffee.getMaxCups(drink);
     }
 
-    public ItemStack consumeOneCup() {
-        if (drink == null || drink.isEmpty()) return ItemStack.EMPTY;
-        int remaining = getRemainingCups();
-        if (remaining <= 0) return ItemStack.EMPTY;
-
-        remaining--;
-        DrinkCoffee.setRemainingCups(drink, remaining);
-        setChanged();
-        if (level != null) {
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-        }
-
-        if (remaining <= 0) {
-            ItemStack empty = drink.getCraftingRemainingItem();
-            return empty;
-        }
-        return drink.copy();
-    }
-
     public boolean hasValidDrink() {
-        return drink != null && !drink.isEmpty()
-                && ForgeRegistries.ITEMS.getKey(drink.getItem()) != null;
+        if (drink == null || drink.isEmpty()) return false;
+        if (!(drink.getItem() instanceof DrinkCoffee dc)) return false;
+
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(drink.getItem());
+        if (id == null) return false;
+        if (!DrinkDisplayRegistry.canDisplay(id)) return false;
+
+        int remaining = DrinkCoffee.getRemainingCups(drink);
+        int max = DrinkCoffee.getMaxCups(drink);
+        return max == dc.getConfiguredMaxCups()
+                && remaining >= 1
+                && remaining <= max;
     }
 
     /** Return the drink and clear the internal reference (for pickup). */
@@ -100,14 +95,15 @@ public class DrinkDisplayBlockEntity extends BlockEntity {
      * become a permanent invisible ghost.
      */
     public void recoverIfInvalid() {
-        if (drink != null && !drink.isEmpty() && !hasValidDrink()) {
-            LOGGER.warn("DrinkDisplayBlockEntity at {} has invalid drink, reverting to plate", worldPosition);
-            if (level != null && !level.isClientSide) {
-                level.setBlock(worldPosition, ModBlocks.PLATE.get().defaultBlockState()
-                        .setValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING,
-                                getBlockState().getValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING)),
-                        3);
-            }
+        if (!needsRecovery && hasValidDrink()) {
+            return;
+        }
+        LOGGER.warn("DrinkDisplayBlockEntity at {} is invalid (recovery={}, validDrink={}), reverting to plate",
+                worldPosition, needsRecovery, hasValidDrink());
+        if (level != null && !level.isClientSide) {
+            Direction facing = getBlockState().getValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING);
+            level.setBlock(worldPosition, ModBlocks.PLATE.get().defaultBlockState()
+                    .setValue(BlockPlate.FACING, facing), 3);
         }
     }
 
@@ -125,40 +121,39 @@ public class DrinkDisplayBlockEntity extends BlockEntity {
             drink.save(drinkTag);
             tag.put(TAG_DRINK, drinkTag);
         }
+        tag.putBoolean("NeedsRecovery", needsRecovery);
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
+        needsRecovery = tag.getBoolean("NeedsRecovery");
         if (tag.contains(TAG_DRINK)) {
             ItemStack loaded = ItemStack.of(tag.getCompound(TAG_DRINK));
             if (loaded.isEmpty()) {
-                drink = ItemStack.EMPTY;
+                needsRecovery = true;
                 return;
             }
             if (ForgeRegistries.ITEMS.getKey(loaded.getItem()) == null) {
-                LOGGER.warn("DrinkDisplayBlockEntity at {} loaded unregistered item {}, clearing",
-                        worldPosition, loaded.getItem());
-                drink = ItemStack.EMPTY;
+                LOGGER.warn("DrinkDisplayBlockEntity at {} loaded unregistered item {}", worldPosition, loaded.getItem());
+                needsRecovery = true;
                 return;
             }
             if (!(loaded.getItem() instanceof DrinkCoffee)) {
-                LOGGER.warn("DrinkDisplayBlockEntity at {} loaded non-drink item {}, clearing",
-                        worldPosition, loaded.getItem());
-                drink = ItemStack.EMPTY;
+                LOGGER.warn("DrinkDisplayBlockEntity at {} loaded non-drink item {}", worldPosition, loaded.getItem());
+                needsRecovery = true;
                 return;
             }
             int remaining = DrinkCoffee.getRemainingCups(loaded);
             int max = DrinkCoffee.getMaxCups(loaded);
             if (remaining < 1 || remaining > max) {
-                LOGGER.warn("DrinkDisplayBlockEntity at {} loaded invalid cup count {}/{}, clearing",
-                        worldPosition, remaining, max);
-                drink = ItemStack.EMPTY;
+                LOGGER.warn("DrinkDisplayBlockEntity at {} loaded invalid cup count {}/{}", worldPosition, remaining, max);
+                needsRecovery = true;
                 return;
             }
             drink = loaded;
         } else {
-            drink = ItemStack.EMPTY;
+            needsRecovery = true;
         }
     }
 

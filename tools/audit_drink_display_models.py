@@ -4,9 +4,8 @@
 Checks:
   - Every mapped drink ID is a registered item
   - Every mapped model path resolves to an existing JSON file
-  - No duplicate drink→model mappings
-  - Lists orphan _plate block models (exist on disk but not mapped)
-  - CI fails if: mapped drink missing from registry, model file missing, or duplicate mapping
+  - No duplicate drink→model mappings (aliases are INFO)
+  - Unmapped _plate models must be in the approved-exclusion allowlist
 
 Exit: 0=PASS, 2=FAIL
 """
@@ -19,6 +18,26 @@ MOD_DIR = "src/main/resources/assets/coffeework"
 DATA_DIR = "src/main/resources/data/coffeework"
 MAPPING_FILE = os.path.join(DATA_DIR, "drink_display_models.json")
 MANIFEST_FILE = "docs/content_manifest.json"
+
+# ── Approved orphan _plate models (legacy, no registered drink item, explicitly excluded) ──
+APPROVED_ORPHANS = {
+    # Decorative blocks without drink items (1.12.2 legacy)
+    "coffee_berry_plate",
+    "coffee_cheese_plate",
+    "coffee_cream_plate",
+    "coffee_ice_plate",
+    "coffee_icecream_plate",
+    "coffee_milk_plate",
+    "coffee_mint_plate",
+    "coffee_turkey_plate",
+    "coffee_vanilla_plate",
+    # Cocoa variants without registered drinks
+    "cocoa_gingerbread_plate",
+    "cocoa_marshmallow_plate",
+    # Old naming variants (renamed drinks)
+    "coffee_american_plate",   # → coffee_americano (legacy English misspelling)
+    "strong_cocoa_plate",      # → cocoa_strong (old naming convention)
+}
 
 
 def load_manifest_items() -> set[str]:
@@ -97,17 +116,25 @@ def main() -> int:
 
     # ── Check 4: orphan plate block models ──
     all_block_plates = list_block_plate_models()
-    orphan = all_block_plates - wired_names - {base_plate}
-    if orphan:
-        print(f"INFO: {len(orphan)} unmapped _plate block model(s):")
-        for o in sorted(orphan):
+    unmapped = all_block_plates - wired_names - {base_plate}
+    unapproved = unmapped - APPROVED_ORPHANS
+    if unapproved:
+        print(f"FAIL: {len(unapproved)} unapproved orphan _plate block model(s):")
+        for o in sorted(unapproved):
             print(f"  - {o}")
+        exit_code = 2
+    if unmapped:
+        approved_count = len(unmapped & APPROVED_ORPHANS)
+        print(f"INFO: {len(unmapped)} unmapped _plate block model(s) "
+              f"({approved_count} approved exclusions, {len(unapproved)} unapproved)")
     else:
         print("PASS: all _plate block models are mapped")
 
     # ── Summary ──
     exit_msg = "PASS" if exit_code == 0 else "FAIL"
-    print(f"\n--- {exit_msg}: {len(mappings)} maps, {len(orphan)} orphans ---")
+    unapproved_count = len(unapproved)
+    print(f"\n--- {exit_msg}: {len(mappings)} maps, {len(unmapped)} orphans "
+          f"({unapproved_count} unapproved) ---")
     return exit_code
 
 
