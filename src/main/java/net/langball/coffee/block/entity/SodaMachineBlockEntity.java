@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -42,7 +43,8 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return switch (slot) {
-                case SLOT_BOTTLE, SLOT_SODA, SLOT_FLAVOR -> true;
+                case SLOT_BOTTLE -> stack.getItem() == Items.GLASS_BOTTLE;
+                case SLOT_SODA, SLOT_FLAVOR -> true;
                 case SLOT_OUTPUT -> false;
                 default -> false;
             };

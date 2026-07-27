@@ -1,10 +1,12 @@
 package net.langball.coffee.gametest;
 
 import net.langball.coffee.CoffeeWork;
+import net.langball.coffee.block.BarCounterBlock;
 import net.langball.coffee.block.CoffeePotBlock;
 import net.langball.coffee.block.MokaPotBlock;
 import net.langball.coffee.block.entity.CoffeePotBlockEntity;
 import net.langball.coffee.block.entity.MokaPotBlockEntity;
+import net.langball.coffee.block.entity.SodaMachineBlockEntity;
 import net.langball.coffee.init.ModBlocks;
 import net.langball.coffee.init.ModItems;
 import net.langball.coffee.item.DrinkCoffee;
@@ -161,6 +163,54 @@ public class Phase9GameTests {
         int level = state.getValue(CoffeePotBlock.LEVEL);
         helper.assertTrue(level == 3,
                 "Coffee Pot LEVEL should be 3 after restoring NBT, got " + level);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterFormsInnerCorner(GameTestHelper helper) {
+        BlockPos p1 = POT_POS;
+        BlockPos p2 = p1.south();
+
+        helper.setBlock(p1, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.EAST));
+        helper.setBlock(p2, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.WEST));
+
+        BlockState s1 = helper.getBlockState(p1);
+        helper.assertTrue(s1.getValue(BarCounterBlock.SHAPE) == BarCounterBlock.Shape.INNER,
+                "Bar counter should form INNER corner when facing EAST with SOUTH neighbor facing WEST");
+
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterStraightAlone(GameTestHelper helper) {
+        helper.setBlock(POT_POS, ModBlocks.STONE_BAR_COUNTER.get().defaultBlockState()
+                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH));
+
+        BlockState s = helper.getBlockState(POT_POS);
+        helper.assertTrue(s.getValue(BarCounterBlock.SHAPE) == BarCounterBlock.Shape.NORMAL,
+                "Bar counter alone should be NORMAL (straight), not INNER");
+
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void sodaMachineAcceptsBottleOnly(GameTestHelper helper) {
+        helper.setBlock(POT_POS, ModBlocks.SODA_MACHINE.get());
+        BlockEntity be = helper.getBlockEntity(POT_POS);
+        helper.assertTrue(be instanceof SodaMachineBlockEntity, "BE must be SodaMachineBlockEntity");
+        SodaMachineBlockEntity sm = (SodaMachineBlockEntity) be;
+
+        var handler = sm.getItemHandler();
+        helper.assertTrue(handler.isItemValid(0, new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE)),
+                "Slot 0 should accept glass bottle");
+        helper.assertTrue(!handler.isItemValid(0, new ItemStack(net.minecraft.world.item.Items.APPLE)),
+                "Slot 0 should reject non-bottle items");
+        helper.assertTrue(!handler.isItemValid(SodaMachineBlockEntity.SLOT_OUTPUT,
+                new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE)),
+                "Output slot should reject items");
+
         helper.succeed();
     }
 }
