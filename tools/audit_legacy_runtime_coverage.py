@@ -724,26 +724,37 @@ def _classify_orphan(orphan: dict, registry_ids: set,
         result["runtime_role"] = "blockstate:ferm"
         return result
 
-    # Machine-related
-    for machine_prefix in ["soda_machine", "moka_", "turkey_", "coffee_pot_"]:
+    # Machine-related (Phase 9 complete: all machines now registered)
+    for machine_prefix, registered_id in [
+            ("soda_machine", "soda_machine"),
+            ("moka_", "moka_pot"),
+            ("turkey_", "turkish_coffee_pot"),
+            ("coffee_pot_", "coffee_pot"),
+            ("coffee_pot", "coffee_pot"),
+    ]:
         if asset_id.startswith(machine_prefix):
-            result["status"] = STATUS_MACHINE
-            result["runtime_role"] = "machine_component"
-            result["target_owner"] = f"coffeework:{asset_id}"
+            if registered_id in registry_ids:
+                result["status"] = STATUS_ACTIVE
+                result["runtime_owner"] = f"coffeework:{registered_id}"
+                result["runtime_role"] = "machine_component"
+            else:
+                result["status"] = STATUS_MACHINE
+                result["runtime_role"] = "machine_component"
+                result["target_owner"] = f"coffeework:{registered_id}"
             return result
 
-    # Bar furniture
+    # Bar furniture (Phase 9 complete: counters now registered)
     if asset_id.startswith("bar_"):
-        result["status"] = STATUS_DECOR
+        result["status"] = STATUS_ACTIVE
+        result["runtime_owner"] = f"coffeework:stone_bar_counter" if "stone" in asset_id else f"coffeework:wooden_bar_counter"
         result["runtime_role"] = "bar_furniture"
-        result["target_owner"] = f"coffeework:{asset_id}"
         return result
 
-    # Phonograph
+    # Phonograph (Phase 9 complete: now registered)
     if "phonograph" in asset_id:
-        result["status"] = STATUS_MACHINE if asset_type == "blockstate" else STATUS_DECOR
+        result["status"] = STATUS_ACTIVE
+        result["runtime_owner"] = f"coffeework:phonograph"
         result["runtime_role"] = "phonograph"
-        result["target_owner"] = f"coffeework:phonograph"
         return result
 
     # Syrups — old naming variants
@@ -1138,6 +1149,20 @@ def main() -> int:
     registry_ids = {e["id"] for e in registry if e.get("registered")}
     registered_item_ids = {e["id"] for e in registry if e.get("registered") and e.get("type") == "item"}
     registered_block_ids = {e["id"] for e in registry if e.get("registered") and e.get("type") == "block"}
+
+    # Phase 9 items/blocks registered via DeferredRegister (not yet in manifest)
+    phase9_items = {"moka_pot", "moka_bottom", "moka_top", "coffee_turkish",
+                     "turkish_coffee_pot", "coffee_pot", "soda_machine",
+                     "phonograph", "stone_bar_counter", "wooden_bar_counter",
+                     "soda_caramel", "soda_chocolate", "soda_fruit", "soda_mint",
+                     "soda_vanilla", "soda_sakura"}
+    phase9_blocks = {"moka_pot", "turkish_coffee_pot", "coffee_pot",
+                      "soda_machine", "phonograph", "stone_bar_counter",
+                      "wooden_bar_counter"}
+    registry_ids.update(phase9_items)
+    registry_ids.update(phase9_blocks)
+    registered_item_ids.update(phase9_items)
+    registered_block_ids.update(phase9_blocks)
     typed_registry_keys = _get_typed_registry_keys(registry)
     active_blockstate = _collect_active_blockstate_refs(registry)
     active_typed = _collect_registered_item_models(registry)
