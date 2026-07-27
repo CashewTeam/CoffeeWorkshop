@@ -152,5 +152,7 @@ public class ModEquipmentItems {
         // Phase 9: Moka Pot block item
         ModItems.MOKA_POT_ITEM = items.register("moka_pot",
                 () -> new BlockItem(ModBlocks.MOKA_POT.get(), new Item.Properties()));
+        ModItems.TURKISH_COFFEE_POT_ITEM = items.register("turkish_coffee_pot",
+                () -> new BlockItem(ModBlocks.TURKISH_COFFEE_POT.get(), new Item.Properties()));
     }
 }

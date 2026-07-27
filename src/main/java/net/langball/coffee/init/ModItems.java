@@ -502,6 +502,7 @@ public class ModItems {
     public static RegistryObject<Item> MOKA_BOTTOM;
     public static RegistryObject<Item> MOKA_TOP;
     public static RegistryObject<Item> COFFEE_TURKISH;
+    public static RegistryObject<Item> TURKISH_COFFEE_POT_ITEM;
 
     // ========================================================================
     // Registration bootstrap

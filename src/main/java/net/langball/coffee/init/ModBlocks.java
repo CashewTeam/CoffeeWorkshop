@@ -92,6 +92,7 @@ public class ModBlocks {
 
     // Phase 9: Traditional brewing
     public static RegistryObject<Block> MOKA_POT;
+    public static RegistryObject<Block> TURKISH_COFFEE_POT;
 
     // ========== Registration bootstrap ==========
     static {

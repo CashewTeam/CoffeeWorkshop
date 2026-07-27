@@ -511,5 +511,14 @@ public class ModCoffeeItems {
                                 new MobEffectInstance(ModEffects.CAFFEINE.get(), 3200, 0),
                                 new MobEffectInstance(ModEffects.RELAX.get(), 500, 0),
                         }, 3, () -> ModItems.CUP_GLASS.get()));
+
+        // Phase 9: Turkish Coffee
+        ModItems.COFFEE_TURKISH = items.register("coffee_turkish",
+                () -> new DrinkCoffee(
+                        new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2F).alwaysEat().build()),
+                        new MobEffectInstance[]{
+                                new MobEffectInstance(ModEffects.CAFFEINE.get(), 6000, 2),
+                                new MobEffectInstance(ModEffects.RELAX.get(), 800, 1),
+                        }, 4, () -> ModItems.CUP.get()));
     }
 }

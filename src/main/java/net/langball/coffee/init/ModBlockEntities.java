@@ -8,6 +8,7 @@ import net.langball.coffee.block.entity.IcecreamMachineBlockEntity;
 import net.langball.coffee.block.entity.MokaPotBlockEntity;
 import net.langball.coffee.block.entity.OvenBlockEntity;
 import net.langball.coffee.block.entity.RollerBlockEntity;
+import net.langball.coffee.block.entity.TurkishCoffeePotBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -59,5 +60,11 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(
                     MokaPotBlockEntity::new,
                     ModBlocks.MOKA_POT.get()
+            ).build(null));
+
+    public static final RegistryObject<BlockEntityType<TurkishCoffeePotBlockEntity>> TURKISH_COFFEE_POT = BLOCK_ENTITIES.register("turkish_coffee_pot",
+            () -> BlockEntityType.Builder.of(
+                    TurkishCoffeePotBlockEntity::new,
+                    ModBlocks.TURKISH_COFFEE_POT.get()
             ).build(null));
 }

@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,heated=false": { "model": "coffeework:block/turkey_coffee_pot_unheated" },
+    "facing=north,heated=true": { "model": "coffeework:block/turkey_coffee_pot_heated" },
+    "facing=south,heated=false": { "model": "coffeework:block/turkey_coffee_pot_unheated", "y": 180 },
+    "facing=south,heated=true": { "model": "coffeework:block/turkey_coffee_pot_heated", "y": 180 },
+    "facing=west,heated=false": { "model": "coffeework:block/turkey_coffee_pot_unheated", "y": 270 },
+    "facing=west,heated=true": { "model": "coffeework:block/turkey_coffee_pot_heated", "y": 270 },
+    "facing=east,heated=false": { "model": "coffeework:block/turkey_coffee_pot_unheated", "y": 90 },
+    "facing=east,heated=true": { "model": "coffeework:block/turkey_coffee_pot_heated", "y": 90 }
+  }
+}

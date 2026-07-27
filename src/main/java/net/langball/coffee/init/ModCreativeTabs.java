@@ -27,6 +27,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.MOKA_POT_ITEM.get());
                         output.accept(ModItems.MOKA_BOTTOM.get());
                         output.accept(ModItems.MOKA_TOP.get());
+                        output.accept(ModItems.TURKISH_COFFEE_POT_ITEM.get());
 
                         // Plants
                         output.accept(ModItems.COFFEE_TREE_ITEM.get());
@@ -405,6 +406,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.COFFEE_INSTANT_CUP.get());
                         output.accept(ModItems.COFFEE_INSTANT.get());
                         output.accept(ModItems.ESPRESSO.get());
+                        output.accept(ModItems.COFFEE_TURKISH.get());
                         output.accept(ModItems.COFFEE_AMERICANO.get());
                         output.accept(ModItems.COFFEE_AMERICANO_ICE.get());
                         output.accept(ModItems.COFFEE_AMERICANO_FRUIT.get());
