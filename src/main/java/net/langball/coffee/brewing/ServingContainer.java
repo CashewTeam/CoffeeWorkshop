@@ -41,7 +41,7 @@ public interface ServingContainer {
     default boolean canAccept(ItemStack drink) {
         if (drink.isEmpty()) return false;
         if (getStoredDrink().isEmpty()) return true;
-        return ItemStack.isSameItemSameTags(drink, getStoredDrink())
+        return ItemStack.isSameItem(drink, getStoredDrink())
                 && getServings() < getCapacity();
     }
 
@@ -51,7 +51,7 @@ public interface ServingContainer {
             setStoredDrink(drink.copy());
             getStoredDrink().setCount(1);
             setServings(Math.min(count, getCapacity()));
-        } else if (ItemStack.isSameItemSameTags(drink, getStoredDrink())) {
+        } else if (ItemStack.isSameItem(drink, getStoredDrink())) {
             setServings(Math.min(getServings() + count, getCapacity()));
         }
     }

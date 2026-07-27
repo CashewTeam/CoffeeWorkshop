@@ -102,27 +102,28 @@ public class CoffeePotBlock extends BaseEntityBlock {
 
         if (held.getItem() instanceof DrinkCoffee && !pot.isFull()) {
             if (!held.is(COFFEE_POT_DRINKS)) return InteractionResult.PASS;
-            int available = DrinkCoffee.getRemainingCups(held);
-            int space = pot.getCapacity() - pot.getServings();
-            int moved = Math.min(available, space);
-            if (moved <= 0) return InteractionResult.PASS;
+            DrinkCoffee dc = (DrinkCoffee) held.getItem();
+            dc.ensureCupData(held);
+            int available = dc.hasMultiCup() ? DrinkCoffee.getRemainingCups(held) : 1;
+            if (available <= 0) return InteractionResult.PASS;
 
-            if (pot.isEmpty()) {
-                pot.setStoredDrink(held.copy());
-                pot.getStoredDrink().setCount(1);
-                DrinkCoffee.setRemainingCups(pot.getStoredDrink(), 1);
-            } else if (!pot.canAccept(held)) {
+            if (!pot.isEmpty() && !ItemStack.isSameItem(held, pot.getStoredDrink())) {
                 return InteractionResult.PASS;
             }
-            pot.setServings(pot.getServings() + moved);
 
-            if (!player.getAbilities().instabuild) {
-                DrinkCoffee.setRemainingCups(held, available - moved);
-                if (DrinkCoffee.getRemainingCups(held) <= 0) {
-                    ItemStack container = ItemStack.EMPTY;
-                    if (held.getItem() instanceof DrinkCoffee dc && dc.getEmptyCupItem() != null) {
-                        container = new ItemStack(dc.getEmptyCupItem());
+            int moved = pot.fillFrom(held, available);
+
+            if (moved > 0 && !player.getAbilities().instabuild) {
+                if (dc.hasMultiCup()) {
+                    DrinkCoffee.setRemainingCups(held, available - moved);
+                    if (DrinkCoffee.getRemainingCups(held) <= 0) {
+                        ItemStack container = dc.getEmptyCupItem() != null
+                                ? new ItemStack(dc.getEmptyCupItem()) : ItemStack.EMPTY;
+                        player.setItemInHand(hand, container);
                     }
+                } else {
+                    ItemStack container = dc.getEmptyCupItem() != null
+                            ? new ItemStack(dc.getEmptyCupItem()) : ItemStack.EMPTY;
                     player.setItemInHand(hand, container);
                 }
             }

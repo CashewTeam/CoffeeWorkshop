@@ -34,21 +34,35 @@ public class CoffeePotBlockEntity extends BlockEntity implements ServingContaine
         return result;
     }
 
-    public void fillFrom(ItemStack drink, int servings) {
+    public int fillFrom(ItemStack source, int requested) {
+        ItemStack dc = source.copy();
+        dc.setCount(1);
+        if (dc.getItem() instanceof net.langball.coffee.item.DrinkCoffee drink) {
+            drink.ensureCupData(dc);
+        }
+        int available = requested;
         if (getStoredDrink().isEmpty()) {
-            ItemStack template = drink.copy();
-            template.setCount(1);
-            if (template.getItem() instanceof net.langball.coffee.item.DrinkCoffee dc) {
-                dc.ensureCupData(template);
+            ItemStack template = dc.copy();
+            if (template.getItem() instanceof net.langball.coffee.item.DrinkCoffee d) {
+                net.langball.coffee.item.DrinkCoffee.setRemainingCups(template, 1);
+                template.getOrCreateTag().putInt("max_cups", 1);
             }
             setStoredDrink(template);
+            int moved = Math.min(available, CAPACITY);
+            setServings(moved);
+            setChanged();
+            sync();
+            return moved;
+        } else if (ItemStack.isSameItem(dc, getStoredDrink())) {
+            int moved = Math.min(available, CAPACITY - getServings());
+            if (moved > 0) {
+                setServings(getServings() + moved);
+            }
+            setChanged();
+            sync();
+            return moved;
         }
-        int moved = Math.min(servings, CAPACITY - getServings());
-        if (moved > 0) {
-            setServings(getServings() + moved);
-        }
-        setChanged();
-        sync();
+        return 0;
     }
 
     public int getFillLevel() {

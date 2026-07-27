@@ -126,6 +126,11 @@ public class MokaPotBlock extends BaseEntityBlock {
                 int moved = Math.min(space, moka.getServings());
                 if (moka.isEmpty() || moved <= 0) return InteractionResult.PASS;
 
+                if (!potData.isEmpty()
+                        && !ItemStack.isSameItem(potData.getStoredDrink(), moka.getStoredDrink())) {
+                    return InteractionResult.PASS;
+                }
+
                 if (potData.isEmpty()) {
                     potData.setStoredDrink(moka.getStoredDrink().copy());
                     potData.getStoredDrink().setCount(1);

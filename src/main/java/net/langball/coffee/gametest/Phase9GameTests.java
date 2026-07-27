@@ -109,16 +109,29 @@ public class Phase9GameTests {
 
         ItemStack espresso = new ItemStack(ModItems.ESPRESSO.get());
         DrinkCoffee.setRemainingCups(espresso, 4);
-        pot.fillFrom(espresso, 2);
+        int moved = pot.fillFrom(espresso, 2);
 
+        helper.assertTrue(moved == 2,
+                "fillFrom should transfer 2, got " + moved);
         helper.assertTrue(pot.getServings() == 2,
-                "Coffee Pot should have 2 servings after fillFrom(2), got " + pot.getServings());
-        helper.assertTrue(!pot.isEmpty(), "Coffee Pot should not be empty after fill");
+                "Coffee Pot should have 2 servings, got " + pot.getServings());
+
+        ItemStack stored = pot.getStoredDrink();
+        helper.assertTrue(ItemStack.isSameItem(stored, espresso),
+                "Stored drink should be same item as input");
+        helper.assertTrue(DrinkCoffee.getRemainingCups(stored) == 1,
+                "Stored template remaining_cups should be 1, got " + DrinkCoffee.getRemainingCups(stored));
 
         ItemStack poured = pot.pourServing();
         helper.assertTrue(!poured.isEmpty(), "pourServing should return drink");
         helper.assertTrue(pot.getServings() == 1,
-                "Coffee Pot should have 1 serving after pour, got " + pot.getServings());
+                "After pour should have 1 serving, got " + pot.getServings());
+
+        moved = pot.fillFrom(espresso, 4);
+        helper.assertTrue(moved == 3,
+                "Second fillFrom should transfer 3 (capacity 4, had 1), got " + moved);
+        helper.assertTrue(pot.getServings() == 4,
+                "Should be full (4 servings), got " + pot.getServings());
         helper.succeed();
     }
 
