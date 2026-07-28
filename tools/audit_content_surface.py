@@ -718,6 +718,15 @@ def build_report():
                 return 2
             _, name = result_id.split(":", 1)
             block_interaction_items.add(name)
+    else:
+        # Phase 9 Fix7 P2-2: a missing shared edge file is a hard
+        # contract violation — the reachability report would silently
+        # lose its non-recipe sources.  Fail-fast to keep the two
+        # audit tools in agreement.
+        print(f"::error::{shared_edges_file.name} is missing; the reachability "
+              "and surface audits cannot agree on block-interaction sources.",
+              file=sys.stderr)
+        return 2
     all_sources = (recipe_outputs | loot_items | traded_items
                    | worldgen_items | interact_items
                    | block_interaction_items)

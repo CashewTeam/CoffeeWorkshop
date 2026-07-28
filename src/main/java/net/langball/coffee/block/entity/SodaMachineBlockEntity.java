@@ -63,17 +63,17 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
         }
     };
 
-    /** Phase 9 Fix6 P1-2: validate flavor against the *current* RecipeManager
-     *  on every slot check.  The previous static cache broke /reload because
-     *  a) newly datapack-added flavors kept being rejected, b) deleted
-     *  flavors kept being accepted until JVM restart, and c) the cache
-     *  could be populated before any recipes were loaded and then serve
-     *  the empty fallback forever.  Removing the cache makes the validator
-     *  authoritative for the current RecipeManager instance.
-     *
-     *  The fallback is retained only for the unit-test / dedicated-server
-     *  bootstrap scenario where {@code ServerLifecycleHooks.getCurrentServer()}
-     *  is null; it is never cached across calls. */
+    /** Phase 9 Fix6 P1-2 / Fix7 P2-1: validate flavor against the
+     *  *current* RecipeManager.  We deliberately call
+     *  {@code recipe.flavor().test(stack)} directly so NBT, Forge
+     *  custom ingredient semantics, and any future dynamic
+     *  ingredients are preserved.  The previous implementation
+     *  expanded the ingredient to a flat set of item IDs, which
+     *  silently dropped NBT data and any non-vanilla ingredient
+     *  type.  The hardcoded fallback is now restricted to the
+     *  no-server (unit-test / data-generation) scenario, so
+     *  deleting every Soda recipe via /reload genuinely rejects
+     *  every flavor slot. */
     private static final java.util.Set<net.minecraft.resources.ResourceLocation> FALLBACK_FLAVORS =
             java.util.Set.of(
                     new net.minecraft.resources.ResourceLocation("coffeework", "syrup_caramel"),
@@ -85,16 +85,24 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
 
     private static boolean isValidFlavor(ItemStack stack) {
         if (stack.isEmpty()) return false;
-        var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
-        if (id == null) return false;
-        return getFlavorItems().contains(id);
+        var server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
+        if (server == null) {
+            // No live server — keep the legacy fallback so dedicated
+            // unit tests and data-generation still recognise the
+            // canonical six syrups.
+            var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
+            return id != null && FALLBACK_FLAVORS.contains(id);
+        }
+        // Live server: route through the live RecipeManager.  Recipe
+        // ingredients are checked directly so NBT / custom ingredient
+        // semantics propagate.
+        var recipes = server.getRecipeManager().getAllRecipesFor(ModRecipeTypes.SODA_MAKING);
+        for (SodaMachineRecipe r : recipes) {
+            if (r.flavor().test(stack)) return true;
+        }
+        return false;
     }
 
-    /** Returns the set of flavor items currently registered as Soda
-     *  Machine recipes.  If the server is not yet running (unit tests,
-     *  data generation) or no recipes are loaded, the fallback set is
-     *  returned *without* caching — every call re-queries the recipe
-     *  manager so /reload is honored. */
     private static java.util.Set<net.minecraft.resources.ResourceLocation> getFlavorItems() {
         var server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
         if (server == null) return FALLBACK_FLAVORS;
@@ -185,10 +193,13 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
                 // server, defeating the visual feedback.
                 // Emission is throttled to one packet every 10 ticks to
                 // avoid flooding the network budget.
-                // Phase 9 Fix6 P2-3: spread argument (y=0.04) is the
-                // velocity assignment, not a position delta — using
-                // count=1 with a positive y spread gives the bubbles a
-                // gentle upward drift instead of hanging in place.
+                // Phase 9 Fix7 P2-5: send an exact-speed particle
+                // (count=0) with a fixed (xSpeed, ySpeed, zSpeed)
+                // direction tuple.  In count=0 mode the X/Y/Z
+                // arguments are exact per-particle velocity
+                // components, not spread — so the bubble gets a
+                // deterministic upward velocity of 0.04 instead of
+                // a random walk inside the previous 0.04 spread box.
                 if (level instanceof net.minecraft.server.level.ServerLevel sl
                         && cookTime % 10 == 0) {
                     double x = pos.getX() + 0.5 + (level.random.nextDouble() - 0.5) * 0.4;
@@ -197,7 +208,7 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
                     sl.sendParticles(
                             net.minecraft.core.particles.ParticleTypes.BUBBLE,
                             x, y, z,
-                            1, 0.0, 0.04, 0.0, 0.04);
+                            0, 0.0, 0.04, 0.0, 1.0);
                 }
             } else {
                 cookTime = 0;

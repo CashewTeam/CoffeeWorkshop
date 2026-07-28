@@ -1,11 +1,13 @@
 package net.langball.coffee.block.entity;
 
+import net.langball.coffee.advancement.PhonographPlayTrigger;
 import net.langball.coffee.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.RecordItem;
@@ -16,15 +18,22 @@ import org.jetbrains.annotations.Nullable;
 
 public class PhonographBlockEntity extends BlockEntity {
     private ItemStack record = ItemStack.EMPTY;
-    /** Phase 9 Fix6 P1-5: when a record is inserted we record the absolute
-     *  game time as the playback start.  Chunk reloads use this time to
-     *  decide whether the song is still in progress.  We deliberately
-     *  do NOT cache a per-record "offset" because vanilla Minecraft music
-     *  is a single fire-and-forget client sound — there is no public API
-     *  to resume playback at a sub-song offset.  See {@link #onLoad} for
-     *  the resume semantics. */
+    /** Absolute game tick at which the current record was inserted.
+     *  Chunk reloads use this to decide whether the song is still
+     *  in progress.  Vanilla Minecraft has no sub-song offset API,
+     *  so the song restarts from the top on chunk reload. */
     private long playbackStartTick = -1L;
     private long tickCount;
+    /** Phase 9 Fix7: a legacy save (no PlaybackStartTick) cannot
+     *  safely read {@link Level#getGameTime()} during {@link #load}
+     *  because the standard chunk-load sequence creates the BE,
+     *  invokes load(), then attaches it to the Level.  We capture
+     *  the migration intent here and apply it at {@link #onLoad}
+     *  when the Level is available.  Without this flag, the actual
+     *  chunk-load path (load() with level == null) keeps
+     *  playbackStartTick at -1 and onLoad() bails out, leaving the
+     *  song silent forever. */
+    private boolean restartLegacyPlayback;
 
     public PhonographBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.PHONOGRAPH.get(), pos, state);
@@ -39,6 +48,7 @@ public class PhonographBlockEntity extends BlockEntity {
         ItemStack inserted = stack.split(1);
         this.record = inserted;
         this.playbackStartTick = level != null ? level.getGameTime() : 0L;
+        this.restartLegacyPlayback = false;
         this.tickCount = 0;
         setChanged();
         sync();
@@ -96,18 +106,28 @@ public class PhonographBlockEntity extends BlockEntity {
         return record.getItem() instanceof RecordItem rec ? rec.getAnalogOutput() : 0;
     }
 
-    /** Phase 9 Fix6 P1-5: resume playback when the chunk loads.  Vanilla
+    /** Phase 9 Fix7: resume playback when the chunk loads.  Vanilla
      *  Minecraft music has no sub-song offset API, so chunk reloads
      *  restart the song from the beginning.  This matches the vanilla
      *  Jukebox behaviour and prevents saves (which lacked
      *  {@code PlaybackStartTick}) from going forever silent because the
      *  naive {@code level.getGameTime() - 0L} would exceed the song's
-     *  tick budget in any reasonably-played world. */
+     *  tick budget in any reasonably-played world.
+     *
+     *  When the legacy migration flag is set we anchor the start
+     *  time to the current game time so the song effectively
+     *  restarts on the next chunk load. */
     @Override
     public void onLoad() {
         super.onLoad();
         if (level == null || level.isClientSide) return;
-        if (!hasRecord() || playbackStartTick < 0) return;
+        if (!hasRecord()) return;
+        if (restartLegacyPlayback) {
+            playbackStartTick = level.getGameTime();
+            restartLegacyPlayback = false;
+            setChanged();
+        }
+        if (playbackStartTick < 0) return;
         if (record.getItem() instanceof RecordItem rec) {
             int songTicks = rec.getLengthInTicks();
             long now = level.getGameTime();
@@ -136,16 +156,18 @@ public class PhonographBlockEntity extends BlockEntity {
         if (tag.contains("Record")) {
             record = ItemStack.of(tag.getCompound("Record"));
         }
-        // Phase 9 Fix6 P1-5: legacy saves without PlaybackStartTick
-        // restart the song on the next chunk load by anchoring the
-        // start time to the current game time.  Doing so means
-        // {@code elapsed = gameTime - playbackStartTick} stays small
-        // (zero) and onLoad() will re-emit the music event rather than
-        // silently bailing out as before.
+        // Phase 9 Fix7: defer the legacy NBT migration to onLoad().
+        // During a real chunk load load() is invoked BEFORE the BE is
+        // attached to the Level, so level == null here.  Reading
+        // level.getGameTime() would throw, and storing 0L would make
+        // the song "already finished" on the next onLoad() because
+        // elapsed = gameTime - 0 quickly exceeds songTicks.
         if (tag.contains("PlaybackStartTick")) {
             playbackStartTick = tag.getLong("PlaybackStartTick");
-        } else if (!record.isEmpty() && level != null) {
-            playbackStartTick = level.getGameTime();
+            restartLegacyPlayback = false;
+        } else if (!record.isEmpty()) {
+            playbackStartTick = -1L;
+            restartLegacyPlayback = true;
         }
         tickCount = tag.getLong("TickCount");
     }

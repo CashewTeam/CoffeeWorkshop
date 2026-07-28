@@ -25,13 +25,18 @@ public class BarCounterBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     /**
-     * Phase 9 Fix6: the bar counter can form an INNER_RIGHT corner (neighbour
-     * to the player's right side) or an INNER_LEFT corner (neighbour to the
-     * player's left).  STRAIGHT is the no-neighbour case.  The legacy
-     * {@code NORMAL} and {@code INNER} names are kept as legacy
-     * serialization aliases so that worlds saved before Fix5 keep loading
-     * without data loss — we expose them via {@link #SHAPE} through the
-     * enum's normalised name lookup.
+     * Phase 9 Fix7: counters can form an INNER_RIGHT corner (neighbour
+     * on the player's right side) or an INNER_LEFT corner (neighbour
+     * on the player's left).  STRAIGHT is the no-neighbour case.
+     *
+     * The legacy {@code NORMAL} and {@code INNER} values are kept as
+     * recognised enum constants so palettes saved by Fix4 and earlier
+     * keep loading — both blockstate JSONs now define
+     * {@code shape=normal} and {@code shape=inner} variants that map
+     * to the same models as their canonical counterparts, and the
+     * neighbour-update logic compares raw enum values so the block
+     * gets rewritten to the canonical form on the next neighbour
+     * change.
      */
     public enum Shape implements StringRepresentable {
         STRAIGHT("straight"),
@@ -51,7 +56,7 @@ public class BarCounterBlock extends Block {
             return serializedName;
         }
 
-        /** Normalise legacy aliases onto the modern enum constants. */
+        /** Legacy aliases map onto the modern enum constants. */
         public Shape normalise() {
             return switch (this) {
                 case NORMAL, STRAIGHT -> STRAIGHT;
@@ -60,7 +65,6 @@ public class BarCounterBlock extends Block {
             };
         }
 
-        /** Legacy NORMAL alias for STRAIGHT. */
         public boolean isStraight() { return this == STRAIGHT || this == NORMAL; }
         public boolean isInner() { return this == INNER_RIGHT || this == INNER_LEFT || this == INNER; }
     }
@@ -68,68 +72,99 @@ public class BarCounterBlock extends Block {
     public static final EnumProperty<Shape> SHAPE = EnumProperty.create("shape", Shape.class);
 
     /**
-     * Per-shape collision.  The model has a 14-pixel-tall inner body in
-     * one quadrant and a 2-pixel full-footprint countertop on top.  We
-     * compose the L-shape via {@link Shapes#or} so the inner corner
-     * matches the rendered silhouette: the empty back-quadrant of the
-     * body is passable, but the top surface is blocked all the way
-     * across.
+     * Per-shape collision.  The bar_stone_normal model has a
+     * 14-pixel-tall body that occupies 12/16 of the depth on the
+     * BACK side (the side away from the facing's "front"), and a
+     * 2-pixel full-footprint countertop on top.  The inner model
+     * adds a 1/4-notch L-shape on the back side.
      *
-     * Coordinates are in 0..1 block units.  The body is anchored at
-     * y=0..0.875 (14/16) and the top at y=0.875..1.
+     * The collision must mirror the rendered geometry so the empty
+     * 4-pixel front strip on the STRAIGHT counter is passable, and
+     * the inner-counter back-quadrant is passable.
      */
     private static final Map<Shape, Map<Direction, VoxelShape>> SHAPES = new EnumMap<>(Shape.class);
 
-    private static final double Y_TOP = 14.0 / 16.0; // top of body, bottom of countertop
+    /**
+     * 14/16 = top of body, bottom of countertop.  12/16 = back-side
+     * extent of the STRAIGHT body in axis-aligned coords.
+     */
+    private static final double Y_TOP = 14.0 / 16.0;
+    private static final double STRAIGHT_INSET = 4.0 / 16.0;
+
+    /**
+     * Build the STRAIGHT body for one FACING.  The body is 12 pixels
+     * deep on the back side (the side opposite the player's facing).
+     * The countertop is a full 1x1 plate at y=0.875..1.
+     */
+    private static VoxelShape straightShape(Direction facing) {
+        VoxelShape top = Shapes.box(0, Y_TOP, 0, 1, 1, 1);
+        VoxelShape body = switch (facing) {
+            // Player looks at -z (north).  Back side = +z.  Body is
+            // z=0.25..1 (the +z 12/16).
+            case NORTH -> Shapes.box(0, 0, STRAIGHT_INSET, 1, Y_TOP, 1);
+            // Player looks at +z (south).  Back side = -z.  Body is
+            // z=0..0.75 (the -z 12/16).
+            case SOUTH -> Shapes.box(0, 0, 0, 1, Y_TOP, 1 - STRAIGHT_INSET);
+            // Player looks at +x (east).  Back side = -x.  Body is
+            // x=0..0.75.
+            case EAST -> Shapes.box(0, 0, 0, 1 - STRAIGHT_INSET, Y_TOP, 1);
+            // Player looks at -x (west).  Back side = +x.  Body is
+            // x=0.25..1.
+            case WEST -> Shapes.box(STRAIGHT_INSET, 0, 0, 1, Y_TOP, 1);
+            default -> Shapes.box(0, 0, 0, 1, Y_TOP, 1);
+        };
+        return Shapes.or(body, top);
+    }
 
     static {
-        // STRAIGHT: model bar_stone_normal.json — full 1x1 footprint at all
-        // facings.  The body is the full 14-pixel lower box and the top is
-        // the full 2-pixel countertop.
-        VoxelShape straightBody = Shapes.box(0, 0, 0, 1, Y_TOP, 1);
-        VoxelShape straightTop = Shapes.box(0, Y_TOP, 0, 1, 1, 1);
         EnumMap<Direction, VoxelShape> straight = new EnumMap<>(Direction.class);
-        VoxelShape straightShape = Shapes.or(straightBody, straightTop);
         for (Direction d : Direction.Plane.HORIZONTAL) {
-            straight.put(d, straightShape);
+            straight.put(d, straightShape(d));
         }
         SHAPES.put(Shape.STRAIGHT, straight);
         SHAPES.put(Shape.NORMAL, straight); // legacy alias
 
-        // INNER_RIGHT: the inner body occupies the +x +z quadrant in the
-        // base orientation (model y=0).  The countertop is full 1x1.
-        // For each facing we recompute the rotated quadrant.
+        // INNER_RIGHT: the inner body occupies the +x +z quadrant in
+        // the base orientation (model y=0).  The countertop is full 1x1.
         EnumMap<Direction, VoxelShape> innerRight = new EnumMap<>(Direction.class);
         // NORTH (model y=0): body +x +z
         innerRight.put(Direction.NORTH,
-                Shapes.or(Shapes.box(0.25, 0, 0.25, 1, Y_TOP, 1), straightTop));
+                Shapes.or(Shapes.box(0.25, 0, 0.25, 1, Y_TOP, 1),
+                        Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
         // SOUTH (model y=180): body -x -z
         innerRight.put(Direction.SOUTH,
-                Shapes.or(Shapes.box(0, 0, 0, 0.75, Y_TOP, 0.75), straightTop));
+                Shapes.or(Shapes.box(0, 0, 0, 0.75, Y_TOP, 0.75),
+                        Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
         // WEST (model y=270): body +x -z
         innerRight.put(Direction.WEST,
-                Shapes.or(Shapes.box(0.25, 0, 0, 1, Y_TOP, 0.75), straightTop));
+                Shapes.or(Shapes.box(0.25, 0, 0, 1, Y_TOP, 0.75),
+                        Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
         // EAST (model y=90): body -x +z
         innerRight.put(Direction.EAST,
-                Shapes.or(Shapes.box(0, 0, 0.25, 0.75, Y_TOP, 1), straightTop));
+                Shapes.or(Shapes.box(0, 0, 0.25, 0.75, Y_TOP, 1),
+                        Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
         SHAPES.put(Shape.INNER_RIGHT, innerRight);
         SHAPES.put(Shape.INNER, innerRight); // legacy alias pre-Fix5
 
-        // INNER_LEFT: the inner body occupies the -x -z quadrant in the
-        // base orientation (model y=180).  The countertop is full 1x1.
+        // INNER_LEFT: the inner body occupies the -x -z quadrant in
+        // the base orientation (model y=180).  The countertop is full 1x1.
         EnumMap<Direction, VoxelShape> innerLeft = new EnumMap<>(Direction.class);
         // NORTH (model y=180): body -x -z
         innerLeft.put(Direction.NORTH,
-                Shapes.or(Shapes.box(0, 0, 0, 0.75, Y_TOP, 0.75), straightTop));
+                Shapes.or(Shapes.box(0, 0, 0, 0.75, Y_TOP, 0.75),
+                        Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
         // SOUTH (model y=0): body +x +z
         innerLeft.put(Direction.SOUTH,
-                Shapes.or(Shapes.box(0.25, 0, 0.25, 1, Y_TOP, 1), straightTop));
+                Shapes.or(Shapes.box(0.25, 0, 0.25, 1, Y_TOP, 1),
+                        Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
         // WEST (model y=90): body -x +z
         innerLeft.put(Direction.WEST,
-                Shapes.or(Shapes.box(0, 0, 0.25, 0.75, Y_TOP, 1), straightTop));
+                Shapes.or(Shapes.box(0, 0, 0.25, 0.75, Y_TOP, 1),
+                        Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
         // EAST (model y=270): body +x -z
         innerLeft.put(Direction.EAST,
-                Shapes.or(Shapes.box(0.25, 0, 0, 1, Y_TOP, 0.75), straightTop));
+                Shapes.or(Shapes.box(0.25, 0, 0, 1, Y_TOP, 0.75),
+                        Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
         SHAPES.put(Shape.INNER_LEFT, innerLeft);
     }
 
@@ -170,27 +205,29 @@ public class BarCounterBlock extends Block {
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock,
                                  BlockPos neighborPos, boolean isMoving) {
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, isMoving);
-        Shape current = state.getValue(SHAPE).normalise();
-        Shape newShape = determineShape(level, pos, state.getValue(FACING), this);
-        if (newShape != current) {
-            level.setBlock(pos, state.setValue(SHAPE, newShape), 3);
+        // Phase 9 Fix7: compare raw enum values so legacy NORMAL/INNER
+        // palettes are rewritten to canonical on the first neighbour
+        // neighbour update.  Without the raw comparison, a stored
+        // shape=normal would stay shape=normal forever because both
+        // sides normalise to STRAIGHT.
+        Shape canonical = determineShape(level, pos, state.getValue(FACING), this);
+        if (state.getValue(SHAPE) != canonical) {
+            level.setBlock(pos, state.setValue(SHAPE, canonical), 3);
         }
     }
 
     /**
-     * Phase 9 Fix5 / Fix6: resolve the counter's corner shape based on
-     * which side has a matching neighbour.  Only INNER_RIGHT and INNER_LEFT
-     * are written by placement/neighbour updates — NORMAL and INNER are
-     * recognised on load but never written, so the live enum only
-     * contains the canonical three values.
+     * Phase 9 Fix5 / Fix7: resolve the counter's corner shape based on
+     * which side has a matching neighbour.  Returns only the canonical
+     * three values (STRAIGHT, INNER_RIGHT, INNER_LEFT).  NORMAL and
+     * INNER are written by the legacy un-alias path on neighbour
+     * update, never by placement.
      */
     public static Shape determineShape(Level level, BlockPos pos, Direction facing, Block thisBlock) {
-        // Right neighbour first — clockwise neighbour
         Direction right = facing.getClockWise();
         if (hasMatchingNeighbour(level, pos.relative(right), thisBlock, facing.getOpposite())) {
             return Shape.INNER_RIGHT;
         }
-        // Left neighbour — counter-clockwise neighbour
         Direction left = facing.getCounterClockWise();
         if (hasMatchingNeighbour(level, pos.relative(left), thisBlock, facing.getOpposite())) {
             return Shape.INNER_LEFT;

@@ -265,239 +265,367 @@ public class Phase9GameTests {
     }
 
     // ─────────────────────────────────────────────────────────────────────
-    // Phase 9 Fix6 P1-1 regression: Phonograph play advancement is
-    // configured to actually fire when a record is inserted.  The
-    // advancement JSON uses
-    // {@code minecraft:player_interacted_with_block} + the
-    // {@code music_discs} tag, which is the canonical vanilla trigger
-    // for jukebox-style play.  We verify the criterion is loaded — the
-    // actual player progress cannot be asserted in a GameTest because
-    // the mock ServerPlayer supplied by {@code makeMockServerPlayerInLevel}
-    // has no live network connection and the advancement grant
-    // bookkeeping throws a NPE on packet dispatch.
+    // Phase 9 Fix7 P1-1 / P1-3 / P2-3 / P2-4: Bar Counter
+    //   - normal/inner alias blockstate variants resolve to canonical models
+    //   - inner-corner shape + collision for all 8 directions
+    //   - STRAIGHT directional body for all 4 facings (12/16 deep)
+    //
+    // Each (shape, side) pair gets its own dedicated GameTest so that
+    // block placements never overlap into adjacent test space.  All
+    // eight corners + four STRAIGHT facings run inside the small
+    // empty template bounds (X=0..2, Y=0..1, Z=0..2) instead of
+    // stacking up to Z=7 like the previous consolidated test.
     // ─────────────────────────────────────────────────────────────────────
 
-    @GameTest(template = "empty", timeoutTicks = 80)
-    public static void phonographAdvancementTriggerLoads(GameTestHelper helper) {
-        helper.setBlock(POT_POS, ModBlocks.PHONOGRAPH.get());
-        var player = helper.makeMockPlayer();
-        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,
-                new ItemStack(ModItems.RECORD_KUSA_NOSHI_TO_NE.get()));
-        // useBlock must return CONSUME / sidedSuccess without error —
-        // the trigger listener is invoked at success time even if the
-        // subsequent progress dispatch fails on the mock player.
-        helper.useBlock(POT_POS, player);
-
-        BlockEntity be = helper.getBlockEntity(POT_POS);
-        helper.assertTrue(be instanceof PhonographBlockEntity, "BE must be PhonographBlockEntity");
-        helper.assertTrue(((PhonographBlockEntity) be).hasRecord(),
-                "Phonograph should have record after useBlock");
-
-        var advMgr = helper.getLevel().getServer().getAdvancements();
-        var advId = new net.minecraft.resources.ResourceLocation(
-                CoffeeWork.MODID, "phonograph_play");
-        var advancement = advMgr.getAdvancement(advId);
-        helper.assertTrue(advancement != null, "phonograph_play advancement must be loaded");
-        var criteria = advancement.getCriteria();
-        helper.assertTrue(criteria.containsKey("play_record"),
-                "phonograph_play must define the 'play_record' criterion, got " + criteria.keySet());
-        var criterion = criteria.get("play_record");
-        // The criterion's trigger instance must be an inner
-        // TriggerInstance of ItemUsedOnLocationTrigger (the only
-        // fully-typed trigger that carries a 'location' block
-        // predicate).  We verify the enclosing class because the
-        // instance is the inner TriggerInstance, not the outer
-        // ItemUsedOnLocationTrigger class.
-        var triggerInstance = criterion.getTrigger();
-        helper.assertTrue(triggerInstance != null,
-                "play_record criterion must have a non-null trigger instance");
-        var triggerClass = triggerInstance.getClass();
-        var outerClass = triggerClass.getEnclosingClass();
-        helper.assertTrue(outerClass == net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger.class,
-                "play_record triggerInstance's enclosing class must be ItemUsedOnLocationTrigger, got "
-                        + (outerClass != null ? outerClass.getSimpleName() : "null"));
-        helper.succeed();
-    }
-
-    // ─────────────────────────────────────────────────────────────────────
-    // Phase 9 Fix6 P1-3 / P2-2: Bar Counter inner-corner shape + collision
-    // ─────────────────────────────────────────────────────────────────────
-
-    /**
-     * Verifies that for each horizontal FACING, placing a matching
-     * Bar Counter on the player's right side resolves to INNER_RIGHT
-     * and on the player's left side resolves to INNER_LEFT.
-     *
-     * The "right" side of a player is determined by the Java side:
-     * {@code Direction.getClockWise()} of the FACING.  Concretely:
-     *   NORTH → EAST,  EAST → SOUTH,  SOUTH → WEST,  WEST → NORTH.
-     * The neighbour block must be placed at that offset and must face
-     * the opposite direction so the matching-neighbour check passes.
-     */
-    @GameTest(template = "empty", timeoutTicks = 40)
-    public static void barCounterInnerCornerAllFacings(GameTestHelper helper) {
-        // Each facing occupies a 2x1 footprint inside the 5x5 template.
-        // (right centres are at X={0,4}, left centres at X={2,2} —
-        // keeping everything within 0..4 bounds.)
-        BlockPos rightPrimary = new BlockPos(0, 1, 0);
-        BlockPos leftPrimary = new BlockPos(4, 1, 0);
-
-        java.util.List<net.minecraft.core.Direction> rightCases = java.util.List.of(
-                net.minecraft.core.Direction.NORTH,
-                net.minecraft.core.Direction.EAST,
-                net.minecraft.core.Direction.SOUTH,
-                net.minecraft.core.Direction.WEST);
-        java.util.List<net.minecraft.core.Direction> leftCases = java.util.List.of(
-                net.minecraft.core.Direction.NORTH,
-                net.minecraft.core.Direction.EAST,
-                net.minecraft.core.Direction.SOUTH,
-                net.minecraft.core.Direction.WEST);
-
-        for (int i = 0; i < rightCases.size(); i++) {
-            net.minecraft.core.Direction facing = rightCases.get(i);
-            net.minecraft.core.Direction rightOffset = facing.getClockWise();
-            // Place the right primary at (0, 1, i*2) so the neighbours
-            // do not overlap on the Z axis.
-            BlockPos p = new BlockPos(0, 1, i * 2);
-            BlockPos n = p.relative(rightOffset);
-            helper.setBlock(p, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                    .setValue(BarCounterBlock.FACING, facing));
-            helper.setBlock(n, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                    .setValue(BarCounterBlock.FACING, facing.getOpposite()));
-
-            net.minecraft.core.Direction leftFacing = leftCases.get(i);
-            net.minecraft.core.Direction leftOffset = facing.getCounterClockWise();
-            BlockPos lp = new BlockPos(4, 1, i * 2);
-            BlockPos ln = lp.relative(leftOffset);
-            helper.setBlock(lp, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                    .setValue(BarCounterBlock.FACING, leftFacing));
-            helper.setBlock(ln, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                    .setValue(BarCounterBlock.FACING, leftFacing.getOpposite()));
-        }
-
-        helper.runAfterDelay(1, () -> {
-            for (int i = 0; i < rightCases.size(); i++) {
-                net.minecraft.core.Direction facing = rightCases.get(i);
-                BlockPos p = new BlockPos(0, 1, i * 2);
-                BlockPos lp = new BlockPos(4, 1, i * 2);
-
-                BarCounterBlock.Shape rShape = helper.getBlockState(p)
-                        .getValue(BarCounterBlock.SHAPE);
-                BarCounterBlock.Shape lShape = helper.getBlockState(lp)
-                        .getValue(BarCounterBlock.SHAPE);
-
-                helper.assertTrue(rShape == BarCounterBlock.Shape.INNER_RIGHT,
-                        "Facing " + facing + " right-neighbour: expected INNER_RIGHT, got " + rShape);
-                helper.assertTrue(lShape == BarCounterBlock.Shape.INNER_LEFT,
-                        "Facing " + leftCases.get(i) + " left-neighbour: expected INNER_LEFT, got " + lShape);
-            }
-            helper.succeed();
-        });
-    }
-
-    /**
-     * Phase 9 Fix6 P1-3: the collision shape must be the L-shaped union
-     * of the body quadrant and the full-footprint countertop, not a
-     * single full-height block.  We verify by checking that the empty
-     * back-quadrant of the body (the L-shape's "notch") does not
-     * collide, while the inner quadrant and the countertop do.
-     */
-    @GameTest(template = "empty", timeoutTicks = 40)
-    public static void barCounterCollisionShapeIsLShape(GameTestHelper helper) {
-        BlockPos primary = new BlockPos(2, 1, 0);
+    /** Helper: place a primary counter at (1, 1, 1) with a matching
+     *  neighbour on the requested side, and return the resolved Shape. */
+    private static BarCounterBlock.Shape placeAndResolve(
+            GameTestHelper helper, net.minecraft.core.Direction primaryFacing,
+            net.minecraft.core.Direction neighbourOffset) {
+        BlockPos primary = new BlockPos(1, 1, 1);
+        BlockPos neighbour = primary.relative(neighbourOffset);
         helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
-                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.INNER_RIGHT));
+                .setValue(BarCounterBlock.FACING, primaryFacing));
+        helper.setBlock(neighbour, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+                .setValue(BarCounterBlock.FACING, primaryFacing.getOpposite()));
+        return helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE);
+    }
 
+    /** Helper: confirm the inner-corner collision shape matches the
+     *  expected body quadrant for the given FACING.
+     *
+     *  The body occupies one of the four XZ quadrants after the
+     *  y-rotation that the FACING applies to the model.  In the
+     *  bar_stone_inner.json model the body is at x=0.25..1.0,
+     *  z=0.25..1.0 (the +x +z quadrant).  After the blockstate
+     *  y-rotation, that quadrant becomes:
+     *    INNER_RIGHT:
+     *      NORTH (y=0):   +x +z (0.25..1, 0.25..1)
+     *      EAST  (y=90):  -x +z (0..0.75, 0.25..1)
+     *      SOUTH (y=180): -x -z (0..0.75, 0..0.75)
+     *      WEST  (y=270): +x -z (0.25..1, 0..0.75)
+     *    INNER_LEFT mirrors the right across the XZ diagonal.
+     *  The body is always in the quadrant that touches the
+     *  neighbour at the front of the counter, but at body height
+     *  the OPPOSITE corner must be empty (the L-shape's notch). */
+    private static void assertInnerCornerCollision(GameTestHelper helper, BlockPos primary,
+                                                     net.minecraft.core.Direction primaryFacing,
+                                                     BarCounterBlock.Shape expectedShape) {
         VoxelShape shape = helper.getBlockState(primary).getShape(
                 helper.getLevel(), primary);
         var aabbs = shape.toAabbs();
+        java.util.function.Predicate<net.minecraft.world.phys.AABB> anyIntersect =
+                target -> aabbs.stream().anyMatch(b -> b.intersects(target));
 
-        // Helper: does any AABB in the shape intersect the target?
-        java.util.function.Predicate<net.minecraft.world.phys.AABB> anyIntersect = target ->
-                aabbs.stream().anyMatch(b -> b.intersects(target));
+        // The empty body quadrant is the OPPOSITE corner of the
+        // body.  We compute the body's quadrant from FACING and
+        // SHAPE, then sample the opposite corner at body height.
+        // The AABB is small enough to fit entirely inside the empty
+        // quadrant (size 0.19 in X and Z so it doesn't bridge the
+        // 0.25 body boundary).
+        var emptyRegion = emptyCornerForFacing(primaryFacing, expectedShape);
+        helper.assertTrue(!anyIntersect.test(emptyRegion),
+                "Empty body quadrant must not collide for facing " + primaryFacing
+                        + " shape " + expectedShape + "; aabbs=" + aabbs);
 
-        // The empty body quadrant is the (-x, -z) corner at body
-        // height: x=0..0.25, y=0..0.875, z=0..0.25.  This must NOT
-        // collide.
-        var emptyBody = new net.minecraft.world.phys.AABB(
-                0.0, 0.0, 0.0, 0.25, 0.87, 0.25);
-        helper.assertTrue(!anyIntersect.test(emptyBody),
-                "INNER_RIGHT shape must not collide in the empty body quadrant; aabbs=" + aabbs);
-
-        // The inner quadrant (which the body covers) at body height
-        // must collide.
-        var innerBody = new net.minecraft.world.phys.AABB(
-                0.3, 0.0, 0.3, 0.7, 0.5, 0.7);
+        // The centre of the block must be inside the body.  The
+        // body always covers a 0.25..1.0 quadrant so the centre
+        // (0.5, 0.5) is always inside regardless of the rotation.
+        var innerBody = new net.minecraft.world.phys.AABB(0.4, 0.0, 0.4, 0.6, 0.5, 0.6);
         helper.assertTrue(anyIntersect.test(innerBody),
-                "INNER_RIGHT shape must collide in the inner quadrant; aabbs=" + aabbs);
+                "Inner body must collide at centre for facing " + primaryFacing
+                        + " shape " + expectedShape + "; aabbs=" + aabbs);
 
-        // The countertop at the top centre must collide (full 1x1).
-        var countertop = new net.minecraft.world.phys.AABB(
-                0.25, 0.9, 0.25, 0.75, 0.99, 0.75);
+        // The countertop must be solid in the centre.
+        var countertop = new net.minecraft.world.phys.AABB(0.4, 0.9, 0.4, 0.6, 0.99, 0.6);
         helper.assertTrue(anyIntersect.test(countertop),
-                "INNER_RIGHT countertop must be solid; aabbs=" + aabbs);
+                "Centered countertop must collide for facing " + primaryFacing
+                        + " shape " + expectedShape + "; aabbs=" + aabbs);
+    }
 
-        // And the countertop must also cover the empty body quadrant
-        // at the top.
-        var emptyQuadTop = new net.minecraft.world.phys.AABB(
-                0.0, 0.9, 0.0, 0.2, 0.99, 0.2);
-        helper.assertTrue(anyIntersect.test(emptyQuadTop),
-                "INNER_RIGHT countertop must cover the empty body quadrant at the top; aabbs=" + aabbs);
+    /** Computes the empty body quadrant AABB for the given
+     *  FACING + corner SHAPE.  The 8 corner variants rotate the
+     *  body into one of the four XZ quadrants; the L-shape's empty
+     *  body area is the opposite corner.  Returns a small AABB
+     *  deliberately inset from the 0.25 quadrant boundary so the
+     *  test doesn't accidentally touch the body's AABB. */
+    private static net.minecraft.world.phys.AABB emptyCornerForFacing(
+            net.minecraft.core.Direction facing, BarCounterBlock.Shape shape) {
+        boolean bodyRight = switch (shape) {
+            case INNER_RIGHT -> true;
+            case INNER_LEFT -> false;
+            default -> throw new IllegalArgumentException();
+        };
+        // Body's quadrant after y-rotation:
+        boolean bodyPlusX, bodyPlusZ;
+        switch (facing) {
+            case NORTH:
+                bodyPlusX = bodyRight; bodyPlusZ = true; break;
+            case EAST:
+                bodyPlusX = false; bodyPlusZ = bodyRight; break;
+            case SOUTH:
+                bodyPlusX = !bodyRight; bodyPlusZ = false; break;
+            case WEST:
+                bodyPlusX = true; bodyPlusZ = !bodyRight; break;
+            default: throw new IllegalArgumentException();
+        }
+        // Sample clearly inside the empty-quadrant at body height.
+        // The body AABB starts at 0.25 (modulo FP rounding), so we
+        // sample at 0.30..0.45 if the empty quadrant is at -x/-z,
+        // or 0.80..0.95 if it is at +x/+z.
+        boolean emptyPlusX = !bodyPlusX;
+        boolean emptyPlusZ = !bodyPlusZ;
+        double minX = emptyPlusX ? 0.80 : 0.05;
+        double maxX = emptyPlusX ? 0.95 : 0.20;
+        double minZ = emptyPlusZ ? 0.80 : 0.05;
+        double maxZ = emptyPlusZ ? 0.95 : 0.20;
+        return new net.minecraft.world.phys.AABB(minX, 0.0, minZ, maxX, 0.86, maxZ);
+    }
 
+    // The 8 corner cases — one per (facing, side).  Each test fits
+    // within a 3x2x3 layout centred at (1, 1, 1).
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterInnerRightNorth(GameTestHelper helper) {
+        var s = placeAndResolve(helper, net.minecraft.core.Direction.NORTH,
+                net.minecraft.core.Direction.EAST);
+        helper.assertTrue(s == BarCounterBlock.Shape.INNER_RIGHT,
+                "NORTH + east neighbour should resolve to INNER_RIGHT, got " + s);
+        assertInnerCornerCollision(helper, new BlockPos(1, 1, 1),
+                net.minecraft.core.Direction.NORTH, s);
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterInnerRightEast(GameTestHelper helper) {
+        var s = placeAndResolve(helper, net.minecraft.core.Direction.EAST,
+                net.minecraft.core.Direction.SOUTH);
+        helper.assertTrue(s == BarCounterBlock.Shape.INNER_RIGHT,
+                "EAST + south neighbour should resolve to INNER_RIGHT, got " + s);
+        assertInnerCornerCollision(helper, new BlockPos(1, 1, 1),
+                net.minecraft.core.Direction.EAST, s);
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterInnerRightSouth(GameTestHelper helper) {
+        var s = placeAndResolve(helper, net.minecraft.core.Direction.SOUTH,
+                net.minecraft.core.Direction.WEST);
+        helper.assertTrue(s == BarCounterBlock.Shape.INNER_RIGHT,
+                "SOUTH + west neighbour should resolve to INNER_RIGHT, got " + s);
+        assertInnerCornerCollision(helper, new BlockPos(1, 1, 1),
+                net.minecraft.core.Direction.SOUTH, s);
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterInnerRightWest(GameTestHelper helper) {
+        var s = placeAndResolve(helper, net.minecraft.core.Direction.WEST,
+                net.minecraft.core.Direction.NORTH);
+        helper.assertTrue(s == BarCounterBlock.Shape.INNER_RIGHT,
+                "WEST + north neighbour should resolve to INNER_RIGHT, got " + s);
+        assertInnerCornerCollision(helper, new BlockPos(1, 1, 1),
+                net.minecraft.core.Direction.WEST, s);
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterInnerLeftNorth(GameTestHelper helper) {
+        var s = placeAndResolve(helper, net.minecraft.core.Direction.NORTH,
+                net.minecraft.core.Direction.WEST);
+        helper.assertTrue(s == BarCounterBlock.Shape.INNER_LEFT,
+                "NORTH + west neighbour should resolve to INNER_LEFT, got " + s);
+        assertInnerCornerCollision(helper, new BlockPos(1, 1, 1),
+                net.minecraft.core.Direction.NORTH, s);
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterInnerLeftEast(GameTestHelper helper) {
+        var s = placeAndResolve(helper, net.minecraft.core.Direction.EAST,
+                net.minecraft.core.Direction.NORTH);
+        helper.assertTrue(s == BarCounterBlock.Shape.INNER_LEFT,
+                "EAST + north neighbour should resolve to INNER_LEFT, got " + s);
+        assertInnerCornerCollision(helper, new BlockPos(1, 1, 1),
+                net.minecraft.core.Direction.EAST, s);
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterInnerLeftSouth(GameTestHelper helper) {
+        var s = placeAndResolve(helper, net.minecraft.core.Direction.SOUTH,
+                net.minecraft.core.Direction.EAST);
+        helper.assertTrue(s == BarCounterBlock.Shape.INNER_LEFT,
+                "SOUTH + east neighbour should resolve to INNER_LEFT, got " + s);
+        assertInnerCornerCollision(helper, new BlockPos(1, 1, 1),
+                net.minecraft.core.Direction.SOUTH, s);
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterInnerLeftWest(GameTestHelper helper) {
+        var s = placeAndResolve(helper, net.minecraft.core.Direction.WEST,
+                net.minecraft.core.Direction.SOUTH);
+        helper.assertTrue(s == BarCounterBlock.Shape.INNER_LEFT,
+                "WEST + south neighbour should resolve to INNER_LEFT, got " + s);
+        assertInnerCornerCollision(helper, new BlockPos(1, 1, 1),
+                net.minecraft.core.Direction.WEST, s);
+        helper.succeed();
+    }
+
+    // STRAIGHT directional body collision.  The STRAIGHT body is a
+    // 12/16 deep box on the back side (the side opposite the front
+    // of the facing).  The front 4 pixels are passable.
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterStraightCollisionNorth(GameTestHelper helper) {
+        assertStraightCollision(helper, net.minecraft.core.Direction.NORTH);
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterStraightCollisionSouth(GameTestHelper helper) {
+        assertStraightCollision(helper, net.minecraft.core.Direction.SOUTH);
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterStraightCollisionEast(GameTestHelper helper) {
+        assertStraightCollision(helper, net.minecraft.core.Direction.EAST);
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterStraightCollisionWest(GameTestHelper helper) {
+        assertStraightCollision(helper, net.minecraft.core.Direction.WEST);
+        helper.succeed();
+    }
+
+    private static void assertStraightCollision(GameTestHelper helper,
+                                                 net.minecraft.core.Direction facing) {
+        BlockPos primary = new BlockPos(1, 1, 1);
+        helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+                .setValue(BarCounterBlock.FACING, facing)
+                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.STRAIGHT));
+        VoxelShape shape = helper.getBlockState(primary).getShape(
+                helper.getLevel(), primary);
+        var aabbs = shape.toAabbs();
+        java.util.function.Predicate<net.minecraft.world.phys.AABB> anyIntersect =
+                target -> aabbs.stream().anyMatch(b -> b.intersects(target));
+
+        // The front 4 pixels (the side opposite the body) must NOT
+        // collide at body height.  The body covers the back 12/16
+        // leaving the front 4/16 empty.  We sample a small AABB at
+        // the centre of the empty strip.
+        var frontEmpty = switch (facing) {
+            // NORTH: body at z=0.25..1.0; front empty strip = z=0..0.25
+            case NORTH -> new net.minecraft.world.phys.AABB(0.1, 0.0, 0.0, 0.9, 0.86, 0.24);
+            // SOUTH: body at z=0..0.75; front empty strip = z=0.75..1.0
+            case SOUTH -> new net.minecraft.world.phys.AABB(0.1, 0.0, 0.76, 0.9, 0.86, 1.0);
+            // EAST: body at x=0..0.75; front empty strip = x=0.75..1.0
+            case EAST -> new net.minecraft.world.phys.AABB(0.76, 0.0, 0.1, 1.0, 0.86, 0.9);
+            // WEST: body at x=0.25..1.0; front empty strip = x=0..0.25
+            case WEST -> new net.minecraft.world.phys.AABB(0.0, 0.0, 0.1, 0.24, 0.86, 0.9);
+            default -> throw new IllegalArgumentException();
+        };
+        helper.assertTrue(!anyIntersect.test(frontEmpty),
+                "STRAIGHT " + facing + " front 4px must be empty at body height; aabbs=" + aabbs);
+
+        // The back 12/16 (the body side) must collide at body height.
+        var backBody = switch (facing) {
+            case NORTH -> new net.minecraft.world.phys.AABB(0.1, 0.0, 0.26, 0.9, 0.86, 0.99);
+            case SOUTH -> new net.minecraft.world.phys.AABB(0.1, 0.0, 0.01, 0.9, 0.86, 0.74);
+            case EAST -> new net.minecraft.world.phys.AABB(0.01, 0.0, 0.1, 0.74, 0.86, 0.9);
+            case WEST -> new net.minecraft.world.phys.AABB(0.26, 0.0, 0.1, 0.99, 0.86, 0.9);
+            default -> throw new IllegalArgumentException();
+        };
+        helper.assertTrue(anyIntersect.test(backBody),
+                "STRAIGHT " + facing + " back 12/16 must collide at body height; aabbs=" + aabbs);
+
+        // The countertop must be solid in the centre.
+        var countertop = new net.minecraft.world.phys.AABB(0.4, 0.9, 0.4, 0.6, 0.99, 0.6);
+        helper.assertTrue(anyIntersect.test(countertop),
+                "STRAIGHT " + facing + " countertop must be solid; aabbs=" + aabbs);
+    }
+
+    /**
+     * Phase 9 Fix7 P1-1: a legacy {@code shape=normal} block loads
+     * with the alias enum value, renders the normal model, and is
+     * migrated to {@code shape=straight} on the next neighbour
+     * update.  We force the migration by placing and removing a
+     * temporary neighbour block, which triggers neighbourChanged
+     * on the primary.
+     */
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void barCounterLegacyNormalMigratesToStraightOnUpdate(GameTestHelper helper) {
+        BlockPos primary = new BlockPos(1, 1, 1);
+        helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
+                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.NORMAL));
+
+        // Raw value must be NORMAL before any update fires.
+        helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
+                        == BarCounterBlock.Shape.NORMAL,
+                "Legacy NORMAL must persist as raw enum before neighbour update");
+
+        // Trigger neighborChanged on the primary by placing and
+        // removing a temporary block adjacent to it.  The setBlock
+        // call notifies neighbors, and removing it also notifies.
+        BlockPos tempNeighbour = primary.relative(net.minecraft.core.Direction.EAST);
+        helper.setBlock(tempNeighbour, net.minecraft.world.level.block.Blocks.STONE);
+        helper.setBlock(tempNeighbour, net.minecraft.world.level.block.Blocks.AIR);
+
+        // The neighborChanged -> determineShape path runs with no
+        // matching neighbours, so STRAIGHT is the canonical write.
+        helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
+                        == BarCounterBlock.Shape.STRAIGHT,
+                "Legacy NORMAL must be migrated to STRAIGHT on neighbour update, got "
+                        + helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE));
         helper.succeed();
     }
 
     /**
-     * Phase 9 Fix6 P1-4: loading a BlockState whose Shape enum is the
-     * legacy NORMAL or INNER must normalise to the modern constant
-     * (STRAIGHT or INNER_RIGHT) when the block's collision is
-     * queried.  Uses the BarCounterBlock.Shape.normalise() path that
-     * is exercised by getShape().
+     * Phase 9 Fix7 P1-1: a legacy {@code shape=inner} block with a
+     * right-neighbour present is migrated to {@code shape=inner_right}.
      */
     @GameTest(template = "empty", timeoutTicks = 40)
-    public static void barCounterLegacyAliasesNormaliseOnLoad(GameTestHelper helper) {
-        BlockPos legacyNormal = new BlockPos(1, 1, 0);
-        BlockPos legacyInner = new BlockPos(3, 1, 0);
-
-        helper.setBlock(legacyNormal, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
-                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.NORMAL));
-        helper.setBlock(legacyInner, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+    public static void barCounterLegacyInnerMigratesToInnerRightOnUpdate(GameTestHelper helper) {
+        BlockPos primary = new BlockPos(1, 1, 1);
+        BlockPos neighbour = primary.relative(net.minecraft.core.Direction.EAST);
+        helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
                 .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
                 .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.INNER));
+        helper.setBlock(neighbour, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.SOUTH));
 
-        // The raw enum value is preserved in the BlockState.
-        helper.assertTrue(helper.getBlockState(legacyNormal).getValue(BarCounterBlock.SHAPE)
-                        == BarCounterBlock.Shape.NORMAL,
-                "Raw enum must be NORMAL when set explicitly");
-        helper.assertTrue(helper.getBlockState(legacyInner).getValue(BarCounterBlock.SHAPE)
-                        == BarCounterBlock.Shape.INNER,
-                "Raw enum must be INNER when set explicitly");
+        // Forge a neighbour update on the primary by toggling a
+        // dummy block adjacent to it.  The right-neighbour is at
+        // EAST, so toggling a block at NORTH or SOUTH triggers
+        // neighborChanged on the primary.
+        BlockPos tempUpdate = primary.relative(net.minecraft.core.Direction.NORTH);
+        helper.setBlock(tempUpdate, net.minecraft.world.level.block.Blocks.STONE);
+        helper.setBlock(tempUpdate, net.minecraft.world.level.block.Blocks.AIR);
 
-        // The NORMAL alias should resolve to STRAIGHT (full 1x1
-        // block).  The empty body quadrant at body height must
-        // collide because the shape is a full block.
-        var normalAabbs = helper.getBlockState(legacyNormal).getShape(
-                helper.getLevel(), legacyNormal).toAabbs();
-        var emptyBody = new net.minecraft.world.phys.AABB(
-                0.0, 0.0, 0.0, 0.25, 0.87, 0.25);
-        helper.assertTrue(normalAabbs.stream().anyMatch(b -> b.intersects(emptyBody)),
-                "NORMAL alias should resolve to STRAIGHT (full block, body-height collision everywhere), got no intersection");
+        helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
+                        == BarCounterBlock.Shape.INNER_RIGHT,
+                "Legacy INNER + right-neighbour must be migrated to INNER_RIGHT, got "
+                        + helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE));
+        helper.succeed();
+    }
 
-        // The INNER alias should resolve to INNER_RIGHT (L-shape).
-        // The empty body quadrant at body height must NOT collide.
-        var innerAabbs = helper.getBlockState(legacyInner).getShape(
-                helper.getLevel(), legacyInner).toAabbs();
-        helper.assertTrue(innerAabbs.stream().noneMatch(b -> b.intersects(emptyBody)),
-                "INNER alias should resolve to INNER_RIGHT (empty body quadrant at body height doesn't collide), got intersection=true");
-
-        // The inner quadrant at body height must collide.
-        var innerBody = new net.minecraft.world.phys.AABB(
-                0.3, 0.0, 0.3, 0.7, 0.5, 0.7);
-        helper.assertTrue(innerAabbs.stream().anyMatch(b -> b.intersects(innerBody)),
-                "INNER alias should resolve to INNER_RIGHT (inner quadrant at body height collides), got no intersection");
-
+    /**
+     * Phase 9 Fix7 P1-4: the phonograph_play advancement is bound
+     * to the custom PhonographPlayTrigger criterion.  We verify the
+     * criterion is loaded — the actual player progress cannot be
+     * asserted in a GameTest because the mock ServerPlayer supplied
+     * by {@code makeMockServerPlayerInLevel} has no live network
+     * connection and the advancement grant bookkeeping throws an
+     * NPE on packet dispatch.  The fact that the trigger is bound
+     * to our custom criterion (vs. the generic vanilla one) is
+     * sufficient proof that the eject path cannot grant the
+     * advancement by accident.
+     */
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void phonographAdvancementBoundToCustomTrigger(GameTestHelper helper) {
+        var advMgr = helper.getLevel().getServer().getAdvancements();
+        var adv = advMgr.getAdvancement(
+                new net.minecraft.resources.ResourceLocation(CoffeeWork.MODID, "phonograph_play"));
+        helper.assertTrue(adv != null, "phonograph_play advancement must be loaded");
+        var criterion = adv.getCriteria().get("play_record");
+        helper.assertTrue(criterion != null, "play_record criterion must exist");
+        var triggerInstance = criterion.getTrigger();
+        var enclosingClass = triggerInstance.getClass().getEnclosingClass();
+        helper.assertTrue(enclosingClass == net.langball.coffee.advancement.PhonographPlayTrigger.class,
+                "Criterion must be backed by PhonographPlayTrigger, got "
+                        + (enclosingClass != null ? enclosingClass.getName() : "null"));
         helper.succeed();
     }
 

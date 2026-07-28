@@ -1,8 +1,10 @@
 package net.langball.coffee.block;
 
+import net.langball.coffee.advancement.PhonographPlayTrigger;
 import net.langball.coffee.block.entity.PhonographBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -78,6 +80,15 @@ public class PhonographBlock extends BaseEntityBlock {
         if (held.getItem() instanceof RecordItem) {
             ItemStack remaining = ph.insertRecord(held.copy());
             if (remaining.getCount() < held.getCount()) {
+                // Phase 9 Fix7 P1-4: award the phonograph_play
+                // advancement via the custom criterion.  We only
+                // reach here when the BE actually accepted a record
+                // (the count decreased), so even vanilla jukebox
+                // eject-then-click patterns cannot trigger the
+                // criterion by accident.
+                if (player instanceof ServerPlayer sp) {
+                    PhonographPlayTrigger.INSTANCE.trigger(sp);
+                }
                 player.setItemInHand(hand, remaining);
                 level.playSound(null, pos, SoundEvents.ARROW_HIT, SoundSource.BLOCKS, 0.5f, 0.5f);
             }

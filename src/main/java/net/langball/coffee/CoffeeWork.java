@@ -1,6 +1,8 @@
 package net.langball.coffee;
 
+import net.langball.coffee.advancement.PhonographPlayTrigger;
 import net.langball.coffee.init.*;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -42,6 +44,11 @@ public class CoffeeWork {
         event.enqueueWork(() -> {
             ModVillagers.registerTrades();
             registerIceFuels();
+            // Phase 9 Fix7 P1-4: register the custom phonograph
+            // trigger.  The advancement JSON references this
+            // criterion by ID, so it must be registered before any
+            // world loads.
+            CriteriaTriggers.register(PhonographPlayTrigger.INSTANCE);
         });
     }
 
