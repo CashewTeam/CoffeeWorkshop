@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -203,17 +204,66 @@ public class BarCounterBlock extends Block {
 
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock,
-                                 BlockPos neighborPos, boolean isMoving) {
-        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, isMoving);
+                                 BlockPos neighbourPos, boolean isMoving) {
+        super.neighborChanged(state, level, pos, neighborBlock, neighbourPos, isMoving);
         // Phase 9 Fix7: compare raw enum values so legacy NORMAL/INNER
         // palettes are rewritten to canonical on the first neighbour
-        // neighbour update.  Without the raw comparison, a stored
+        // update.  Without the raw comparison, a stored
         // shape=normal would stay shape=normal forever because both
         // sides normalise to STRAIGHT.
         Shape canonical = determineShape(level, pos, state.getValue(FACING), this);
         if (state.getValue(SHAPE) != canonical) {
             level.setBlock(pos, state.setValue(SHAPE, canonical), 3);
         }
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState,
+                                   LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+        // Phase 9 Fix8 P1-2: legacy shape=inner palettes from Fix4
+        // and earlier cannot distinguish left from right corners
+        // (both sides were written as INNER).  updateShape runs
+        // every time the chunk's surrounding blocks change, so
+        // we use it as a chunk-load-aligned migration hook.  If
+        // the current shape is INNER but the actual neighbour
+        // configuration points at INNER_LEFT, rewrite the state
+        // immediately rather than waiting for a player
+        // interaction.
+        Shape self = state.getValue(SHAPE);
+        if (self == Shape.INNER) {
+            Direction facingDir = state.getValue(FACING);
+            Shape canonical = determineShapeFromLevelAccessor(level, currentPos, facingDir, this);
+            if (canonical != self) {
+                return state.setValue(SHAPE, canonical);
+            }
+        }
+        return state;
+    }
+
+    /** Phase 9 Fix8: variant of {@link #determineShape} accepting
+     *  the {@link LevelAccessor} passed to updateShape.  We use the
+     *  public Level API (which LevelAccessor extends) and cast
+     *  only when the level is a real Level.  LevelAccessor is the
+     *  type pumped into read-only path methods like updateShape,
+     *  so duplicating the helper keeps the public Level-based
+     *  signature intact for placement + neighbour-change code. */
+    private static Shape determineShapeFromLevelAccessor(LevelAccessor level, BlockPos pos,
+                                                          Direction facing, Block thisBlock) {
+        Direction right = facing.getClockWise();
+        if (hasMatchingNeighbour(level, pos.relative(right), thisBlock, facing.getOpposite())) {
+            return Shape.INNER_RIGHT;
+        }
+        Direction left = facing.getCounterClockWise();
+        if (hasMatchingNeighbour(level, pos.relative(left), thisBlock, facing.getOpposite())) {
+            return Shape.INNER_LEFT;
+        }
+        return Shape.STRAIGHT;
+    }
+
+    private static boolean hasMatchingNeighbour(LevelAccessor level, BlockPos neighbourPos,
+                                                 Block thisBlock, Direction expectedFacing) {
+        BlockState neighbour = level.getBlockState(neighbourPos);
+        return neighbour.is(thisBlock) && neighbour.getValue(FACING) == expectedFacing;
     }
 
     /**

@@ -170,7 +170,7 @@ public class Phase9GameTests {
         helper.succeed();
     }
 
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterStraightAlone(GameTestHelper helper) {
         helper.setBlock(POT_POS, ModBlocks.STONE_BAR_COUNTER.get().defaultBlockState()
                 .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH));
@@ -294,20 +294,11 @@ public class Phase9GameTests {
     /** Helper: confirm the inner-corner collision shape matches the
      *  expected body quadrant for the given FACING.
      *
-     *  The body occupies one of the four XZ quadrants after the
-     *  y-rotation that the FACING applies to the model.  In the
-     *  bar_stone_inner.json model the body is at x=0.25..1.0,
-     *  z=0.25..1.0 (the +x +z quadrant).  After the blockstate
-     *  y-rotation, that quadrant becomes:
-     *    INNER_RIGHT:
-     *      NORTH (y=0):   +x +z (0.25..1, 0.25..1)
-     *      EAST  (y=90):  -x +z (0..0.75, 0.25..1)
-     *      SOUTH (y=180): -x -z (0..0.75, 0..0.75)
-     *      WEST  (y=270): +x -z (0.25..1, 0..0.75)
-     *    INNER_LEFT mirrors the right across the XZ diagonal.
-     *  The body is always in the quadrant that touches the
-     *  neighbour at the front of the counter, but at body height
-     *  the OPPOSITE corner must be empty (the L-shape's notch). */
+     *  Phase 9 Fix8 P2-2: assert the body against the diagonally
+     *  opposite corner of the empty quadrant, plus the two
+     *  orthogonal empty strips.  A mirrored wrong-orientation
+     *  shape would have its body and empty swapped and would
+     *  now fail the test. */
     private static void assertInnerCornerCollision(GameTestHelper helper, BlockPos primary,
                                                      net.minecraft.core.Direction primaryFacing,
                                                      BarCounterBlock.Shape expectedShape) {
@@ -317,23 +308,19 @@ public class Phase9GameTests {
         java.util.function.Predicate<net.minecraft.world.phys.AABB> anyIntersect =
                 target -> aabbs.stream().anyMatch(b -> b.intersects(target));
 
-        // The empty body quadrant is the OPPOSITE corner of the
-        // body.  We compute the body's quadrant from FACING and
-        // SHAPE, then sample the opposite corner at body height.
-        // The AABB is small enough to fit entirely inside the empty
-        // quadrant (size 0.19 in X and Z so it doesn't bridge the
-        // 0.25 body boundary).
+        // The empty body quadrant (diagonal opposite of the body)
+        // must not collide at body height.
         var emptyRegion = emptyCornerForFacing(primaryFacing, expectedShape);
         helper.assertTrue(!anyIntersect.test(emptyRegion),
                 "Empty body quadrant must not collide for facing " + primaryFacing
                         + " shape " + expectedShape + "; aabbs=" + aabbs);
 
-        // The centre of the block must be inside the body.  The
-        // body always covers a 0.25..1.0 quadrant so the centre
-        // (0.5, 0.5) is always inside regardless of the rotation.
-        var innerBody = new net.minecraft.world.phys.AABB(0.4, 0.0, 0.4, 0.6, 0.5, 0.6);
-        helper.assertTrue(anyIntersect.test(innerBody),
-                "Inner body must collide at centre for facing " + primaryFacing
+        // The body quadrant (the same diagonal as the inner
+        // counter) must collide at body height.  We sample the
+        // mirror of the empty region.
+        var bodyRegion = bodyCornerForFacing(primaryFacing, expectedShape);
+        helper.assertTrue(anyIntersect.test(bodyRegion),
+                "Body quadrant must collide for facing " + primaryFacing
                         + " shape " + expectedShape + "; aabbs=" + aabbs);
 
         // The countertop must be solid in the centre.
@@ -348,25 +335,40 @@ public class Phase9GameTests {
      *  body into one of the four XZ quadrants; the L-shape's empty
      *  body area is the opposite corner.  Returns a small AABB
      *  deliberately inset from the 0.25 quadrant boundary so the
-     *  test doesn't accidentally touch the body's AABB. */
+     *  test doesn't accidentally touch the body's AABB.
+     *
+     *  Phase 9 Fix8 P2-2: the body quadrant table is computed
+     *  by direct enumeration of (shape, facing) pairs instead of
+     *  a single rotation rule.  Mirror symmetry across the FACING
+     *  axis makes INNER_LEFT the flip of INNER_RIGHT.  The eight
+     *  pairs reproduce the Java code in BarCounterBlock.SHASES:
+     *    INNER_RIGHT:        INNER_LEFT:
+     *      NORTH: +x +z        NORTH: -x -z
+     *      EAST:  -x +z        EAST:  +x -z
+     *      SOUTH: -x -z        SOUTH: +x +z
+     *      WEST:  +x -z        WEST:  -x +z */
     private static net.minecraft.world.phys.AABB emptyCornerForFacing(
             net.minecraft.core.Direction facing, BarCounterBlock.Shape shape) {
-        boolean bodyRight = switch (shape) {
-            case INNER_RIGHT -> true;
-            case INNER_LEFT -> false;
-            default -> throw new IllegalArgumentException();
-        };
-        // Body's quadrant after y-rotation:
         boolean bodyPlusX, bodyPlusZ;
-        switch (facing) {
-            case NORTH:
-                bodyPlusX = bodyRight; bodyPlusZ = true; break;
-            case EAST:
-                bodyPlusX = false; bodyPlusZ = bodyRight; break;
-            case SOUTH:
-                bodyPlusX = !bodyRight; bodyPlusZ = false; break;
-            case WEST:
-                bodyPlusX = true; bodyPlusZ = !bodyRight; break;
+        switch (shape) {
+            case INNER_RIGHT:
+                switch (facing) {
+                    case NORTH: bodyPlusX = true;  bodyPlusZ = true;  break;
+                    case EAST:  bodyPlusX = false; bodyPlusZ = true;  break;
+                    case SOUTH: bodyPlusX = false; bodyPlusZ = false; break;
+                    case WEST:  bodyPlusX = true;  bodyPlusZ = false; break;
+                    default: throw new IllegalArgumentException();
+                }
+                break;
+            case INNER_LEFT:
+                switch (facing) {
+                    case NORTH: bodyPlusX = false; bodyPlusZ = false; break;
+                    case EAST:  bodyPlusX = true;  bodyPlusZ = false; break;
+                    case SOUTH: bodyPlusX = true;  bodyPlusZ = true;  break;
+                    case WEST:  bodyPlusX = false; bodyPlusZ = true;  break;
+                    default: throw new IllegalArgumentException();
+                }
+                break;
             default: throw new IllegalArgumentException();
         }
         // Sample clearly inside the empty-quadrant at body height.
@@ -382,9 +384,26 @@ public class Phase9GameTests {
         return new net.minecraft.world.phys.AABB(minX, 0.0, minZ, maxX, 0.86, maxZ);
     }
 
+    /** Computes the body quadrant AABB for the given FACING +
+     *  corner SHAPE.  This is the diagonally opposite of the
+     *  empty quadrant.  Phase 9 Fix8 P2-2 requires the body to
+     *  actually collide at its expected corner so a mirrored
+     *  wrong-orientation shape would fail the test. */
+    private static net.minecraft.world.phys.AABB bodyCornerForFacing(
+            net.minecraft.core.Direction facing, BarCounterBlock.Shape shape) {
+        var empty = emptyCornerForFacing(facing, shape);
+        // The empty corner is on the opposite side of the body
+        // corner.  Mirror across the block centre.
+        double minX = 1.0 - (empty.maxX);
+        double maxX = 1.0 - (empty.minX);
+        double minZ = 1.0 - (empty.maxZ);
+        double maxZ = 1.0 - (empty.minZ);
+        return new net.minecraft.world.phys.AABB(minX, 0.0, minZ, maxX, 0.86, maxZ);
+    }
+
     // The 8 corner cases — one per (facing, side).  Each test fits
     // within a 3x2x3 layout centred at (1, 1, 1).
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterInnerRightNorth(GameTestHelper helper) {
         var s = placeAndResolve(helper, net.minecraft.core.Direction.NORTH,
                 net.minecraft.core.Direction.EAST);
@@ -394,7 +413,7 @@ public class Phase9GameTests {
                 net.minecraft.core.Direction.NORTH, s);
         helper.succeed();
     }
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterInnerRightEast(GameTestHelper helper) {
         var s = placeAndResolve(helper, net.minecraft.core.Direction.EAST,
                 net.minecraft.core.Direction.SOUTH);
@@ -404,7 +423,7 @@ public class Phase9GameTests {
                 net.minecraft.core.Direction.EAST, s);
         helper.succeed();
     }
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterInnerRightSouth(GameTestHelper helper) {
         var s = placeAndResolve(helper, net.minecraft.core.Direction.SOUTH,
                 net.minecraft.core.Direction.WEST);
@@ -414,7 +433,7 @@ public class Phase9GameTests {
                 net.minecraft.core.Direction.SOUTH, s);
         helper.succeed();
     }
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterInnerRightWest(GameTestHelper helper) {
         var s = placeAndResolve(helper, net.minecraft.core.Direction.WEST,
                 net.minecraft.core.Direction.NORTH);
@@ -424,7 +443,7 @@ public class Phase9GameTests {
                 net.minecraft.core.Direction.WEST, s);
         helper.succeed();
     }
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterInnerLeftNorth(GameTestHelper helper) {
         var s = placeAndResolve(helper, net.minecraft.core.Direction.NORTH,
                 net.minecraft.core.Direction.WEST);
@@ -434,7 +453,7 @@ public class Phase9GameTests {
                 net.minecraft.core.Direction.NORTH, s);
         helper.succeed();
     }
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterInnerLeftEast(GameTestHelper helper) {
         var s = placeAndResolve(helper, net.minecraft.core.Direction.EAST,
                 net.minecraft.core.Direction.NORTH);
@@ -444,7 +463,7 @@ public class Phase9GameTests {
                 net.minecraft.core.Direction.EAST, s);
         helper.succeed();
     }
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterInnerLeftSouth(GameTestHelper helper) {
         var s = placeAndResolve(helper, net.minecraft.core.Direction.SOUTH,
                 net.minecraft.core.Direction.EAST);
@@ -454,7 +473,7 @@ public class Phase9GameTests {
                 net.minecraft.core.Direction.SOUTH, s);
         helper.succeed();
     }
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterInnerLeftWest(GameTestHelper helper) {
         var s = placeAndResolve(helper, net.minecraft.core.Direction.WEST,
                 net.minecraft.core.Direction.SOUTH);
@@ -468,22 +487,22 @@ public class Phase9GameTests {
     // STRAIGHT directional body collision.  The STRAIGHT body is a
     // 12/16 deep box on the back side (the side opposite the front
     // of the facing).  The front 4 pixels are passable.
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterStraightCollisionNorth(GameTestHelper helper) {
         assertStraightCollision(helper, net.minecraft.core.Direction.NORTH);
         helper.succeed();
     }
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterStraightCollisionSouth(GameTestHelper helper) {
         assertStraightCollision(helper, net.minecraft.core.Direction.SOUTH);
         helper.succeed();
     }
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterStraightCollisionEast(GameTestHelper helper) {
         assertStraightCollision(helper, net.minecraft.core.Direction.EAST);
         helper.succeed();
     }
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterStraightCollisionWest(GameTestHelper helper) {
         assertStraightCollision(helper, net.minecraft.core.Direction.WEST);
         helper.succeed();
@@ -544,7 +563,7 @@ public class Phase9GameTests {
      * temporary neighbour block, which triggers neighbourChanged
      * on the primary.
      */
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterLegacyNormalMigratesToStraightOnUpdate(GameTestHelper helper) {
         BlockPos primary = new BlockPos(1, 1, 1);
         helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
@@ -576,7 +595,7 @@ public class Phase9GameTests {
      * Phase 9 Fix7 P1-1: a legacy {@code shape=inner} block with a
      * right-neighbour present is migrated to {@code shape=inner_right}.
      */
-    @GameTest(template = "empty", timeoutTicks = 40)
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterLegacyInnerMigratesToInnerRightOnUpdate(GameTestHelper helper) {
         BlockPos primary = new BlockPos(1, 1, 1);
         BlockPos neighbour = primary.relative(net.minecraft.core.Direction.EAST);
@@ -626,6 +645,60 @@ public class Phase9GameTests {
         helper.assertTrue(enclosingClass == net.langball.coffee.advancement.PhonographPlayTrigger.class,
                 "Criterion must be backed by PhonographPlayTrigger, got "
                         + (enclosingClass != null ? enclosingClass.getName() : "null"));
+        helper.succeed();
+    }
+
+    /**
+     * Phase 9 Fix8 P2-3: a full insert -> onLoad -> save round-trip
+     * must preserve the new PlaybackStartTick.  The legacy
+     * {@code load() -> onLoad() -> saveAdditional()} sequence is
+     * the path actually taken by a chunk load, so we drive that
+     * path explicitly via NBT round-trip rather than relying on
+     * tick scheduling.
+     */
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void phonographLegacyNbtMigrationSurvivesRoundTrip(GameTestHelper helper) {
+        helper.setBlock(POT_POS, ModBlocks.PHONOGRAPH.get());
+        BlockEntity be0 = helper.getBlockEntity(POT_POS);
+        helper.assertTrue(be0 instanceof PhonographBlockEntity, "BE must be PhonographBlockEntity");
+        PhonographBlockEntity ph0 = (PhonographBlockEntity) be0;
+
+        // Seed a legacy save: a record but no PlaybackStartTick.
+        ph0.load(new CompoundTag() {{
+            put("Record", new ItemStack(ModItems.RECORD_KUSA_NOSHI_TO_NE.get()).save(new CompoundTag()));
+        }});
+        helper.assertTrue(ph0.hasRecord(), "Legacy NBT must restore the record");
+        helper.assertTrue(ph0.isRestartLegacyPlaybackFlagSet(),
+                "Legacy NBT must mark the restart-on-load migration flag");
+
+        // Simulate the chunk-load sequence: onLoad() runs after
+        // the BE is attached to the Level.  Calling onLoad() here
+        // applies the migration flag and anchors playbackStartTick
+        // to the current game time.
+        ph0.runOnLoadForTesting();
+        helper.assertTrue(!ph0.isRestartLegacyPlaybackFlagSet(),
+                "After onLoad() the migration flag must be cleared");
+        helper.assertTrue(ph0.getPlaybackStartTickForTesting() >= 0,
+                "After onLoad() PlaybackStartTick must be anchored to a real tick");
+
+        // Save and re-load: the new save tag must carry the
+        // populated PlaybackStartTick so the next load does not
+        // re-trigger the legacy migration.
+        var savedTag = ph0.snapshotForTesting();
+        helper.assertTrue(savedTag.contains("PlaybackStartTick"),
+                "Save after migration must carry PlaybackStartTick");
+        long savedTick = savedTag.getLong("PlaybackStartTick");
+        helper.assertTrue(savedTick >= 0, "Saved tick must be non-negative, got " + savedTick);
+
+        // The migration flag must NOT be set on a load that
+        // already carries PlaybackStartTick.  Build a fresh BE
+        // instance, attach to the level, then load.
+        BlockPos ph2Pos = new BlockPos(2, 1, 0);
+        helper.setBlock(ph2Pos, ModBlocks.PHONOGRAPH.get());
+        var savedBe = (PhonographBlockEntity) helper.getBlockEntity(ph2Pos);
+        savedBe.load(savedTag);
+        helper.assertTrue(!savedBe.isRestartLegacyPlaybackFlagSet(),
+                "Loaded BE with PlaybackStartTick must not re-enter the legacy migration");
         helper.succeed();
     }
 

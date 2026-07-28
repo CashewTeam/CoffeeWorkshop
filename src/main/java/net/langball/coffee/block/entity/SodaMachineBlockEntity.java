@@ -63,17 +63,11 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
         }
     };
 
-    /** Phase 9 Fix6 P1-2 / Fix7 P2-1: validate flavor against the
-     *  *current* RecipeManager.  We deliberately call
-     *  {@code recipe.flavor().test(stack)} directly so NBT, Forge
-     *  custom ingredient semantics, and any future dynamic
-     *  ingredients are preserved.  The previous implementation
-     *  expanded the ingredient to a flat set of item IDs, which
-     *  silently dropped NBT data and any non-vanilla ingredient
-     *  type.  The hardcoded fallback is now restricted to the
-     *  no-server (unit-test / data-generation) scenario, so
-     *  deleting every Soda recipe via /reload genuinely rejects
-     *  every flavor slot. */
+    /** Fallback syrup set used only when the BE Level has not yet
+     *  been attached (data generation / unit-test / NBT-only
+     *  construction).  The fallback is intentionally strict so
+     *  /reload can override it as soon as a real RecipeManager is
+     *  available. */
     private static final java.util.Set<net.minecraft.resources.ResourceLocation> FALLBACK_FLAVORS =
             java.util.Set.of(
                     new net.minecraft.resources.ResourceLocation("coffeework", "syrup_caramel"),
@@ -83,39 +77,38 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
                     new net.minecraft.resources.ResourceLocation("coffeework", "syrup_vanilla"),
                     new net.minecraft.resources.ResourceLocation("coffeework", "syrup_sakura"));
 
-    private static boolean isValidFlavor(ItemStack stack) {
+    /** Phase 9 Fix8 P1-1: validate flavor against the *current*
+     *  BlockEntity's Level, not the global
+     *  {@code ServerLifecycleHooks.getCurrentServer()}.  The
+     *  previous static lookup returned null on a remote
+     *  physical-client JVM, which would have clients reject
+     *  every datapack-added flavor at the slot-prediction /
+     *  shift-click stage.  Routing the check through this BE's
+     *  {@code level} field makes the same validator work on
+     *  logical-server, integrated-server, and remote-client
+     *  BE instances.
+     *
+     *  Phase 9 Fix7 P2-1: route through {@code Ingredient.test()}
+     *  so NBT and Forge custom ingredient semantics propagate.
+     *
+     *  Phase 9 Fix8 P3-1: the old {@code getFlavorItems()}
+     *  helper that flattened every ingredient to a flat
+     *  item-ID set was removed because it silently dropped NBT
+     *  data and any non-vanilla ingredient type. */
+    private boolean isValidFlavor(ItemStack stack) {
         if (stack.isEmpty()) return false;
-        var server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
-        if (server == null) {
-            // No live server — keep the legacy fallback so dedicated
-            // unit tests and data-generation still recognise the
-            // canonical six syrups.
+        Level level = this.getLevel();
+        if (level == null) {
+            // Unit-test / data-gen / construction-before-pack: rely
+            // on the canonical fallback syrup set.
             var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
             return id != null && FALLBACK_FLAVORS.contains(id);
         }
-        // Live server: route through the live RecipeManager.  Recipe
-        // ingredients are checked directly so NBT / custom ingredient
-        // semantics propagate.
-        var recipes = server.getRecipeManager().getAllRecipesFor(ModRecipeTypes.SODA_MAKING);
+        var recipes = level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.SODA_MAKING);
         for (SodaMachineRecipe r : recipes) {
             if (r.flavor().test(stack)) return true;
         }
         return false;
-    }
-
-    private static java.util.Set<net.minecraft.resources.ResourceLocation> getFlavorItems() {
-        var server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
-        if (server == null) return FALLBACK_FLAVORS;
-        var recipes = server.getRecipeManager().getAllRecipesFor(ModRecipeTypes.SODA_MAKING);
-        if (recipes.isEmpty()) return FALLBACK_FLAVORS;
-        var set = new java.util.HashSet<net.minecraft.resources.ResourceLocation>();
-        for (SodaMachineRecipe r : recipes) {
-            for (ItemStack s : r.flavor().getItems()) {
-                var rid = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(s.getItem());
-                if (rid != null) set.add(rid);
-            }
-        }
-        return set;
     }
 
     private LazyOptional<IItemHandler> lazyHandler = LazyOptional.empty();

@@ -153,8 +153,18 @@ public class PhonographBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
+        // Phase 9 Fix8 P2-4: clear the record when the tag is
+        // absent, so a server sync that bumps the block but doesn't
+        // carry a Record entry leaves the client BE consistent with
+        // the server.  Without this, ejecting a record would leave
+        // the previous record cached on the client.  Also reset
+        // restartLegacyPlayback so a re-insert does not re-trigger
+        // the legacy migration.
         if (tag.contains("Record")) {
             record = ItemStack.of(tag.getCompound("Record"));
+        } else {
+            record = ItemStack.EMPTY;
+            restartLegacyPlayback = false;
         }
         // Phase 9 Fix7: defer the legacy NBT migration to onLoad().
         // During a real chunk load load() is invoked BEFORE the BE is
@@ -168,6 +178,9 @@ public class PhonographBlockEntity extends BlockEntity {
         } else if (!record.isEmpty()) {
             playbackStartTick = -1L;
             restartLegacyPlayback = true;
+        } else {
+            playbackStartTick = -1L;
+            restartLegacyPlayback = false;
         }
         tickCount = tag.getLong("TickCount");
     }
@@ -189,5 +202,20 @@ public class PhonographBlockEntity extends BlockEntity {
     public void setRemoved() {
         stopRecord();
         super.setRemoved();
+    }
+
+    // Phase 9 Fix8 P2-3: test-only accessors that expose the
+    // private NBT-migration state so GameTest can verify the
+    // load() -> onLoad() -> save() round-trip without depending
+    // on chunk scheduling.
+    public boolean isRestartLegacyPlaybackFlagSet() { return restartLegacyPlayback; }
+    public long getPlaybackStartTickForTesting() { return playbackStartTick; }
+    public void runOnLoadForTesting() { this.onLoad(); }
+    public ItemStack getRecordForTesting() { return record; }
+
+    public CompoundTag snapshotForTesting() {
+        CompoundTag tag = new CompoundTag();
+        saveAdditional(tag);
+        return tag;
     }
 }
