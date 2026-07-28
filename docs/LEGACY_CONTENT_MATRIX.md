@@ -66,10 +66,10 @@ These are already wired to existing blockstates, recipes, or registered items.
 
 | Asset ID | Runtime Owner | Role |
 |---|---|---|
-| `bar_stone_inner` | coffeework:stone_bar_counter | blockstate:variants=facing=east,shape=inner |
-| `bar_stone_normal` | coffeework:stone_bar_counter | blockstate:variants=facing=east,shape=normal |
-| `bar_wooden_inner` | coffeework:wooden_bar_counter | blockstate:variants=facing=east,shape=inner |
-| `bar_wooden_normal` | coffeework:wooden_bar_counter | blockstate:variants=facing=east,shape=normal |
+| `bar_stone_inner` | coffeework:stone_bar_counter | blockstate:variants=facing=east,shape=inner_left |
+| `bar_stone_normal` | coffeework:stone_bar_counter | blockstate:variants=facing=east,shape=straight |
+| `bar_wooden_inner` | coffeework:wooden_bar_counter | blockstate:variants=facing=east,shape=inner_left |
+| `bar_wooden_normal` | coffeework:wooden_bar_counter | blockstate:variants=facing=east,shape=straight |
 | `blueberry_stage0` | coffeework:blueberry_bush | blockstate:variants=age=0 |
 | `blueberry_stage1` | coffeework:blueberry_bush | blockstate:variants=age=1 |
 | `blueberry_stage2` | coffeework:blueberry_bush | blockstate:variants=age=2 |
