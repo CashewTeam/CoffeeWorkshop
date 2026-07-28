@@ -1,0 +1,11 @@
+# Python dependencies for the development / regeneration tools.
+#
+# These are NOT installed by the GitHub Actions runner.  Install
+# locally with:
+#
+#   pip install -r tools/requirements.txt
+#
+# before running the structure-template generator.  The committed
+# .nbt templates are checked in and do not require this dependency
+# at build time.
+nbtlib==2.0.4

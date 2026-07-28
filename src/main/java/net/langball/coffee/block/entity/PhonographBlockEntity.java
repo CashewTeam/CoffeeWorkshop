@@ -207,13 +207,14 @@ public class PhonographBlockEntity extends BlockEntity {
     // Phase 9 Fix8 P2-3: test-only accessors that expose the
     // private NBT-migration state so GameTest can verify the
     // load() -> onLoad() -> save() round-trip without depending
-    // on chunk scheduling.
-    public boolean isRestartLegacyPlaybackFlagSet() { return restartLegacyPlayback; }
-    public long getPlaybackStartTickForTesting() { return playbackStartTick; }
-    public void runOnLoadForTesting() { this.onLoad(); }
-    public ItemStack getRecordForTesting() { return record; }
+    // on chunk scheduling.  Phase 9 Fix9 P3-1: package-private
+    // so they do not leak into the public production API.
+    boolean isRestartLegacyPlaybackFlagSet() { return restartLegacyPlayback; }
+    long getPlaybackStartTickForTesting() { return playbackStartTick; }
+    void runOnLoadForTesting() { this.onLoad(); }
+    ItemStack getRecordForTesting() { return record; }
 
-    public CompoundTag snapshotForTesting() {
+    CompoundTag snapshotForTesting() {
         CompoundTag tag = new CompoundTag();
         saveAdditional(tag);
         return tag;
