@@ -63,13 +63,17 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
         }
     };
 
-    /** Phase 9 Fix5 P2: cached set of flavor items, derived lazily from
-     *  every registered SodaMachineRecipe's flavor Ingredient.  Using
-     *  recipe-driven data means datapack-added flavors are accepted
-     *  automatically without modifying Java code.  The hardcoded fallback
-     *  covers the empty level / unit-test scenario where the recipe
-     *  manager hasn't been initialised yet. */
-    private static java.util.Set<net.minecraft.resources.ResourceLocation> cachedFlavorItems;
+    /** Phase 9 Fix6 P1-2: validate flavor against the *current* RecipeManager
+     *  on every slot check.  The previous static cache broke /reload because
+     *  a) newly datapack-added flavors kept being rejected, b) deleted
+     *  flavors kept being accepted until JVM restart, and c) the cache
+     *  could be populated before any recipes were loaded and then serve
+     *  the empty fallback forever.  Removing the cache makes the validator
+     *  authoritative for the current RecipeManager instance.
+     *
+     *  The fallback is retained only for the unit-test / dedicated-server
+     *  bootstrap scenario where {@code ServerLifecycleHooks.getCurrentServer()}
+     *  is null; it is never cached across calls. */
     private static final java.util.Set<net.minecraft.resources.ResourceLocation> FALLBACK_FLAVORS =
             java.util.Set.of(
                     new net.minecraft.resources.ResourceLocation("coffeework", "syrup_caramel"),
@@ -79,38 +83,31 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
                     new net.minecraft.resources.ResourceLocation("coffeework", "syrup_vanilla"),
                     new net.minecraft.resources.ResourceLocation("coffeework", "syrup_sakura"));
 
-    private static java.util.Set<net.minecraft.resources.ResourceLocation> collectFlavorItems() {
-        if (cachedFlavorItems != null) return cachedFlavorItems;
-        var set = new java.util.HashSet<net.minecraft.resources.ResourceLocation>();
-        var recipes = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer() != null
-                ? net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer()
-                        .getRecipeManager().getAllRecipesFor(ModRecipeTypes.SODA_MAKING)
-                : java.util.Collections.<SodaMachineRecipe>emptyList();
-        if (recipes.isEmpty()) {
-            set.addAll(FALLBACK_FLAVORS);
-        } else {
-for (SodaMachineRecipe r : recipes) {
-            for (ItemStack s : r.flavor().getItems()) {
-                var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(s.getItem());
-                    if (id != null) set.add(id);
-                }
-            }
-        }
-        cachedFlavorItems = set;
-        return set;
-    }
-
     private static boolean isValidFlavor(ItemStack stack) {
         if (stack.isEmpty()) return false;
         var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
         if (id == null) return false;
-        return collectFlavorItems().contains(id);
+        return getFlavorItems().contains(id);
     }
 
-    /** Phase 9 Fix5 P2: clear the recipe-derived flavor cache so a
-     *  /reload picks up newly added Soda recipes. */
-    public static void invalidateFlavorCache() {
-        cachedFlavorItems = null;
+    /** Returns the set of flavor items currently registered as Soda
+     *  Machine recipes.  If the server is not yet running (unit tests,
+     *  data generation) or no recipes are loaded, the fallback set is
+     *  returned *without* caching — every call re-queries the recipe
+     *  manager so /reload is honored. */
+    private static java.util.Set<net.minecraft.resources.ResourceLocation> getFlavorItems() {
+        var server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
+        if (server == null) return FALLBACK_FLAVORS;
+        var recipes = server.getRecipeManager().getAllRecipesFor(ModRecipeTypes.SODA_MAKING);
+        if (recipes.isEmpty()) return FALLBACK_FLAVORS;
+        var set = new java.util.HashSet<net.minecraft.resources.ResourceLocation>();
+        for (SodaMachineRecipe r : recipes) {
+            for (ItemStack s : r.flavor().getItems()) {
+                var rid = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(s.getItem());
+                if (rid != null) set.add(rid);
+            }
+        }
+        return set;
     }
 
     private LazyOptional<IItemHandler> lazyHandler = LazyOptional.empty();
@@ -188,6 +185,10 @@ for (SodaMachineRecipe r : recipes) {
                 // server, defeating the visual feedback.
                 // Emission is throttled to one packet every 10 ticks to
                 // avoid flooding the network budget.
+                // Phase 9 Fix6 P2-3: spread argument (y=0.04) is the
+                // velocity assignment, not a position delta — using
+                // count=1 with a positive y spread gives the bubbles a
+                // gentle upward drift instead of hanging in place.
                 if (level instanceof net.minecraft.server.level.ServerLevel sl
                         && cookTime % 10 == 0) {
                     double x = pos.getX() + 0.5 + (level.random.nextDouble() - 0.5) * 0.4;
@@ -196,7 +197,7 @@ for (SodaMachineRecipe r : recipes) {
                     sl.sendParticles(
                             net.minecraft.core.particles.ParticleTypes.BUBBLE,
                             x, y, z,
-                            1, 0.0, 0.04, 0.0, 0.0);
+                            1, 0.0, 0.04, 0.0, 0.04);
                 }
             } else {
                 cookTime = 0;

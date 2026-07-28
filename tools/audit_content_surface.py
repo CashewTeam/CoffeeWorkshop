@@ -676,20 +676,48 @@ def build_report():
     # the same data file used by tools/report_recipe_reachability.py so
     # the two audit reports can never disagree about a block-interaction
     # production source.
+    #
+    # Phase 9 Fix6 P2-1: parse failures on this file MUST fail the audit.
+    # The previous fail-open behaviour silently ignored malformed JSON
+    # and missing required fields, which would let the surface audit
+    # pass while the reachability report disagreed about reachable
+    # items.  The two tools are contractually bound to the same shape.
     shared_edges_file = ROOT / "data" / "coffeework" / "non_recipe_production_edges.json"
     block_interaction_items = set()
     if shared_edges_file.exists():
         try:
             with open(shared_edges_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            for edge in data.get("edges", []):
-                result_id = edge.get("result", "")
-                if ":" in result_id:
-                    _, name = result_id.split(":", 1)
-                    block_interaction_items.add(name)
-        except (json.JSONDecodeError, Exception) as e:
-            print(f"  WARN: failed to parse {shared_edges_file}: {e}",
-                  file=__import__("sys").stderr)
+        except (json.JSONDecodeError, OSError) as e:
+            print(f"::error::Failed to parse {shared_edges_file.name}: {e}",
+                  file=sys.stderr)
+            return 2
+        if not isinstance(data, dict) or "edges" not in data:
+            print(f"::error::{shared_edges_file.name} must contain a top-level 'edges' array",
+                  file=sys.stderr)
+            return 2
+        edges = data["edges"]
+        if not isinstance(edges, list):
+            print(f"::error::{shared_edges_file.name} 'edges' must be a list",
+                  file=sys.stderr)
+            return 2
+        for i, edge in enumerate(edges):
+            if not isinstance(edge, dict):
+                print(f"::error::{shared_edges_file.name} edges[{i}] must be an object",
+                      file=sys.stderr)
+                return 2
+            result_id = edge.get("result", "")
+            if not isinstance(result_id, str) or ":" not in result_id:
+                print(f"::error::{shared_edges_file.name} edges[{i}].result must be a namespaced id",
+                      file=sys.stderr)
+                return 2
+            requires = edge.get("requires", [])
+            if not isinstance(requires, list) or not all(isinstance(r, str) for r in requires):
+                print(f"::error::{shared_edges_file.name} edges[{i}].requires must be a list of strings",
+                      file=sys.stderr)
+                return 2
+            _, name = result_id.split(":", 1)
+            block_interaction_items.add(name)
     all_sources = (recipe_outputs | loot_items | traded_items
                    | worldgen_items | interact_items
                    | block_interaction_items)

@@ -103,13 +103,13 @@ Run GameTests:
 | zh_cn Key Coverage | 100% |
 | ja_jp Key Coverage | 100% (community-contributed) |
 | Creative Tab | 100% |
-| Reachable Sources | 173/176 (98%) — 3 items explained gaps |
-| GameTests | 56 passing |
+| Reachable Sources | See `build/reports/coffeework/recipe-reachability.md` (generated per CI run) |
+| GameTests | See `build/reports/gametest-results.html` (generated per CI run) |
 
 The core coffee and machine production loops are fully reachable in survival.
-Three items lack direct recipe/loot sources: `coffee_tree` (worldgen), `coldbrew_bottle`
-(block interaction), and `coffee_americano_nitro_fruit_ice` (P1 single-slot limitation).
-See `docs/CONTENT_MANIFEST.md` for the full per-item breakdown.
+The recipe-reachability and GameTest reports regenerate on every CI run; refer to
+the latest artifacts for the current counts. The current deliberate gaps are
+documented in `docs/CONTENT_MANIFEST.md`.
 
 - ✅ **Phase 1**: Registry modernization, resource format migration
 - ✅ **Phase 2**: Unified machine architecture (BlockEntity/Menu/RecipeManager)
