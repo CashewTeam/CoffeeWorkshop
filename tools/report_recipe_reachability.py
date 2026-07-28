@@ -97,19 +97,18 @@ WORLDGEN_SOURCES = {
 
 # Explicit non-JSON production edges (recipes that the script can't model
 # as JSON, e.g., block interactions).
-NON_RECIPE_EDGES = {
-    # coldbrew_pot (full) + glass_bottle → coldbrew_bottle (after random ticks complete)
-    "coffeework:coldbrew_bottle": ["coffeework:coldbrew_pot", "minecraft:glass_bottle"],
-    # Turkish coffee pot + water + coffee powder → turkish coffee (BE interaction)
-    # Phase 9 Fix4: water_bucket is required because Turkish Pot must be filled
-    # with water before coffee powder can become turkish coffee.  Listing only
-    # the pot and powder would let a missing water chain pass silently.
-    "coffeework:coffee_turkish": [
-        "coffeework:turkish_coffee_pot",
-        "coffeework:coffee_powder",
-        "minecraft:water_bucket",
-    ],
-}
+# Phase 9 Fix5 P2: edges are loaded from the shared data source so
+# tools/audit_content_surface.py and this script can't drift apart.
+_NON_RECIPE_EDGES_FILE = REPO_ROOT / "data" / "coffeework" / "non_recipe_production_edges.json"
+NON_RECIPE_EDGES = {}
+if _NON_RECIPE_EDGES_FILE.exists():
+    import json as _json
+    with open(_NON_RECIPE_EDGES_FILE, "r", encoding="utf-8") as _f:
+        _data = _json.load(_f)
+    for _edge in _data.get("edges", []):
+        _result = _edge.get("result")
+        if _result:
+            NON_RECIPE_EDGES[_result] = list(_edge.get("requires", []))
 
 # Machine recipe types and their required machine blocks.
 MACHINE_BLOCKS = {

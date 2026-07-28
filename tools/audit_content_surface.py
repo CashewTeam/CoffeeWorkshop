@@ -672,12 +672,24 @@ def build_report():
     # 9. Survival source check — dynamically parsed from ModCakeBlocks.java
     cake_slice_data = parse_cake_slice_items()
     interact_items = cake_slice_data['slice_item_ids']
-    # Phase 9 Fix4: align with tools/report_recipe_reachability.py
-    # NON_RECIPE_EDGES.  These items are produced by block interactions
-    # that the JSON-recipe scanner cannot see.
-    block_interaction_items = {
-        "coffee_turkish",     # Turkish Pot brewing (water + powder → result)
-    }
+    # Phase 9 Fix5 P2: load the shared non-recipe production edge list from
+    # the same data file used by tools/report_recipe_reachability.py so
+    # the two audit reports can never disagree about a block-interaction
+    # production source.
+    shared_edges_file = ROOT / "data" / "coffeework" / "non_recipe_production_edges.json"
+    block_interaction_items = set()
+    if shared_edges_file.exists():
+        try:
+            with open(shared_edges_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            for edge in data.get("edges", []):
+                result_id = edge.get("result", "")
+                if ":" in result_id:
+                    _, name = result_id.split(":", 1)
+                    block_interaction_items.add(name)
+        except (json.JSONDecodeError, Exception) as e:
+            print(f"  WARN: failed to parse {shared_edges_file}: {e}",
+                  file=__import__("sys").stderr)
     all_sources = (recipe_outputs | loot_items | traded_items
                    | worldgen_items | interact_items
                    | block_interaction_items)

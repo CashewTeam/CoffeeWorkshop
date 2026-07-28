@@ -1,0 +1,20 @@
+{
+  "comment": "Phase 9 Fix5: shared data source for non-JSON recipe production edges. Both tools/report_recipe_reachability.py (NON_RECIPE_EDGES) and tools/audit_content_surface.py (block_interaction_items) read this file. Adding a new entry here automatically updates both reachability and content-surface reports.",
+  "edges": [
+    {
+      "result": "coffeework:coldbrew_bottle",
+      "requires": [
+        "coffeework:coldbrew_pot",
+        "minecraft:glass_bottle"
+      ]
+    },
+    {
+      "result": "coffeework:coffee_turkish",
+      "requires": [
+        "coffeework:turkish_coffee_pot",
+        "coffeework:coffee_powder",
+        "minecraft:water_bucket"
+      ]
+    }
+  ]
+}

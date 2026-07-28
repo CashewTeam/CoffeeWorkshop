@@ -16,6 +16,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class PhonographBlockEntity extends BlockEntity {
     private ItemStack record = ItemStack.EMPTY;
+    /** Phase 9 Fix5: store the absolute tick at which the record was
+     *  inserted so chunk reloads can resume playback seamlessly. */
+    private long playbackStartTick = -1L;
     private long tickCount;
 
     public PhonographBlockEntity(BlockPos pos, BlockState state) {
@@ -30,6 +33,7 @@ public class PhonographBlockEntity extends BlockEntity {
         if (!(stack.getItem() instanceof RecordItem)) return stack;
         ItemStack inserted = stack.split(1);
         this.record = inserted;
+        this.playbackStartTick = level != null ? level.getGameTime() : 0L;
         this.tickCount = 0;
         setChanged();
         sync();
@@ -46,6 +50,7 @@ public class PhonographBlockEntity extends BlockEntity {
         ItemStack ejected = record.copy();
         stopRecord();
         record = ItemStack.EMPTY;
+        playbackStartTick = -1L;
         tickCount = 0;
         setChanged();
         sync();
@@ -86,12 +91,31 @@ public class PhonographBlockEntity extends BlockEntity {
         return record.getItem() instanceof RecordItem rec ? rec.getAnalogOutput() : 0;
     }
 
+    /** Phase 9 Fix5: resume playback when the chunk loads.  If the
+     *  stored record is non-empty and the game time still falls inside
+     *  the song duration, restart the music event so clients hear it
+     *  again.  Beyond the song length the record stays inserted but
+     *  silence is the expected state — matching vanilla Jukebox. */
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (level == null || level.isClientSide) return;
+        if (!hasRecord() || playbackStartTick < 0) return;
+        if (record.getItem() instanceof RecordItem rec) {
+            int songTicks = rec.getLengthInTicks();
+            long elapsed = level.getGameTime() - playbackStartTick;
+            if (elapsed >= songTicks) return; // already finished
+            playRecord();
+        }
+    }
+
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         if (!record.isEmpty()) {
             tag.put("Record", record.save(new CompoundTag()));
         }
+        tag.putLong("PlaybackStartTick", playbackStartTick);
         tag.putLong("TickCount", tickCount);
     }
 
@@ -100,6 +124,14 @@ public class PhonographBlockEntity extends BlockEntity {
         super.load(tag);
         if (tag.contains("Record")) {
             record = ItemStack.of(tag.getCompound("Record"));
+        }
+        // Migration: legacy saves without PlaybackStartTick default to
+        // game time at load — the song effectively restarts on chunk
+        // reload, which is preferable to silence.
+        if (tag.contains("PlaybackStartTick")) {
+            playbackStartTick = tag.getLong("PlaybackStartTick");
+        } else if (!record.isEmpty()) {
+            playbackStartTick = 0L;
         }
         tickCount = tag.getLong("TickCount");
     }

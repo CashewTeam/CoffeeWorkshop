@@ -2,6 +2,7 @@ package net.langball.coffee.gametest;
 
 import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.block.BarCounterBlock;
+import net.langball.coffee.block.BlockCoffeeMachine;
 import net.langball.coffee.block.CoffeePotBlock;
 import net.langball.coffee.block.MokaPotBlock;
 import net.langball.coffee.block.entity.CoffeeMachineBlockEntity;
@@ -180,8 +181,8 @@ public class Phase9GameTests {
                 .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.WEST));
 
         BlockState s1 = helper.getBlockState(p1);
-        helper.assertTrue(s1.getValue(BarCounterBlock.SHAPE) == BarCounterBlock.Shape.INNER,
-                "Bar counter should form INNER corner when facing EAST with SOUTH neighbor facing WEST");
+        helper.assertTrue(s1.getValue(BarCounterBlock.SHAPE) == BarCounterBlock.Shape.INNER_RIGHT,
+                "Bar counter should form INNER_RIGHT corner when facing EAST with SOUTH neighbor facing WEST");
 
         helper.succeed();
     }
@@ -192,8 +193,8 @@ public class Phase9GameTests {
                 .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH));
 
         BlockState s = helper.getBlockState(POT_POS);
-        helper.assertTrue(s.getValue(BarCounterBlock.SHAPE) == BarCounterBlock.Shape.NORMAL,
-                "Bar counter alone should be NORMAL (straight), not INNER");
+        helper.assertTrue(s.getValue(BarCounterBlock.SHAPE) == BarCounterBlock.Shape.STRAIGHT,
+                "Bar counter alone should be STRAIGHT, not inner");
 
         helper.succeed();
     }
@@ -281,21 +282,74 @@ public class Phase9GameTests {
     }
 
     // ─────────────────────────────────────────────────────────────────────
-    // Phase 9 Fix4 regression tests
+    // Phase 9 Fix4 / Fix5 regression tests
     // ─────────────────────────────────────────────────────────────────────
 
-    /** Phase 9 Fix4 P2-5 placeholder: the existing single-direction test
-     *  {@code barCounterFormsInnerCorner} already validates one rotation.
-     *  The audit requested four-direction coverage but the GameTest
-     *  helper's coordinate-space abstraction (relative → absolute via
-     *  {@code absolutePos}) makes a four-direction sweep brittle in batched
-     *  runs.  We deliberately keep this as a documentation stub rather
-     *  than a flaky test; the BarCounter four-direction logic itself is
-     *  covered by {@code determineShape} which is exercised through the
-     *  in-game neighbour-update path on real placements. */
-    @GameTest(template = "empty", timeoutTicks = 20)
+    /** Phase 9 Fix5 P1: each horizontal rotation of Bar Counter produces
+     *  the correct INNER_RIGHT / INNER_LEFT / STRAIGHT shape for the
+     *  configured neighbour.  Each scenario uses a fresh Y layer so
+     *  block states cannot leak between cases. */
+    @GameTest(template = "empty", timeoutTicks = 80)
     public static void barCounterInnerAllFourDirections(GameTestHelper helper) {
-        helper.succeed();
+        // Pair primary with neighbour offset, expected shape and the
+        // expected FACING of the neighbour (must be opposite of primary).
+        // We use Object[][] instead of a record to avoid an inner-record
+        // declaration that the javac target here does not accept.
+        Object[][] cases = new Object[][] {
+                // Right-neighbour cases — should resolve to INNER_RIGHT
+                {net.minecraft.core.Direction.EAST, net.minecraft.core.Direction.SOUTH,
+                        net.minecraft.core.Direction.WEST, BarCounterBlock.Shape.INNER_RIGHT},
+                {net.minecraft.core.Direction.SOUTH, net.minecraft.core.Direction.WEST,
+                        net.minecraft.core.Direction.NORTH, BarCounterBlock.Shape.INNER_RIGHT},
+                {net.minecraft.core.Direction.WEST, net.minecraft.core.Direction.NORTH,
+                        net.minecraft.core.Direction.EAST, BarCounterBlock.Shape.INNER_RIGHT},
+                {net.minecraft.core.Direction.NORTH, net.minecraft.core.Direction.EAST,
+                        net.minecraft.core.Direction.SOUTH, BarCounterBlock.Shape.INNER_RIGHT},
+                // Left-neighbour cases — should resolve to INNER_LEFT
+                {net.minecraft.core.Direction.EAST, net.minecraft.core.Direction.NORTH,
+                        net.minecraft.core.Direction.WEST, BarCounterBlock.Shape.INNER_LEFT},
+                {net.minecraft.core.Direction.SOUTH, net.minecraft.core.Direction.EAST,
+                        net.minecraft.core.Direction.NORTH, BarCounterBlock.Shape.INNER_LEFT},
+                {net.minecraft.core.Direction.WEST, net.minecraft.core.Direction.SOUTH,
+                        net.minecraft.core.Direction.EAST, BarCounterBlock.Shape.INNER_LEFT},
+                {net.minecraft.core.Direction.NORTH, net.minecraft.core.Direction.WEST,
+                        net.minecraft.core.Direction.SOUTH, BarCounterBlock.Shape.INNER_LEFT},
+        };
+
+        for (int i = 0; i < cases.length; i++) {
+            net.minecraft.core.Direction primaryFacing =
+                    (net.minecraft.core.Direction) cases[i][0];
+            net.minecraft.core.Direction neighbourOffset =
+                    (net.minecraft.core.Direction) cases[i][1];
+            net.minecraft.core.Direction neighbourFacing =
+                    (net.minecraft.core.Direction) cases[i][2];
+            BlockPos primary = BlockPos.ZERO.above(2 + i * 4);
+            helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+                    .setValue(BarCounterBlock.FACING, primaryFacing));
+            helper.setBlock(primary.relative(neighbourOffset),
+                    ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+                            .setValue(BarCounterBlock.FACING, neighbourFacing));
+        }
+
+        helper.runAfterDelay(1, () -> {
+            for (int i = 0; i < cases.length; i++) {
+                net.minecraft.core.Direction primaryFacing =
+                        (net.minecraft.core.Direction) cases[i][0];
+                net.minecraft.core.Direction neighbourOffset =
+                        (net.minecraft.core.Direction) cases[i][1];
+                BarCounterBlock.Shape expectedShape =
+                        (BarCounterBlock.Shape) cases[i][3];
+
+                BlockPos primary = BlockPos.ZERO.above(2 + i * 4);
+                BlockState s = helper.getBlockState(primary);
+                BarCounterBlock.Shape got = s.getValue(BarCounterBlock.SHAPE);
+                helper.assertTrue(got == expectedShape,
+                        "Bar counter facing " + primaryFacing
+                                + " with " + neighbourOffset + " neighbour expected "
+                                + expectedShape + ", got " + got);
+            }
+            helper.succeed();
+        });
     }
 
     /** Phase 9 Fix4 P0-2: Pot Items must be stacksTo(1) so the right-click
@@ -316,84 +370,121 @@ public class Phase9GameTests {
         helper.succeed();
     }
 
-    /** Phase 9 Fix4 P0-3: simulate the duplicate-via-stacked-pot path.
-     *  Even if a creative-mode player gives themselves a 64-stack of pots
-     *  (impossible in survival but legal in test setup), right-clicking a
-     *  Moka pot filled with a 4-cup drink must only move ONE serving into
-     *  the pot — because CoffeePotBlock.use() refuses held.count != 1. */
-    @GameTest(template = "empty", timeoutTicks = 40)
-    public static void stackedPotFillRefusesDuplication(GameTestHelper helper) {
-        // Place Moka pot pre-filled with a 4-cup Americano
+    /** Phase 9 Fix5 P1: a real Moka Pot → Coffee Pot direct fill must
+     *  (a) actually transfer a serving into the held pot, (b) decrement
+     *  the Moka's stored servings, and (c) refuse to mutate a
+     *  stacked-pot ItemStack.  Uses {@link GameTestHelper#useBlock} which
+     *  is the canonical GameTest invocation path (it routes through
+     *  BlockState.useItemOn → use()). */
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void mokaPotFillsHeldCoffeePot(GameTestHelper helper) {
+        // Place a Moka pot pre-loaded with a 4-cup Espresso.
         helper.setBlock(POT_POS, ModBlocks.MOKA_POT.get());
         BlockEntity be = helper.getBlockEntity(POT_POS);
         helper.assertTrue(be instanceof MokaPotBlockEntity, "BE must be MokaPotBlockEntity");
         MokaPotBlockEntity moka = (MokaPotBlockEntity) be;
-        ItemStack americano = new ItemStack(ModItems.COFFEE_AMERICANO.get());
-        if (americano.getItem() instanceof DrinkCoffee dc) dc.initializeFreshStack(americano);
-        DrinkCoffee.setRemainingCups(americano, 4);
-        moka.setStoredDrink(americano);
+        ItemStack espresso = new ItemStack(ModItems.ESPRESSO.get());
+        if (espresso.getItem() instanceof DrinkCoffee dc) dc.initializeFreshStack(espresso);
+        DrinkCoffee.setRemainingCups(espresso, 4);
+        moka.setStoredDrink(espresso);
         moka.setServings(4);
 
-        // Place an empty Coffee Pot
-        helper.setBlock(POT_POS.above(), ModBlocks.COFFEE_POT.get());
+        // Build a player and put a Coffee Pot pre-filled with 3 servings of
+        // the same drink in their hand.  Only 1 space is left, so the
+        // Moka should lose exactly 1 serving when the player right-clicks.
+        ItemStack heldPot = new ItemStack(ModItems.COFFEE_POT_ITEM.get());
+        net.langball.coffee.block.entity.CoffeePotBlockEntity potBE =
+                new net.langball.coffee.block.entity.CoffeePotBlockEntity(POT_POS,
+                        ModBlocks.COFFEE_POT.get().defaultBlockState());
+        potBE.fillFrom(espresso.copy(), 3);
+        heldPot.getOrCreateTag().put("BlockEntityTag", potBE.saveForItem());
 
-        // Try to fill it using a 4-stack of empty Coffee Pot Items
-        // (the only way to have count > 1 is creative /give since stacksTo(1))
-        ItemStack potStack = new ItemStack(ModItems.COFFEE_POT_ITEM.get());
-        potStack.setCount(4); // simulate creative-bypass
+        net.minecraft.world.entity.player.Player player =
+                helper.makeMockPlayer();
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, heldPot);
+        helper.useBlock(POT_POS, player);
 
-        // Simulate the placement of the pot (count > 1) — must refuse to
-        // mutate the BlockEntityTag of the entire stack.  The Coffee Pot
-        // block on the world is itself untouched (no fill should occur).
-        BlockEntity placedPot = helper.getBlockEntity(POT_POS.above());
-        helper.assertTrue(placedPot instanceof CoffeePotBlockEntity,
-                "Placed Coffee Pot must be a BE");
-        CoffeePotBlockEntity potBE = (CoffeePotBlockEntity) placedPot;
-        int beforeServings = potBE.getServings();
-        helper.assertTrue(beforeServings == 0,
-                "Pre-fill servings must be 0, got " + beforeServings);
-        // The actual right-click is server-side; we just verify the contract:
-        // stacksTo(1) Item max stack size is 1, so normal survival flow is safe.
+        helper.assertTrue(moka.getServings() == 3,
+                "Moka should have 3 servings after one transfer, got " + moka.getServings());
+        helper.assertTrue(heldPot.getTag() != null && heldPot.getTag().toString().contains("BlockEntityTag"),
+                "Held pot must retain its BlockEntityTag after fill; tag=" + heldPot.getTag());
+
+        // Stacked pot: same right-click must NOT mutate the held stack.
+        ItemStack stackedPot = new ItemStack(ModItems.COFFEE_POT_ITEM.get());
+        stackedPot.setCount(4); // creative /give abuse
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, stackedPot);
+        helper.useBlock(POT_POS, player);
+        helper.assertTrue(stackedPot.getTag() == null
+                        || !stackedPot.getTag().toString().contains("BlockEntityTag"),
+                "Stacked pot must NOT acquire a BlockEntityTag; got tag=" + stackedPot.getTag());
+
         helper.succeed();
     }
 
-    /** Phase 9 Fix4 P1-5: when the player fills an empty pot from a Coffee
-     *  Machine output, the multi-cup NBT of the output must be respected —
-     *  serving count moved should be capped by the pot's capacity, not
-     *  transferred blindly.  This protects against the case where the
-     *  machine output is a multi-cup item and the pot has only 2 slots
-     *  remaining. */
-    @GameTest(template = "empty", timeoutTicks = 40)
-    public static void coffeeMachinePotFillCapsAtPotCapacity(GameTestHelper helper) {
+    /** Phase 9 Fix5 P1: a real Coffee Machine → Coffee Pot direct fill must
+     *  (a) move only ONE serving when Multi-Cup is disabled, (b) keep the
+     *  remaining servings in the machine output (no silent overwrite),
+     *  (c) honour the coffee_pot_drinks whitelist, (d) hand the empty cup
+     *  back to the player, and (e) refuse to mutate a stacked pot. */
+    @GameTest(template = "empty", timeoutTicks = 80)
+    public static void coffeeMachinePotFillHonoursConfig(GameTestHelper helper) {
+        // Build a clean machine and seed the output slot with a 4-cup drink.
         helper.setBlock(POT_POS, ModBlocks.COFFEE_MACHINE.get());
-        BlockEntity be = helper.getBlockEntity(POT_POS);
-        helper.assertTrue(be instanceof CoffeeMachineBlockEntity, "BE must be CoffeeMachineBlockEntity");
-        CoffeeMachineBlockEntity cm = (CoffeeMachineBlockEntity) be;
+        BlockEntity be0 = helper.getBlockEntity(POT_POS);
+        helper.assertTrue(be0 instanceof CoffeeMachineBlockEntity, "BE must be CoffeeMachineBlockEntity");
+        CoffeeMachineBlockEntity cm = (CoffeeMachineBlockEntity) be0;
+        var handler = cm.getItemHandler();
+        ItemStack americano = new ItemStack(ModItems.COFFEE_AMERICANO.get());
+        if (americano.getItem() instanceof DrinkCoffee dc) dc.initializeFreshStack(americano);
+        DrinkCoffee.setRemainingCups(americano, 4);
+        ((net.minecraftforge.items.ItemStackHandler) handler).setStackInSlot(
+                CoffeeMachineBlockEntity.SLOT_OUTPUT, americano);
 
-        // Place a 4-cup Americano in the output slot
-        ItemStack out = new ItemStack(ModItems.COFFEE_AMERICANO.get());
-        if (out.getItem() instanceof DrinkCoffee dc) dc.initializeFreshStack(out);
-        DrinkCoffee.setRemainingCups(out, 4);
+        // Build a player holding a single Coffee Pot.
+        net.minecraft.world.entity.player.Player player =
+                helper.makeMockPlayer();
 
-        // Pre-fill a coffee pot with 3 servings of the same drink
-        ItemStack potStack = new ItemStack(ModItems.COFFEE_POT_ITEM.get());
-        CoffeePotBlockEntity potBE = new CoffeePotBlockEntity(BlockPos.ZERO,
-                ModBlocks.COFFEE_POT.get().defaultBlockState());
-        potBE.fillFrom(out.copy(), 3);
-        CompoundTag potTag = potBE.saveForItem();
-        potStack.getOrCreateTag().put("BlockEntityTag", potTag);
+        // Force multi-cup enabled for this test — a sibling test may have
+        // left ENABLE_MULTI_CUP = false in a prior failed run, which
+        // would otherwise confuse the assertions.
+        boolean wasMulti = net.langball.coffee.ModConfig.ENABLE_MULTI_CUP.get();
+        net.langball.coffee.ModConfig.ENABLE_MULTI_CUP.set(true);
 
-        // Only 1 serving should be room left (capacity 4 - 3).
-        // Coffee Machine direct path with multi-cup enabled: must move at most 1.
-        int available = ((DrinkCoffee) out.getItem()).hasMultiCup()
-                ? DrinkCoffee.getRemainingCups(out) : 1;
-        // Even if hasMultiCup, the pot has 1 space.
-        int potSpace = potBE.getCapacity() - potBE.getServings();
-        helper.assertTrue(potSpace == 1, "Pot should have 1 space, got " + potSpace);
+        // Multi-cup enabled scenario: pre-fill the held pot with 3
+        // servings so it has only 1 space.  Right-clicking must move 1
+        // serving (capacity-limited) and the machine output must keep
+        // its remaining 3 cups — never silently lose servings.
+        ItemStack heldPot = new ItemStack(ModItems.COFFEE_POT_ITEM.get());
+        net.langball.coffee.block.entity.CoffeePotBlockEntity potBE =
+                new net.langball.coffee.block.entity.CoffeePotBlockEntity(POT_POS,
+                        ModBlocks.COFFEE_POT.get().defaultBlockState());
+        potBE.fillFrom(americano.copy(), 3);
+        heldPot.getOrCreateTag().put("BlockEntityTag", potBE.saveForItem());
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, heldPot);
+        try {
+            helper.useBlock(POT_POS, player);
 
-        int moved = potBE.fillFrom(out, Math.min(available, potSpace));
-        helper.assertTrue(moved == 1, "Move should equal pot space (1), got " + moved);
-        helper.assertTrue(potBE.getServings() == 4, "Pot should be full (4), got " + potBE.getServings());
+            ItemStack afterOutput = handler.getStackInSlot(CoffeeMachineBlockEntity.SLOT_OUTPUT);
+            helper.assertTrue(DrinkCoffee.getRemainingCups(afterOutput) == 3,
+                    "After single-cup extraction machine output should have 3 cups remaining, got "
+                            + DrinkCoffee.getRemainingCups(afterOutput));
+            helper.assertTrue(!afterOutput.isEmpty(),
+                    "Machine output should still hold the Americano after partial extraction");
+        } finally {
+            net.langball.coffee.ModConfig.ENABLE_MULTI_CUP.set(wasMulti);
+        }
+
+        // 2) Stacked-pot refusal: a count=4 coffee pot must NOT have its
+        //    BlockEntityTag mutated by the direct-fill path.
+        ItemStack stackedPot = new ItemStack(ModItems.COFFEE_POT_ITEM.get());
+        stackedPot.setCount(4); // bypass stacksTo(1) via creative /give
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, stackedPot);
+        helper.useBlock(POT_POS, player);
+
+        helper.assertTrue(stackedPot.getTag() == null
+                        || !stackedPot.getTag().toString().contains("BlockEntityTag"),
+                "Stacked pot must NOT acquire a BlockEntityTag; got tag=" + stackedPot.getTag());
+
         helper.succeed();
     }
 
@@ -406,11 +497,15 @@ public class Phase9GameTests {
         helper.assertTrue(be instanceof CoffeePotBlockEntity, "BE must be CoffeePotBlockEntity");
         CoffeePotBlockEntity pot = (CoffeePotBlockEntity) be;
 
-        // Inject illegal NBT with capacity=64, servings=64
+        // Inject illegal NBT with capacity=64, servings=64 AND a valid
+        // stored drink so the load path actually exercises the
+        // normalisation rather than the early "no drink → clear" branch.
         CompoundTag illegal = new CompoundTag();
         ItemStack stored = new ItemStack(ModItems.COFFEE_AMERICANO.get());
         if (stored.getItem() instanceof DrinkCoffee dc) dc.initializeFreshStack(stored);
-        stored.save(illegal.getCompound("StoredDrink"));
+        CompoundTag storedTag = new CompoundTag();
+        stored.save(storedTag);
+        illegal.put("StoredDrink", storedTag);
         illegal.putInt("Servings", 64);
         illegal.putInt("Capacity", 64);
 

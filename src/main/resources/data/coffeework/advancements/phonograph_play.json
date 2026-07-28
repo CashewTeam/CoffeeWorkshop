@@ -11,18 +11,8 @@
   "parent": "coffeework:root",
   "criteria": {
     "play_record": {
-      "trigger": "minecraft:item_used_on_block",
+      "trigger": "minecraft:consume_item",
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {
-              "block": {
-                "blocks": [ "coffeework:phonograph" ]
-              }
-            }
-          }
-        ],
         "item": {
           "tag": "minecraft:music_discs"
         }

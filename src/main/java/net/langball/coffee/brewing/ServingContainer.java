@@ -45,11 +45,21 @@ public interface ServingContainer {
                 && getServings() < getCapacity();
     }
 
+    /**
+     * Phase 9 Fix5 P2: legacy fill API — kept for backwards compatibility
+     * but routes through the single-serving normalisation logic so callers
+     * can no longer accidentally paste a multi-cup stack into the pot.
+     * Prefer {@link #fillFrom(ItemStack, int)} which already normalises.
+     */
     default void fill(ItemStack drink, int count) {
         if (count <= 0) return;
+        if (!(drink.getItem() instanceof net.langball.coffee.item.DrinkCoffee)) return;
         if (getStoredDrink().isEmpty()) {
-            setStoredDrink(drink.copy());
-            getStoredDrink().setCount(1);
+            ItemStack template = drink.copy();
+            template.setCount(1);
+            net.langball.coffee.item.DrinkCoffee.setRemainingCups(template, 1);
+            template.getOrCreateTag().putInt("max_cups", 1);
+            setStoredDrink(template);
             setServings(Math.min(count, getCapacity()));
         } else if (ItemStack.isSameItem(drink, getStoredDrink())) {
             setServings(Math.min(getServings() + count, getCapacity()));

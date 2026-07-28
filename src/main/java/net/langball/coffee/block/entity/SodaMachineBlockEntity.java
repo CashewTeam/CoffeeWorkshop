@@ -63,19 +63,54 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
         }
     };
 
-    /** Phase 9 Fix4 P2-2: accepted flavor items for the Soda Machine.
-     *  Includes the syrup bottles themselves plus the empty syrup container
-     *  (so a player can refill from an empty bottle without first filling). */
+    /** Phase 9 Fix5 P2: cached set of flavor items, derived lazily from
+     *  every registered SodaMachineRecipe's flavor Ingredient.  Using
+     *  recipe-driven data means datapack-added flavors are accepted
+     *  automatically without modifying Java code.  The hardcoded fallback
+     *  covers the empty level / unit-test scenario where the recipe
+     *  manager hasn't been initialised yet. */
+    private static java.util.Set<net.minecraft.resources.ResourceLocation> cachedFlavorItems;
+    private static final java.util.Set<net.minecraft.resources.ResourceLocation> FALLBACK_FLAVORS =
+            java.util.Set.of(
+                    new net.minecraft.resources.ResourceLocation("coffeework", "syrup_caramel"),
+                    new net.minecraft.resources.ResourceLocation("coffeework", "syrup_chocolate"),
+                    new net.minecraft.resources.ResourceLocation("coffeework", "syrup_fruit"),
+                    new net.minecraft.resources.ResourceLocation("coffeework", "syrup_mint"),
+                    new net.minecraft.resources.ResourceLocation("coffeework", "syrup_vanilla"),
+                    new net.minecraft.resources.ResourceLocation("coffeework", "syrup_sakura"));
+
+    private static java.util.Set<net.minecraft.resources.ResourceLocation> collectFlavorItems() {
+        if (cachedFlavorItems != null) return cachedFlavorItems;
+        var set = new java.util.HashSet<net.minecraft.resources.ResourceLocation>();
+        var recipes = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer() != null
+                ? net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer()
+                        .getRecipeManager().getAllRecipesFor(ModRecipeTypes.SODA_MAKING)
+                : java.util.Collections.<SodaMachineRecipe>emptyList();
+        if (recipes.isEmpty()) {
+            set.addAll(FALLBACK_FLAVORS);
+        } else {
+for (SodaMachineRecipe r : recipes) {
+            for (ItemStack s : r.flavor().getItems()) {
+                var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(s.getItem());
+                    if (id != null) set.add(id);
+                }
+            }
+        }
+        cachedFlavorItems = set;
+        return set;
+    }
+
     private static boolean isValidFlavor(ItemStack stack) {
         if (stack.isEmpty()) return false;
-        var item = stack.getItem();
-        return item == ModItems.SYRUP_EMPTY.get()
-                || item == ModItems.SYRUP_CARAMEL.get()
-                || item == ModItems.SYRUP_CHOCOLATE.get()
-                || item == ModItems.SYRUP_FRUIT.get()
-                || item == ModItems.SYRUP_MINT.get()
-                || item == ModItems.SYRUP_VANILLA.get()
-                || item == ModItems.SYRUP_SAKURA.get();
+        var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
+        if (id == null) return false;
+        return collectFlavorItems().contains(id);
+    }
+
+    /** Phase 9 Fix5 P2: clear the recipe-derived flavor cache so a
+     *  /reload picks up newly added Soda recipes. */
+    public static void invalidateFlavorCache() {
+        cachedFlavorItems = null;
     }
 
     private LazyOptional<IItemHandler> lazyHandler = LazyOptional.empty();
@@ -146,18 +181,22 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
                     totalCookTime = 0;
                 }
 
-                // Phase 9 Fix4 P2-3: emit bubble particles while processing
-                // to give visual feedback that the machine is active.
-                // Emission rate is throttled to one particle every 10 ticks
-                // so we don't flood the client packet budget.
-                if (cookTime % 10 == 0) {
+                // Phase 9 Fix5 P2: emit bubble particles via ServerLevel.sendParticles
+                // so they actually reach clients.  The plain
+                // {@link Level#addParticle} call only fires when invoked on
+                // the client and is otherwise silently dropped by the
+                // server, defeating the visual feedback.
+                // Emission is throttled to one packet every 10 ticks to
+                // avoid flooding the network budget.
+                if (level instanceof net.minecraft.server.level.ServerLevel sl
+                        && cookTime % 10 == 0) {
                     double x = pos.getX() + 0.5 + (level.random.nextDouble() - 0.5) * 0.4;
                     double y = pos.getY() + 0.6;
                     double z = pos.getZ() + 0.5 + (level.random.nextDouble() - 0.5) * 0.4;
-                    level.addParticle(
+                    sl.sendParticles(
                             net.minecraft.core.particles.ParticleTypes.BUBBLE,
                             x, y, z,
-                            0.0, 0.04, 0.0);
+                            1, 0.0, 0.04, 0.0, 0.0);
                 }
             } else {
                 cookTime = 0;
