@@ -68,7 +68,7 @@ public final class BarCounterMigrationHandler {
      * The caller is responsible for marking the chunk unsaved if
      * any rewrites happen.
      *
-     * Phase 9 Fix9 P1-1: exposed so GameTests can drive the
+     * <p>Phase 9 Fix9 P1-1: exposed so GameTests can drive the
      * migration deterministically without having to unload and
      * reload an entire chunk (which the GameTest harness does not
      * support).  The {@link #onChunkLoad} subscriber calls into
@@ -76,14 +76,17 @@ public final class BarCounterMigrationHandler {
      */
     public static int migrateChunk(net.minecraft.server.level.ServerLevel level, LevelChunk chunk) {
         int migrated = 0;
-        int minBuildY = level.getMinBuildHeight();
         LevelChunkSection[] sections = chunk.getSections();
         for (int sectionIdx = 0; sectionIdx < sections.length; sectionIdx++) {
             LevelChunkSection section = sections[sectionIdx];
             if (section == null) continue;
             if (section.hasOnlyAir()) continue;
+            // sectionY is the absolute section Y coordinate (e.g. -4 for
+            // the bottom of the overworld).  Multiplying by 16 gives the
+            // block Y of the section's local y=0 row without adding
+            // minBuildY, which would double-count the offset.
             int sectionY = chunk.getSectionYFromSectionIndex(sectionIdx);
-            int sectionBaseY = minBuildY + SectionPos.sectionToBlockCoord(sectionY);
+            int sectionBaseY = SectionPos.sectionToBlockCoord(sectionY);
             PalettedContainer<BlockState> states = section.getStates();
             for (int ly = 0; ly < 16; ly++) {
                 for (int lz = 0; lz < 16; lz++) {
