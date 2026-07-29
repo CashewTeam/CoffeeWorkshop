@@ -3,7 +3,7 @@
   "textures": {
     "1": "block/iron_block",
     "2": "block/hopper_outside",
-    "3": "block/glass_black"
+    "3": "block/black_stained_glass"
   },
   "elements": [
     {
