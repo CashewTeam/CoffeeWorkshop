@@ -190,12 +190,15 @@ public class Phase9GameTests {
         SodaMachineBlockEntity sm = (SodaMachineBlockEntity) be;
 
         var handler = sm.getItemHandler();
-        helper.assertTrue(handler.isItemValid(0, new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE)),
-                "Slot 0 should accept glass bottle");
+        ItemStack waterBottle = net.minecraft.world.item.alchemy.PotionUtils.setPotion(
+                new ItemStack(net.minecraft.world.item.Items.POTION),
+                net.minecraft.world.item.alchemy.Potions.WATER);
+        helper.assertTrue(handler.isItemValid(0, waterBottle),
+                "Slot 0 should accept water bottle");
         helper.assertTrue(!handler.isItemValid(0, new ItemStack(net.minecraft.world.item.Items.APPLE)),
                 "Slot 0 should reject non-bottle items");
         helper.assertTrue(!handler.isItemValid(SodaMachineBlockEntity.SLOT_OUTPUT,
-                new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE)),
+                waterBottle),
                 "Output slot should reject items");
 
         helper.succeed();
@@ -1152,8 +1155,11 @@ public class Phase9GameTests {
                 "Soda base slot must reject an apple");
         helper.assertTrue(!handler.isItemValid(2, new ItemStack(Blocks.DIRT)),
                 "Soda flavor slot must reject dirt");
-        helper.assertTrue(handler.isItemValid(0, new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE)),
-                "Soda bottle slot must accept glass bottle");
+        ItemStack waterBottle = net.minecraft.world.item.alchemy.PotionUtils.setPotion(
+                new ItemStack(net.minecraft.world.item.Items.POTION),
+                net.minecraft.world.item.alchemy.Potions.WATER);
+        helper.assertTrue(handler.isItemValid(0, waterBottle),
+                "Soda bottle slot must accept water bottle");
         helper.succeed();
     }
 

@@ -12,10 +12,10 @@
       "item": "minecraft:sugar"
     },
     {
-      "item": "coffeework:coffee_seeds"
+      "tag": "forge:seeds"
     },
     {
-      "item": "coffeework:coffee_seeds"
+      "tag": "forge:seeds"
     }
   ],
   "result": {

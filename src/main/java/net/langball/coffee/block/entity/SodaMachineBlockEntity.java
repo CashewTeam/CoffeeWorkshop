@@ -17,6 +17,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -44,10 +46,12 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return switch (slot) {
-                // Phase 9 Fix4 P2-2: restrict base/flavor slots to their
-                // intended role items so junk like an apple can't lock up
-                // the recipe matcher or drain a glass bottle.
-                case SLOT_BOTTLE -> stack.getItem() == Items.GLASS_BOTTLE;
+                // Phase 9 Fix10: accept water bottles as container.
+                // Slot also accepts empty glass bottles so the machine can
+                // return the empty bottle after consuming the water.
+                case SLOT_BOTTLE -> stack.getItem() == Items.GLASS_BOTTLE
+                        || (stack.getItem() == Items.POTION
+                            && PotionUtils.getPotion(stack) == Potions.WATER);
                 case SLOT_SODA -> stack.getItem() == ModItems.SODA.get();
                 case SLOT_FLAVOR -> isValidFlavor(stack);
                 case SLOT_OUTPUT -> false;
@@ -158,15 +162,26 @@ public class SodaMachineBlockEntity extends BlockEntity implements MenuProvider 
             }
 
                 if (cookTime >= totalCookTime) {
+                    // Consume water bottle → extract from slot 0
                     itemHandler.extractItem(SLOT_BOTTLE, 1, false);
+                    // Return the empty glass bottle to the bottle slot
+                    ItemStack glassBottle = new ItemStack(Items.GLASS_BOTTLE);
+                    ItemStack bottleRemainder = itemHandler.insertItem(SLOT_BOTTLE, glassBottle, false);
+                    if (!bottleRemainder.isEmpty()) {
+                        net.minecraft.world.Containers.dropItemStack(level,
+                                pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, bottleRemainder);
+                    }
+
                     itemHandler.extractItem(SLOT_SODA, 1, false);
                     ItemStack flavorExtracted = itemHandler.extractItem(SLOT_FLAVOR, 1, false);
-                    if (!flavorExtracted.isEmpty() && flavorExtracted.getItem().hasCraftingRemainingItem()) {
-                        ItemStack remainder = new ItemStack(flavorExtracted.getItem().getCraftingRemainingItem());
-                        ItemStack leftover = itemHandler.insertItem(SLOT_FLAVOR, remainder, false);
-                        if (!leftover.isEmpty()) {
-                            net.minecraft.world.Containers.dropItemStack(level,
-                                    pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, leftover);
+                    if (!flavorExtracted.isEmpty()) {
+                        ItemStack remainder = flavorExtracted.getItem().getCraftingRemainingItem(flavorExtracted);
+                        if (!remainder.isEmpty()) {
+                            ItemStack leftover = itemHandler.insertItem(SLOT_FLAVOR, remainder, false);
+                            if (!leftover.isEmpty()) {
+                                net.minecraft.world.Containers.dropItemStack(level,
+                                        pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, leftover);
+                            }
                         }
                     }
 

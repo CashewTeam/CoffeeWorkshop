@@ -12,6 +12,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
 
@@ -1485,8 +1486,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.MOONCAKE_MODEL.get())
                 .requires(ModItems.DOUGH_PASTRY.get())
                 .requires(Items.SUGAR)
-                .requires(ModItems.COFFEE_SEEDS.get())
-                .requires(ModItems.COFFEE_SEEDS.get())
+                .requires(Tags.Items.SEEDS)
+                .requires(Tags.Items.SEEDS)
                 .save(writer, modLoc("mooncake_raw"));
         shapeless(RecipeCategory.FOOD, ModItems.MOONCAKE_EGG_RAW.get(), 2, ModItems.MOONCAKE_MODEL.get())
                 .requires(ModItems.MOONCAKE_MODEL.get())
@@ -1506,8 +1507,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.MOONCAKE_MODEL.get())
                 .requires(ModItems.DOUGH_PASTRY.get())
                 .requires(Items.SUGAR)
-                .requires(Items.COOKED_PORKCHOP)
-                .requires(Items.COOKED_PORKCHOP)
+                .requires(Ingredient.of(Items.BEEF, Items.PORKCHOP, Items.CHICKEN, Items.RABBIT, Items.MUTTON))
                 .save(writer, modLoc("mooncake_ham_raw"));
 
         // Phase 7: Soufflé raw (iron_bowl_egg + flour + sugar + butter + 4× small_model ± cocoa → 4× raw)

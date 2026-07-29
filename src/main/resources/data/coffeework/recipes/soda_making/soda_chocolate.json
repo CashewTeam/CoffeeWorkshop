@@ -1,6 +1,6 @@
 {
   "type": "coffeework:soda_making",
-  "container": { "item": "minecraft:glass_bottle" },
+  "container": { "item": "minecraft:potion", "nbt": "{Potion:\"minecraft:water\"}" },
   "base": { "item": "coffeework:soda" },
   "flavor": { "item": "coffeework:syrup_chocolate" },
   "result": { "item": "coffeework:soda_chocolate" },
