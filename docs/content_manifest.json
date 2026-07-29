@@ -23,7 +23,7 @@
       "lang_zh_ok": 406,
       "lang_ja_ok": 406,
       "creative_tab_ok": 406,
-      "has_source": 404,
+      "has_source": 405,
       "total_items": 406
     }
   },
@@ -3158,7 +3158,9 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [],
+      "sources": [
+        "recipe"
+      ],
       "block_item": true,
       "block_of": "coldbrew_pot"
     },

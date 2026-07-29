@@ -60,6 +60,7 @@ INITIAL_ITEMS = {
     "minecraft:spruce_log", "minecraft:birch_log",
     "minecraft:spruce_planks", "minecraft:birch_planks",
     "minecraft:glass_bottle",
+    "minecraft:glow_berries",
     # Phase 9: vanilla intermediates needed by coffeework recipes
     "minecraft:glass",
     "minecraft:piston",
@@ -93,6 +94,7 @@ WORLDGEN_SOURCES = {
     "coffeework:vanilla": "harvest from vanilla crop (worldgen)",
     "coffeework:soda_ore": "worldgen (soda ore block)",
     "coffeework:lemon": "trade (materials trader)",
+    "coffeework:blueberry": "harvest from blueberry bush (worldgen)",
 }
 
 # Explicit non-JSON production edges (recipes that the script can't model

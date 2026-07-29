@@ -537,8 +537,10 @@ public class ModRecipeProvider extends RecipeProvider {
         smelting(ModItems.TEA_LEAF.get(), ModItems.BLACK_TEA_LEAF.get(), 0.1F, "black_tea_leaf")
                 .save(writer, modLoc("black_tea_leaf"));
 
-        // Cold Brew Pot (filled)
-        shapeless(RecipeCategory.MISC, ModBlocks.COLD_BREW_POT.get(), ModItems.EMPTY_COLDBREW_POT.get())
+        // Cold Brew Pot (filled) — uses explicit item reference,
+        // not the block, because Block.asItem() may return the wrong
+        // BlockItem when two BlockItems share the same block.
+        shapeless(RecipeCategory.MISC, ModItems.COLD_BREW_POT.get(), ModItems.COLD_BREW_POT.get())
                 .requires(ModItems.COFFEE_POWDER.get())
                 .requires(ModItems.COFFEE_POWDER.get())
                 .requires(ModItems.COFFEE_POWDER.get())

@@ -26,7 +26,7 @@
 | zh_cn Key Coverage | 406/406 | 100% |
 | ja_jp Key Coverage | 406/406 | 100% |
 | Creative Tab | 406/406 | 100% |
-| Survival Source | 404/406 | 99% |
+| Survival Source | 405/406 | 99% |
 
 ## Registered Items
 
@@ -222,7 +222,7 @@
 | `coffee_tree` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | loot,worldgen |
 | `coffee_turkish` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
 | `coldbrew_bottle` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | interact |
-| `coldbrew_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| `coldbrew_pot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cookie_black` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cookie_icecream_apple` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
 | `cookie_icecream_berry` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | recipe |
