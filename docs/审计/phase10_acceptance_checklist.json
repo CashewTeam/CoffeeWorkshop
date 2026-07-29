@@ -1,0 +1,106 @@
+{
+  "phase": "10",
+  "title": "Legacy Content Closure and Guidance",
+  "status": "PLANNED",
+  "workstreams": {
+    "creative_tabs": {
+      "required_tabs": [
+        "drinks_and_machines",
+        "bakery_and_ingredients",
+        "decor_and_equipment"
+      ],
+      "gates": [
+        "all_registered_items_in_at_least_one_tab",
+        "no_unknown_items",
+        "three_language_titles"
+      ]
+    },
+    "jei": {
+      "required_categories": [
+        "grinding",
+        "coffee_brewing",
+        "icecream_making",
+        "rolling",
+        "oven_baking",
+        "cooling",
+        "drink_transform",
+        "moka_brewing",
+        "turkish_brewing",
+        "soda_making",
+        "display_conversion"
+      ],
+      "gates": [
+        "all_categories_registered",
+        "all_categories_have_language",
+        "machine_categories_have_catalysts",
+        "soda_gui_has_click_area"
+      ]
+    },
+    "advancements": {
+      "required_nodes": [
+        "root",
+        "coffee_farming",
+        "machine_processing",
+        "drink_collection",
+        "cold_brew",
+        "ice_cream",
+        "bakery",
+        "cake_master",
+        "traditional_brewing",
+        "soda_shop",
+        "cafe_decoration"
+      ],
+      "gates": [
+        "no_missing_parent",
+        "no_parent_cycle",
+        "all_icons_registered",
+        "three_language_text"
+      ]
+    },
+    "villagers": {
+      "professions": [
+        "coffee_barista",
+        "coffee_materials_trader",
+        "food_trader"
+      ],
+      "required_distinct_pois": 3,
+      "gates": [
+        "no_direct_arbitrage",
+        "valid_trade_amounts",
+        "clear_profession_ownership"
+      ]
+    },
+    "content": {
+      "minimum_soda_count": 10,
+      "required_new_soda": [
+        "soda_cola",
+        "soda_apple",
+        "soda_berry",
+        "soda_lemon"
+      ],
+      "required_sandwiches": [
+        "sandwich_blt",
+        "sandwich_bacon_egg",
+        "sandwich_beef_cheese",
+        "sandwich_blt_large",
+        "sandwich_club",
+        "sandwich_club_large",
+        "sandwich_ham_cheese"
+      ],
+      "required_new_icecream": [
+        "icecream_caramel",
+        "icecream_mint",
+        "icecream_sakura",
+        "icecream_tea"
+      ]
+    }
+  },
+  "final_gates": [
+    "clean_build",
+    "game_tests_pass",
+    "clean_datagen_no_diff",
+    "content_surface_zero_issues",
+    "recipe_reachability_zero_unreachable",
+    "client_smoke_test_pass"
+  ]
+}
