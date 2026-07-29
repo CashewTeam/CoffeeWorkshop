@@ -23,7 +23,7 @@
       "lang_zh_ok": 406,
       "lang_ja_ok": 406,
       "creative_tab_ok": 406,
-      "has_source": 405,
+      "has_source": 404,
       "total_items": 406
     }
   },
@@ -3158,9 +3158,7 @@
       "lang_zh": true,
       "lang_ja": true,
       "creative_tab": true,
-      "sources": [
-        "recipe"
-      ],
+      "sources": [],
       "block_item": true,
       "block_of": "coldbrew_pot"
     },
@@ -3817,7 +3815,8 @@
       "sources": [
         "recipe"
       ],
-      "block_item": false
+      "block_item": true,
+      "block_of": "soda_ore"
     },
     {
       "id": "espresso",
