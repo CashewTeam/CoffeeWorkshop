@@ -115,6 +115,9 @@ public class BlockColdBrewPot extends Block {
 
     @Override
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-        return new ItemStack(ModItems.COLD_BREW_POT.get());
+        return new ItemStack(
+                state.getValue(FERM) == 8
+                        ? ModItems.EMPTY_COLDBREW_POT.get()
+                        : ModItems.COLD_BREW_POT.get());
     }
 }

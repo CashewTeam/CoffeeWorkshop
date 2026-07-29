@@ -12,10 +12,10 @@
       "item": "minecraft:sugar"
     },
     {
-      "item": "minecraft:sweet_berries"
+      "tag": "coffeework:fruits"
     },
     {
-      "item": "minecraft:sweet_berries"
+      "tag": "coffeework:fruits"
     }
   ],
   "result": {

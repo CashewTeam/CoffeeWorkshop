@@ -55,7 +55,10 @@ public class JEICompat implements mezz.jei.api.IModPlugin {
                         JEIRecipeTypes.DRINK_TRANSFORM,
                         Component.translatable("jei.coffeework.category.drink_transform"),
                         guiHelper,
-                        new ItemStack(net.langball.coffee.init.ModItems.SYRUP_FRUIT.get()))
+                        new ItemStack(net.langball.coffee.init.ModItems.SYRUP_FRUIT.get())),
+                new SodaMachineRecipeCategory(
+                        guiHelper,
+                        new ItemStack(ModBlocks.SODA_MACHINE.get()))
         );
     }
 
@@ -81,6 +84,9 @@ public class JEICompat implements mezz.jei.api.IModPlugin {
 
         registration.addRecipes(JEIRecipeTypes.DRINK_TRANSFORM,
                 JEIRecipeTypes.getDrinkTransformRecipes());
+
+        registration.addRecipes(JEIRecipeTypes.SODA_MAKING,
+                JEIRecipeTypes.getSodaRecipes());
     }
 
     @Override
@@ -94,5 +100,16 @@ public class JEICompat implements mezz.jei.api.IModPlugin {
                 JEIRecipeTypes.COOLING);
         registration.addRecipeCatalyst(new ItemStack(net.langball.coffee.init.ModItems.SYRUP_FRUIT.get()),
                 JEIRecipeTypes.DRINK_TRANSFORM);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.SODA_MACHINE.get()),
+                JEIRecipeTypes.SODA_MAKING);
+    }
+
+    @Override
+    public void registerGuiHandlers(mezz.jei.api.registration.IGuiHandlerRegistration registration) {
+        registration.addRecipeClickArea(
+                net.langball.coffee.gui.GuiSodaMachine.class,
+                94, 20,
+                34, 36,
+                JEIRecipeTypes.SODA_MAKING);
     }
 }

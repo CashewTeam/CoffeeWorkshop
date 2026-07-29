@@ -6,6 +6,7 @@ import net.langball.coffee.recipes.CoffeeBrewingRecipe;
 import net.langball.coffee.recipes.CoolingRecipe;
 import net.langball.coffee.recipes.DrinkTransformRecipe;
 import net.langball.coffee.recipes.MachineRecipe;
+import net.langball.coffee.recipes.SodaMachineRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -38,6 +39,9 @@ public final class JEIRecipeTypes {
 
     public static final mezz.jei.api.recipe.RecipeType<DrinkTransformRecipe> DRINK_TRANSFORM =
             mezz.jei.api.recipe.RecipeType.create(CoffeeWork.MODID, "drink_transform", DrinkTransformRecipe.class);
+
+    public static final mezz.jei.api.recipe.RecipeType<SodaMachineRecipe> SODA_MAKING =
+            mezz.jei.api.recipe.RecipeType.create(CoffeeWork.MODID, "soda_making", SodaMachineRecipe.class);
 
     /** Fetch CoolingRecipes from the client-side RecipeManager.
      *  CoolingRecipe extends CustomRecipe and lives under {@link net.minecraft.world.item.crafting.RecipeType#CRAFTING}.
@@ -93,6 +97,14 @@ public final class JEIRecipeTypes {
             }
         }
         return result;
+    }
+
+    /** Fetch SodaMachineRecipes from the client-side RecipeManager. */
+    public static List<SodaMachineRecipe> getSodaRecipes() {
+        ClientLevel level = Minecraft.getInstance().level;
+        if (level == null) return List.of();
+        RecipeManager rm = level.getRecipeManager();
+        return new ArrayList<>(rm.getAllRecipesFor(ModRecipeTypes.SODA_MAKING));
     }
 
     private JEIRecipeTypes() {}

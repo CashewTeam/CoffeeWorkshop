@@ -3,10 +3,13 @@ package net.langball.coffee.client;
 import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.client.renderer.DrinkDisplayRenderer;
 import net.langball.coffee.init.ModBlockEntities;
+import net.langball.coffee.init.ModBlocks;
 import net.langball.coffee.init.ModMenuTypes;
 import net.langball.coffee.gui.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -23,13 +26,16 @@ public class ClientModEvents {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
+	    event.enqueueWork(() -> {
             MenuScreens.register(ModMenuTypes.GRINDER.get(), GuiGrinder::new);
             MenuScreens.register(ModMenuTypes.COFFEE_MACHINE.get(), GuiCoffeeMachine::new);
             MenuScreens.register(ModMenuTypes.ICECREAM_MACHINE.get(), GuiIcecreamMachine::new);
             MenuScreens.register(ModMenuTypes.ROLLER.get(), GuiRoller::new);
             MenuScreens.register(ModMenuTypes.OVEN.get(), GuiOven::new);
             MenuScreens.register(ModMenuTypes.SODA_MACHINE.get(), GuiSodaMachine::new);
+
+            // Render layers for blocks with transparent/glass textures
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.COLD_BREW_POT.get(), RenderType.cutout());
 
             ResourceManager rm = Minecraft.getInstance().getResourceManager();
             DrinkDisplayModelRegistry.loadModels(rm);

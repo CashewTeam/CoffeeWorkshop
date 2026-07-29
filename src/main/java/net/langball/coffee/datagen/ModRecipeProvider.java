@@ -2,6 +2,7 @@ package net.langball.coffee.datagen;
 
 import net.langball.coffee.CoffeeWork;
 import net.langball.coffee.init.ModBlocks;
+import net.langball.coffee.init.ModItemTags;
 import net.langball.coffee.init.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -113,7 +114,7 @@ public class ModRecipeProvider extends RecipeProvider {
         // Flavor batter: base batter + flavor → flavored batter (iron_bowl returned)
         shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_BATTER_BERRY.get(), ModItems.IRON_BOWL_BATTER.get())
                 .requires(ModItems.IRON_BOWL_BATTER.get())
-                .requires(Items.SWEET_BERRIES)
+                .requires(ModItemTags.BERRIES)
                 .save(writer, modLoc("iron_bowl_batter_berry"));
         shapeless(RecipeCategory.MISC, ModItems.IRON_BOWL_BATTER_CARROT.get(), ModItems.IRON_BOWL_BATTER.get())
                 .requires(ModItems.IRON_BOWL_BATTER.get())
@@ -210,7 +211,7 @@ public class ModRecipeProvider extends RecipeProvider {
 
         shapeless(RecipeCategory.MISC, ModItems.SYRUP_FRUIT.get(), ModItems.SYRUP_EMPTY.get())
                 .requires(ModItems.SYRUP_EMPTY.get())
-                .requires(Items.SWEET_BERRIES)
+                .requires(ModItemTags.FRUITS)
                 .requires(Items.SUGAR)
                 .save(writer, modLoc("syrup_fruit"));
 
@@ -626,7 +627,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModBlocks.CAKE_SPONGE.get())
                 .requires(Items.SUGAR)
                 .requires(Items.MILK_BUCKET)
-                .requires(Items.SWEET_BERRIES)
+                .requires(ModItems.VANILLA.get())
                 .save(writer, modLoc("cake_vanilla"));
 
         // Coffee Cake
@@ -650,7 +651,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModBlocks.CAKE_SPONGE_BERRY.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.SUGAR)
-                .requires(Items.SWEET_BERRIES)
+                .requires(ModItemTags.BERRIES)
                 .save(writer, modLoc("cake_berry"));
 
         // Lemon Cake
@@ -966,7 +967,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.GELATIN.get())
                 .requires(Items.MILK_BUCKET)
                 .requires(Items.MILK_BUCKET)
-                .requires(Items.SWEET_BERRIES)
+                .requires(ModItemTags.BERRIES)
                 .requires(Items.EGG)
                 .requires(Items.EGG)
                 .save(writer, modLoc("mousse_berry_raw"));
@@ -1042,7 +1043,7 @@ public class ModRecipeProvider extends RecipeProvider {
         shapeless(RecipeCategory.FOOD, ModItems.CREAM_BERRY.get(), ModItems.CREAM_MILK.get())
                 .requires(ModItems.MIXING_BOWL.get())
                 .requires(ModItems.CREAM_MILK.get())
-                .requires(Items.SWEET_BERRIES)
+                .requires(ModItemTags.BERRIES)
                 .save(writer, modLoc("cream_berry"));
         shapeless(RecipeCategory.FOOD, ModItems.CREAM_CHOCOLATE.get(), ModItems.CREAM_MILK.get())
                 .requires(ModItems.MIXING_BOWL.get())
@@ -1289,7 +1290,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.PLATE_DOUGH_PASTRY.get())
                 .requires(Items.SUGAR)
                 .requires(ModItems.CREAM_MILK.get())
-                .requires(Items.SWEET_BERRIES)
+                .requires(ModItemTags.BERRIES)
                 .save(writer, modLoc("pie_berry"));
         shapeless(RecipeCategory.FOOD, ModItems.PIE_CARAMEL.get(), ModItems.PLATE_DOUGH_PASTRY.get())
                 .requires(ModItems.PLATE_DOUGH_PASTRY.get())
@@ -1498,8 +1499,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.MOONCAKE_MODEL.get())
                 .requires(ModItems.DOUGH_PASTRY.get())
                 .requires(Items.SUGAR)
-                .requires(Items.SWEET_BERRIES)
-                .requires(Items.SWEET_BERRIES)
+                .requires(ModItemTags.FRUITS)
+                .requires(ModItemTags.FRUITS)
                 .save(writer, modLoc("mooncake_fruit_raw"));
         shapeless(RecipeCategory.FOOD, ModItems.MOONCAKE_HAM_RAW.get(), 2, ModItems.MOONCAKE_MODEL.get())
                 .requires(ModItems.MOONCAKE_MODEL.get())

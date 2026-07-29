@@ -8,12 +8,10 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class SodaMachineRecipeSerializer implements RecipeSerializer<SodaMachineRecipe> {
     public static final SodaMachineRecipeSerializer INSTANCE = new SodaMachineRecipeSerializer();
-    public static final RecipeType<SodaMachineRecipe> TYPE = RecipeType.simple(new ResourceLocation("coffeework", "soda_making"));
 
     @Override
     public SodaMachineRecipe fromJson(ResourceLocation id, JsonObject json) {

@@ -2,15 +2,15 @@
   "variants": {
     "facing=north,shape=straight":    { "model": "coffeework:block/bar_wooden_normal" },
     "facing=north,shape=inner_right": { "model": "coffeework:block/bar_wooden_inner" },
-    "facing=north,shape=inner_left":  { "model": "coffeework:block/bar_wooden_inner", "y": 180 },
+    "facing=north,shape=inner_left":  { "model": "coffeework:block/bar_wooden_inner", "y": 90 },
     "facing=south,shape=straight":    { "model": "coffeework:block/bar_wooden_normal", "y": 180 },
     "facing=south,shape=inner_right": { "model": "coffeework:block/bar_wooden_inner", "y": 180 },
-    "facing=south,shape=inner_left":  { "model": "coffeework:block/bar_wooden_inner", "y": 0 },
+    "facing=south,shape=inner_left":  { "model": "coffeework:block/bar_wooden_inner", "y": 270 },
     "facing=west,shape=straight":     { "model": "coffeework:block/bar_wooden_normal", "y": 270 },
     "facing=west,shape=inner_right":  { "model": "coffeework:block/bar_wooden_inner", "y": 270 },
-    "facing=west,shape=inner_left":   { "model": "coffeework:block/bar_wooden_inner", "y": 90 },
+    "facing=west,shape=inner_left":   { "model": "coffeework:block/bar_wooden_inner", "y": 0 },
     "facing=east,shape=straight":     { "model": "coffeework:block/bar_wooden_normal", "y": 90 },
     "facing=east,shape=inner_right":  { "model": "coffeework:block/bar_wooden_inner", "y": 90 },
-    "facing=east,shape=inner_left":   { "model": "coffeework:block/bar_wooden_inner", "y": 270 }
+    "facing=east,shape=inner_left":   { "model": "coffeework:block/bar_wooden_inner", "y": 180 }
   }
 }

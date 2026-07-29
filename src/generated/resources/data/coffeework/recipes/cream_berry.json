@@ -9,7 +9,7 @@
       "item": "coffeework:cream_milk"
     },
     {
-      "item": "minecraft:sweet_berries"
+      "tag": "coffeework:fruits/berries"
     }
   ],
   "result": {

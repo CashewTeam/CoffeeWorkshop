@@ -124,24 +124,25 @@ public class BarCounterBlock extends Block {
                         Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
         SHAPES.put(Shape.INNER_RIGHT, innerRight);
 
-        // INNER_LEFT: the inner body occupies the -x -z quadrant in
-        // the base orientation (model y=180).  The countertop is full 1x1.
+        // INNER_LEFT: mirror of INNER_RIGHT across the facing axis.
+        // The body occupies the BACK + LEFT quadrant instead of
+        // BACK + RIGHT.  Countertop is full 1x1.
         EnumMap<Direction, VoxelShape> innerLeft = new EnumMap<>(Direction.class);
-        // NORTH (model y=180): body -x -z
+        // NORTH (facing -z): left = -x, back = +z → -x +z
         innerLeft.put(Direction.NORTH,
-                Shapes.or(Shapes.box(0, 0, 0, 0.75, Y_TOP, 0.75),
-                        Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
-        // SOUTH (model y=0): body +x +z
-        innerLeft.put(Direction.SOUTH,
-                Shapes.or(Shapes.box(0.25, 0, 0.25, 1, Y_TOP, 1),
-                        Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
-        // WEST (model y=90): body -x +z
-        innerLeft.put(Direction.WEST,
                 Shapes.or(Shapes.box(0, 0, 0.25, 0.75, Y_TOP, 1),
                         Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
-        // EAST (model y=270): body +x -z
+        // EAST (facing +x): left = -z, back = -x → -x -z
         innerLeft.put(Direction.EAST,
+                Shapes.or(Shapes.box(0, 0, 0, 0.75, Y_TOP, 0.75),
+                        Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
+        // SOUTH (facing +z): left = +x, back = -z → +x -z
+        innerLeft.put(Direction.SOUTH,
                 Shapes.or(Shapes.box(0.25, 0, 0, 1, Y_TOP, 0.75),
+                        Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
+        // WEST (facing -x): left = +z, back = +x → +x +z
+        innerLeft.put(Direction.WEST,
+                Shapes.or(Shapes.box(0.25, 0, 0.25, 1, Y_TOP, 1),
                         Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
         SHAPES.put(Shape.INNER_LEFT, innerLeft);
     }
@@ -193,20 +194,28 @@ public class BarCounterBlock extends Block {
      * Phase 9 Fix10: resolve the counter's corner shape based on
      * which side has a matching neighbour.  Returns only the
      * three canonical values (STRAIGHT, INNER_RIGHT, INNER_LEFT).
+     *
+     * The neighbour must face the same direction as the side it
+     * sits on (e.g. a neighbour on the EAST side must be FACING
+     * east), so the two counters form a 90° L-shape rather than
+     * a parallel line.
      */
-    public static Shape determineShape(Level level, BlockPos pos, Direction facing, Block thisBlock) {
+    public static Shape determineShape(BlockGetter level, BlockPos pos, Direction facing, Block thisBlock) {
         Direction right = facing.getClockWise();
-        if (hasMatchingNeighbour(level, pos.relative(right), thisBlock, facing.getOpposite())) {
-            return Shape.INNER_RIGHT;
-        }
+        boolean connectsRight = hasMatchingNeighbour(level, pos.relative(right), thisBlock, right);
+
         Direction left = facing.getCounterClockWise();
-        if (hasMatchingNeighbour(level, pos.relative(left), thisBlock, facing.getOpposite())) {
-            return Shape.INNER_LEFT;
+        boolean connectsLeft = hasMatchingNeighbour(level, pos.relative(left), thisBlock, left);
+
+        // No T-junction shape exists; both sides matching → STRAIGHT.
+        if (connectsRight == connectsLeft) {
+            return Shape.STRAIGHT;
         }
-        return Shape.STRAIGHT;
+
+        return connectsRight ? Shape.INNER_RIGHT : Shape.INNER_LEFT;
     }
 
-    private static boolean hasMatchingNeighbour(Level level, BlockPos neighbourPos, Block thisBlock,
+    private static boolean hasMatchingNeighbour(BlockGetter level, BlockPos neighbourPos, Block thisBlock,
                                                  Direction expectedFacing) {
         BlockState neighbour = level.getBlockState(neighbourPos);
         return neighbour.is(thisBlock) && neighbour.getValue(FACING) == expectedFacing;

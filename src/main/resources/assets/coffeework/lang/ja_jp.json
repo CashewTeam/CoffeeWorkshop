@@ -530,5 +530,6 @@
   "jei.coffeework.category.roller": "圧延",
   "jei.coffeework.cooling.tip": "氷滓を加えて冷たい飲み物に",
   "jei.coffeework.drink_transform.action": "変換",
+  "jei.coffeework.category.soda_machine": "ソーダマシン",
   "tooltip.coffeework.cups_remaining": "残り %1$s / %2$s 杯"
 }

@@ -6,7 +6,7 @@
       "item": "coffeework:iron_bowl_batter"
     },
     {
-      "item": "minecraft:sweet_berries"
+      "tag": "coffeework:fruits/berries"
     }
   ],
   "result": {

@@ -278,7 +278,11 @@ public class Phase9GameTests {
     // ─────────────────────────────────────────────────────────────────────
 
     /** Helper: place a primary counter at (1, 1, 1) with a matching
-     *  neighbour on the requested side, and return the resolved Shape. */
+     *  neighbour on the requested side, and return the resolved Shape.
+     *
+     *  The neighbour must face the same direction as the offset from
+     *  the primary (e.g. a neighbour on the EAST side faces EAST) so
+     *  the two counters form a 90° L-shape. */
     private static BarCounterBlock.Shape placeAndResolve(
             GameTestHelper helper, net.minecraft.core.Direction primaryFacing,
             net.minecraft.core.Direction neighbourOffset) {
@@ -287,7 +291,7 @@ public class Phase9GameTests {
         helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
                 .setValue(BarCounterBlock.FACING, primaryFacing));
         helper.setBlock(neighbour, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, primaryFacing.getOpposite()));
+                .setValue(BarCounterBlock.FACING, neighbourOffset));
         return helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE);
     }
 
@@ -364,10 +368,10 @@ public class Phase9GameTests {
                 break;
             case INNER_LEFT:
                 switch (facing) {
-                    case NORTH: bodyPlusX = false; bodyPlusZ = false; break;
-                    case EAST:  bodyPlusX = true;  bodyPlusZ = false; break;
-                    case SOUTH: bodyPlusX = true;  bodyPlusZ = true;  break;
-                    case WEST:  bodyPlusX = false; bodyPlusZ = true;  break;
+                    case NORTH: bodyPlusX = false; bodyPlusZ = true;  break;
+                    case EAST:  bodyPlusX = false; bodyPlusZ = false; break;
+                    case SOUTH: bodyPlusX = true;  bodyPlusZ = false; break;
+                    case WEST:  bodyPlusX = true;  bodyPlusZ = true;  break;
                     default: throw new IllegalArgumentException();
                 }
                 break;
@@ -410,12 +414,12 @@ public class Phase9GameTests {
      *  by direct enumeration of (shape, facing) pairs instead of
      *  a single rotation rule.  Mirror symmetry across the FACING
      *  axis makes INNER_LEFT the flip of INNER_RIGHT.  The eight
-     *  pairs reproduce the Java code in BarCounterBlock.SHASES:
+     *  pairs reproduce the Java code in BarCounterBlock.SHAPES:
      *    INNER_RIGHT:        INNER_LEFT:
-     *      NORTH: +x +z        NORTH: -x -z
-     *      EAST:  -x +z        EAST:  +x -z
-     *      SOUTH: -x -z        SOUTH: +x +z
-     *      WEST:  +x -z        WEST:  -x +z */
+     *      NORTH: +x +z        NORTH: -x +z
+     *      EAST:  -x +z        EAST:  -x -z
+     *      SOUTH: -x -z        SOUTH: +x -z
+     *      WEST:  +x -z        WEST:  +x +z */
     private static net.minecraft.world.phys.AABB emptyCornerForFacing(
             net.minecraft.core.Direction facing, BarCounterBlock.Shape shape) {
         boolean bodyPlusX, bodyPlusZ;
@@ -431,10 +435,10 @@ public class Phase9GameTests {
                 break;
             case INNER_LEFT:
                 switch (facing) {
-                    case NORTH: bodyPlusX = false; bodyPlusZ = false; break;
-                    case EAST:  bodyPlusX = true;  bodyPlusZ = false; break;
-                    case SOUTH: bodyPlusX = true;  bodyPlusZ = true;  break;
-                    case WEST:  bodyPlusX = false; bodyPlusZ = true;  break;
+                    case NORTH: bodyPlusX = false; bodyPlusZ = true;  break;
+                    case EAST:  bodyPlusX = false; bodyPlusZ = false; break;
+                    case SOUTH: bodyPlusX = true;  bodyPlusZ = false; break;
+                    case WEST:  bodyPlusX = true;  bodyPlusZ = true;  break;
                     default: throw new IllegalArgumentException();
                 }
                 break;
@@ -637,6 +641,9 @@ public class Phase9GameTests {
      * formed an inner corner must immediately downgrade the
      * primary back to STRAIGHT.  Covers the live gameplay case
      * of breaking a counter that was completing an L-shape.
+     *
+     * Primary facing NORTH with neighbour on its EAST side
+     * facing EAST → forms INNER_RIGHT.
      */
     @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterInnerCornerDowngradesToStraightOnNeighbourRemoval(GameTestHelper helper) {
@@ -645,7 +652,7 @@ public class Phase9GameTests {
         helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
                 .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH));
         helper.setBlock(neighbour, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.SOUTH));
+                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.EAST));
 
         helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
                         == BarCounterBlock.Shape.INNER_RIGHT,
@@ -669,6 +676,10 @@ public class Phase9GameTests {
      * between INNER_LEFT and INNER_RIGHT.  Covers the live
      * gameplay case of relocating a counter that still anchors
      * the L-shape.
+     *
+     * Primary facing NORTH:
+     *   - neighbour on WEST facing WEST → INNER_LEFT
+     *   - neighbour on EAST facing EAST → INNER_RIGHT
      */
     @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterInnerCornerFlipsSideOnNeighbourMove(GameTestHelper helper) {
@@ -678,7 +689,7 @@ public class Phase9GameTests {
         helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
                 .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH));
         helper.setBlock(leftNeighbour, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.SOUTH));
+                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.WEST));
 
         helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
                         == BarCounterBlock.Shape.INNER_LEFT,
@@ -689,7 +700,7 @@ public class Phase9GameTests {
         // must flip to INNER_RIGHT.
         helper.setBlock(leftNeighbour, net.minecraft.world.level.block.Blocks.AIR);
         helper.setBlock(rightNeighbour, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.SOUTH));
+                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.EAST));
 
         helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
                         == BarCounterBlock.Shape.INNER_RIGHT,

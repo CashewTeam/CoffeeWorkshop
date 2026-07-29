@@ -6,7 +6,7 @@
       "item": "coffeework:syrup_empty"
     },
     {
-      "item": "minecraft:sweet_berries"
+      "tag": "coffeework:fruits"
     },
     {
       "item": "minecraft:sugar"

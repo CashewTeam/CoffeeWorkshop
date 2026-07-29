@@ -530,5 +530,6 @@
   "jei.coffeework.category.roller": "火力卷板",
   "jei.coffeework.cooling.tip": "加入冰渣冷却热饮",
   "jei.coffeework.drink_transform.action": "变换",
+  "jei.coffeework.category.soda_machine": "苏打水机",
   "tooltip.coffeework.cups_remaining": "剩余 %1$s / %2$s 杯"
 }

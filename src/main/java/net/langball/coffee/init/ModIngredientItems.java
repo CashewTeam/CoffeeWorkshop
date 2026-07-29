@@ -63,8 +63,6 @@ public class ModIngredientItems {
                 () -> new Item(new Item.Properties()));
 
         // ── Coldbrew equipment ──
-        ModItems.EMPTY_COLDBREW_POT = items.register("empty_coldbrew_pot",
-                () -> new Item(new Item.Properties()));
         ModItems.COLDBREW_BOTTLE = items.register("coldbrew_bottle",
                 () -> new Item(new Item.Properties().stacksTo(1)) {
                     @Override public boolean hasCraftingRemainingItem() { return true; }

@@ -1,5 +1,6 @@
 package net.langball.coffee.recipes;
 
+import net.langball.coffee.init.ModRecipeTypes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
@@ -58,5 +59,5 @@ public record SodaMachineRecipe(
     public RecipeSerializer<?> getSerializer() { return SodaMachineRecipeSerializer.INSTANCE; }
 
     @Override
-    public RecipeType<?> getType() { return SodaMachineRecipeSerializer.TYPE; }
+    public RecipeType<?> getType() { return ModRecipeTypes.SODA_MAKING; }
 }

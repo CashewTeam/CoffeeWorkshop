@@ -1,5 +1,6 @@
 package net.langball.coffee.init;
 
+import net.langball.coffee.item.EmptyColdBrewPotItem;
 import net.langball.coffee.item.ItemRecordCW;
 import net.langball.coffee.item.SeedCoffee;
 import net.minecraft.world.item.BlockItem;
@@ -34,7 +35,9 @@ public class ModEquipmentItems {
         ModItems.PLATE = items.register("plate",
                 () -> new BlockItem(ModBlocks.PLATE.get(), new Item.Properties()));
         ModItems.COLD_BREW_POT = items.register("coldbrew_pot",
-                () -> new BlockItem(ModBlocks.COLD_BREW_POT.get(), new Item.Properties()));
+                () -> new BlockItem(ModBlocks.COLD_BREW_POT.get(), new Item.Properties().stacksTo(1)));
+        ModItems.EMPTY_COLDBREW_POT = items.register("empty_coldbrew_pot",
+                () -> new EmptyColdBrewPotItem(ModBlocks.COLD_BREW_POT.get(), new Item.Properties().stacksTo(1)));
         ModItems.SODA_ORE = items.register("soda_ore",
                 () -> new BlockItem(ModBlocks.SODA_ORE.get(), new Item.Properties()));
         ModItems.XMAS_TREE = items.register("xmas_tree",

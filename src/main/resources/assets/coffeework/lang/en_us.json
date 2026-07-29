@@ -530,5 +530,6 @@
   "jei.coffeework.category.roller": "Rolling",
   "jei.coffeework.cooling.tip": "Add ice slag to cool hot drinks",
   "jei.coffeework.drink_transform.action": "Transform",
+  "jei.coffeework.category.soda_machine": "Soda Machine",
   "tooltip.coffeework.cups_remaining": "%s/%s cups"
 }
