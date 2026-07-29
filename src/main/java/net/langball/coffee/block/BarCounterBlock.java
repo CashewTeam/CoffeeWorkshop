@@ -5,7 +5,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -19,31 +18,20 @@ import net.minecraft.util.StringRepresentable;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class BarCounterBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     /**
-     * Phase 9 Fix7: counters can form an INNER_RIGHT corner (neighbour
-     * on the player's right side) or an INNER_LEFT corner (neighbour
-     * on the player's left).  STRAIGHT is the no-neighbour case.
-     *
-     * The legacy {@code NORMAL} and {@code INNER} values are kept as
-     * recognised enum constants so palettes saved by Fix4 and earlier
-     * keep loading — both blockstate JSONs now define
-     * {@code shape=normal} and {@code shape=inner} variants that map
-     * to the same models as their canonical counterparts, and the
-     * neighbour-update logic compares raw enum values so the block
-     * gets rewritten to the canonical form on the next neighbour
-     * change.
+     * Phase 9 Fix10: only the three canonical corner shapes are
+     * exposed.  {@code NORMAL} and {@code INNER} from internal
+     * Fix4–Fix8 dev saves are no longer supported — development
+     * worlds should be regenerated rather than migrated.
      */
     public enum Shape implements StringRepresentable {
         STRAIGHT("straight"),
-        NORMAL("normal"),
         INNER_RIGHT("inner_right"),
-        INNER("inner"),
         INNER_LEFT("inner_left");
 
         private final String serializedName;
@@ -57,17 +45,8 @@ public class BarCounterBlock extends Block {
             return serializedName;
         }
 
-        /** Legacy aliases map onto the modern enum constants. */
-        public Shape normalise() {
-            return switch (this) {
-                case NORMAL, STRAIGHT -> STRAIGHT;
-                case INNER, INNER_RIGHT -> INNER_RIGHT;
-                case INNER_LEFT -> INNER_LEFT;
-            };
-        }
-
-        public boolean isStraight() { return this == STRAIGHT || this == NORMAL; }
-        public boolean isInner() { return this == INNER_RIGHT || this == INNER_LEFT || this == INNER; }
+        public boolean isStraight() { return this == STRAIGHT; }
+        public boolean isInner() { return this != STRAIGHT; }
     }
 
     public static final EnumProperty<Shape> SHAPE = EnumProperty.create("shape", Shape.class);
@@ -123,7 +102,6 @@ public class BarCounterBlock extends Block {
             straight.put(d, straightShape(d));
         }
         SHAPES.put(Shape.STRAIGHT, straight);
-        SHAPES.put(Shape.NORMAL, straight); // legacy alias
 
         // INNER_RIGHT: the inner body occupies the +x +z quadrant in
         // the base orientation (model y=0).  The countertop is full 1x1.
@@ -145,7 +123,6 @@ public class BarCounterBlock extends Block {
                 Shapes.or(Shapes.box(0, 0, 0.25, 0.75, Y_TOP, 1),
                         Shapes.box(0, Y_TOP, 0, 1, 1, 1)));
         SHAPES.put(Shape.INNER_RIGHT, innerRight);
-        SHAPES.put(Shape.INNER, innerRight); // legacy alias pre-Fix5
 
         // INNER_LEFT: the inner body occupies the -x -z quadrant in
         // the base orientation (model y=180).  The countertop is full 1x1.
@@ -183,7 +160,7 @@ public class BarCounterBlock extends Block {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-        Shape shape = state.getValue(SHAPE).normalise();
+        Shape shape = state.getValue(SHAPE);
         Direction facing = state.getValue(FACING);
         Map<Direction, VoxelShape> perFacing = SHAPES.get(shape);
         return perFacing.getOrDefault(facing, Shapes.block());
@@ -206,72 +183,16 @@ public class BarCounterBlock extends Block {
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock,
                                  BlockPos neighbourPos, boolean isMoving) {
         super.neighborChanged(state, level, pos, neighborBlock, neighbourPos, isMoving);
-        // Phase 9 Fix7: compare raw enum values so legacy NORMAL/INNER
-        // palettes are rewritten to canonical on the first neighbour
-        // update.  Without the raw comparison, a stored
-        // shape=normal would stay shape=normal forever because both
-        // sides normalise to STRAIGHT.
         Shape canonical = determineShape(level, pos, state.getValue(FACING), this);
         if (state.getValue(SHAPE) != canonical) {
             level.setBlock(pos, state.setValue(SHAPE, canonical), 3);
         }
     }
 
-    @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState,
-                                   LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
-        // Phase 9 Fix8 P1-2: legacy shape=inner palettes from Fix4
-        // and earlier cannot distinguish left from right corners
-        // (both sides were written as INNER).  updateShape runs
-        // every time the chunk's surrounding blocks change, so
-        // we use it as a chunk-load-aligned migration hook.  If
-        // the current shape is INNER but the actual neighbour
-        // configuration points at INNER_LEFT, rewrite the state
-        // immediately rather than waiting for a player
-        // interaction.
-        Shape self = state.getValue(SHAPE);
-        if (self == Shape.INNER) {
-            Direction facingDir = state.getValue(FACING);
-            Shape canonical = determineShapeFromLevelAccessor(level, currentPos, facingDir, this);
-            if (canonical != self) {
-                return state.setValue(SHAPE, canonical);
-            }
-        }
-        return state;
-    }
-
-    /** Phase 9 Fix8: variant of {@link #determineShape} accepting
-     *  the {@link LevelAccessor} passed to updateShape.  We use the
-     *  public Level API (which LevelAccessor extends) and cast
-     *  only when the level is a real Level.  LevelAccessor is the
-     *  type pumped into read-only path methods like updateShape,
-     *  so duplicating the helper keeps the public Level-based
-     *  signature intact for placement + neighbour-change code. */
-    private static Shape determineShapeFromLevelAccessor(LevelAccessor level, BlockPos pos,
-                                                          Direction facing, Block thisBlock) {
-        Direction right = facing.getClockWise();
-        if (hasMatchingNeighbour(level, pos.relative(right), thisBlock, facing.getOpposite())) {
-            return Shape.INNER_RIGHT;
-        }
-        Direction left = facing.getCounterClockWise();
-        if (hasMatchingNeighbour(level, pos.relative(left), thisBlock, facing.getOpposite())) {
-            return Shape.INNER_LEFT;
-        }
-        return Shape.STRAIGHT;
-    }
-
-    private static boolean hasMatchingNeighbour(LevelAccessor level, BlockPos neighbourPos,
-                                                 Block thisBlock, Direction expectedFacing) {
-        BlockState neighbour = level.getBlockState(neighbourPos);
-        return neighbour.is(thisBlock) && neighbour.getValue(FACING) == expectedFacing;
-    }
-
     /**
-     * Phase 9 Fix5 / Fix7: resolve the counter's corner shape based on
-     * which side has a matching neighbour.  Returns only the canonical
-     * three values (STRAIGHT, INNER_RIGHT, INNER_LEFT).  NORMAL and
-     * INNER are written by the legacy un-alias path on neighbour
-     * update, never by placement.
+     * Phase 9 Fix10: resolve the counter's corner shape based on
+     * which side has a matching neighbour.  Returns only the
+     * three canonical values (STRAIGHT, INNER_RIGHT, INNER_LEFT).
      */
     public static Shape determineShape(Level level, BlockPos pos, Direction facing, Block thisBlock) {
         Direction right = facing.getClockWise();

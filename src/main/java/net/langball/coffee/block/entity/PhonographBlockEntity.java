@@ -209,10 +209,13 @@ public class PhonographBlockEntity extends BlockEntity {
     // load() -> onLoad() -> save() round-trip without depending
     // on chunk scheduling.  Phase 9 Fix9 P3-1: package-private
     // so they do not leak into the public production API.
+    // Phase 9 Fix10 P3-1: the unused runOnLoadForTesting() and
+    // getRecordForTesting() hooks were removed once the
+    // phonographLoadTagWithoutRecordClearsState test confirmed
+    // the load() path through hasRecord() and
+    // getPlaybackStartTickForTesting() alone.
     boolean isRestartLegacyPlaybackFlagSet() { return restartLegacyPlayback; }
     long getPlaybackStartTickForTesting() { return playbackStartTick; }
-    void runOnLoadForTesting() { this.onLoad(); }
-    ItemStack getRecordForTesting() { return record; }
 
     CompoundTag snapshotForTesting() {
         CompoundTag tag = new CompoundTag();

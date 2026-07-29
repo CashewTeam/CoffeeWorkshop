@@ -87,4 +87,51 @@ public class PhonographBlockEntityTest {
                 "Loaded BE with PlaybackStartTick must not re-enter the legacy migration");
         helper.succeed();
     }
+
+    /**
+     * Phase 9 Fix10 P2-2: a server sync that bumps the block but
+     * does not carry a {@code Record} entry must clear the cached
+     * record on the receiver and reset the legacy migration flag.
+     * Regression-locks the {@code load(tag)} path so a future bug
+     * that keeps the previous record cached on the client cannot
+     * slip back in.
+     */
+    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 80)
+    public static void phonographLoadTagWithoutRecordClearsState(GameTestHelper helper) {
+        BlockPos primary = new BlockPos(1, 1, 1);
+        helper.setBlock(primary, ModBlocks.PHONOGRAPH.get());
+        PhonographBlockEntity ph = (PhonographBlockEntity) helper.getBlockEntity(primary);
+
+        // First load: tag WITH Record.  The BE must hold the
+        // record and an explicit PlaybackStartTick.
+        CompoundTag withRecord = new CompoundTag();
+        ItemStack record = new ItemStack(ModItems.RECORD_KUSA_NOSHI_TO_NE.get());
+        CompoundTag recordTag = new CompoundTag();
+        record.save(recordTag);
+        withRecord.put("Record", recordTag);
+        withRecord.putLong("PlaybackStartTick", helper.getLevel().getGameTime());
+        ph.load(withRecord);
+        helper.assertTrue(ph.hasRecord(),
+                "After load(tag with Record) hasRecord() must be true");
+        helper.assertTrue(ph.getPlaybackStartTickForTesting() >= 0,
+                "After load(tag with Record) playbackStartTick must be populated, got "
+                        + ph.getPlaybackStartTickForTesting());
+
+        // Second load: tag WITHOUT Record.  An empty sync must
+        // clear the record and the legacy migration flag, and
+        // reset playbackStartTick to -1.  This is the path the
+        // server's update-tag dispatch takes when ejecting a
+        // record.
+        CompoundTag emptyTag = new CompoundTag();
+        emptyTag.putLong("PlaybackStartTick", -1L);
+        ph.load(emptyTag);
+        helper.assertTrue(!ph.hasRecord(),
+                "After load(tag without Record) hasRecord() must be false");
+        helper.assertTrue(ph.getPlaybackStartTickForTesting() == -1L,
+                "After load(tag without Record) playbackStartTick must be -1, got "
+                        + ph.getPlaybackStartTickForTesting());
+        helper.assertTrue(!ph.isRestartLegacyPlaybackFlagSet(),
+                "After load(tag without Record) legacy migration flag must be cleared");
+        helper.succeed();
+    }
 }

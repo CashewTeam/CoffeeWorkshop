@@ -624,144 +624,77 @@ public class Phase9GameTests {
                 "STRAIGHT " + facing + " countertop must be solid; aabbs=" + aabbs);
     }
 
-    /**
-     * Phase 9 Fix7 P1-1: a legacy {@code shape=normal} block loads
-     * with the alias enum value, renders the normal model, and is
-     * migrated to {@code shape=straight} on the next neighbour
-     * update.  We force the migration by placing and removing a
-     * temporary neighbour block, which triggers neighbourChanged
-     * on the primary.
-     */
-    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
-    public static void barCounterLegacyNormalMigratesToStraightOnUpdate(GameTestHelper helper) {
-        BlockPos primary = new BlockPos(1, 1, 1);
-        helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
-                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.NORMAL));
-
-        // Raw value must be NORMAL before any update fires.
-        helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
-                        == BarCounterBlock.Shape.NORMAL,
-                "Legacy NORMAL must persist as raw enum before neighbour update");
-
-        // Trigger neighborChanged on the primary by placing and
-        // removing a temporary block adjacent to it.  The setBlock
-        // call notifies neighbors, and removing it also notifies.
-        BlockPos tempNeighbour = primary.relative(net.minecraft.core.Direction.EAST);
-        helper.setBlock(tempNeighbour, net.minecraft.world.level.block.Blocks.STONE);
-        helper.setBlock(tempNeighbour, net.minecraft.world.level.block.Blocks.AIR);
-
-        // The neighborChanged -> determineShape path runs with no
-        // matching neighbours, so STRAIGHT is the canonical write.
-        helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
-                        == BarCounterBlock.Shape.STRAIGHT,
-                "Legacy NORMAL must be migrated to STRAIGHT on neighbour update, got "
-                        + helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE));
-        helper.succeed();
-    }
+    // ─────────────────────────────────────────────────────────────────────
+    // Phase 9 Fix10 P3-1: state transitions exposed by the live
+    //   gameplay loop.  Removing the legacy NORMAL/INNER aliases
+    //   removes the corresponding migration tests, but the two
+    //   genuine state transitions below exercise the same
+    //   determineShape() path that real player interactions trigger.
+    // ─────────────────────────────────────────────────────────────────────
 
     /**
-     * Phase 9 Fix7 P1-1: a legacy {@code shape=inner} block with a
-     * right-neighbour present is migrated to {@code shape=inner_right}.
+     * Phase 9 Fix10 P3-1: removing the matching neighbour that
+     * formed an inner corner must immediately downgrade the
+     * primary back to STRAIGHT.  Covers the live gameplay case
+     * of breaking a counter that was completing an L-shape.
      */
     @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
-    public static void barCounterLegacyInnerMigratesToInnerRightOnUpdate(GameTestHelper helper) {
+    public static void barCounterInnerCornerDowngradesToStraightOnNeighbourRemoval(GameTestHelper helper) {
         BlockPos primary = new BlockPos(1, 1, 1);
         BlockPos neighbour = primary.relative(net.minecraft.core.Direction.EAST);
         helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
-                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.INNER));
+                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH));
         helper.setBlock(neighbour, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
                 .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.SOUTH));
 
-        // Forge a neighbour update on the primary by toggling a
-        // dummy block adjacent to it.  The right-neighbour is at
-        // EAST, so toggling a block at NORTH or SOUTH triggers
-        // neighborChanged on the primary.
-        BlockPos tempUpdate = primary.relative(net.minecraft.core.Direction.NORTH);
-        helper.setBlock(tempUpdate, net.minecraft.world.level.block.Blocks.STONE);
-        helper.setBlock(tempUpdate, net.minecraft.world.level.block.Blocks.AIR);
-
         helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
                         == BarCounterBlock.Shape.INNER_RIGHT,
-                "Legacy INNER + right-neighbour must be migrated to INNER_RIGHT, got "
+                "Primary must resolve to INNER_RIGHT before neighbour removal, got "
+                        + helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE));
+
+        // Knock the neighbour out.  The primary's neighborChanged
+        // path must rewrite the corner back to STRAIGHT.
+        helper.setBlock(neighbour, net.minecraft.world.level.block.Blocks.AIR);
+
+        helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
+                        == BarCounterBlock.Shape.STRAIGHT,
+                "Primary must downgrade to STRAIGHT after neighbour removal, got "
                         + helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE));
         helper.succeed();
     }
 
     /**
-     * Phase 9 Fix9 P1-1: a legacy {@code shape=inner} block with a
-     * LEFT neighbour must migrate to {@code shape=inner_left} on
-     * chunk load, not just on neighbour update.  Pre-Fix5 palettes
-     * stored both sides as {@code INNER}; Fix7's
-     * {@code neighborChanged} path only fires when a neighbour
-     * changes after load.  The {@code BarCounterMigrationHandler}
-     * subscribes to {@link net.minecraftforge.event.level.ChunkEvent.Load}
-     * so the rewrite runs once per chunk load and resolves the
-     * canonical enum from the actual neighbour geometry.
-     *
-     * The test drives the migration directly via
-     * {@link BarCounterMigrationHandler#migrateChunk} so the
-     * assertion does not depend on the harness unloading and
-     * reloading the test chunk.  The test places the primary
-     * with the legacy INNER shape; the chunk's current
-     * {@code setBlockState} path migrates INNER to INNER_LEFT
-     * via {@code updateShape}.  We then re-write the raw
-     * INNER value into the chunk's section palette to simulate
-     * a freshly-deserialised chunk, run the migration handler,
-     * and verify the canonical INNER_LEFT is restored.
+     * Phase 9 Fix10 P3-1: moving the matching neighbour from one
+     * side of the primary to the other must flip the inner corner
+     * between INNER_LEFT and INNER_RIGHT.  Covers the live
+     * gameplay case of relocating a counter that still anchors
+     * the L-shape.
      */
     @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
-    public static void barCounterLegacyInnerLeftMigratesOnChunkLoad(GameTestHelper helper) {
-        // Place a neighbour on the WEST side.  helper.setBlock
-        // runs the BarCounterBlock.updateShape migration path
-        // automatically so we explicitly write the legacy raw
-        // INNER value into the section palette to simulate a
-        // pre-Fix5 chunk state.
-        var level = (net.minecraft.server.level.ServerLevel) helper.getLevel();
+    public static void barCounterInnerCornerFlipsSideOnNeighbourMove(GameTestHelper helper) {
         BlockPos primary = new BlockPos(1, 1, 1);
-        BlockPos neighbour = primary.relative(net.minecraft.core.Direction.WEST);
+        BlockPos leftNeighbour = primary.relative(net.minecraft.core.Direction.WEST);
+        BlockPos rightNeighbour = primary.relative(net.minecraft.core.Direction.EAST);
         helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
-                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.INNER));
-        helper.setBlock(neighbour, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.SOUTH)
-                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.INNER));
+                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH));
+        helper.setBlock(leftNeighbour, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.SOUTH));
 
-        // Drive the migration handler.  The handler is a no-op
-        // for the canonical enum, but it would rewrite a legacy
-        // NORMAL or INNER value to its canonical form.  We
-        // assert that the handler runs and returns 0 for an
-        // already-canonical state, demonstrating that the
-        // ChunkEvent.Load subscriber will not corrupt the world.
-        var chunk = level.getChunkAt(helper.absolutePos(primary));
-        int migrated = net.langball.coffee.event.BarCounterMigrationHandler.migrateChunk(level, chunk);
-        helper.assertTrue(migrated == 0,
-                "Migration handler must be a no-op on a canonical INNER_LEFT block, got "
-                        + migrated + " rewrites");
-
-        // After the migration no-op, the block is still
-        // INNER_LEFT (the updateShape path put it there).
         helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
                         == BarCounterBlock.Shape.INNER_LEFT,
-                "After migration no-op the block must still be INNER_LEFT, got "
+                "Primary must resolve to INNER_LEFT before neighbour move, got "
                         + helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE));
 
-        // Verify the neighbouring WEST block is also canonical.
-        helper.assertTrue(helper.getBlockState(neighbour).getValue(BarCounterBlock.SHAPE)
-                        == BarCounterBlock.Shape.INNER_LEFT,
-                "Neighbour block must also be canonical INNER_LEFT");
+        // Move the neighbour to the opposite side.  The primary
+        // must flip to INNER_RIGHT.
+        helper.setBlock(leftNeighbour, net.minecraft.world.level.block.Blocks.AIR);
+        helper.setBlock(rightNeighbour, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.SOUTH));
 
-        // Verify the migration handler does not touch the
-        // canonical STRAIGHT enum either.
-        helper.setBlock(new BlockPos(0, 0, 0), ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
-                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.STRAIGHT));
-        int migratedStraight = net.langball.coffee.event.BarCounterMigrationHandler.migrateChunk(
-                level, chunk);
-        helper.assertTrue(migratedStraight == 0,
-                "Migration handler must be a no-op on a chunk with no legacy values, got "
-                        + migratedStraight);
+        helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
+                        == BarCounterBlock.Shape.INNER_RIGHT,
+                "Primary must flip to INNER_RIGHT after neighbour moved to opposite side, got "
+                        + helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE));
         helper.succeed();
     }
 
