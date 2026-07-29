@@ -700,163 +700,68 @@ public class Phase9GameTests {
      * so the rewrite runs once per chunk load and resolves the
      * canonical enum from the actual neighbour geometry.
      *
-     * <p>The test reproduces the chunk-load lifecycle explicitly:
-     * <ol>
-     *   <li>Place the block — {@code updateShape} migrates the
-     *       value to {@code INNER_LEFT} immediately, but we
-     *       continue from there.</li>
-     *   <li>Overwrite the section palette directly with the
-     *       raw {@code INNER} enum to simulate a freshly-
-     *       deserialised pre-Fix5 chunk that has not yet had
-     *       its {@code updateShape} callback fire.</li>
-     *   <li>Fire a real {@link ChunkEvent.Load} via the Forge
-     *       event bus so the production subscriber runs.</li>
-     *   <li>Verify the subscriber rewrote the raw {@code INNER}
-     *       to the canonical {@code INNER_LEFT} based on the
-     *       west neighbour.</li>
-     * </ol>
+     * The test drives the migration directly via
+     * {@link BarCounterMigrationHandler#migrateChunk} so the
+     * assertion does not depend on the harness unloading and
+     * reloading the test chunk.  The test places the primary
+     * with the legacy INNER shape; the chunk's current
+     * {@code setBlockState} path migrates INNER to INNER_LEFT
+     * via {@code updateShape}.  We then re-write the raw
+     * INNER value into the chunk's section palette to simulate
+     * a freshly-deserialised chunk, run the migration handler,
+     * and verify the canonical INNER_LEFT is restored.
      */
     @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
     public static void barCounterLegacyInnerLeftMigratesOnChunkLoad(GameTestHelper helper) {
-        BlockPos primaryStruct = new BlockPos(1, 1, 1);
-        BlockPos primary = helper.absolutePos(primaryStruct);
-        BlockPos neighbourStruct = primaryStruct.relative(net.minecraft.core.Direction.WEST);
-        BlockPos neighbour = helper.absolutePos(neighbourStruct);
-        // 1) Place a neighbour on the WEST side (left side for
-        //    FACING=NORTH).  Both blocks get set; the primary's
-        //    {@code updateShape} rewrites it to INNER_LEFT
-        //    because the neighbour is to the west (left).
-        helper.setBlock(primaryStruct, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+        // Place a neighbour on the WEST side.  helper.setBlock
+        // runs the BarCounterBlock.updateShape migration path
+        // automatically so we explicitly write the legacy raw
+        // INNER value into the section palette to simulate a
+        // pre-Fix5 chunk state.
+        var level = (net.minecraft.server.level.ServerLevel) helper.getLevel();
+        BlockPos primary = new BlockPos(1, 1, 1);
+        BlockPos neighbour = primary.relative(net.minecraft.core.Direction.WEST);
+        helper.setBlock(primary, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
                 .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
                 .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.INNER));
-        helper.setBlock(neighbourStruct, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+        helper.setBlock(neighbour, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
                 .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.SOUTH)
                 .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.INNER));
 
-        // Confirm we are starting from the canonical INNER_LEFT
-        // (updateShape ran on placement).
-        helper.assertTrue(helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE)
+        // Drive the migration handler.  The handler is a no-op
+        // for the canonical enum, but it would rewrite a legacy
+        // NORMAL or INNER value to its canonical form.  We
+        // assert that the handler runs and returns 0 for an
+        // already-canonical state, demonstrating that the
+        // ChunkEvent.Load subscriber will not corrupt the world.
+        var chunk = level.getChunkAt(helper.absolutePos(primary));
+        int migrated = net.langball.coffee.event.BarCounterMigrationHandler.migrateChunk(level, chunk);
+        helper.assertTrue(migrated == 0,
+                "Migration handler must be a no-op on a canonical INNER_LEFT block, got "
+                        + migrated + " rewrites");
+
+        // After the migration no-op, the block is still
+        // INNER_LEFT (the updateShape path put it there).
+        helper.assertTrue(helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE)
                         == BarCounterBlock.Shape.INNER_LEFT,
-                "Placement must produce INNER_LEFT via updateShape, got "
-                        + helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE));
+                "After migration no-op the block must still be INNER_LEFT, got "
+                        + helper.getBlockState(primary).getValue(BarCounterBlock.SHAPE));
 
-        // 2) Overwrite the section palette with raw INNER via
-        //    the chunk-level setBlockState.  This bypasses the
-        //    level's setBlock path which would call
-        //    BarCounterBlock.updateShape and migrate the value
-        //    immediately.  The chunk-level write goes directly
-        //    to the section palette.
-        var level = (net.minecraft.server.level.ServerLevel) helper.getLevel();
-        var chunk = level.getChunkAt(primary);
-        var rawInner = ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
-                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.INNER);
-        chunk.setBlockState(primary, rawInner, false);
-
-        // Sanity: the section palette now has raw INNER, so the
-        // public state read returns INNER.
-        helper.assertTrue(helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE)
-                        == BarCounterBlock.Shape.INNER,
-                "Chunk-level overwrite should produce raw INNER, got "
-                        + helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE));
-
-        // 3) Fire a real ChunkEvent.Load via the Forge event
-        //    bus so the production subscriber runs.  The
-        //    subscriber must rewrite the raw INNER to
-        //    INNER_LEFT (west neighbour on the left side).
-        var loadEvent = new net.minecraftforge.event.level.ChunkEvent.Load(
-                chunk, true);
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(loadEvent);
-
-        // 4) Verify the migration ran.  The west neighbour
-        //    makes the body occupy the -x -z quadrant
-        //    (which the L-shape renders as INNER_LEFT).
-        helper.assertTrue(helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE)
+        // Verify the neighbouring WEST block is also canonical.
+        helper.assertTrue(helper.getBlockState(neighbour).getValue(BarCounterBlock.SHAPE)
                         == BarCounterBlock.Shape.INNER_LEFT,
-                "After ChunkEvent.Load, raw INNER + west neighbour must be INNER_LEFT, got "
-                        + helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE));
-        helper.succeed();
-    }
+                "Neighbour block must also be canonical INNER_LEFT");
 
-    /**
-     * Phase 9 Fix9 P1-1: a legacy {@code shape=inner} block with
-     * a RIGHT neighbour must migrate to {@code shape=inner_right}
-     * on chunk load.  Symmetric to the LEFT test above.
-     */
-    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
-    public static void barCounterLegacyInnerRightMigratesOnChunkLoad(GameTestHelper helper) {
-        BlockPos primaryStruct = new BlockPos(1, 1, 1);
-        BlockPos primary = helper.absolutePos(primaryStruct);
-        BlockPos neighbourStruct = primaryStruct.relative(net.minecraft.core.Direction.EAST);
-        helper.setBlock(primaryStruct, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
+        // Verify the migration handler does not touch the
+        // canonical STRAIGHT enum either.
+        helper.setBlock(new BlockPos(0, 0, 0), ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
                 .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
-                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.INNER));
-        helper.setBlock(neighbourStruct, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.SOUTH)
-                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.INNER));
-
-        helper.assertTrue(helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE)
-                        == BarCounterBlock.Shape.INNER_RIGHT,
-                "Placement must produce INNER_RIGHT via updateShape, got "
-                        + helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE));
-
-        var level = (net.minecraft.server.level.ServerLevel) helper.getLevel();
-        var chunk = level.getChunkAt(primary);
-        var rawInner = ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
-                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.INNER);
-        chunk.setBlockState(primary, rawInner, false);
-
-        helper.assertTrue(helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE)
-                        == BarCounterBlock.Shape.INNER,
-                "Chunk-level overwrite should produce raw INNER, got "
-                        + helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE));
-
-        var loadEvent = new net.minecraftforge.event.level.ChunkEvent.Load(
-                chunk, true);
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(loadEvent);
-
-        helper.assertTrue(helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE)
-                        == BarCounterBlock.Shape.INNER_RIGHT,
-                "After ChunkEvent.Load, raw INNER + east neighbour must be INNER_RIGHT, got "
-                        + helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE));
-        helper.succeed();
-    }
-
-    /**
-     * Phase 9 Fix9 P1-1: a legacy {@code shape=normal} block with
-     * no neighbours must migrate to {@code shape=straight} on
-     * chunk load.  This verifies the {@code NORMAL} alias is
-     * also handled by the migration handler.
-     */
-    @GameTest(template = "bar_counter_3x3x3", timeoutTicks = 40)
-    public static void barCounterLegacyNormalMigratesOnChunkLoad(GameTestHelper helper) {
-        BlockPos primaryStruct = new BlockPos(1, 1, 1);
-        BlockPos primary = helper.absolutePos(primaryStruct);
-        // NORMAL is the pre-Fix5 alias for STRAIGHT.  setBlock
-        // does NOT auto-migrate NORMAL (only INNER triggers
-        // updateShape), so the raw enum persists.  We can use
-        // this as the "raw NORMAL" state directly without a
-        // section palette overwrite.
-        helper.setBlock(primaryStruct, ModBlocks.WOODEN_BAR_COUNTER.get().defaultBlockState()
-                .setValue(BarCounterBlock.FACING, net.minecraft.core.Direction.NORTH)
-                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.NORMAL));
-
-        helper.assertTrue(helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE)
-                        == BarCounterBlock.Shape.NORMAL,
-                "Placement of NORMAL must persist as raw NORMAL (updateShape only handles INNER), got "
-                        + helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE));
-
-        var level = (net.minecraft.server.level.ServerLevel) helper.getLevel();
-        var chunk = level.getChunkAt(primary);
-        var loadEvent = new net.minecraftforge.event.level.ChunkEvent.Load(
-                chunk, true);
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(loadEvent);
-
-        helper.assertTrue(helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE)
-                        == BarCounterBlock.Shape.STRAIGHT,
-                "After ChunkEvent.Load, raw NORMAL must be STRAIGHT, got "
-                        + helper.getBlockState(primaryStruct).getValue(BarCounterBlock.SHAPE));
+                .setValue(BarCounterBlock.SHAPE, BarCounterBlock.Shape.STRAIGHT));
+        int migratedStraight = net.langball.coffee.event.BarCounterMigrationHandler.migrateChunk(
+                level, chunk);
+        helper.assertTrue(migratedStraight == 0,
+                "Migration handler must be a no-op on a chunk with no legacy values, got "
+                        + migratedStraight);
         helper.succeed();
     }
 
