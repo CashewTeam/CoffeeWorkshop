@@ -2,8 +2,8 @@
   "credit": "Made with Blockbench",
   "textures": {
     "1": "block/iron_block",
-    "2": "blocks/hopper_outside",
-    "3": "blocks/glass_black"
+    "2": "block/hopper_outside",
+    "3": "block/glass_black"
   },
   "elements": [
     {

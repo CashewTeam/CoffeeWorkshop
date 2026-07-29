@@ -3,7 +3,7 @@
   "textures": {
     "0": "block/iron_block",
     "1": "block/iron_block",
-    "2": "blocks/hopper_outside",
+    "2": "block/hopper_outside",
     "particle": "block/iron_block"
   },
   "elements": [

@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "blocks/concrete_yellow",
+		"0": "block/concrete_yellow",
 		"1": "block/iron_block",
-		"particle": "blocks/concrete_yellow"
+		"particle": "block/concrete_yellow"
 	},
 	"elements": [
 		{
